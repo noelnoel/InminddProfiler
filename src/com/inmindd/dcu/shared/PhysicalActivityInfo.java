@@ -2,8 +2,6 @@ package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
 
-import com.inmindd.dcu.client.InminddServiceAsync;
-
 public class PhysicalActivityInfo  implements Serializable{	
 	
 	private String userId;

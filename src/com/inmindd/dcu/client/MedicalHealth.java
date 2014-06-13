@@ -18,9 +18,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.inmindd.dcu.shared.MedicalInfo;
-import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class MedicalHealth {

@@ -1,10 +1,6 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.ButtonGroup;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,7 +20,6 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FeelingsInfo;
-import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class Feelings {

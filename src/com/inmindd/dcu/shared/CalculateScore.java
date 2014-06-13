@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.client.PatientInfo;
 import com.inmindd.dcu.shared.FeelingsInfo;
 import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
