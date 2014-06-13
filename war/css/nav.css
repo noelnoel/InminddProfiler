@@ -1,0 +1,107 @@
+/*
+Theme Name: Avada
+Description: A business, portfolio and blog theme.
+Author: ThemeFusion
+Theme URI: http://theme-fusion.com/avada/
+Author URI: http://themeforest.net/user/ThemeFusion
+Version: 1.0.5
+License: GNU General Public License
+License URI: license.txt
+*/
+
+@font-face {
+  font-family: 'MuseoSlab500Regular';
+  src: url('../fonts/Museo_Slab_500-webfont.eot');
+  src: url('../fonts/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Museo_Slab_500-webfont.woff') format('woff'),
+    url('../fonts/Museo_Slab_500-webfont.ttf') format('truetype'),
+    url('../fonts/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+#nav a {
+  text-decoration:none;
+  color:#333;
+}
+#nav a:hover {
+  color:#a0ce4e;
+  text-decoration:none;
+}
+
+#nav{
+  font:14px/16px 'MuseoSlab500Regular', arial, helvetica, sans-serif;
+  font-family: 'PT Sans', arial, helvetica, sans-serif !important;
+}
+#nav ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+#nav ul li{
+  float:left;
+  margin:0 0 0 49px;
+}
+#nav ul a{
+  display:block;
+  height:83px;
+  line-height:83px;
+  border-top:3px solid #fff;
+}
+#nav ul .current_page_item a, #nav ul .current-menu-item  a, #nav ul > .current-menu-parent a{
+  color:#a0ce4e;
+  text-decoration:none;
+  border-color:#a0ce4e;
+}
+#nav ul li{
+  position:relative;
+}
+#nav ul ul{
+  display:none;
+  position:absolute;top:86px;left:0;
+  width:170px;
+  background:#edebeb;
+  z-index:100000;
+  border-top:3px solid #a0ce4e;
+}
+#nav ul li:hover ul{
+  display:block;
+}
+#nav ul li ul li{
+  display:block;
+  float:none;
+  margin:0;
+}
+#nav ul li ul li a{
+  background:url(http://www.inmindd.eu/wp-content/themes/Avada/images/subnav_sep.jpg) repeat-x bottom left;
+  border:0;
+  height:30px;
+  text-indent:20px;
+  font:13px/30px 'PTSansRegular', Arial, Helvetica, sans-serif;
+  font-family: 'PT Sans', Arial, Helvetica, sans-serif !important;
+  color:#333333 !important;
+}
+#nav ul li ul li a:hover, #nav ul li ul li.current-menu-item a{
+  background-color:rgba(255,255,255,0.5);
+}
+#nav ul ul ul{
+  display:none !important;
+}
+#nav ul ul li:hover ul{
+  display:block !important;
+  top:-3px;left:170px;
+}
+#nav select{
+  max-width:100%;
+  display:none;
+}
+
+#nav ul li {
+font-size:14px;
+margin: 0 0 0 30px;
+}
+
+#nav ul ul {
+top: 60px;!
+}
+
+

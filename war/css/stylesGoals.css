@@ -1,0 +1,61 @@
+/* move special fonts to HTML head for better performance */
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600,700');
+@import url("nav.css");
+
+/* custom template */
+html, body {
+   height: 100%;
+   font-family:'Open Sans',arial,sans-serif;
+}
+
+.wrapper, .row {
+   height: 100%;
+   margin-left:0;
+   margin-right:0;
+}
+
+.wrapper:before, .wrapper:after,
+.column:before, .column:after {
+    content: "";
+    display: table;
+}
+
+.wrapper:after,
+.column:after {
+    clear: both;
+}
+
+.column {
+    height: 100%;
+    overflow: auto;
+    *zoom:1;
+}
+
+.column .padding {
+    padding: 20px;
+}
+
+.box {
+  	bottom: 0; /* increase for footer use */
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.img-circle {
+  height:125px;
+  width:125px;
+  -webkit-transition:width 1s, height 1s; /* For Safari 3.1 to 6.0 */
+  transition:width 0.5s, height 0.5s;
+  transition-timing-function: ease;
+}
+
+.img-circle:hover {
+  height:200px;
+  width:200px;
+}
+
+.text {
+  display:none;
+}
