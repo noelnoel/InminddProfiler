@@ -1,2 +1,0 @@
-serviceClass: com.inmindd.dcu.client.InminddService
-path: DE57312FB996E85FDB2DC3085B2F38BF.gwt.rpc

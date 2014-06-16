@@ -64,5 +64,8 @@ public interface InminddServiceAsync {
 	
 	void getLibraScore(User user, AsyncCallback<com.inmindd.dcu.shared.RiskFactorScore> callback)
 			throws IllegalArgumentException;
+	
+	void getUserConnected(AsyncCallback<com.inmindd.dcu.shared.User> callback)
+			throws IllegalArgumentException;
 }
 

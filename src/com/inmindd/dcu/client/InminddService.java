@@ -42,5 +42,6 @@ public interface InminddService extends RemoteService {
 	public Boolean updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco)	throws IllegalArgumentException;
 	public Boolean updateDiet(DietInfo diet)	throws IllegalArgumentException;
 	public com.inmindd.dcu.shared.RiskFactorScore getLibraScore(User user) 			throws IllegalArgumentException;
+	public User getUserConnected() throws IllegalArgumentException;
 	
 }

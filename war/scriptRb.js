@@ -1,18 +1,12 @@
-function load(){
+function trigeredByGWT() {
+	$("#scoreInputRPC").trigger("change");
+}
+
+function loadCharts(){
 	specials_risk_factor = ["heart_disease","kidney_disease","diabetes"];
-	data = {"blood_pressure":8.6,
-		"cholesteral":0, //7.5
-		"coginitive_activity":17.1,
-		"diabetes":7,
-		"diet":0, //9.1
-		"drinking":5.3,
-		"heart_disease":5.9,
-		"kidney_disease":5.9,
-		"mood":0, //11.2
-		"obesity":0, //8.6
-		"physical_exercise":0, //5.9
-		"smoking":0 //8.0
-	}
+	data = $("#scoreInputRPC").val();
+	data = JSON.parse(data);
+
 	/*	Alcohol	0.74	-0.30	-1.0	1	5.3
 Physical inactivity	1.39	0.33	+1.1	1.1	5.9
 Coron. heart dis.	1.38	0.32	+1.1	1.1	5.9
@@ -56,7 +50,6 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	}); 
 	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"] - dataGraph.pie["improvement"];
 	graph(dataGraph);
-
 }
 
 function clickFactors(event){
@@ -67,6 +60,6 @@ function clickFactors(event){
 
 var data = {};
 $(document).ready(function(){
-	load();
+	$("#scoreInputRPC").change(loadCharts);
 	$(document).on("click",".circle", clickFactors);
 });

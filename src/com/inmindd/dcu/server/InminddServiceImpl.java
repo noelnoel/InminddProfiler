@@ -5,6 +5,7 @@ package com.inmindd.dcu.server;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
@@ -60,11 +61,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				//	user.setCountryCode(result.getString(2));
 				//	user.setPractice(result.getString(3));
 					conn.close();
+					getThreadLocalRequest().getSession().setAttribute("current_user", user);
 					return user;
 				}
 
 			}
 			user = null;
+			getThreadLocalRequest().getSession().setAttribute("current_user", null);
 			conn.close();
 			return user;
 
@@ -1327,6 +1330,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      return;
 		    }
 
+	}
+
+	@Override
+	public User getUserConnected() throws IllegalArgumentException {
+		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
 	}
 
 	

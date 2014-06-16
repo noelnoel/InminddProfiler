@@ -3,6 +3,7 @@ package com.inmindd.dcu.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -214,7 +215,26 @@ public class Login  {
 	    		//  generate digest of the password
 	  		  hashedPassword = getSHA1for((password.getText()));
 	    	 // AsyncCallback<User> callback = new AuthenticationHandler<User>();
+	  		
 	    	  AsyncCallback<User> callback = new AsyncCallback<User>() {
+	    		  
+	    		  AsyncCallback<User> callbackUser = new AsyncCallback<User>() {
+	  				@Override
+	  				public void onSuccess(User user) {
+	  					if (user == null) {
+	  						System.out.println("[login::getScore] \\ user null");
+	  						Window.alert("please connect before check your score");
+	  					} else {
+	  						Window.alert("ok "+ user.toString());
+	  					}
+	  				}
+
+	  				@Override
+	  				public void onFailure(Throwable caught) {
+	  					System.out.println("[RB_Score::getScore] \\ exception null");
+	  					// TODO print error
+	  				}
+	  			};
 	    		 
 	              public void onSuccess(User user) {
 	            		if ((user == null)){	            		
@@ -227,6 +247,7 @@ public class Login  {
 	            			InlineLabel error = new InlineLabel("You are now logged on to Inmindd. Please proceed to input panels");
 	            			showErrorPopupPanel(error, "green");	            			
 	            			setUser(user);	
+	            			InminddServiceSvc.getUserConnected(callbackUser);
 	            			 getScore();   			
 	            		}
 	                 
