@@ -1,7 +1,5 @@
 package com.inmindd.dcu.server;
 
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,10 +17,14 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportGoal;
+import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -40,6 +42,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	private MedicalInfo medical;
 	private FamilyHistoryInfo history;
 	private PhysicalActivityInfo physical;
+	private SupportGoalUser goal;
 	
 	
 	@Override
@@ -1335,6 +1338,153 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
 		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
+	}
+	
+	@Override
+	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
+		//open database connection
+		initDBConnection();
+
+		if (createSupportGoalUser(goal)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+	}
+
+	
+	private boolean createSupportGoalUser(SupportGoalUser goal) {
+		String patient_id = goal.getId_user();
+		long time = System.currentTimeMillis();
+		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
+
+		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
+
+		try {
+			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(insert);
+			statement.setInt(1, goal.getId_goal());
+			statement.setString(2, patient_id);
+			statement.setTimestamp(3,timestamp);
+			statement.setString(4, goal.getComment());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;		
+		}
+
+		return true;	
+
+	}
+	
+	public SupportGoalUser querySupportGoalUser(User user) {
+		//open database connection
+		goal = new SupportGoalUser();
+		initDBConnection();
+
+		if (getSupportGoalUser(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return goal;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return goal;
+		}
+	}
+	
+	
+	private boolean getSupportGoalUser(User user) {
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_goals_users` WHERE `id_user` = " + idUser);
+			result = pstmt.executeQuery("SELECT * FROM `support_goals_users` WHERE `id_user` = " + idUser);
+
+			while (result.last()) {
+				goal.setId_goal(result.getInt(1));
+				goal.setId_user(result.getString(2));
+				goal.setTimestamp(result.getTimestamp(3).toString());
+				goal.setComment(result.getString(4));
+				conn.close();
+				return true;
+			}
+			conn.close();
+			return false;
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+
+	}
+
+	@Override
+	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportGoal> goals = new ArrayList<SupportGoal>();
+		initDBConnection();
+
+		if (getSupportGoals(riskFactor, goals)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return goals;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return goals;
+		}
+	}
+	
+	
+	private boolean getSupportGoals(int riskFactor, ArrayList<SupportGoal> goalsList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = "+riskFactor+";");
+			result = pstmt.executeQuery("SELECT * FROM `support_goals`;");
+
+			while (result.next()) {
+				SupportGoal data = new SupportGoal(result.getInt("id"), result.getInt("goal_nb"), result.getString("goal_name"), result.getString("description"), result.getString("image_url")); 
+				goalsList.add(data);
+				return true;
+			}
+			conn.close();
+			return (goalsList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
 	}
 
 	

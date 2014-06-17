@@ -22,6 +22,16 @@
   </servlet>
   
   <servlet-mapping>
+    <servlet-name>InminddGoals</servlet-name>
+    <url-pattern>/Goals/Inmindd</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>InminddGoals</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
     <servlet-name>InminddScore</servlet-name>
     <url-pattern>/Score/Inmindd</url-pattern>
   </servlet-mapping>

@@ -1,6 +1,9 @@
 package com.inmindd.dcu.client;
 
 
+import java.util.ArrayList;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -12,6 +15,8 @@ import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportGoal;
+import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.User;
 
 /**
@@ -42,6 +47,9 @@ public interface InminddService extends RemoteService {
 	public Boolean updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco)	throws IllegalArgumentException;
 	public Boolean updateDiet(DietInfo diet)	throws IllegalArgumentException;
 	public com.inmindd.dcu.shared.RiskFactorScore getLibraScore(User user) 			throws IllegalArgumentException;
-	public User getUserConnected() throws IllegalArgumentException;
 	
+	public User getUserConnected() throws IllegalArgumentException;
+	public Boolean updateSupportGoalUser(SupportGoalUser history)	throws IllegalArgumentException;
+	public SupportGoalUser querySupportGoalUser(User user) 			throws IllegalArgumentException;
+	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)		throws IllegalArgumentException;
 }

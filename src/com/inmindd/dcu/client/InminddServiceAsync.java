@@ -1,6 +1,8 @@
 package com.inmindd.dcu.client;
 
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -10,7 +12,10 @@ import com.inmindd.dcu.shared.FeelingsInfo;
 import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
+import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportGoal;
+import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.User;
 
 /**
@@ -65,7 +70,17 @@ public interface InminddServiceAsync {
 	void getLibraScore(User user, AsyncCallback<com.inmindd.dcu.shared.RiskFactorScore> callback)
 			throws IllegalArgumentException;
 	
+	
 	void getUserConnected(AsyncCallback<com.inmindd.dcu.shared.User> callback)
+			throws IllegalArgumentException;
+
+	void updateSupportGoalUser(SupportGoalUser goal, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportGoalUser(User user, AsyncCallback<SupportGoalUser> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportGoals(int riskFactor, AsyncCallback<ArrayList<SupportGoal>> callback)
 			throws IllegalArgumentException;
 }
 

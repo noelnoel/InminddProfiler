@@ -45,11 +45,11 @@ public class Score implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
-	
+
 	public static native void trigerJavascript() /*-{
 		$wnd.trigeredByGWT();
      }-*/;
-	
+
 	private void setUser(User user) {
 		this.user = user;
 	}
@@ -74,7 +74,7 @@ public class Score implements EntryPoint {
 			return;
 
 		}
-		
+
 
 		AsyncCallback<RiskFactorScore> callback = new AsyncCallback<RiskFactorScore>() {
 
@@ -85,34 +85,34 @@ public class Score implements EntryPoint {
 					// TODO print error
 				} else {
 					// TODO retrieve result   scoreInputRPC
-					
+
 					/*data = {"blood_pressure":8.6,
-		"cholesteral":0, //7.5
-		"coginitive_activity":17.1,
-		"diabetes":7,
-		"diet":0, //9.1
-		"drinking":5.3,
-		"heart_disease":5.9,
-		"kidney_disease":5.9,
-		"mood":0, //11.2
-		"obesity":0, //8.6
-		"physical_exercise":0, //5.9
-		"smoking":0 //8.0
-	}*/
+						"cholesteral":0, //7.5
+						"coginitive_activity":17.1,
+						"diabetes":7,
+						"diet":0, //9.1
+						"drinking":5.3,
+						"heart_disease":5.9,
+						"kidney_disease":5.9,
+						"mood":0, //11.2
+						"obesity":0, //8.6
+						"physical_exercise":0, //5.9
+						"smoking":0 //8.0
+					}*/
 					String output = "{ \"blood_pressure\":" + score.getMidlifeHypertension() +
-					 ",\"cholesteral\":" + score.getCholesterolOthers() +
-					 ", \"coginitive_activity\":" + score.getHighCognitiveActivity() +
-					 ",\"diabetes\":" + score.getDiabetes() +
-					 ",\"diet\":" + score.getHealthyDiet() +
-					 ",\"drinking\":" + score.getAlcohol() +
-					 ",\"heart_disease\":" + score.getCoronaryHeartDisease() +
-					 ",\"kidney_disease\":" + score.getChronicKidneyDisease() +
-					 ",\"mood\":" + score.getDepression() +
-					 ", \"obesity\":" + score.getMidlifeObesity() +
-					 ", \"physical_exercise\":" + score.getPhysicalInactivity() +
-					 ",\"smoking\":" + score.getSmoking() +
-					 "}";
-					
+							",\"cholesteral\":" + score.getCholesterolOthers() +
+							", \"coginitive_activity\":" + score.getHighCognitiveActivity() +
+							",\"diabetes\":" + score.getDiabetes() +
+							",\"diet\":" + score.getHealthyDiet() +
+							",\"drinking\":" + score.getAlcohol() +
+							",\"heart_disease\":" + score.getCoronaryHeartDisease() +
+							",\"kidney_disease\":" + score.getChronicKidneyDisease() +
+							",\"mood\":" + score.getDepression() +
+							", \"obesity\":" + score.getMidlifeObesity() +
+							", \"physical_exercise\":" + score.getPhysicalInactivity() +
+							",\"smoking\":" + score.getSmoking() +
+							"}";
+
 					DOM.getElementById("scoreInputRPC").setAttribute("value",output);
 
 					trigerJavascript();
