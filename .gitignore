@@ -26,9 +26,11 @@ www-test/
 
 #old GWT (1.5) created this dir
 .gwt-tmp/
-war/inminddprofiler
+war/inminddprofiler/
 war/Score/
 .classpath
 .settings/com.google.gwt.eclipse.core.prefs
 .settings/org.eclipse.jdt.core.prefs
 /bin
+
+war/Goals/
