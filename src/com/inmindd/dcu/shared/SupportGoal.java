@@ -48,5 +48,12 @@ public class SupportGoal implements Serializable {
 		this.image_url = image_url;
 	}
 
-
+	public String toJSON(){
+		return "{ \"id\":" + getId() +
+				",\"goalNb\":" + getGoalNb() +
+				", \"name\":  \"" + getName() +
+				"\" ,\"text\": \"" + getText() +
+				"\" ,\"image_url\": \"" + getImage_url() +
+				"\" }";
+	}
 }
