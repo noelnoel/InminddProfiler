@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FamilyHistoryInfo;
+import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class FamilyMedicalHistory {
@@ -61,25 +62,57 @@ public class FamilyMedicalHistory {
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
 	private Login login;
-	public void PatientPanel(){
-
-	}
+	public static FamilyMedicalHistory lastinstance;
+	
 
 	public FamilyMedicalHistory() {
-		// TODO Auto-generated constructor stub
+		lastinstance = this;
 	}
 
-public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
-	this.login = login;
-	HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-			"About Your family medical history</h1>");
+	public static void clearInputs() {
+		lastinstance.fatherCardioDontKnow.setValue(false);
+		lastinstance.fatherCardioNo.setValue(false);
+		lastinstance.fatherCardioYes.setValue(false);
+		lastinstance.fatherDementiaDontKnow.setValue(false);
+		lastinstance.fatherDementiaNo.setValue(false);
+		lastinstance.fatherDementiaYes.setValue(false);
+		lastinstance.fatherMellitusDontKnow.setValue(false);
+		lastinstance.fatherMellitusNo.setValue(false);
+		lastinstance.fatherMellitusYes.setValue(false);
+		
+		lastinstance.motherCardioDontKnow.setValue(false);
+		lastinstance.motherCardioNo.setValue(false);
+		lastinstance.motherCardioYes.setValue(false);
+		lastinstance.motherDementiaDontKnow.setValue(false);
+		lastinstance.motherDementiaNo.setValue(false);
+		lastinstance.motherDementiaYes.setValue(false);
+		lastinstance.motherMellitusDontKnow.setValue(false);
+		lastinstance.motherMellitusNo.setValue(false);
+		lastinstance.motherMellitusYes.setValue(false);
+		
+		lastinstance.siblingCardioDontKnow.setValue(false);
+		lastinstance.siblingCardioNo.setValue(false);
+		lastinstance.siblingCardioYes.setValue(false);
+		lastinstance.siblingDementiaDontKnow.setValue(false);
+		lastinstance.siblingDementiaNo.setValue(false);
+		lastinstance.siblingDementiaYes.setValue(false);
+		lastinstance.siblingMellitusDontKnow.setValue(false);
+		lastinstance.siblingMellitusNo.setValue(false);
+		lastinstance.siblingMellitusYes.setValue(false);
+		
+	}
 	
+	public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
+		this.login = login;
+		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
+				"About Your family medical history</h1>");
+
 		HTMLPanel header = new HTMLPanel("<h3>" +
-			"We would like to ask you some questions about your family medical history</h3>");
+				"We would like to ask you some questions about your family medical history</h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
-		
+
 		Button prev = new Button("Retrieve previous data ?");
-		
+
 
 		// Listen for mouse events on the previous button.
 		prev.addClickHandler(new ClickHandler() {
@@ -87,16 +120,16 @@ public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
 				getHistoryData();
 			}
 		});
-		   
-	    familyMedicalHistory = new FlowPanel();
-	  
-	    
-	    // Create questions about mother	
+
+		familyMedicalHistory = new FlowPanel();
+
+
+		// Create questions about mother	
 		familyMedicalHistory.add(mainHeader);
 		familyMedicalHistory.add(header);
 		familyMedicalHistory.add(prev);
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
-		
+
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		HorizontalPanel mother_dementia = setupMotherQuestionsOne();
 		familyMedicalHistory.add(mother_dementia);
@@ -107,22 +140,22 @@ public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
-		
+
 		// Questions about father
 		HorizontalPanel father_dementia =  setupFatherQuestionsOne();
 		familyMedicalHistory.add(father_dementia);
 
 		HorizontalPanel father_cardio =  setupFatherQuestionsTwo();
 		familyMedicalHistory.add(father_cardio);
-		
+
 		HorizontalPanel father_diabetes = setupFatherQuestionsThree();
 		familyMedicalHistory.add(father_diabetes);
-		
+
 		// Questions about siblings
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
-		
+
 		HorizontalPanel sibling_dementia =  setupSiblingQuestionsOne();
 		familyMedicalHistory.add(sibling_dementia);
 
@@ -134,25 +167,25 @@ public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		Button btn = new Button("submit");
 		familyMedicalHistory.add(btn);
-		    
-		    // Listen for mouse events on the submit button.
-		    btn.addClickHandler(new ClickHandler() {
-		    	public void onClick(ClickEvent event) {
-		    		if (!checkQuestionResponses()) {
-		    			return;
-		    			
-		    		}
-		    		else {
-		    			updateFamilyHistory();
-		    		}
-		    	}
-		    		
-		     
-		    });
-		
-		
+
+		// Listen for mouse events on the submit button.
+		btn.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (!checkQuestionResponses()) {
+					return;
+
+				}
+				else {
+					updateFamilyHistory();
+				}
+			}
+
+
+		});
+
+
 		return familyMedicalHistory;
-}
+	}
 
 
 	private boolean checkQuestionResponses() {
@@ -249,7 +282,7 @@ public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
             		else {
             			InlineLabel error = new InlineLabel("family History Data  updated. proceed to next panel");
             			showErrorPopupPanel(error, "green");  
-            			Window.Location.reload();  // This is where the page relooad is triggered
+            			
             		}
                  
               }
@@ -396,7 +429,7 @@ public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
 
 			 @Override	 
 			 public void onSuccess(FamilyHistoryInfo history) {
-				 if ((history == null || history.getUserId().equals(null))){	            		
+				 if ((history == null || history.getUserId()== null)){	            		
 					 InlineLabel error = new InlineLabel("History Data not retrieved. No data available for this patient ");
 					 showErrorPopupPanel(error, "red");            			
 				 }            		

@@ -15,7 +15,9 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -127,10 +129,65 @@ public class CognitiveTwo {
 	private DataField oftenBank;
 	
 	
-	
+	public static CognitiveTwo  lastinstance;
 	
 	public CognitiveTwo() {
-		
+		lastinstance = this;
+	}
+	
+	public static void clearInputs() {
+		lastinstance.artisticNever.setValue(false);
+		lastinstance.artisticOften.setValue(false);
+		lastinstance.bankNever.setValue(false);
+		lastinstance.bankOften.setValue(false);
+		lastinstance.booksNever.setValue(false);
+		lastinstance.booksOften.setValue(false);
+		lastinstance.careNever.setValue(false);
+		lastinstance.careOften.setValue(false);
+		lastinstance.childNo.setValue(false);
+		lastinstance.childYes.setValue(false);
+		lastinstance.cinemaNever.setValue(false);
+		lastinstance.cinemaOften.setValue(false);
+		lastinstance.drivingNever.setValue(false);
+		lastinstance.drivingOften.setValue(false);
+		lastinstance.exhibNever.setValue(false);
+		lastinstance.exhibOften.setValue(false);
+		lastinstance.gardeningNever.setValue(false);
+		lastinstance.gardeningOften.setValue(false);
+		lastinstance.holidayNever.setValue(false);
+		lastinstance.holidayOften.setValue(false);
+		lastinstance.householdNever.setValue(false);
+		lastinstance.householdOften.setValue(false);
+		lastinstance.leisureNever.setValue(false);
+		lastinstance.leisureOften.setValue(false);
+		lastinstance.numberChildren.setText("");
+		lastinstance.oftenArtistic.setText("");
+		lastinstance.oftenBank.setText("");
+		lastinstance.oftenBooks.setText("");
+		lastinstance.oftenCare.setText("");
+		lastinstance.oftenCinema.setText("");
+		lastinstance.oftenDrive.setText("");
+		lastinstance.oftenExhib.setText("");
+		lastinstance.oftenGardening.setText("");
+		lastinstance.oftenHoliday.setText("");
+		lastinstance.oftenHousehold.setText("");
+		lastinstance.oftenLeisure.setText("");
+		lastinstance.oftenPets.setText("");
+		lastinstance.oftenRead.setText("");
+		lastinstance.oftenSocial.setText("");
+		lastinstance.oftenTech.setText("");
+		lastinstance.oftenVolunteer.setText("");
+		lastinstance.petsNever.setValue(false);
+		lastinstance.petsOften.setValue(false);
+		lastinstance.readingNever.setValue(false);
+		lastinstance.readingOften.setValue(false);
+		lastinstance.socialNever.setValue(false);
+		lastinstance.socialOften.setValue(false);
+		lastinstance.techNever.setValue(false);
+		lastinstance.techOften.setValue(false);
+		lastinstance.volunteerNever.setValue(false);
+		lastinstance.volunteerOften.setValue(false);
+				
 	}
 	
 	public FlowPanel setupCognitiveTwoPanel(Login login) {
@@ -138,7 +195,15 @@ public class CognitiveTwo {
 		cognitiveTwoPanel = new FlowPanel();
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 				"About Your cognitive activities part 2</h1>");
-		
+		Button prev = new Button("Retrieve previous data ?");
+
+
+		// Listen for mouse events on the previous button.
+		prev.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				getCognitiveTwoData();
+			}
+		});
 		HTMLPanel header = new HTMLPanel("<h3>" +
 				"Social & Leisure Activities</h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
@@ -155,6 +220,7 @@ public class CognitiveTwo {
 		
 		
 		cognitiveTwoPanel.add(mainHeader);
+		cognitiveTwoPanel.add(prev);
 		cognitiveTwoPanel.add(header);
 		cognitiveTwoPanel.add(lbl);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -1317,6 +1383,150 @@ public class CognitiveTwo {
 		}
 		return input;
 	}
+		
+	
+	
+	private void getCognitiveTwoData() {				
+		User user = login.getUser();
+		if (user== null) {
+	
+			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			showErrorPopupPanel(error, "red");
+			return;
+	
+		}
+		callServiceSetup();
+	
+		AsyncCallback<CognitiveTwoInfo> callback =  new AsyncCallback<CognitiveTwoInfo>(){
+	
+			@Override	 
+			public void onSuccess(CognitiveTwoInfo cognitiveTwo) {
+				if ((cognitiveTwo == null || cognitiveTwo.getUserId() == null)){	            		
+					InlineLabel error = new InlineLabel("Cognitive Two Data not retrieved. No data available for this patient ");
+					showErrorPopupPanel(error, "red");            			
+				}            		
+				else {
+					InlineLabel error = new InlineLabel("Cognitive Two data retrieved- Edit as necessary");
+					showErrorPopupPanel(error, "green");  
+					populatePanel(cognitiveTwo);
+	
+				}
+	
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				InlineLabel error = new InlineLabel("Cognitive Two data Database error");
+				showErrorPopupPanel(error, "red");			
+	
+			}
+		};
+	
+		InminddServiceSvc.queryCognitiveTwo(user, callback);
+		return;
+	}
+	
+	private void populatePanel(CognitiveTwoInfo cognitiveTwo) {
+		
+		if(cognitiveTwo.getArtistic().equals("never"))
+			artisticNever.setValue(true);
+		if(cognitiveTwo.getArtistic().equals("often"))
+			artisticOften.setValue(true);
+		if(cognitiveTwo.getBank_account().equals("never"))
+			bankNever.setValue(true);
+		if(cognitiveTwo.getBank_account().equals("often"))
+			bankOften.setValue(true);		
+		if(cognitiveTwo.getBooks().equals("never"))
+			booksNever.setValue(true);
+		if(cognitiveTwo.getBooks().equals("often"))
+			booksOften.setValue(true);		
+		if(cognitiveTwo.getChildren().equals("never"))
+			careNever.setValue(true);
+		if(cognitiveTwo.getChildren().equals("often"))
+			careOften.setValue(true);		
+		if(cognitiveTwo.getCinema().equals("never"))
+			cinemaNever.setValue(true);
+		if(cognitiveTwo.getCinema().equals("often"))
+			cinemaOften.setValue(true);		
+		if(cognitiveTwo.getDriving().equals("never"))
+			drivingNever.setValue(true);
+		if(cognitiveTwo.getDriving().equals("often"))
+			drivingOften.setValue(true);		
+		if(cognitiveTwo.getExhibitions().equals("never"))
+			exhibNever.setValue(true);
+		if(cognitiveTwo.getExhibitions().equals("often"))
+			exhibOften.setValue(true);		
+		if(cognitiveTwo.getGardening().equals("never"))
+			gardeningNever.setValue(true);
+		if(cognitiveTwo.getGardening().equals("often"))
+			gardeningOften.setValue(true);		
+		if(cognitiveTwo.getHolidays().equals("never"))
+			holidayNever.setValue(true);
+		if(cognitiveTwo.getGardening().equals("often"))
+			holidayOften.setValue(true);
+		
+		if(cognitiveTwo.getHousehold().equals("never"))
+			householdNever.setValue(true);
+		if(cognitiveTwo.getHousehold().equals("often"))
+			householdOften.setValue(true);
+		
+		if(cognitiveTwo.getLeisure().equals("never"))
+			leisureNever.setValue(true);
+		if(cognitiveTwo.getLeisure().equals("often"))
+			leisureOften.setValue(true);
+		
+		if(cognitiveTwo.getPets().equals("never"))
+			petsNever.setValue(true);
+		if(cognitiveTwo.getPets().equals("often"))
+			petsOften.setValue(true);
+		
+		if(cognitiveTwo.getReading().equals("never"))
+			readingNever.setValue(true);
+		if(cognitiveTwo.getReading().equals("often"))
+			readingOften.setValue(true);
+		
+		if(cognitiveTwo.getSocial().equals("never"))
+			socialNever.setValue(true);
+		if(cognitiveTwo.getSocial().equals("often"))
+			socialOften.setValue(true);
+		
+		if(cognitiveTwo.getTechnology().equals("never"))
+			techNever.setValue(true);
+		if(cognitiveTwo.getTechnology().equals("often"))
+			techOften.setValue(true);
+		
+		if(cognitiveTwo.getVolunteering().equals("never"))
+			volunteerNever.setValue(true);
+		if(cognitiveTwo.getVolunteering().equals("often"))
+			volunteerOften.setValue(true);
+		
+		if(cognitiveTwo.getRaised_children().equals("yes"))
+			childYes.setValue(true);
+		if(cognitiveTwo.getRaised_children().equals("no"))
+			childNo.setValue(true);
+		
+		
+		numberChildren.setText(Integer.toString(cognitiveTwo.getNumber_children()));
+		oftenArtistic.setText(Integer.toString(cognitiveTwo.getArtistic_years()));
+		oftenBank.setText(Integer.toString(cognitiveTwo.getBank_account_years()));
+		oftenBooks.setText(Integer.toString(cognitiveTwo.getBooks_years()));
+		oftenCare.setText(Integer.toString(cognitiveTwo.getChildren_years()));
+		oftenCinema.setText(Integer.toString(cognitiveTwo.getCinema_years()));
+		oftenDrive.setText(Integer.toString(cognitiveTwo.getDriving_years()));
+		oftenExhib.setText(Integer.toString(cognitiveTwo.getExhibitions_years()));
+		oftenGardening.setText(Integer.toString(cognitiveTwo.getGardening_years()));
+		oftenHoliday.setText(Integer.toString(cognitiveTwo.getHolidays_years()));
+		oftenHousehold.setText(Integer.toString(cognitiveTwo.getHousehold_years()));
+		oftenLeisure.setText(Integer.toString(cognitiveTwo.getLeisure_years()));
+		oftenPets.setText(Integer.toString(cognitiveTwo.getPets_years()));
+		oftenRead.setText(Integer.toString(cognitiveTwo.getReading_years()));
+		oftenSocial.setText(Integer.toString(cognitiveTwo.getSocial_years()));
+		oftenTech.setText(Integer.toString(cognitiveTwo.getTechnology_years()));
+		oftenVolunteer.setText(Integer.toString(cognitiveTwo.getVolunteering_years()));
+		
+	
+		
+	}
+
 }
 
 

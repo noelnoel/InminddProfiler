@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
+import com.inmindd.dcu.client.PhysicalActivity;
+import com.inmindd.dcu.client.SmokeAlcohol;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -42,9 +44,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	private MedicalInfo medical;
 	private FamilyHistoryInfo history;
 	private PhysicalActivityInfo physical;
+	private SmokeAlcoholInfo smokeAlcohol;
+	private CognitiveTwoInfo cognitiveTwo;
+	private CognitiveOneInfo cognitiveOne;
+	private DietInfo diet;
 	private SupportGoalUser goal;
-	
-	
+
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
 		//open database connection
@@ -823,74 +828,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 	
-	public PhysicalActivityInfo queryPhysicalActivity(User user) {
-		//open database connection
-		physical = new PhysicalActivityInfo();
-		initDBConnection();
-
-		if (getPhysicalActivityInfo(user)) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			return  physical;
-		}
-		else {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			return physical;
-		}
-	}
 	
-	
-	private boolean getPhysicalActivityInfo(User user) {
-		String idUser = user.getUserId();
-		PreparedStatement pstmt = null;
-		ResultSet result = null;
-
-		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM physical_activities_info where patient_id = " + idUser);
-			result = pstmt.executeQuery("SELECT * FROM physical_activities_info where patient_id = " + idUser);
-			
-			while (result.last()) {
-				physical.setUserId(result.getString(1));
-				physical.setDiyHours(result.getInt(3));
-				physical.setSummerWalkingHours(result.getInt(4));
-				physical.setWinterWalkingHours(result.getInt(5));
-				physical.setSummerCyclingHours(result.getInt(6));
-				physical.setWinterCyclingHours(result.getInt(7));
-				physical.setSummerGardenHours(result.getInt(8));
-				physical.setWinterGardenHours(result.getInt(9));
-				physical.setSummerPhysicalHours(result.getInt(10));
-				physical.setWinterPhysicalHours(result.getInt(11));
-				physical.setSummerHouseworkHours(result.getInt(12));
-				physical.setWinterHouseworkHours(result.getInt(13));
-				physical.setFlightStairs(result.getInt(14));
-				
-				physical.setPhysicalWork(result.getString(15));
-				physical.setVigorous(result.getString(16));
-				conn.close();
-				return true;
-				
-			}
-			
-			conn.close();
-			return false;
-			}
-		catch (SQLException e) {
-			user = null;
-			
-			//return user;
-		return false;
-		}
-			
-	}
 	
 	@Override
 	public Boolean updateCognitiveOne(CognitiveOneInfo cognitiveOne) throws IllegalArgumentException {
@@ -980,6 +918,83 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return false;
 	}
 	
+	
+	
+	public CognitiveOneInfo queryCognitiveOne(User user) {
+		//open database connection
+		cognitiveOne  = new CognitiveOneInfo();
+		initDBConnection();
+
+		if (getCognitiveOneData(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  cognitiveOne;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return cognitiveOne;
+		}
+	}
+	
+	
+	private boolean getCognitiveOneData(User user) {
+
+		
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery("SELECT * FROM cognitive_one_info where patient_id = " + idUser);			
+			while (result.last()) {
+				cognitiveOne.setUserId(result.getString(1));
+				cognitiveOne.setFormalEducationYears(result.getInt(3));
+				cognitiveOne.setNonFormalEducationYears(result.getInt(4));
+				cognitiveOne.setManager(result.getInt(5));
+				cognitiveOne.setManagerSimulYears(result.getInt(6));
+				cognitiveOne.setProfessional(result.getInt(7));
+				cognitiveOne.setProfessionalSimulYears(result.getInt(8));
+				cognitiveOne.setTechnician(result.getInt(9));
+				cognitiveOne.setTechnicianSimulYears(result.getInt(10));
+				cognitiveOne.setClerical(result.getInt(11));
+				cognitiveOne.setClericalSimulYears(result.getInt(12));
+				cognitiveOne.setService(result.getInt(13));
+				cognitiveOne.setServiceSimulYears(result.getInt(14));
+				cognitiveOne.setAgriculture(result.getInt(15));
+				cognitiveOne.setAgricultureSimulYears(result.getInt(16));
+				cognitiveOne.setCraft(result.getInt(17));
+				cognitiveOne.setCraftSimulYears(result.getInt(18));
+				cognitiveOne.setPlant(result.getInt(19));
+				cognitiveOne.setPlantSimulYears(result.getInt(20));
+				cognitiveOne.setElementary(result.getInt(21));
+				cognitiveOne.setElementarySimulYears(result.getInt(22));
+				
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			
+		return false;
+		}
+			
+	}
 	
 	@Override
 	public Boolean updateCognitiveTwo(CognitiveTwoInfo cognitiveTwo) throws IllegalArgumentException {
@@ -1103,6 +1118,98 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return false; 
 	}
 
+	public CognitiveTwoInfo queryCognitiveTwo(User user) {
+		//open database connection
+		cognitiveTwo  = new CognitiveTwoInfo();
+		initDBConnection();
+
+		if (getCognitiveTwoData(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  cognitiveTwo;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return cognitiveTwo;
+		}
+	}
+	
+	
+	private boolean getCognitiveTwoData(User user) {
+
+		
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery("SELECT * FROM cognitive_two_info where patient_id = " + idUser);			
+			while (result.last()) {
+				cognitiveTwo.setUserId(result.getString(1));
+				cognitiveTwo.setReading_years(result.getInt(2));				
+				cognitiveTwo.setHolidays_years(result.getInt(3));
+				cognitiveTwo.setDriving_years(result.getInt(4));
+				cognitiveTwo.setLeisure_years(result.getInt(5));
+				cognitiveTwo.setTechnology_years(result.getInt(6));
+				cognitiveTwo.setSocial_years(result.getInt(7));
+				cognitiveTwo.setCinema_years(result.getInt(8));
+				cognitiveTwo.setGardening_years(result.getInt(9));
+				cognitiveTwo.setChildren_years(result.getInt(10));
+				cognitiveTwo.setVolunteering_years(result.getInt(11));
+				cognitiveTwo.setArtistic_years(result.getInt(12));
+				cognitiveTwo.setExhibitions_years(result.getInt(13));
+				cognitiveTwo.setHolidays_years(result.getInt(14));
+				cognitiveTwo.setBooks_years(result.getInt(15));
+				cognitiveTwo.setNumber_children(result.getInt(16));
+				cognitiveTwo.setPets_years(result.getInt(17));
+				cognitiveTwo.setBank_account_years(result.getInt(18));
+				cognitiveTwo.setReading(result.getString(19));
+				cognitiveTwo.setHousehold(result.getString(20));
+				cognitiveTwo.setDriving(result.getString(21));
+				cognitiveTwo.setLeisure(result.getString(22));
+				cognitiveTwo.setTechnology(result.getString(23));
+				cognitiveTwo.setSocial(result.getString(24));
+				cognitiveTwo.setCinema(result.getString(25));
+				cognitiveTwo.setGardening(result.getString(26));
+				cognitiveTwo.setChildren(result.getString(27));
+				cognitiveTwo.setVolunteering(result.getString(28));
+				cognitiveTwo.setArtistic(result.getString(29));
+				cognitiveTwo.setExhibitions(result.getString(30));
+				cognitiveTwo.setHolidays(result.getString(31));
+				cognitiveTwo.setBooks(result.getString(32));
+				cognitiveTwo.setRaised_children(result.getString(33));
+				cognitiveTwo.setPets(result.getString(34));
+				cognitiveTwo.setBank_account(result.getString(35));
+				
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			
+		return false;
+		}
+			
+	}
+	
+
+	
 	@Override
 	public Boolean updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco) throws IllegalArgumentException {
 		//open database connection
@@ -1165,13 +1272,74 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 			updateSmokeAl.executeUpdate();
 			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {			
 			e.printStackTrace();
 			return false;
 		}		
 	}
 	
+	
+	public SmokeAlcoholInfo querySmokeAlcohol(User user) {
+		//open database connection
+		smokeAlcohol = new SmokeAlcoholInfo();
+		initDBConnection();
+
+		if (getSmokeAlcoholData(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  smokeAlcohol;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return smokeAlcohol;
+		}
+	}
+	
+	
+	private boolean getSmokeAlcoholData(User user) {
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM smoking_alcohol_info where patient_id = " + idUser);
+			result = pstmt.executeQuery("SELECT * FROM smoking_alcohol_info where patient_id = " + idUser);
+			
+			while (result.last()) {
+				smokeAlcohol.setUserId(result.getString(1));
+				smokeAlcohol.setSmoker_type(result.getString(3));
+				smokeAlcohol.setCurrent_year_start(result.getInt(4));
+				smokeAlcohol.setCurrent_num_smoke(result.getInt(5));
+				smokeAlcohol.setFormer_year_start(result.getInt(6));
+				smokeAlcohol.setFormer_year_stop(result.getInt(7));
+				smokeAlcohol.setFormer_num_smoke(result.getInt(8));
+				smokeAlcohol.setDrinks_freq(result.getString(9));
+				smokeAlcohol.setNum_drinks(result.getString(10));
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			//return user;
+		return false;
+		}
+			
+	}
 	@Override
 	public Boolean updateDiet(DietInfo diet) throws IllegalArgumentException {
 		//open database connection
@@ -1254,7 +1422,75 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}				
 	}
 
+	public DietInfo queryDiet(User user) {
+		
+		diet  = new DietInfo();
+		//open database connection
+		initDBConnection();
+
+		if (getDietData(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  diet;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return diet;
+		}
+	}
 	
+	
+	private boolean getDietData(User user) {
+
+		
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery("SELECT * FROM diet_info where patient_id = " + idUser);			
+			while (result.last()) {
+				diet.setUserId(result.getString(1));
+				diet.setCulinaryFat(result.getInt(3));
+				diet.setRapeSeedOil(result.getInt(4));
+				diet.setVegetableServings(result.getInt(5));
+				diet.setFruit(result.getInt(6));
+				diet.setRedMeat(result.getInt(7));
+				diet.setButter(result.getInt(8));
+				diet.setBeverages(result.getInt(9));
+				diet.setWine(result.getInt(10));
+				diet.setLegumes(result.getInt(11));
+				diet.setFish(result.getInt(12));
+				diet.setSweets(result.getInt(13));
+				diet.setNuts(result.getInt(14));
+				diet.setChicken(result.getInt(15));
+				diet.setSauce(result.getInt(16));
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			
+		return false;
+		}
+			
+	}
 	public RiskFactorScore getLibraScore(User user) {
 		//open database connection
 		RiskFactorScore score = new RiskFactorScore();
@@ -1335,11 +1571,80 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	}
 
+	public PhysicalActivityInfo queryPhysicalActivity(User user) {
+		//open database connection
+		physical = new PhysicalActivityInfo();
+		initDBConnection();
+
+		if (getPhysicalActivityInfo(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  physical;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return physical;
+		}
+	}
+	
+	
+	private boolean getPhysicalActivityInfo(User user) {
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM physical_activities_info where patient_id = " + idUser);
+			result = pstmt.executeQuery("SELECT * FROM physical_activities_info where patient_id = " + idUser);
+			
+			while (result.last()) {
+				physical.setUserId(result.getString(1));
+				physical.setDiyHours(result.getInt(3));
+				physical.setSummerWalkingHours(result.getInt(4));
+				physical.setWinterWalkingHours(result.getInt(5));
+				physical.setSummerCyclingHours(result.getInt(6));
+				physical.setWinterCyclingHours(result.getInt(7));
+				physical.setSummerGardenHours(result.getInt(8));
+				physical.setWinterGardenHours(result.getInt(9));
+				physical.setSummerPhysicalHours(result.getInt(10));
+				physical.setWinterPhysicalHours(result.getInt(11));
+				physical.setSummerHouseworkHours(result.getInt(12));
+				physical.setWinterHouseworkHours(result.getInt(13));
+				physical.setFlightStairs(result.getInt(14));
+				
+				physical.setPhysicalWork(result.getString(15));
+				physical.setVigorous(result.getString(16));
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			//return user;
+		return false;
+		}
+			
+	}
+
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
 		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
 	}
-	
+
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
 		//open database connection
@@ -1363,7 +1668,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 
-	
+
 	private boolean createSupportGoalUser(SupportGoalUser goal) {
 		String patient_id = goal.getId_user();
 		long time = System.currentTimeMillis();
@@ -1386,7 +1691,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return true;	
 
 	}
-	
+
 	public SupportGoalUser querySupportGoalUser(User user) {
 		//open database connection
 		goal = new SupportGoalUser();
@@ -1409,8 +1714,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			return goal;
 		}
 	}
-	
-	
+
 	private boolean getSupportGoalUser(User user) {
 		String idUser = user.getUserId();
 		PreparedStatement pstmt = null;
@@ -1463,8 +1767,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			return goals;
 		}
 	}
-	
-	
+
+
 	private boolean getSupportGoals(int riskFactor, ArrayList<SupportGoal> goalsList) {
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
@@ -1487,5 +1791,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 
-	
+
+
+
 }

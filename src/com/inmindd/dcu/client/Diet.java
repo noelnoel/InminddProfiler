@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -22,12 +23,12 @@ public class Diet {
 	private DietInfo diet;
 	private RadioButton culFatYes;
 	private RadioButton culFatNo;
-	private RadioButton oilOne;
+	private RadioButton oilZero;
 	private RadioButton oilTwo;
 	private RadioButton oilFour;
 	private RadioButton vegZero;
-	private RadioButton vegOne;
-	private RadioButton vegTwo;
+	private RadioButton vegThree;
+	private RadioButton vegFive;
 	private RadioButton fruitZero;
 	private RadioButton fruitOne;
 	private RadioButton fruitTwo;
@@ -50,28 +51,70 @@ public class Diet {
 	private RadioButton nutsThree;
 	private RadioButton chickenYes;
 	private RadioButton chickenNo;
-	private RadioButton pastaOne;
+	private RadioButton pastaZero;
 	private RadioButton pastaTwo;
-	
-	private static Diet lastinstance;
-	public static void clearAllInputs() {
-		lastinstance.nutsZero.setValue(false);
-		
-	}
 	
 	private ScrollPanel scroll = new ScrollPanel();
 	private User user;
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
+	public static Diet lastinstance;
 	public Diet() {	
 		lastinstance = this;
 	}
 	
-public FlowPanel setupDietPanel(Login login) {
+	public static void clearInputs() {
+		
+		lastinstance.beverageOne.setValue(false);
+		lastinstance.beverageZero.setValue(false);
+		lastinstance.butterOne.setValue(false);
+		lastinstance.butterZero.setValue(false);
+		lastinstance.cakeThree.setValue(false);
+		lastinstance.cakeZero.setValue(false);
+		lastinstance.chickenNo.setValue(false);
+		lastinstance.chickenYes.setValue(false);
+		lastinstance.culFatNo.setValue(false);
+		lastinstance.culFatYes.setValue(false);
+		lastinstance.fishThree.setValue(false);
+		lastinstance.fishZero.setValue(false);
+		lastinstance.fruitOne.setValue(false);
+		lastinstance.fruitTwo.setValue(false);
+		lastinstance.fruitThree.setValue(false);
+		lastinstance.fruitZero.setValue(false);
+		lastinstance.legumesThree.setValue(false);
+		lastinstance.legumesZero.setValue(false);
+		lastinstance.meatOne.setValue(false);
+		lastinstance.meatZero.setValue(false);
+		lastinstance.nutsThree.setValue(false);
+		lastinstance.nutsZero.setValue(false);
+		lastinstance.oilFour.setValue(false);
+		lastinstance.oilZero.setValue(false);
+		lastinstance.oilTwo.setValue(false);
+		lastinstance.pastaZero.setValue(false);
+		lastinstance.pastaTwo.setValue(false);
+		lastinstance.vegThree.setValue(false);
+		lastinstance.vegFive.setValue(false);;
+		lastinstance.vegZero.setValue(false);
+		lastinstance.wineSeven.setValue(false);
+		lastinstance.wineZero.setValue(false);
+		
+		
+	}
+	
+	
+	public FlowPanel setupDietPanel(Login login) {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 				"Information about your Diet</h1>");
-		
+		Button prev = new Button("Retrieve previous data ?");
+
+
+		// Listen for mouse events on the previous button.
+		prev.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				getDietData();
+			}
+		});
 	
 		HTMLPanel lbl1 = new HTMLPanel("<h3>" +
 				"Please answer the following questions.</h3>");
@@ -81,7 +124,7 @@ public FlowPanel setupDietPanel(Login login) {
 	
 		dietPanel = new FlowPanel();
 		dietPanel.add(mainHeader);
-		
+		dietPanel.add(prev);
 		dietPanel.setWidth("100%");
 		
 		dietPanel.add(lbl1);
@@ -200,8 +243,8 @@ public FlowPanel setupDietPanel(Login login) {
 		if (culFatNo.getValue()) {
 			diet.setCulinaryFat(0);
 		}
-		if (oilOne.getValue()) {
-			diet.setRapeSeedOil(1);
+		if (oilZero.getValue()) {
+			diet.setRapeSeedOil(0);
 		}
 		if (oilTwo.getValue()) {
 			diet.setRapeSeedOil(2);
@@ -213,10 +256,10 @@ public FlowPanel setupDietPanel(Login login) {
 		if (vegZero.getValue()) {
 			diet.setVegetableServings(0);
 		}
-		if (vegOne.getValue()) {
+		if (vegThree.getValue()) {
 			diet.setVegetableServings(3);
 		}
-		if (vegTwo.getValue()) {
+		if (vegFive.getValue()) {
 			diet.setVegetableServings(5);
 		}
 		
@@ -290,8 +333,8 @@ public FlowPanel setupDietPanel(Login login) {
 			diet.setChicken(0);
 		}
 		
-		if (pastaOne.getValue() ) {
-			diet.setSauce(1);
+		if (pastaZero.getValue() ) {
+			diet.setSauce(0);
 		}
 		if (pastaTwo.getValue() ) {
 			diet.setSauce(2);
@@ -325,9 +368,9 @@ public FlowPanel setupDietPanel(Login login) {
 	private void addOilConsume() {		
 		dietPanel.add(addLabel("How much olive oil or rape seed oil do you consume in a given day (including oil used for frying, salads, out-of-house meals, etc.) ? "));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		oilOne = new RadioButton("consume","0 - 1 tablespoons");
-		oilOne.getElement().getStyle().setProperty("marginLeft","220px");
-		pnl1.add(oilOne);
+		oilZero = new RadioButton("consume","0 - 1 tablespoons");
+		oilZero.getElement().getStyle().setProperty("marginLeft","220px");
+		pnl1.add(oilZero);
 		oilTwo = new RadioButton("consume","2 - 3 tablespoons");
 		oilTwo.getElement().getStyle().setProperty("marginLeft","20px");
 		pnl1.add(oilTwo);
@@ -345,13 +388,13 @@ public FlowPanel setupDietPanel(Login login) {
 		vegZero = new RadioButton("veg","0-2");
 		vegZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(vegZero);
-		vegOne = new RadioButton("veg","3-4");
-		vegOne.getElement().getStyle().setProperty("marginLeft","112px");
-		pnl1.add(vegOne);
+		vegThree = new RadioButton("veg","3-4");
+		vegThree.getElement().getStyle().setProperty("marginLeft","112px");
+		pnl1.add(vegThree);
 		
-		vegTwo = new RadioButton("veg","5 or more");
-		vegTwo.getElement().getStyle().setProperty("marginLeft","113px");
-		pnl1.add(vegTwo);
+		vegFive = new RadioButton("veg","5 or more");
+		vegFive.getElement().getStyle().setProperty("marginLeft","113px");
+		pnl1.add(vegFive);
 		dietPanel.add(pnl1);
 		
 	}
@@ -497,9 +540,9 @@ public FlowPanel setupDietPanel(Login login) {
 		dietPanel.add(addLabel("How many times per week do you consume vegetables, pasta, rice or"
 				+ " other dishes seasoned with a tomato sauce made with onion, leek or garlic and olive oil?"));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		pastaOne = new RadioButton("pasta","0 - 1");
-		pastaOne.getElement().getStyle().setProperty("marginLeft","220px");
-		pnl1.add(pastaOne);
+		pastaZero = new RadioButton("pasta","0 - 1");
+		pastaZero.getElement().getStyle().setProperty("marginLeft","220px");
+		pnl1.add(pastaZero);
 		pastaTwo = new RadioButton("pasta","2 or more");
 		pastaTwo.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(pastaTwo);		
@@ -517,10 +560,170 @@ public FlowPanel setupDietPanel(Login login) {
 
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
-		//popup.setGlassEnabled(true);
+		
 		popup.setPopupPosition(190,700);
 		popup.setWidth("550px");
 		popup.show();
 
 	}
+	
+	
+	private void getDietData() {				
+		User user = login.getUser();
+		if (user== null) {
+	
+			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			showErrorPopupPanel(error, "red");
+			return;
+	
+		}
+		callServiceSetup();
+	
+		AsyncCallback<DietInfo> callback =  new AsyncCallback<DietInfo>(){
+	
+			@Override	 
+			public void onSuccess(DietInfo diet) {
+				if ((diet == null || diet.getUserId() == null)){	            		
+					InlineLabel error = new InlineLabel("Diet Data not retrieved. No data available for this patient ");
+					showErrorPopupPanel(error, "red");            			
+				}            		
+				else {
+					InlineLabel error = new InlineLabel("Diet data retrieved- Edit as necessary");
+					showErrorPopupPanel(error, "green");  
+					populatePanel(diet);
+	
+				}
+	
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				InlineLabel error = new InlineLabel("Diet Two data Database error");
+				showErrorPopupPanel(error, "red");			
+	
+			}
+		};
+	
+		InminddServiceSvc.queryDiet(user, callback);
+		return;
+	}
+	
+	private void populatePanel(DietInfo diet) {
+		if (diet.getCulinaryFat() == 1) {
+			culFatYes.setValue(true);		
+		}
+		
+		if (diet.getCulinaryFat() == 0) {
+			culFatNo.setValue(true);
+		}
+		
+		if (diet.getRapeSeedOil() == 0) {
+			oilZero.setValue(true);
+		}
+		if (diet.getRapeSeedOil() == 2) {
+			oilTwo.setValue(true);
+		}
+		if (diet.getRapeSeedOil() == 4) {
+			oilFour.setValue(true);
+		}
+		
+		if (diet.getVegetableServings() == 0) {
+			vegZero.setValue(true);
+		}
+		if (diet.getVegetableServings() == 3) {
+			vegThree.setValue(true);
+		}
+		if (diet.getVegetableServings() == 5) {
+			vegFive.setValue(true);
+		}
+		if (diet.getFruit() == 0) {
+			fruitZero.setValue(true);
+		}
+		if (diet.getFruit() == 1) {
+			fruitOne.setValue(true);
+		}
+		if (diet.getFruit() == 2) {
+			fruitTwo.setValue(true);
+		}
+		if (diet.getFruit() == 3) {
+			fruitThree.setValue(true);
+		}
+		
+		if (diet.getRedMeat() == 0) {
+			meatZero.setValue(true);
+		}
+		if (diet.getRedMeat() == 1) {
+			meatOne.setValue(true);
+		}		
+		
+		if (diet.getButter() == 0) {
+			butterZero.setValue(true);
+		}
+		if (diet.getButter() == 1) {
+			butterOne.setValue(true);
+		}
+		if (diet.getBeverages() == 0) {
+			beverageZero.setValue(true);
+		}
+		if (diet.getBeverages() == 1) {
+			beverageOne.setValue(true);
+		}
+		
+		if (diet.getWine() == 0) {
+			wineZero.setValue(true);
+		}
+		if (diet.getWine() == 7) {
+			wineSeven.setValue(true);
+		}
+		
+		if (diet.getLegumes() == 0) {
+			legumesZero.setValue(true);
+		}
+
+		if (diet.getLegumes() == 3) {
+			legumesThree.setValue(true);
+		}
+		if (diet.getFish() == 0) {
+			fishZero.setValue(true);
+		}
+
+		if (diet.getFish() == 3) {
+			fishThree.setValue(true);
+		}
+		
+		if (diet.getSweets() == 0) {
+			cakeZero.setValue(true);
+		}
+
+		if (diet.getFish() == 3) {
+			cakeThree.setValue(true);
+		}
+		
+		if (diet.getNuts() == 0) {
+			nutsZero.setValue(true);
+		}
+
+		if (diet.getNuts() == 3) {
+			nutsThree.setValue(true);
+		}
+		
+		if (diet.getChicken() == 0) {
+			chickenNo.setValue(true);
+		}
+
+		if (diet.getChicken() == 1) {
+			chickenYes.setValue(true);
+		}
+		
+		if (diet.getSauce() == 0) {
+			pastaZero.setValue(true);
+		}
+
+		if (diet.getSauce() == 2) {
+			pastaTwo.setValue(true);
+		}
+	}
+
 }
+
+	
+

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.appengine.api.utils.SystemProperty;
+import com.inmindd.dcu.client.PatientInfo;
 import com.inmindd.dcu.shared.FeelingsInfo;
 import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
@@ -229,7 +230,7 @@ public class CalculateScore {
 	private void smoking(RiskFactorScore rf){
 		String smoker_type = smoke.getSmoker_type();
 		if (smoker_type != null && smoker_type.equals("current")){
-			rf.setSmoking(1.5);
+			rf.setSmoking(1.5);  // raise score by factor 1.5 if current smoker
 		}
 		else {
 			rf.setSmoking(0);
@@ -238,7 +239,7 @@ public class CalculateScore {
 	private void hypertension(RiskFactorScore rf){
 		String hypertension = medical.getHyper();
 		if (hypertension != null && hypertension.equals("yes")){
-			rf.setMidlifeHypertension(1.6);
+			rf.setMidlifeHypertension(1.6);  // raise score if suffering from hypertension
 		}
 		else {
 			rf.setMidlifeHypertension(0);
@@ -248,7 +249,7 @@ public class CalculateScore {
 	private void diabetes(RiskFactorScore rf){
 		String diabetes = medical.getMellitus();
 		if (diabetes != null && diabetes.equals("yes")){
-			rf.setDiabetes(1.3);
+			rf.setDiabetes(1.3); // raise score if suffering from diabetes
 		}
 		else {
 			rf.setDiabetes(0);

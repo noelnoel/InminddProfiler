@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
@@ -43,9 +44,15 @@ public interface InminddService extends RemoteService {
 	public PhysicalActivityInfo queryPhysicalActivity(User user) 			throws IllegalArgumentException;
 	
 	public Boolean updateCognitiveOne(CognitiveOneInfo cognitiveOne)	throws IllegalArgumentException;
+	public CognitiveOneInfo queryCognitiveOne(User user) 			throws IllegalArgumentException;
+	
 	public Boolean updateCognitiveTwo(CognitiveTwoInfo cognitiveTwo)	throws IllegalArgumentException;
+	public CognitiveTwoInfo queryCognitiveTwo(User user) 			throws IllegalArgumentException;
 	public Boolean updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco)	throws IllegalArgumentException;
+	public SmokeAlcoholInfo querySmokeAlcohol(User user) 			throws IllegalArgumentException;
+	
 	public Boolean updateDiet(DietInfo diet)	throws IllegalArgumentException;
+	public DietInfo queryDiet(User user) 			throws IllegalArgumentException;
 	public com.inmindd.dcu.shared.RiskFactorScore getLibraScore(User user) 			throws IllegalArgumentException;
 	
 	public User getUserConnected() throws IllegalArgumentException;

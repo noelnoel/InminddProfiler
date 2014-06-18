@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.client.MyHandler;
 import com.inmindd.dcu.client.MyChangeHandler;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
+import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.User;
 
 public class CognitiveOne {
@@ -55,7 +56,36 @@ public class CognitiveOne {
 	private TextBox elementaryYears;
 	private TextBox elementarySimulYears;
 	
+	public static CognitiveOne lastinstance;
 	public CognitiveOne() {
+		lastinstance = this;
+	}
+	
+	
+	public static void clearInputs() {
+		lastinstance.agriculturalSimulYears.setText("");
+		lastinstance.agriculturalYears.setText("");
+		lastinstance.clericalSimulYears.setText("");
+		lastinstance.clericalYears.setText("");
+		lastinstance.craftSimulYears.setText("");
+		lastinstance.craftYears.setText("");
+		lastinstance.elementarySimulYears.setText("");
+		lastinstance.elementaryYears.setText("");
+		lastinstance.managerSimulYears.setText("");
+		lastinstance.managerYears.setText("");
+		lastinstance.plantSimulYears.setText("");
+		lastinstance.plantYears.setText("");
+		lastinstance.professionalSimulYears.setText("");
+		lastinstance.professionalYears.setText("");
+		lastinstance.serviceSimulYears.setText("");
+		lastinstance.serviceYears.setText("");
+		lastinstance.technicianSimulYears.setText("");
+		lastinstance.technicianYears.setText("");		
+		lastinstance.yearsFormalEducation.setText("");
+		lastinstance.yearsNonformalEducation.setText("");
+	
+		
+		
 		
 	}
 	public FlowPanel setupCognitiveOnePanel(Login login) {
@@ -67,12 +97,20 @@ public class CognitiveOne {
 		HTMLPanel educ = new HTMLPanel("<h3>" +
 				"Education</h3>");
 		educ.getElement().getStyle().setProperty("textDecoration", "underline");
-		
-	
+
+		Button prev = new Button("Retrieve previous data ?");
+
+
+		// Listen for mouse events on the previous button.
+		prev.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				getCognitiveOneData();
+			}
+		});
 		
 		cognitiveOnePanel = new FlowPanel();
 		cognitiveOnePanel.add(mainHeader);
-		
+		cognitiveOnePanel.add(prev);
 		cognitiveOnePanel.setWidth("100%");
 		
 		cognitiveOnePanel.add(educ);
@@ -93,7 +131,7 @@ public class CognitiveOne {
 		
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
-		Button neverBtn = new Button("Never employed");
+		Button neverBtn = new Button("Never employed - submit data");
 		cognitiveOnePanel.add(neverBtn);	
 
 		// Listen for mouse events on the never employed button.
@@ -663,37 +701,100 @@ public class CognitiveOne {
 			
 				
 }
-private int getValueAsInt(TextBox box) {		
-		// get the text entered
-		int input = 0;
-		try {
-			input = Integer.parseInt(box.getText());	
+	private int getValueAsInt(TextBox box) {		
+			// get the text entered
+			int input = 0;
+			try {
+				input = Integer.parseInt(box.getText());	
+			}
+	
+			catch (Exception e)	{					
+							
+				return 0;
+	
+			}
+			return input;
 		}
 
-		catch (Exception e)	{					
-						
-			return 0;
 
+	private void getCognitiveOneData() {				
+		User user = login.getUser();
+		if (user== null) {
+	
+			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			showErrorPopupPanel(error, "red");
+			return;
+	
 		}
-		return input;
+		callServiceSetup();
+	
+		AsyncCallback<CognitiveOneInfo> callback =  new AsyncCallback<CognitiveOneInfo>(){
+	
+			@Override	 
+			public void onSuccess(CognitiveOneInfo cognitiveOne) {
+				if ((cognitiveOne == null || cognitiveOne.getUserId() == null)){	            		
+					InlineLabel error = new InlineLabel("Cognitive One Data not retrieved. No data available for this patient ");
+					showErrorPopupPanel(error, "red");            			
+				}            		
+				else {
+					InlineLabel error = new InlineLabel("Cognitive One data retrieved- Edit as necessary");
+					showErrorPopupPanel(error, "green");  
+					populatePanel(cognitiveOne);
+	
+				}
+	
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				InlineLabel error = new InlineLabel("Cognitive One data Database error");
+				showErrorPopupPanel(error, "red");			
+	
+			}
+		};
+	
+		InminddServiceSvc.queryCognitiveOne(user, callback);
+		return;
 	}
+	
+	private void populatePanel(CognitiveOneInfo cognitiveOne) {
+		
+		managerYears.setText(Integer.toString(cognitiveOne.getManager()));
+		managerSimulYears.setText(Integer.toString(cognitiveOne.getManagerSimulYears()));
+		agriculturalSimulYears.setText(Integer.toString(cognitiveOne.getAgricultureSimulYears()));
+		agriculturalYears.setText(Integer.toString(cognitiveOne.getAgriculture()));
+		
+		clericalSimulYears.setText(Integer.toString(cognitiveOne.getClericalSimulYears()));
+		clericalYears.setText(Integer.toString(cognitiveOne.getClerical()));
+		craftSimulYears.setText(Integer.toString(cognitiveOne.getClericalSimulYears()));
+		craftYears.setText(Integer.toString(cognitiveOne.getCraft()));
+		elementarySimulYears.setText(Integer.toString(cognitiveOne.getElementarySimulYears()));
+		elementaryYears.setText(Integer.toString(cognitiveOne.getElementary()));	
+		plantSimulYears.setText(Integer.toString(cognitiveOne.getPlantSimulYears()));
+		plantYears.setText(Integer.toString(cognitiveOne.getPlant()));
+		professionalSimulYears.setText(Integer.toString(cognitiveOne.getProfessionalSimulYears()));
+		professionalYears.setText(Integer.toString(cognitiveOne.getProfessional()));
+		serviceSimulYears.setText(Integer.toString(cognitiveOne.getServiceSimulYears()));
+		serviceYears.setText(Integer.toString(cognitiveOne.getService()));
+		technicianSimulYears.setText(Integer.toString(cognitiveOne.getTechnicianSimulYears()));
+		technicianYears.setText(Integer.toString(cognitiveOne.getTechnician()));		
+		yearsFormalEducation.setText(Integer.toString(cognitiveOne.getFormalEducationYears()));
+		yearsNonformalEducation.setText(Integer.toString(cognitiveOne.getNonFormalEducationYears()));
+	
+		
+	}
+
 }
-
-
-
 class MyHandler implements ClickHandler
 	{ 
 	    TextBox simulYears;
 	    int value;
-
 	    void setTextBox(TextBox box)
 	    {
 	        simulYears =box;
 	        simulYears.setMaxLength(3);
 	        simulYears.setWidth("2em");
 	      
-	    }
-	    
+	    }	    
 	    PopupPanel pop;
 	    void setPop(PopupPanel pop)   {
 	        this.pop = pop;
@@ -703,8 +804,6 @@ class MyHandler implements ClickHandler
 	    @Override
 		public void onClick(ClickEvent event) 
 	    {
-	    	
-	    
 	    	PopupPanel popup = new PopupPanel(true, true);			
 			InlineLabel quest2 = new InlineLabel("Please indicate the number of years that you worked at this job");
 			
@@ -725,9 +824,7 @@ class MyHandler implements ClickHandler
 			MyChangeHandler handler = new MyChangeHandler();
 			handler.setPop(popup);
 			handler.setOuterPop(pop);
-			simulYears.addChangeHandler(handler); 
-				
-	       
+			simulYears.addChangeHandler(handler);   
 	   
 	    }	
 
@@ -754,6 +851,7 @@ class MyChangeHandler implements ChangeHandler
     pop.clear();  
     outerPop.clear();
     }
+    
 }
 	
 

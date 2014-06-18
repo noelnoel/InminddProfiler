@@ -1,6 +1,11 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.ButtonGroup;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,6 +25,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FeelingsInfo;
+import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class Feelings {
@@ -42,9 +48,27 @@ public class Feelings {
 		private static User user;
 		private InminddServiceAsync InminddServiceSvc;
 		
-		public Feelings () {		
+		
+		
+		public static Feelings lastinstance;
+		// save reference for clearing fields if user logs out.
+		
+		public Feelings() {
 			
+			lastinstance = this;
 		}
+		public static void clearInputs() {
+			lastinstance.treatNo.setValue(false);
+			lastinstance.treatYes.setValue(false);
+			lastinstance.depressedYes.setValue(false);
+			lastinstance.depressedNo.setValue(false);
+			Iterator<RadioButton> btn = lastinstance.radioButtonsArray.iterator();
+			while (btn.hasNext()) {
+				btn.next().setValue(false);
+			}
+		}
+		
+		
 	
 
 

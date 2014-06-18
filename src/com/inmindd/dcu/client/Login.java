@@ -3,7 +3,6 @@ package com.inmindd.dcu.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -31,7 +30,7 @@ public class Login  {
 	private  User user = new User();;
 	private  Patient patient = new Patient();
 	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
-
+  
 	
 	
 	/**
@@ -99,11 +98,6 @@ public class Login  {
     }
 	public VerticalPanel setupLoginPanel() {
 		
-    	//countryCode.addItem("Please select one");
-    	//countryCode.addItem("IR");
-    	//countryCode.addItem("SC");
-    	//countryCode.addItem("NL");
-    	//countryCode.addItem("FR");
     	
     	practiceBox.setMaxLength(2);
 		practiceBox.setWidth("2em");
@@ -190,85 +184,106 @@ public class Login  {
         
     	
 		 // Listen for mouse events on the registration  button.
-	    registerbutton.addClickHandler(new ClickHandler() {
-	      @Override
-		public void onClick(ClickEvent event) {
-	    	  if (validateUser()) {
-	    	  callServiceSetup();
-	    	  createUser();
-	    	  AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
-	    	
-	    	  InminddServiceSvc.registerUser(user, callback);
-	    	  }
-	      }
-	    });
+        registerbutton.addClickHandler(new ClickHandler() {
+        	@Override
+        	public void onClick(ClickEvent event) {
+        		if (validateUser()) {
+        			callServiceSetup();
+        			createUser();
+        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
+
+        			InminddServiceSvc.registerUser(user, callback);
+        		}
+        	}
+        });
 	    
 	    // Listen for mouse events on the login button.
 	    loginbutton.addClickHandler(new ClickHandler() {
-	      @Override
-		public void onClick(ClickEvent event) {
-	    	   
-	      
-	    	  callServiceSetup();
-	    	
-	    	//  convertUserId(userId.getText()); // get user id
-	    		//  generate digest of the password
-	  		  hashedPassword = getSHA1for((password.getText()));
-	    	 // AsyncCallback<User> callback = new AuthenticationHandler<User>();
-	  		
-	    	  AsyncCallback<User> callback = new AsyncCallback<User>() {
-	    		  
-	    		  AsyncCallback<User> callbackUser = new AsyncCallback<User>() {
-	  				@Override
-	  				public void onSuccess(User user) {
-	  					if (user == null) {
-	  						System.out.println("[login::getScore] \\ user null");
-	  						Window.alert("please connect before check your score");
-	  					} else {
-	  						Window.alert("ok "+ user.toString());
-	  					}
-	  				}
+	    	@Override
+	    	public void onClick(ClickEvent event) {
 
-	  				@Override
-	  				public void onFailure(Throwable caught) {
-	  					System.out.println("[RB_Score::getScore] \\ exception null");
-	  					// TODO print error
-	  				}
-	  			};
-	    		 
-	              public void onSuccess(User user) {
-	            		if ((user == null)){	            		
-	            			InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check Caps lock");
-	            			showErrorPopupPanel(error, "red");
-	            			setUser(user);
-	            		}
-	            		
-	            		else {
-	            			InlineLabel error = new InlineLabel("You are now logged on to Inmindd. Please proceed to input panels");
-	            			showErrorPopupPanel(error, "green");	            			
-	            			setUser(user);	
-	            			InminddServiceSvc.getUserConnected(callbackUser);
-	            			 getScore();   			
-	            		}
-	                 
-	              }
-				@Override
-				public void onFailure(Throwable caught) {
-					InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check your Caps lock");
-        			showErrorPopupPanel(error, "red");
-        			setUser(user);
-					
-				}
-	    	  };
-	    	 
-	    	  InminddServiceSvc.authenticateUser(userId.getText(),hashedPassword, callback);
-	    	  }
-	
+
+	    		callServiceSetup();
+
+
+	    		//  generate digest of the password
+	    		hashedPassword = getSHA1for((password.getText()));
+	    		// AsyncCallback<User> callback = new AuthenticationHandler<User>();
+
+	    		AsyncCallback<User> callback = new AsyncCallback<User>() {
+
+	    			AsyncCallback<User> callbackUser = new AsyncCallback<User>() {
+	    				@Override
+	    				public void onSuccess(User user) {
+	    					if (user == null) {
+	    						System.out.println("[login::getUserConnected] \\ user null");
+	    						Window.alert("please connect without errors");
+	    					} else {
+	    						//Window.alert("ok "+ user.toString());
+	    					}
+	    				}
+
+	    				@Override
+	    				public void onFailure(Throwable caught) {
+	    					System.out.println("[login::getUserConnected] \\ exception null");
+	    					// TODO print error
+	    				}
+	    			};
+
+	    			public void onSuccess(User user) {
+	    				if ((user == null)){	            		
+	    					InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check Caps lock");
+	    					showErrorPopupPanel(error, "red");
+	    					setUser(user);
+	    				}
+
+	    				else {
+	    					InlineLabel error = new InlineLabel("You are now logged on to Inmindd. Please proceed to input panels");
+	    					showErrorPopupPanel(error, "green");	            			
+	    					setUser(user);	
+	    					InminddServiceSvc.getUserConnected(callbackUser);
+	    					// Clear screens of previous input
+	    					if(PatientInfo.lastinstance != null)
+	    						PatientInfo.clearInputs();	
+	    					if (Feelings.lastinstance != null)
+	    						Feelings.clearInputs();
+	    					if (MedicalHealth.lastinstance != null)
+	    						MedicalHealth.clearInputs();
+	    					if (FamilyMedicalHistory.lastinstance != null)
+	    						FamilyMedicalHistory.clearInputs();
+	    					if (PhysicalActivity.lastinstance != null)
+	    						PhysicalActivity.clearInputs();
+	    					if (CognitiveOne.lastinstance != null)
+	    						CognitiveOne.clearInputs();
+	    					if (CognitiveTwo.lastinstance != null)
+	    						CognitiveTwo.clearInputs();
+	    					if (SmokeAlcohol.lastinstance != null)
+	    						SmokeAlcohol.clearInputs();
+	    					if (Diet.lastinstance != null)
+	    						Diet.clearInputs();
+
+	    					getScore();   
+
+	    				}
+
+	    			}
+	    			@Override
+	    			public void onFailure(Throwable caught) {
+	    				InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check your Caps lock");
+	    				showErrorPopupPanel(error, "red");
+	    				setUser(user);
+
+	    			}
+	    		};
+
+	    		InminddServiceSvc.authenticateUser(userId.getText(),hashedPassword, callback);
+	    	}
+
 	    });
 
 	    return mainpanel;
-     
-    }
+
+	}
 	
 	private void createUser() {
 		
@@ -387,8 +402,8 @@ public class Login  {
     		
     		else {
     			InlineLabel error = new InlineLabel("Congratulations, you are now registered with Inmindd");
-    			//showErrorPopupPanel(error);
-    			//loggedOn = true;
+    			// Clear screens of previous input
+				
     		}
     	}
     	
@@ -413,7 +428,24 @@ public class Login  {
     		else {
     			InlineLabel error = new InlineLabel("Congratulations, you are now registered with Inmindd. Please proceed to input panels");
     			showErrorPopupPanel(error, "green");
-    			
+    			if(PatientInfo.lastinstance != null)
+					PatientInfo.clearInputs();	
+				if (Feelings.lastinstance != null)
+					Feelings.clearInputs();
+				if (MedicalHealth.lastinstance != null)
+					MedicalHealth.clearInputs();
+				if (FamilyMedicalHistory.lastinstance != null)
+					FamilyMedicalHistory.clearInputs();
+				if (PhysicalActivity.lastinstance != null)
+					PhysicalActivity.clearInputs();
+				if (CognitiveOne.lastinstance != null)
+					CognitiveOne.clearInputs();
+				if (CognitiveTwo.lastinstance != null)
+					CognitiveTwo.clearInputs();
+				if (SmokeAlcohol.lastinstance != null)
+					SmokeAlcohol.clearInputs();
+				if (Diet.lastinstance != null)
+					Diet.clearInputs();
     		}
     	}
   }
@@ -460,6 +492,7 @@ public class Login  {
 		popup.show();
 
 	}
+    
     private void getScore() {				
 		  String userId =  user.getUserId();
 		 if (user== null) {
@@ -476,12 +509,12 @@ public class Login  {
 			 @Override	 
 			 public void onSuccess(RiskFactorScore score) {
 				 if ((score == null)){	            		
-					 InlineLabel error = new InlineLabel("Score data not retrieved ");
-					 showErrorPopupPanel(error, "red");            			
+				//	 InlineLabel error = new InlineLabel("Score data not retrieved ");
+				//	 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("Libra Score retrieved");
-					 showErrorPopupPanel(error, "green");  
+				//	 InlineLabel error = new InlineLabel("Libra Score retrieved");
+				//	 showErrorPopupPanel(error, "green");  
 					
 					
 				 }
@@ -489,8 +522,8 @@ public class Login  {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("Libra  score not retrieved");
-				 showErrorPopupPanel(error, "red");			
+			//	 InlineLabel error = new InlineLabel("Libra  score not retrieved");
+			//	 showErrorPopupPanel(error, "red");			
 
 			 }
 		 };

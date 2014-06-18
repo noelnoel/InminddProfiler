@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.FamilyHistoryInfo;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -24,7 +25,7 @@ public class PhysicalActivity {
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
 	private InminddServiceAsync InminddServiceSvc;
-	
+	public static PhysicalActivity lastinstance;
 	private VerticalPanel pnl = new VerticalPanel();
 	private HorizontalPanel horizPanel = new HorizontalPanel();
 	private HorizontalPanel walkingPanel1 = new HorizontalPanel();
@@ -60,12 +61,33 @@ public class PhysicalActivity {
 	private RadioButton sweatYes; 
 	private RadioButton sweatNo; 
 	private User user;
-	private Login login;
+	private Login login;	
 	PhysicalActivityInfo activity;
-	public PhysicalActivity() {
-		
-	}
 	
+	public PhysicalActivity() {
+		lastinstance = this;
+	}
+	public static void clearInputs() {
+		lastinstance.cyclingSummer.setText("");
+		lastinstance.cyclingWinter.setText("");
+		lastinstance.diy.setText("");
+		lastinstance.exerciseSummer.setText("");
+		lastinstance.exerciseWinter.setText("");
+		lastinstance.gardeningSummer.setText("");
+		lastinstance.gardeningWinter.setText("");
+		lastinstance.heavyManualBtn.setValue(false);
+		lastinstance.houseworkSummer.setText("");
+		lastinstance.houseworkWinter.setText("");
+		lastinstance.manualBtn.setValue(false);
+		lastinstance.naBtn.setValue(false);
+		lastinstance.sedBtn.setValue(false);
+		lastinstance.standingBtn.setValue(false);
+		lastinstance.sweatNo.setValue(false);
+		lastinstance.sweatYes.setValue(false);
+		lastinstance.walkingSummer.setText("");
+		lastinstance.walkingWinter.setText("");
+		lastinstance.stairs.setText("");
+	}
 	public FlowPanel setupPhysicalActivityPanel(Login login) {		
 		this.login = login;	
 		HTMLPanel mainheader = new HTMLPanel("<h1>" +
@@ -674,7 +696,8 @@ private int getValueAsInt(TextBox hours) {
 
 			 @Override	 
 			 public void onSuccess(PhysicalActivityInfo physical) {
-				 if ((physical == null || physical.getUserId().equals(null))){	            		
+				 if (physical == null || physical.getUserId() == null){
+					  
 					 InlineLabel error = new InlineLabel("Physical Activity  Data not retrieved. No data available for this patient ");
 					 showErrorPopupPanel(error, "red");            			
 				 }            		

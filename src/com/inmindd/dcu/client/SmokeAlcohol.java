@@ -6,6 +6,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -20,6 +22,8 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.CognitiveOneInfo;
+import com.inmindd.dcu.shared.FamilyHistoryInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -36,15 +40,32 @@ public class SmokeAlcohol {
 	private DataField formerSmokePerDay;
 	private RadioButton neverSmoked;
 	private InlineLabel startSmoke;
-	private final ListBox drinks = new ListBox();
-	private final ListBox drinks_1 = new ListBox();;
+	private final ListBox drinksIrish = new ListBox();
+	private final ListBox drinksNonIrish = new ListBox();;
 	private ListBox drinksFrequency;
 	private User user;
 	private Login login;
-	
+	public static SmokeAlcohol lastinstance;
 	private InminddServiceAsync InminddServiceSvc;
 	public SmokeAlcohol() {
-		// TODO Auto-generated constructor stub
+		lastinstance = this;
+	}
+	
+	public static void clearInputs() {
+		
+		lastinstance.currentSmoker.setValue(false);
+		lastinstance.currentYearStart.setText("");
+		lastinstance.drinksIrish.setSelectedIndex(0);
+		lastinstance.drinksNonIrish.setSelectedIndex(0);
+		lastinstance.drinksFrequency.setSelectedIndex(0);
+		lastinstance.formerSmokePerDay.setText("");
+		lastinstance.formerSmoker.setValue(false);
+		lastinstance.formerYearStart.setText("");
+		lastinstance.formerYearStop.setText("");
+		lastinstance.neverSmoked.setValue(false);
+		lastinstance.smokePerDay.setText("");
+	
+		
 	}
 	
 	public FlowPanel  setupSmokeAlcoholPanel(Login login) {
@@ -52,17 +73,30 @@ public class SmokeAlcohol {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 				"About your Smoking habits and Alcohol consumption</h1>");
-		
+		Button prev = new Button("Retrieve previous data ?");
+
+
+		// Listen for mouse events on the previous button.
+		prev.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				getSmokeAlcoholData();
+			}
+		});
+
 	   // Smoking questions
 		HTMLPanel header = new HTMLPanel("<h3>" +
 				"These next questions are about your smoking habits</h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
 		
+		
+		
 		InlineLabel lbl = new InlineLabel("Please indicate which of the following best describes you ? ");
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		smokeAlcoholPanel = new FlowPanel();
 		smokeAlcoholPanel.add(mainHeader);
+		smokeAlcoholPanel.add(prev);
 		smokeAlcoholPanel.add(header);
+	
 		smokeAlcoholPanel.add(lbl);
 		
 		smokeAlcoholPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -276,13 +310,13 @@ public class SmokeAlcohol {
 		int index = drinksFrequency.getSelectedIndex();
 		smokeAlco.setDrinks_freq(drinksFrequency.getItemText(index));
 		// ditto
-		index = drinks.getSelectedIndex();
+		index = drinksIrish.getSelectedIndex();
 		if (index > 0) {
-			smokeAlco.setNum_drinks(drinks.getItemText(index)); // for ireland
+			smokeAlco.setNum_drinks(drinksIrish.getItemText(index)); // for ireland
 		}
-		index = drinks_1.getSelectedIndex();
+		index = drinksNonIrish.getSelectedIndex();
 		if (index > 0) {
-			smokeAlco.setNum_drinks(drinks_1.getItemText(index)); // other countries
+			smokeAlco.setNum_drinks(drinksNonIrish.getItemText(index)); // other countries
 		}
 		
 		return smokeAlco;
@@ -312,50 +346,50 @@ public class SmokeAlcohol {
 	private FlowPanel addDrinkQuantity() {
 		FlowPanel drinkFreq = new FlowPanel();
 
-		drinks_1.getElement().getStyle().setProperty("marginLeft", "25px");	
-		drinks_1.getElement().getStyle().setProperty("marginLeft", "25px");	
+		drinksNonIrish.getElement().getStyle().setProperty("marginLeft", "25px");	
+		drinksNonIrish.getElement().getStyle().setProperty("marginLeft", "25px");	
 		InlineLabel theSelection = new InlineLabel("Using the above table, how many standard drinks do you have" +
 				"  in A TYPICAL WEEK when you are drinking ?");
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		drinks.addItem("Please select one - Ireland");
+		drinksIrish.addItem("Please select one - If in Ireland");
 		//User user = login.getUser();
 
 		//String userId = user.getUserId();
 
 
-		drinks.addItem("7 or less");
-		drinks.addItem("8 - 11");
-		drinks.addItem("12 - 17");
-		drinks.addItem("18+");
+		drinksIrish.addItem("7 or less");
+		drinksIrish.addItem("8 - 11");
+		drinksIrish.addItem("12 - 17");
+		drinksIrish.addItem("18+");
 
-		drinks.addChangeHandler(new ChangeHandler() {
+		drinksIrish.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 
-				drinks_1.setVisible(false);
+				drinksNonIrish.setVisible(true);
 			}
 		});
 
 
 
-		drinks_1.addItem("Please select one - Other Countries");
-		drinks_1.addItem("7 or less");
-		drinks_1.addItem("8 - 14");
-		drinks_1.addItem("14 - 20");
-		drinks_1.addItem("21+");
+		drinksNonIrish.addItem("Please select one - If not in Ireland");
+		drinksNonIrish.addItem("7 or less");
+		drinksNonIrish.addItem("8 - 14");
+		drinksNonIrish.addItem("14 - 20");
+		drinksNonIrish.addItem("21+");
 
 
-		drinks_1.addChangeHandler(new ChangeHandler() {
+		drinksNonIrish.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 
-				drinks.setVisible(false);
+				drinksIrish.setVisible(true);
 			}
 		});
 
 		drinkFreq.add(theSelection);
-		drinkFreq.add(drinks); 
-		drinkFreq.add(drinks_1);
+		drinkFreq.add(drinksIrish); 
+		drinkFreq.add(drinksNonIrish);
 
 		drinkFreq.setWidth("100%");
 
@@ -406,7 +440,8 @@ public class SmokeAlcohol {
 			return false;
 			
 		}
-		drinks.getElement().getStyle().setProperty("color", "black");
+		drinksIrish.getElement().getStyle().setProperty("color", "black");
+		drinksNonIrish.getElement().getStyle().setProperty("color", "black");
 		drinksFrequency.getElement().getStyle().setProperty("color", "black");
 		currentYearStart.getElement().getStyle().setProperty("color", "blackd");
 		smokePerDay.getElement().getStyle().setProperty("color", "black");
@@ -429,10 +464,10 @@ public class SmokeAlcohol {
 			return false;			   
 		}
 		
-		if (drinks.getSelectedIndex() <= 0 && drinks_1.getSelectedIndex() <= 0) {			
+		if (drinksIrish.getSelectedIndex() <= 0 && drinksNonIrish.getSelectedIndex() <= 0) {			
 			InlineLabel error = new InlineLabel("Please indicate the number of standard drinks per week");
 			showErrorPopupPanel(error, "red");
-			drinks.getElement().getStyle().setProperty("color", "red");
+			drinksIrish.getElement().getStyle().setProperty("color", "red");
 			return false;			   
 		}
 
@@ -517,4 +552,85 @@ public class SmokeAlcohol {
 		}
 		return input;
 	}
+	
+	 private void getSmokeAlcoholData() {				
+		 User user = login.getUser();
+		 if (user== null) {
+
+			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 showErrorPopupPanel(error, "red");
+			 return;
+
+		 }
+		 callServiceSetup();
+
+		 AsyncCallback<SmokeAlcoholInfo> callback =  new AsyncCallback<SmokeAlcoholInfo>(){
+
+			 @Override	 
+			 public void onSuccess(SmokeAlcoholInfo smokeAlcohol) {
+				 if ((smokeAlcohol == null || smokeAlcohol.getUserId() == null)){	            		
+					 InlineLabel error = new InlineLabel("Smoke Alcohol Data not retrieved. No data available for this patient ");
+					 showErrorPopupPanel(error, "red");            			
+				 }            		
+				 else {
+					 InlineLabel error = new InlineLabel("Smoke Alcohol data retrieved- Edit as necessary");
+					 showErrorPopupPanel(error, "green");  
+					 populatePanel(smokeAlcohol);
+					
+				 }
+
+			 }
+			 @Override
+			 public void onFailure(Throwable caught) {
+				 InlineLabel error = new InlineLabel("Smoke Alcohol data Database error");
+				 showErrorPopupPanel(error, "red");			
+
+			 }
+		 };
+
+		 InminddServiceSvc.querySmokeAlcohol(user, callback);
+		 return;
+	 }
+	 private void populatePanel(SmokeAlcoholInfo smokeAlcohol) {
+		 drinksNonIrish.setVisible(true);
+		 drinksIrish.setVisible(true);
+		 if (smokeAlcohol.getSmoker_type().equals("current")){currentSmoker.setValue(true);}
+		 if (smokeAlcohol.getSmoker_type().equals("former")){formerSmoker.setValue(true);}
+		 if (smokeAlcohol.getSmoker_type().equals("never")){neverSmoked.setValue(true);}
+		 smokePerDay.setText(Integer.toString(smokeAlcohol.getCurrent_num_smoke()));
+		 formerSmokePerDay.setText(Integer.toString(smokeAlcohol.getFormer_num_smoke()));
+		 currentYearStart.setText(Integer.toString(smokeAlcohol.getCurrent_year_start())); 
+		 formerYearStart.setText(Integer.toString(smokeAlcohol.getFormer_year_start())); 
+		 formerYearStop.setText(Integer.toString(smokeAlcohol.getFormer_year_stop())); 
+		 String drinksFreq = smokeAlcohol.getDrinks_freq();
+		 int itemCount = drinksFrequency.getItemCount();
+		 for (int index = 0; index < itemCount; index++) {
+			 if ( drinksFrequency.getItemText(index).equals(drinksFreq)) {
+				 drinksFrequency.setSelectedIndex(index);
+				 break;
+			 }
+		 }
+		 drinksIrish.setValue(0, smokeAlcohol.getNum_drinks());
+		 if (smokeAlcohol.getUserId().startsWith("11")) {  // irish participant 
+			 String drinks_num  = smokeAlcohol.getNum_drinks();
+			 itemCount = drinksIrish.getItemCount();
+			 for (int index = 0; index < itemCount; index++) {
+				 if ( drinksIrish.getItemText(index).equals(drinks_num)) {
+					 drinksIrish.setSelectedIndex(index);
+					 break;
+				 }
+			 }
+		 }
+		 
+		 if (!(smokeAlcohol.getUserId().startsWith("11"))) {  // non- irish participant different standard units
+			 String drinks_freq  = smokeAlcohol.getNum_drinks();
+			 itemCount = drinksNonIrish.getItemCount();
+			 for (int index = 0; index < itemCount; index++) {
+				 if ( drinksNonIrish.getItemText(index).equals(drinks_freq)) {
+					 drinksNonIrish.setSelectedIndex(index);
+					 break;
+				 }
+			 }
+		 }
+	 }
 }

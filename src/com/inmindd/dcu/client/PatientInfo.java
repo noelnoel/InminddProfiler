@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DefaultLocalizedNames;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -24,27 +25,42 @@ public class PatientInfo {
 	private FlowPanel patient;
 	private FlowPanel patientPanel;
 	private ScrollPanel scroll = new ScrollPanel();
-	private DataField age;
-	private RadioButton male;
-	private RadioButton female;
-	private FlowPanel sex = new FlowPanel();
+	public DataField age;
+	public RadioButton male;
+	public RadioButton female;
+	public  FlowPanel sex = new FlowPanel();
 	private InlineLabel error;
-	private ListBox country = new ListBox();
-	private ListBox marital = new ListBox();
-	private ListBox livingArrangements = new ListBox();
-	private ListBox educationLevel = new ListBox();
+	public ListBox country = new ListBox();
+	public ListBox marital = new ListBox();
+	public ListBox livingArrangements = new ListBox();
+	public ListBox educationLevel = new ListBox();
 	
-	private ListBox occupation = new ListBox();
-	private ListBox employmentStatus = new ListBox();
+	public ListBox occupation = new ListBox();
+	public ListBox employmentStatus = new ListBox();
 	private User user;
 	private Login login;
-	private Patient currentPatient;
-	
+	public static PatientInfo lastinstance;
+	// save reference for clearing fields if user logs out.
+	//{
+	//	lastinstance = this;
+	//}
 	private InminddServiceAsync InminddServiceSvc;
-	public void PatientPanel(){
-		
+	
+	public  PatientInfo(){
+		lastinstance = this;
 	}
 	
+	public static void clearInputs() {
+		lastinstance.female.setValue(false);
+		lastinstance.male.setValue(false);
+		lastinstance.age.setText("");
+		lastinstance.country.setSelectedIndex(0);
+		lastinstance.livingArrangements.setSelectedIndex(0);
+		lastinstance.educationLevel.setSelectedIndex(0);
+		lastinstance.occupation.setSelectedIndex(0);
+		lastinstance.employmentStatus.setSelectedIndex(0);
+		lastinstance.marital.setSelectedIndex(0);
+	}
 	public FlowPanel setupPatientPanel(Login login ) {
 		this.login = login;
 	   	HTMLPanel mainHeader = new HTMLPanel("<h1>" +
@@ -452,9 +468,9 @@ public class PatientInfo {
 	 }
 	 
 	 private void updatePatientDB() {
-		 Patient patient = createPatient();
+		Patient patient = createPatient();
 		 callServiceSetup();
-		 
+		 lastinstance = this;
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 			 @Override	 
             public void onSuccess(Boolean result) {
@@ -465,7 +481,8 @@ public class PatientInfo {
             		else {
             			InlineLabel error = new InlineLabel("Patient Data  updated. proceed to next panel");
             			showErrorPopupPanel(error, "green");  
-            			Window.Location.reload();  // This is where the page relooad is triggered
+            			
+            			//Window.Location.reload();  // This is where the page relooad is triggered
             		}
                  
               }
@@ -616,13 +633,13 @@ public class PatientInfo {
 			 }
 		 }
 			 
-	 }
-	 
- public void clearPanel() {
-
-
-	 Window.Location.reload();
  }
+	 
+ //public void clearPanel() {
+
+
+//	 Window.Location.reload();
+// }
 		
 		 
 		 

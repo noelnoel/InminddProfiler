@@ -1,5 +1,7 @@
 package com.inmindd.dcu.client;
 
+import java.util.Iterator;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,10 +20,66 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.inmindd.dcu.shared.MedicalInfo;
+import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class MedicalHealth {
+	
+	
+	public static MedicalHealth lastinstance;
+	
+	
+	public static void clearInputs() {
+		lastinstance.heightCent.setText("");
+		lastinstance.heightFeet.setText("");
+		lastinstance.heightInches.setText("");
+		lastinstance.bloodPressureNo.setValue(false);
+		lastinstance.bloodPressureYes.setValue(false);
+		lastinstance.cholNo.setValue(false);
+		lastinstance.cholYes.setValue(false);
+		lastinstance.diastolic.setText("");
+		lastinstance.systolic.setText("");
+		lastinstance.heartDiseaseDontKnow.setValue(false);
+		lastinstance.heartDiseaseNo.setValue(false);
+		lastinstance.heartDiseaseYes.setValue(false);
+		lastinstance.hyperDontKnow.setValue(false);
+		lastinstance.hyperNo.setValue(false);
+		lastinstance.hyperYes.setValue(false);
+		lastinstance.hyperMedNever.setValue(false);
+		lastinstance.hyperMedYes.setValue(false);
+		lastinstance.hyperMedPast.setValue(false);
+		lastinstance.hyperMedDontKnow.setValue(false);
+		lastinstance.kidneyDontKnow.setValue(false);
+		lastinstance.kidneyNo.setValue(false);
+		lastinstance.kidneyYes.setValue(false);
+		lastinstance.lifestyleDontKnow.setValue(false);
+		lastinstance.lifestyleNo.setValue(false);
+		lastinstance.lifestyleYes.setValue(false);
+		lastinstance.medicationDontKnow.setValue(false);
+		lastinstance.medicationNever.setValue(false);
+		lastinstance.medicationPast.setValue(false);
+		lastinstance.medicationYes.setValue(false);
+		lastinstance.mellitusDontKnow.setValue(false);
+		lastinstance.mellitusNo.setValue(false);
+		lastinstance.mellitusYes.setValue(false);
+		lastinstance.mellitusTreatmentDontKnow.setValue(false);
+		lastinstance.mellitusTreatmentNo.setValue(false);
+		lastinstance.mellitusTreatmentYes.setValue(false);
+		lastinstance.sugarDontKnow.setValue(false);
+		lastinstance.sugarNo.setValue(false);
+		lastinstance.sugarYes.setValue(false);
+		lastinstance.totalCholDontKnow.setValue(false);
+		lastinstance.totalCholNo.setValue(false);
+		lastinstance.totalCholYes.setValue(false);
+		lastinstance.systolic.setText("");
+		lastinstance.weightKilos.setText("");;
+		lastinstance.weightLbs.setText("");
+		lastinstance.weightStone.setText("");
+		lastinstance.mmol.setText("");
+		
+	}
 	
 	private User user;
 	private Login login;
@@ -135,7 +193,7 @@ public class MedicalHealth {
 	private  MedicalInfo medicalData;  
 	
 	public MedicalHealth() {
-	
+		lastinstance = this;
 	}
 	
 	public FlowPanel setupMedicalHealthPanel(Login login) {
@@ -1100,7 +1158,8 @@ public class MedicalHealth {
 			 input  = (int) medical.getLbs();
 			 weightInputLbs = input;
 			 weightLbs.setText(Integer.toString(input));
-
+			 input = (int)medical.getMmol();
+			 mmol.setText(Integer.toString(input));
 			 String button = medical.getChol();
 			 if (button.equals("yes")) {
 				 cholYes.setValue(true);
