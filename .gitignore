@@ -29,7 +29,6 @@ www-test/
 war/inminddprofiler/
 war/Score/
 .classpath
-.settings/com.google.gwt.eclipse.core.prefs
 .settings/org.eclipse.jdt.core.prefs
 /bin
 
