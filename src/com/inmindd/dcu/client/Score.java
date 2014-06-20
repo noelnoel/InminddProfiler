@@ -99,19 +99,19 @@ public class Score implements EntryPoint {
 						"physical_exercise":0, //5.9
 						"smoking":0 //8.0
 					}*/
-					String output = "{ \"blood_pressure\":" + score.getMidlifeHypertension() +
-							",\"cholesteral\":" + score.getCholesterolOthers() +
-							", \"coginitive_activity\":" + score.getHighCognitiveActivity() +
-							",\"diabetes\":" + score.getDiabetes() +
-							",\"diet\":" + score.getHealthyDiet() +
-							",\"drinking\":" + score.getAlcohol() +
-							",\"heart_disease\":" + score.getCoronaryHeartDisease() +
-							",\"kidney_disease\":" + score.getChronicKidneyDisease() +
-							",\"mood\":" + score.getDepression() +
-							", \"obesity\":" + score.getMidlifeObesity() +
-							", \"physical_exercise\":" + score.getPhysicalInactivity() +
-							",\"smoking\":" + score.getSmoking() +
-							"}";
+					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() +
+							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterolOthers() +
+							"}, \"coginitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
+							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() +
+							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() +
+							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() +
+							"},\"heart_disease\": { \"id\":11, \"score\":" + score.getCoronaryHeartDisease() +
+							"},\"kidney_disease\": { \"id\":12, \"score\":" + score.getChronicKidneyDisease() +
+							"},\"mood\": { \"id\":2, \"score\":" + score.getDepression() +
+							"}, \"obesity\": { \"id\":7, \"score\":" + score.getMidlifeObesity() +
+							"}, \"physical_exercise\": { \"id\":4, \"score\":" + score.getPhysicalInactivity() +
+							"},\"smoking\": { \"id\":5, \"score\":" + score.getSmoking() +
+							"}}";
 
 					DOM.getElementById("scoreInputRPC").setAttribute("value",output);
 
