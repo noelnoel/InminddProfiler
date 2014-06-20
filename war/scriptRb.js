@@ -26,26 +26,26 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	$.each(data, function(index, value) {
 		if(jQuery.inArray( index, specials_risk_factor) != -1){
 			$(".libra-improvement .img-"+index).css("display","none");
-			//$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
-			dataGraph.pie["manage"] += value;
-		} else if(value == 0){
+			$(".libra-manage .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			dataGraph.pie["manage"] += value.score;
+		} else if(value.score == 0){
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).css("display","none");
-			//$(".libra-keep .img-"+index).css("display","none");
-			sum += value;
+			$(".libra-keep .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			sum += value.score;
 		} else {
-			//$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
-			dataGraph.pie["improvement"] += value;
-			sum += value;
+			$(".libra-improvement .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			dataGraph.pie["improvement"] += value.score;
+			sum += value.score;
 		}
 		
 	}); 
 	$.each(data, function(index, value) {
-		if(jQuery.inArray( index, specials_risk_factor) == -1 && value != 0){
-			dataGraph.bars[index] = value/sum*100;
+		if(jQuery.inArray( index, specials_risk_factor) == -1 && value.score != 0){
+			dataGraph.bars[index] = value.score/sum*100;
 		}
 	}); 
 	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"] - dataGraph.pie["improvement"];
