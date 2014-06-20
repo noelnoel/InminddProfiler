@@ -86,8 +86,8 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	
 	
 	
-	
-	
+	static InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	
 	/**
 	 * Strings representing the history tokens we will use to indicate which tab content
@@ -97,7 +97,8 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	static final String TOKEN_CESD = "About Your mood";	
 	static final String TOKEN_MEDICAL= "Medical health";
 	static final String TOKEN_HISTORY = "Your family medical history";
-	static final String TOKEN_PHYSICAL = "Your physical activity";
+	//static final String TOKEN_PHYSICAL = "Your physical activity";
+	static final String TOKEN_PHYSICAL = constants.physical();
 	static final String TOKEN_COGNITIVE1 = "Cognitive Activity 1";
 	static final String TOKEN_COGNITIVE2 = "Cognitive Activity 2";
 	static final String TOKEN_SMOKE_ALCOHOL = "Smoking & Alcohol intake";
@@ -316,8 +317,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		Login login = new Login();
 		loginPanel = login.setupLoginPanel();// Create the login Panel
 
-		//	int userId = login.getUserId();
-		//	User user = login.getUser();
+	
 		// Create the Patient Info Panel
 
 		PatientInfo patient = new PatientInfo();		
@@ -431,10 +431,15 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		styleTabPanelUsingUIObject();	
 
 		content.setSize("100%",  "130%");
-
+		Label welLabel = new Label(constants.welcome());
+		
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");
 		if (logoSlot!=null)logoSlot.add(logo);
+		
+		RootPanel welcomeSlot = RootPanel.get("welcome");
+		if (welcomeSlot != null) welcomeSlot.add(welLabel);
+		
 		// Add the TabPanel to the DOM element with the id of "content"
 		RootPanel contentSlot = RootPanel.get("content");
 

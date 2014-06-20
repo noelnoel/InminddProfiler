@@ -100,11 +100,11 @@ public class CalculateScore {
 		double chol = medical.getMmol();
 		// netherlands calulation;
 		if (chol >= 6.5) {
-			rf.setCholesterolNetherlands(1.4);
+			rf.setCholesterolNetherlands(7.5);
 			
 		}
 		if (chol >= 5.0) {
-			rf.setCholesterolOthers(1.4);
+			rf.setCholesterolOthers(7.5);
 			return;
 		}
 		else {
@@ -126,7 +126,7 @@ public class CalculateScore {
 			bmi = (weightKilos / heightMeters) / heightMeters; 
 		//	double roundOffBmi = Math.round(bmi * 100.0) / 100.0;
 			if (bmi  > 30) {
-				rf.setMidlifeObesity(1.6);
+				rf.setMidlifeObesity(8.6);
 			} else {
 				rf.setMidlifeObesity(0);
 			}
@@ -230,7 +230,7 @@ public class CalculateScore {
 	private void smoking(RiskFactorScore rf){
 		String smoker_type = smoke.getSmoker_type();
 		if (smoker_type != null && smoker_type.equals("current")){
-			rf.setSmoking(1.5);  // raise score by factor 1.5 if current smoker
+			rf.setSmoking(8);  // raise score by factor 1.5 if current smoker
 		}
 		else {
 			rf.setSmoking(0);
@@ -239,7 +239,7 @@ public class CalculateScore {
 	private void hypertension(RiskFactorScore rf){
 		String hypertension = medical.getHyper();
 		if (hypertension != null && hypertension.equals("yes")){
-			rf.setMidlifeHypertension(1.6);  // raise score if suffering from hypertension
+			rf.setMidlifeHypertension(8.6);  // raise score if suffering from hypertension
 		}
 		else {
 			rf.setMidlifeHypertension(0);
@@ -249,7 +249,7 @@ public class CalculateScore {
 	private void diabetes(RiskFactorScore rf){
 		String diabetes = medical.getMellitus();
 		if (diabetes != null && diabetes.equals("yes")){
-			rf.setDiabetes(1.3); // raise score if suffering from diabetes
+			rf.setDiabetes(7); // raise score if suffering from diabetes
 		}
 		else {
 			rf.setDiabetes(0);
@@ -258,7 +258,7 @@ public class CalculateScore {
 	private void kidneyDisease(RiskFactorScore rf) { 
 		String kidney = medical.getKidney();
 		if (kidney != null && kidney.equals("yes")) {
-			rf.setChronicKidneyDisease(1.1);
+			rf.setChronicKidneyDisease(5.9);
 		}
 		else {
 			rf.setChronicKidneyDisease(0);
@@ -269,7 +269,7 @@ public class CalculateScore {
 		String coronary = medical.getCvd();
 		
 		if (coronary != null && coronary.equals("yes")) {
-			rf.setCoronaryHeartDisease(1.1);
+			rf.setCoronaryHeartDisease(5.9);
 		}
 		else {
 			rf.setCoronaryHeartDisease(0.0);
@@ -284,33 +284,33 @@ public class CalculateScore {
 		String num_drinks = smoke.getNum_drinks();
 		if (userId.startsWith("11") ) {
 			if (gender.equals("male") &&    !(num_drinks.startsWith("18+"))){
-				rf.setAlcohol(-1);
+				rf.setAlcohol(0);
 			}
 			else if (gender.equals("male")  && (num_drinks.startsWith("18+"))){
-				rf.setAlcohol(0);			 
+				rf.setAlcohol(5.3);			 
 			}
 
 			else if (gender.equals("female") &&    (num_drinks.startsWith("7") || num_drinks.startsWith("8"))){
-				rf.setAlcohol(-1);
+				rf.setAlcohol(0);
 			}
 			else if (gender.equals("female")  && (num_drinks.startsWith("12") || num_drinks.startsWith("18+"))){
-				rf.setAlcohol(0);			 
+				rf.setAlcohol(5.3);			 
 			}
 		}
 
 		else {
 			if (gender.equals("male") &&    !(num_drinks.startsWith("21+"))){
-				rf.setAlcohol(-1);
+				rf.setAlcohol(0);
 			}
 			else if (gender.equals("male")  && (num_drinks.startsWith("21+)"))){
-				rf.setAlcohol(0);			 
+				rf.setAlcohol(5.3);			 
 			}
 
 			else if (gender.equals("female") &&    (num_drinks.startsWith("7") || num_drinks.startsWith("8"))){
-				rf.setAlcohol(-1);
+				rf.setAlcohol(0);
 			}
 			else if (gender.equals("female")  && (num_drinks.startsWith("14") || num_drinks.startsWith("21+"))){
-				rf.setAlcohol(0);			 
+				rf.setAlcohol(5.3);			 
 			}
 
 		}

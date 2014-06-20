@@ -45,7 +45,8 @@ public class PatientInfo {
 	//	lastinstance = this;
 	//}
 	private InminddServiceAsync InminddServiceSvc;
-	
+	InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	public  PatientInfo(){
 		lastinstance = this;
 	}
@@ -63,17 +64,16 @@ public class PatientInfo {
 	}
 	public FlowPanel setupPatientPanel(Login login ) {
 		this.login = login;
-	   	HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"About You</h1>");
-		
-		HTMLPanel header = new HTMLPanel("<h3>" +
-				"We would like to ask you for some background information about yourself</h3>");
+		String text = constants.patient();
+	   	HTMLPanel mainHeader = new HTMLPanel("<h1>" + text + "</h1>");
+				
+		text = constants.yourself();
+		HTMLPanel header = new HTMLPanel("<h3>" + text + "</h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
 	
 		 
 	   
-		Label lbl = new Label("We would like to ask you some background information about yourself");
-		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
+		
 		
 		patientPanel = new FlowPanel();
 	
@@ -95,8 +95,10 @@ public class PatientInfo {
 		});
 		    
 		patientPanel.add(prev);
+		text = constants.age();
+		String text_2 = constants.year();
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		age = new DataField("What age are you ? ");
+		age = new DataField(text, text_2);
 		
 		age.getElement().getStyle().setProperty("fontWeight", "bold");
 		flp.add(age);
@@ -149,11 +151,11 @@ public class PatientInfo {
 	
 	private FlowPanel getGender() {
 		
-		InlineLabel theQuestion = new InlineLabel("What is your sex ?");
+		InlineLabel theQuestion = new InlineLabel(constants.sex());
 		theQuestion.getElement().getStyle().setProperty("fontWeight", "bold");
 	//	theQuestion.getElement().getStyle().setProperty("marginLeft", "10px");
-		male = new RadioButton("radioGroup", "Male");
-	    female = new RadioButton("radioGroup", "Female");
+		male = new RadioButton("radioGroup", constants.male());
+	    female = new RadioButton("radioGroup", constants.female());
 	   
 	    sex.add(theQuestion);
 	    sex.add(male);
@@ -166,7 +168,7 @@ public class PatientInfo {
 	private FlowPanel  getCountryOfBirth() {
 		FlowPanel countryBirth  = new FlowPanel();
 		
-		InlineLabel theSelection = new InlineLabel("What is your country of birth ? ");
+		InlineLabel theSelection = new InlineLabel(constants.cob());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
 		country.addItem("Please select one");
@@ -184,18 +186,18 @@ public class PatientInfo {
 
 	private FlowPanel getMaritalStatus() {
 		FlowPanel maritalStatus = new FlowPanel();		
-		InlineLabel theSelection = new InlineLabel("What is your martial status ? ");
+		InlineLabel theSelection = new InlineLabel(constants.marital());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		marital.addItem("Please select one");
-        marital.addItem("Single (Never married)");
-        marital.addItem("Married (First marriage)");
-        marital.addItem("In a civil partnership)");
-        marital.addItem("Cohabiting with a partner");
-        marital.addItem("Remarried (Following widowhood)");
-        marital.addItem("Married (Following divorce/annulment)");
-        marital.addItem("Divorced");
-        marital.addItem("Separated");
-        marital.addItem("Widowed");
+        marital.addItem(constants.single());
+        marital.addItem(constants.married());
+        marital.addItem(constants.civil());
+        marital.addItem(constants.cohab());
+        marital.addItem(constants.remarried());
+        marital.addItem(constants.marr());
+        marital.addItem(constants.divorced());
+        marital.addItem(constants.seperated());
+        marital.addItem(constants.widowed());
         maritalStatus.add(theSelection);
         maritalStatus.add(marital);
         

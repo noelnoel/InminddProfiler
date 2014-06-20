@@ -19,7 +19,7 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>    -->
 
   <!-- Other module inherits                                      -->
-
+<inherits name="com.google.gwt.i18n.I18N"/>
   <!-- Specify the app entry point class.                         -->
 
   <!-- Specify the paths for translatable code                    -->
@@ -27,4 +27,5 @@
   <source path='shared'/>
  <!-- Here we define the class that contains the entry point -->
 	<entry-point class="com.inmindd.dcu.client.InminddProfiler"/>
+	<extend-property name="locale" values="nl" />
 </module>
