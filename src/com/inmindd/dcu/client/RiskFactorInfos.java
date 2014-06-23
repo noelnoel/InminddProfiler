@@ -66,6 +66,7 @@ public class RiskFactorInfos implements EntryPoint {
 					System.out.println("[RB_RiskFactors::getScore] \\ score null");
 					// TODO print error
 				} else {
+					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					switch(riskFactor){
 					case 1:
 						if(score.getMidlifeHypertension() != 0){

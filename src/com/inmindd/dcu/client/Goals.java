@@ -75,7 +75,7 @@ public class Goals implements EntryPoint {
 					}
 					output += "]";
 
-					DOM.getElementById("scoreInputRPC").setAttribute("value",output);
+					DOM.getElementById("goalsInputRPC").setAttribute("value",output);
 
 					trigerJavascript();
 				}
@@ -122,7 +122,7 @@ public class Goals implements EntryPoint {
 	
 	public static native void exportClickGoals() /*-{
 		$wnd.goalClick =
-		$entry(@com.inmindd.dcu.client.Goals::clickGoals(ILjava/lang/String;)(i,s));
+		$entry(@com.inmindd.dcu.client.Goals::clickGoals(ILjava/lang/String;));
 	}-*/;
 
 	private void setUser(User user) {
