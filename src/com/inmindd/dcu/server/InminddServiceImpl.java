@@ -1774,13 +1774,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = "+riskFactor+";");
-			result = pstmt.executeQuery("SELECT * FROM `support_goals`;");
+			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = ?;");
+			pstmt.setInt(1, riskFactor);
+			result = pstmt.executeQuery();
 
 			while (result.next()) {
 				SupportGoal data = new SupportGoal(result.getInt("id"), result.getInt("goal_nb"), result.getString("goal_name"), result.getString("description"), result.getString("image_url")); 
 				goalsList.add(data);
-				return true;
 			}
 			conn.close();
 			return (goalsList.size() > 0);
