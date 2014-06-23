@@ -8,12 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.client.PatientInfo;
-import com.inmindd.dcu.shared.FeelingsInfo;
-import com.inmindd.dcu.shared.MedicalInfo;
-import com.inmindd.dcu.shared.Patient;
-import com.inmindd.dcu.shared.SmokeAlcoholInfo;
-import com.inmindd.dcu.shared.User;
 
 public class CalculateScore {
 	
@@ -24,6 +18,7 @@ public class CalculateScore {
 	private FeelingsInfo feelings = new FeelingsInfo();
 	private MedicalInfo medical = new MedicalInfo(); 
 	private SmokeAlcoholInfo smoke = new SmokeAlcoholInfo();
+	private DietInfo  diet = new DietInfo();
 	private String userId;
 	
 	
@@ -60,7 +55,15 @@ public class CalculateScore {
 			
 			pstmt = conn.prepareStatement("");
 			result = pstmt.executeQuery(query);
-			populateSmokingAl(result);			
+			populateSmokingAl(result);	
+			
+			query = "select * from diet_info where patient_id = " + userId;
+			
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery(query);
+			populateDiet(result);	
+			
+			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}			
@@ -86,12 +89,62 @@ public class CalculateScore {
 			cesd(rf);
 			bmi(rf);
 			mmol(rf);
+			diet(rf);
 		}
 		catch (Exception e) {
 			rf = null;
 			return rf;
 		}
 		return rf;
+	}
+	
+	private void diet(RiskFactorScore rf ) {
+		int dietScore = 0;
+		
+		if (diet.getCulinaryFat() == 1) 
+			dietScore++;
+		
+		if (diet.getRapeSeedOil() == 4) 
+			dietScore++;
+		
+		if (diet.getVegetableServings() > 2) 
+			dietScore++;
+		
+		if (diet.getFruit() == 3)
+			dietScore++;
+		
+		if(diet.getRedMeat() < 1)
+			dietScore++;
+		
+		if (diet.getButter() < 1)
+			dietScore++;
+		
+		if (diet.getBeverages() < 1)
+			dietScore++;
+		
+		if	(diet.getWine() >= 7)
+			dietScore++;
+		
+		if (diet.getLegumes() >= 3)
+			dietScore++;
+		
+		if (diet.getFish() >= 3)
+			dietScore++;
+		
+		if (diet.getNuts() >= 3)
+			dietScore++;
+		
+		if (diet.getSweets() < 3)
+			dietScore++;
+			
+		if (diet.getChicken() == 1)
+			dietScore++;
+		
+		if (diet.getSauce() >= 2)
+			dietScore++;
+		
+		if (dietScore < 11)
+			rf.setHealthyDiet(9.1);
 	}
 	
 	private void mmol(RiskFactorScore rf){
@@ -138,7 +191,7 @@ public class CalculateScore {
 			bmiHeightInches = ((heightFeet * 12) + heightInches) *((heightFeet * 12) + heightInches);
 			bmi = bmiWeightLbs / bmiHeightInches;
 			if (bmi  > 30) {
-				rf.setMidlifeObesity(1.6);
+				rf.setMidlifeObesity(8.6);
 			} else {
 				rf.setMidlifeObesity(0);
 			}
@@ -190,7 +243,7 @@ public class CalculateScore {
 		ces = feelings.getCes16();		 
 		cesdScore += getPositivePoints(ces);
 		if (cesdScore > 16) {
-			rf.setDepression(2.1);
+			rf.setDepression(11.2);
 		}
 		else {
 			rf.setDepression(0);
@@ -416,6 +469,32 @@ public class CalculateScore {
 			}
 				
 		}
+	private void populateDiet(ResultSet result) {
+		try {
+			while (result.last()) {
+				diet.setUserId(result.getString(1));
+				diet.setCulinaryFat(result.getInt(3));
+				diet.setRapeSeedOil(result.getInt(4));
+				diet.setVegetableServings(result.getInt(5));
+				diet.setFruit(result.getInt(6));
+				diet.setRedMeat(result.getInt(7));
+				diet.setButter(result.getInt(8));
+				diet.setBeverages(result.getInt(9));
+				diet.setWine(result.getInt(10));
+				diet.setLegumes(result.getInt(11));
+				diet.setFish(result.getInt(12));
+				diet.setSweets(result.getInt(13));
+				diet.setNuts(result.getInt(14));
+				diet.setChicken(result.getInt(15));
+				diet.setSauce(result.getInt(16));
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode
