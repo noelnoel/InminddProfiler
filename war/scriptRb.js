@@ -24,7 +24,7 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	dataGraph = {"pie": {"manage":0, "improvement":0,"keep":0}, "bars":{}};
 	sum = 0;
 	$.each(data, function(index, value) {
-		if(jQuery.inArray( index, specials_risk_factor) != -1){
+		if(jQuery.inArray( index, specials_risk_factor) != -1 && value.score != 0){
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
@@ -33,7 +33,9 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
-			sum += value.score;
+			if(jQuery.inArray( index, specials_risk_factor) != -1){
+				sum += value.score;
+			}
 		} else {
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
