@@ -22,7 +22,7 @@ public class RiskFactorScore  implements Serializable {
 	private double smoking;
 	private double midlifeObesity;
 	private double midlifeHypertension;
-	private int healthyDiet;
+	private double healthyDiet;
 	private double depression;
 	private int highCognitiveActivity;
 	
@@ -77,10 +77,10 @@ public class RiskFactorScore  implements Serializable {
 	public void setMidlifeHypertension(double midlifeHypertension) {
 		this.midlifeHypertension = midlifeHypertension;
 	}
-	public int getHealthyDiet() {
+	public double getHealthyDiet() {
 		return healthyDiet;
 	}
-	public void setHealthyDiet(int healthyDiet) {
+	public void setHealthyDiet(double healthyDiet) {
 		this.healthyDiet = healthyDiet;
 	}
 	public double getDepression() {
