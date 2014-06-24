@@ -245,8 +245,8 @@ public class CognitiveOne {
 		cognitiveOne = new CognitiveOneInfo();
 		User user = login.getUser();
 		cognitiveOne.setUserId(user.getUserId());
-		cognitiveOne.setFormalEducationYears(getValueAsInt(yearsFormalEducation));
-		cognitiveOne.setNonFormalEducationYears(getValueAsInt(yearsNonformalEducation));
+		cognitiveOne.setFormalEducationYears(getValueAsDouble(yearsFormalEducation));
+		cognitiveOne.setNonFormalEducationYears(getValueAsDouble(yearsNonformalEducation));
 		cognitiveOne.setManager(getValueAsInt(managerYears));
 		cognitiveOne.setManagerSimulYears(getValueAsInt(managerSimulYears));
 		cognitiveOne.setProfessional(getValueAsInt(professionalYears));
@@ -287,9 +287,9 @@ public class CognitiveOne {
 		}
 		yearsEducation.getElement().getStyle().setProperty("color", "black");
 		yearsNonForEducation.getElement().getStyle().setProperty("color", "black");
-		int years = 0;
+		double years = 0;
 		try {
-			years  = Integer.parseInt(yearsFormalEducation.getText());	
+			years  = Double.parseDouble(yearsFormalEducation.getText());	
 		}
 
 		catch (Exception e)
@@ -308,7 +308,7 @@ public class CognitiveOne {
 		HorizontalPanel cogoLine  = new HorizontalPanel();
 		
 		yearsFormalEducation = new TextBox();
-		yearsFormalEducation.setMaxLength(3);
+		yearsFormalEducation.setMaxLength(4);
 		yearsFormalEducation.setWidth("2em"); 
 	 
 		yearsFormalEducation.getElement().getStyle().setProperty("marginLeft", "50px");
@@ -331,7 +331,7 @@ public class CognitiveOne {
 		HorizontalPanel cogoLine  = new HorizontalPanel();
 		
 		yearsNonformalEducation = new TextBox();
-		yearsNonformalEducation.setMaxLength(3);
+		yearsNonformalEducation.setMaxLength(4);
 		
 		yearsNonformalEducation.setWidth("2em"); 
 	 
@@ -717,6 +717,20 @@ public class CognitiveOne {
 		}
 
 
+	private double getValueAsDouble(TextBox box) {		
+		// get the text entered
+		double input = 0;
+		try {
+			input = Double.parseDouble(box.getText());	
+		}
+
+		catch (Exception e)	{					
+						
+			return 0;
+
+		}
+		return input;
+	}
 	private void getCognitiveOneData() {				
 		User user = login.getUser();
 		if (user== null) {
@@ -777,8 +791,8 @@ public class CognitiveOne {
 		serviceYears.setText(Integer.toString(cognitiveOne.getService()));
 		technicianSimulYears.setText(Integer.toString(cognitiveOne.getTechnicianSimulYears()));
 		technicianYears.setText(Integer.toString(cognitiveOne.getTechnician()));		
-		yearsFormalEducation.setText(Integer.toString(cognitiveOne.getFormalEducationYears()));
-		yearsNonformalEducation.setText(Integer.toString(cognitiveOne.getNonFormalEducationYears()));
+		yearsFormalEducation.setText(Double.toString(cognitiveOne.getFormalEducationYears()));
+		yearsNonformalEducation.setText(Double.toString(cognitiveOne.getNonFormalEducationYears()));
 	
 		
 	}

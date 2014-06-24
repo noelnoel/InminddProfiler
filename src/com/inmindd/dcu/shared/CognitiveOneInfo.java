@@ -3,8 +3,8 @@ package com.inmindd.dcu.shared;
 import java.io.Serializable;
 
 public class CognitiveOneInfo  implements Serializable {
-	private int formalEducationYears;
-	private int nonFormalEducationYears;
+	private double formalEducationYears;
+	private double nonFormalEducationYears;
 	private int manager;
 	private int managerSimulYears;
 	private int professional;
@@ -31,16 +31,16 @@ public class CognitiveOneInfo  implements Serializable {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getFormalEducationYears() {
+	public double getFormalEducationYears() {
 		return formalEducationYears;
 	}
-	public void setFormalEducationYears(int formalEducationYears) {
+	public void setFormalEducationYears(double formalEducationYears) {
 		this.formalEducationYears = formalEducationYears;
 	}
-	public int getNonFormalEducationYears() {
+	public double getNonFormalEducationYears() {
 		return nonFormalEducationYears;
 	}
-	public void setNonFormalEducationYears(int nonFormalEducationYears) {
+	public void setNonFormalEducationYears(double nonFormalEducationYears) {
 		this.nonFormalEducationYears = nonFormalEducationYears;
 	}
 	public int getManager() {
