@@ -66,6 +66,7 @@ public class RiskFactorInfos implements EntryPoint {
 					System.out.println("[RB_RiskFactors::getScore] \\ score null");
 					// TODO print error
 				} else {
+					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					switch(riskFactor){
 					case 1:
 						if(score.getMidlifeHypertension() != 0){
@@ -140,7 +141,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 10:
-						if(score.getCholesterolOthers() != 0){
+						if(score.getCholesterol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
 						} else {
@@ -150,22 +151,34 @@ public class RiskFactorInfos implements EntryPoint {
 						break;
 
 					case 3:
-						DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						//special icon
-						score.getDiabetes();
+						if(score.getDiabetes() != 0){
+							DOM.getElementById("goalButton").setAttribute("style","");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
+						} else {
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-blue.png");
+						}
+						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 11:
-						DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						//special icon
-						score.getCoronaryHeartDisease();
+						if(score.getCoronaryHeartDisease() != 0){
+							DOM.getElementById("goalButton").setAttribute("style","");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
+						} else {
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_blue.png");
+						}
+						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 12:
-						DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						//special icon
-						score.getChronicKidneyDisease();
+						if(score.getChronicKidneyDisease() != 0){
+							DOM.getElementById("goalButton").setAttribute("style","");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
+						} else {
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_blue.png");
+						}
+						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					}
 				}

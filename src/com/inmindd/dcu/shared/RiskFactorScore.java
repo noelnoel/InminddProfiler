@@ -1,6 +1,8 @@
 package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RiskFactorScore  implements Serializable {
 	private int age;
@@ -119,6 +121,29 @@ public class RiskFactorScore  implements Serializable {
 	}
 	public void setCholesterolOthers(double cholesterolOthers) {
 		this.cholesterolOthers = cholesterolOthers;
+	}
+	
+	/**
+	 * This method return the cholesterol score regarding of the country code of the @userId
+	 * @return correct cholesterol score regarding the country
+	 */
+	public double getCholesterol() {
+		if (userId.matches("^([0-9]{7})$")) {
+			Pattern pa = Pattern.compile("^([0-9]{2})[0-9]{5}$");
+			Matcher matcher = pa.matcher(userId);
+			if (matcher.matches()) {
+				try {
+					if (matcher.group(1).equals("33")) {
+						return getCholesterolNetherlands();
+					} else {
+						return getCholesterolOthers();
+					}
+				} catch (Exception e) {
+					System.out.println("getCholesterol // error");
+				}
+			}
+		}
+		return getCholesterolOthers();
 	}
 
 }

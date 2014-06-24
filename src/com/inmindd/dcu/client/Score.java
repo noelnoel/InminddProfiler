@@ -100,7 +100,7 @@ public class Score implements EntryPoint {
 						"smoking":0 //8.0
 					}*/
 					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() +
-							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterolOthers() +
+							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() +
 							"}, \"coginitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
 							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() +
 							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() +
