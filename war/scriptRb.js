@@ -52,6 +52,8 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	}); 
 	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"] - dataGraph.pie["improvement"];
 	graph(dataGraph);
+	$("#loadingPanel").css("display","none");
+	$("#scorePanel").attr("style", "");
 }
 
 function clickFactors(event){

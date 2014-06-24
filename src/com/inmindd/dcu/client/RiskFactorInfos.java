@@ -67,6 +67,9 @@ public class RiskFactorInfos implements EntryPoint {
 					// TODO print error
 				} else {
 					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
+					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+					Window.alert("truc");
+					DOM.getElementById("infosPanel").setAttribute("style", "");
 					switch(riskFactor){
 					case 1:
 						if(score.getMidlifeHypertension() != 0){

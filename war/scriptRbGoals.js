@@ -32,6 +32,8 @@ function load(){
 		var div = $("<div class=\"col-md-"+data.colSpan+" col-md-offset-"+data.colSpan*i+" text\"></div>").attr("x-goal", data[i].goalNb).attr("id","text"+data[i].goalNb).append(h4).append(p).append($("<br />")).append(button);
 		$("#textGoals").append(div);
 	};
+	$("#imagesGoals").attr("style", "");
+	$("#loadingPanel").css("display", "none");
 }
 
 function trigeredByGWT() {
