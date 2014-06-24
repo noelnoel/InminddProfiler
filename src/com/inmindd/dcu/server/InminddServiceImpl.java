@@ -857,8 +857,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	private boolean createCognitiveOne(CognitiveOneInfo cognitiveOne) {
 		String patient_id = cognitiveOne.getUserId();
-		int formal_education_years = cognitiveOne.getFormalEducationYears();
-		int non_formal_education_years = cognitiveOne.getNonFormalEducationYears();
+		double formal_education_years = cognitiveOne.getFormalEducationYears();
+		double non_formal_education_years = cognitiveOne.getNonFormalEducationYears();
 		int manager = cognitiveOne.getManager();
 		int manager_simul_years = cognitiveOne.getManagerSimulYears();
 		int professional = cognitiveOne.getProfessional();
@@ -888,8 +888,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		try {
 			PreparedStatement updateCognitiveOneInfo = (PreparedStatement) conn.prepareStatement(insert);
 			updateCognitiveOneInfo.setString(1, patient_id);
-			updateCognitiveOneInfo.setInt(2,  formal_education_years);
-			updateCognitiveOneInfo.setInt(3, non_formal_education_years);
+			updateCognitiveOneInfo.setDouble(2,  formal_education_years);
+			updateCognitiveOneInfo.setDouble(3, non_formal_education_years);
 			updateCognitiveOneInfo.setInt(4, manager);
 			updateCognitiveOneInfo.setInt(5, manager_simul_years);
 			updateCognitiveOneInfo.setInt(6, professional);
@@ -958,8 +958,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			result = pstmt.executeQuery("SELECT * FROM cognitive_one_info where patient_id = " + idUser);			
 			while (result.last()) {
 				cognitiveOne.setUserId(result.getString(1));
-				cognitiveOne.setFormalEducationYears(result.getInt(3));
-				cognitiveOne.setNonFormalEducationYears(result.getInt(4));
+				cognitiveOne.setFormalEducationYears(result.getDouble(3));
+				cognitiveOne.setNonFormalEducationYears(result.getDouble(4));
 				cognitiveOne.setManager(result.getInt(5));
 				cognitiveOne.setManagerSimulYears(result.getInt(6));
 				cognitiveOne.setProfessional(result.getInt(7));

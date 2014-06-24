@@ -14,7 +14,7 @@ public class RiskFactorScore  implements Serializable {
 	}
 	private double alcohol;	
 	private double coronaryHeartDisease;
-	private int physicalInactivity;
+	private double physicalInactivity;
 	private double chronicKidneyDisease;
 	private double diabetes;
 	private double cholesterolNetherlands;
@@ -24,7 +24,7 @@ public class RiskFactorScore  implements Serializable {
 	private double midlifeHypertension;
 	private double healthyDiet;
 	private double depression;
-	private int highCognitiveActivity;
+	private double highCognitiveActivity;
 	
 	
 	public double getAlcohol() {
@@ -40,10 +40,10 @@ public class RiskFactorScore  implements Serializable {
 	public void setCoronaryHeartDisease(double coronaryHeartDisease) {
 		this.coronaryHeartDisease = coronaryHeartDisease;
 	}
-	public int getPhysicalInactivity() {
+	public double getPhysicalInactivity() {
 		return physicalInactivity;
 	}
-	public void setPhysicalInactivity(int physicalInactivity) {
+	public void setPhysicalInactivity(double physicalInactivity) {
 		this.physicalInactivity = physicalInactivity;
 	}
 	public double getChronicKidneyDisease() {
@@ -89,10 +89,10 @@ public class RiskFactorScore  implements Serializable {
 	public void setDepression(double depression) {
 		this.depression = depression;
 	}
-	public int getHighCognitiveActivity() {
+	public double getHighCognitiveActivity() {
 		return highCognitiveActivity;
 	}
-	public void setHighCognitiveActivity(int highCognitiveActivity) {
+	public void setHighCognitiveActivity(double highCognitiveActivity) {
 		this.highCognitiveActivity = highCognitiveActivity;
 	}
 	

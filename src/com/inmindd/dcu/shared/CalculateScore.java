@@ -19,6 +19,9 @@ public class CalculateScore {
 	private MedicalInfo medical = new MedicalInfo(); 
 	private SmokeAlcoholInfo smoke = new SmokeAlcoholInfo();
 	private DietInfo  diet = new DietInfo();
+	private CognitiveOneInfo cognitiveOne = new CognitiveOneInfo();
+	private CognitiveTwoInfo cognitiveTwo = new CognitiveTwoInfo();
+	private PhysicalActivityInfo physical = new PhysicalActivityInfo();
 	private String userId;
 	
 	
@@ -63,6 +66,26 @@ public class CalculateScore {
 			result = pstmt.executeQuery(query);
 			populateDiet(result);	
 			
+			query = "select * from cognitive_one_info where patient_id = " + userId;
+			
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery(query);
+			populateCogOne(result);	
+			
+			
+			query = "select * from cognitive_two_info where patient_id = " + userId;
+			
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery(query);
+			populateCogTwo(result);	
+			
+			
+			query = "select * from physical_activities_info where patient_id = " + userId;
+			
+			pstmt = conn.prepareStatement("");
+			result = pstmt.executeQuery(query);
+			populatePhysical(result);	
+			
 			
 		} catch (SQLException e) {			
 			e.printStackTrace();
@@ -90,6 +113,8 @@ public class CalculateScore {
 			bmi(rf);
 			mmol(rf);
 			diet(rf);
+			cri(rf);  // calculate cognitive reserve index
+			physical(rf);
 		}
 		catch (Exception e) {
 			rf = null;
@@ -97,6 +122,84 @@ public class CalculateScore {
 		}
 		return rf;
 	}
+	
+	private void physical(RiskFactorScore rf) {
+		
+		String  workType = physical.getPhysicalWork();
+		double hrsWeekCycling = physical.getSummerCyclingHours() + physical.getWinterCyclingHours();
+		double hrsWeekPhysical = physical.getSummerPhysicalHours() + physical.getWinterPhysicalHours();
+		if ((hrsWeekCycling + hrsWeekPhysical) / 2  >= 3.5) {
+			rf.setPhysicalInactivity(0);
+			
+		}
+		if ((hrsWeekCycling + hrsWeekPhysical) / 2  == 0 && !(workType.equals("manual") || workType.equals("heavy"))) {
+			rf.setPhysicalInactivity(5.9);
+			return;
+		}
+		
+		if ((hrsWeekCycling  + hrsWeekPhysical) / 2  <= 3.50 && (workType.equals("sedentary"))) {
+			rf.setPhysicalInactivity(5.9);
+			return;
+		}
+		
+		else  {
+			rf.setPhysicalInactivity(0);
+			
+		}
+	}
+	private void cri(RiskFactorScore rf) {
+		double criEducation = cognitiveOne.getFormalEducationYears() + cognitiveOne.getNonFormalEducationYears();
+		double workingYears = 0;
+		double leisureYears = 0;
+		
+		double criWorking = 0;
+		double criLeisure = 0;
+		
+		criEducation = ((criEducation  - 10.496) / 4.75); // (years - model value) / s.d 
+		
+		workingYears += cognitiveOne.getManager() * 5;
+		workingYears += cognitiveOne.getProfessional() * 4;
+		workingYears += cognitiveOne.getTechnician() * 3;
+		workingYears += cognitiveOne.getClerical() * 3;
+		workingYears += cognitiveOne.getCraft() * 2;
+		workingYears += cognitiveOne.getAgriculture() * 2;
+		workingYears += cognitiveOne.getService() * 2;
+		workingYears += cognitiveOne.getElementary() * 1;
+		workingYears += cognitiveOne.getPlant() * 1;
+		
+		criWorking = (workingYears - 70.978) / 40.21979;  
+		
+		leisureYears += cognitiveTwo.getArtistic_years();
+		leisureYears += cognitiveTwo.getBank_account_years();
+		leisureYears += cognitiveTwo.getBooks_years();
+		leisureYears += cognitiveTwo.getChildren_years();
+		leisureYears += cognitiveTwo.getCinema_years();
+		leisureYears += cognitiveTwo.getDriving_years();
+		leisureYears += cognitiveTwo.getExhibitions_years();
+		leisureYears += cognitiveTwo.getGardening_years();
+		leisureYears += cognitiveTwo.getHolidays_years();
+		leisureYears += cognitiveTwo.getHousehold_years();
+		leisureYears += cognitiveTwo.getLeisure_years();
+		leisureYears += cognitiveTwo.getPets_years();
+		leisureYears += cognitiveTwo.getReading_years();
+		leisureYears += cognitiveTwo.getSocial_years();
+		leisureYears += cognitiveTwo.getTechnology_years();
+		leisureYears += cognitiveTwo.getVolunteering_years();
+		// number of children 
+		leisureYears += (cognitiveTwo.getNumber_children() * 5) +10;
+		criLeisure = (leisureYears - 246.690 ) / 80.24101; 
+		criEducation = criEducation * 15 + 100;
+		criWorking = criWorking * 15 + 100;
+		criLeisure = criLeisure * 15 + 100;
+		// the final cognitive reserve index score
+		double criFinal = ((((criEducation + criWorking + criLeisure) / 3) - 100) / 11.3277) * 15 + 100;
+		
+		if (criFinal >= 100) 
+			rf.setHighCognitiveActivity(0);
+		else if (criFinal < 100)
+			rf.setHighCognitiveActivity(17.1);
+	}
+	
 	
 	private void diet(RiskFactorScore rf ) {
 		int dietScore = 0;
@@ -147,6 +250,7 @@ public class CalculateScore {
 			rf.setHealthyDiet(9.1);
 	}
 	
+	
 	private void mmol(RiskFactorScore rf){
 		double cholNetherlands;
 		double cholOthers;
@@ -165,6 +269,7 @@ public class CalculateScore {
 			rf.setCholesterolOthers(0);			
 		}
 	}
+	
 	private void bmi(RiskFactorScore rf) {
 		double bmi = 0;
 		double bmiWeightLbs = 0;
@@ -469,6 +574,7 @@ public class CalculateScore {
 			}
 				
 		}
+	
 	private void populateDiet(ResultSet result) {
 		try {
 			while (result.last()) {
@@ -487,6 +593,121 @@ public class CalculateScore {
 				diet.setNuts(result.getInt(14));
 				diet.setChicken(result.getInt(15));
 				diet.setSauce(result.getInt(16));
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void populateCogOne(ResultSet result) {
+		try {
+			while (result.last()) {
+				
+					cognitiveOne.setUserId(result.getString(1));
+					cognitiveOne.setFormalEducationYears(result.getDouble(3));
+					cognitiveOne.setNonFormalEducationYears(result.getDouble(4));
+					cognitiveOne.setManager(result.getInt(5));
+					cognitiveOne.setManagerSimulYears(result.getInt(6));
+					cognitiveOne.setProfessional(result.getInt(7));
+					cognitiveOne.setProfessionalSimulYears(result.getInt(8));
+					cognitiveOne.setTechnician(result.getInt(9));
+					cognitiveOne.setTechnicianSimulYears(result.getInt(10));
+					cognitiveOne.setClerical(result.getInt(11));
+					cognitiveOne.setClericalSimulYears(result.getInt(12));
+					cognitiveOne.setService(result.getInt(13));
+					cognitiveOne.setServiceSimulYears(result.getInt(14));
+					cognitiveOne.setAgriculture(result.getInt(15));
+					cognitiveOne.setAgricultureSimulYears(result.getInt(16));
+					cognitiveOne.setCraft(result.getInt(17));
+					cognitiveOne.setCraftSimulYears(result.getInt(18));
+					cognitiveOne.setPlant(result.getInt(19));
+					cognitiveOne.setPlantSimulYears(result.getInt(20));
+					cognitiveOne.setElementary(result.getInt(21));
+					cognitiveOne.setElementarySimulYears(result.getInt(22));
+				
+					return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void populateCogTwo(ResultSet result) {
+		try {
+			while (result.last()) {
+				
+				cognitiveTwo.setUserId(result.getString(1));
+				cognitiveTwo.setReading_years(result.getInt(2));				
+				cognitiveTwo.setHousehold_years(result.getInt(3));
+				cognitiveTwo.setDriving_years(result.getInt(4));
+				cognitiveTwo.setLeisure_years(result.getInt(5));
+				cognitiveTwo.setTechnology_years(result.getInt(6));
+				cognitiveTwo.setSocial_years(result.getInt(7));
+				cognitiveTwo.setCinema_years(result.getInt(8));
+				cognitiveTwo.setGardening_years(result.getInt(9));
+				cognitiveTwo.setChildren_years(result.getInt(10));
+				cognitiveTwo.setVolunteering_years(result.getInt(11));
+				cognitiveTwo.setArtistic_years(result.getInt(12));
+				cognitiveTwo.setExhibitions_years(result.getInt(13));
+				cognitiveTwo.setHolidays_years(result.getInt(14));
+				cognitiveTwo.setBooks_years(result.getInt(15));
+				cognitiveTwo.setNumber_children(result.getInt(16));
+				cognitiveTwo.setPets_years(result.getInt(17));
+				cognitiveTwo.setBank_account_years(result.getInt(18));
+				cognitiveTwo.setReading(result.getString(19));
+				cognitiveTwo.setHousehold(result.getString(20));
+				cognitiveTwo.setDriving(result.getString(21));
+				cognitiveTwo.setLeisure(result.getString(22));
+				cognitiveTwo.setTechnology(result.getString(23));
+				cognitiveTwo.setSocial(result.getString(24));
+				cognitiveTwo.setCinema(result.getString(25));
+				cognitiveTwo.setGardening(result.getString(26));
+				cognitiveTwo.setChildren(result.getString(27));
+				cognitiveTwo.setVolunteering(result.getString(28));
+				cognitiveTwo.setArtistic(result.getString(29));
+				cognitiveTwo.setExhibitions(result.getString(30));
+				cognitiveTwo.setHolidays(result.getString(31));
+				cognitiveTwo.setBooks(result.getString(32));
+				cognitiveTwo.setRaised_children(result.getString(33));
+				cognitiveTwo.setPets(result.getString(34));
+				cognitiveTwo.setBank_account(result.getString(35));
+				
+				
+					return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void populatePhysical(ResultSet result) {
+		try {
+			while (result.last()) {
+				
+				physical.setUserId(result.getString(1));
+				physical.setDiyHours(result.getInt(3));
+				physical.setSummerWalkingHours(result.getInt(4));
+				physical.setWinterWalkingHours(result.getInt(5));
+				physical.setSummerCyclingHours(result.getInt(6));
+				physical.setWinterCyclingHours(result.getInt(7));
+				physical.setSummerGardenHours(result.getInt(8));
+				physical.setWinterGardenHours(result.getInt(9));
+				physical.setSummerPhysicalHours(result.getInt(10));
+				physical.setWinterPhysicalHours(result.getInt(11));
+				physical.setSummerHouseworkHours(result.getInt(12));
+				physical.setWinterHouseworkHours(result.getInt(13));
+				physical.setFlightStairs(result.getInt(14));
+				
+				physical.setPhysicalWork(result.getString(15));
+				physical.setVigorous(result.getString(16));
 				return;
 			}
 		} catch (SQLException e) {
