@@ -1,8 +1,11 @@
 package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.apache.tools.ant.util.regexp.Regexp;
+
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 
 public class RiskFactorScore  implements Serializable {
 	private int age;
@@ -128,22 +131,19 @@ public class RiskFactorScore  implements Serializable {
 	 * @return correct cholesterol score regarding the country
 	 */
 	public double getCholesterol() {
-		if (userId.matches("^([0-9]{7})$")) {
-			Pattern pa = Pattern.compile("^([0-9]{2})[0-9]{5}$");
-			Matcher matcher = pa.matcher(userId);
-			if (matcher.matches()) {
-				try {
-					if (matcher.group(1).equals("33")) {
-						return getCholesterolNetherlands();
-					} else {
-						return getCholesterolOthers();
-					}
-				} catch (Exception e) {
-					System.out.println("getCholesterol // error");
-				}
+		RegExp regExp = RegExp.compile("^([0-9]{2})[0-9]{5}$");
+		MatchResult matcher = regExp.exec(userId);
+		boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr); 
+
+		if (matchFound) {
+			if (matcher.getGroup(1).equals("33")) {
+				return getCholesterolNetherlands();
+			} else {
+				return getCholesterolOthers();
 			}
+		} else {
+			return getCholesterolOthers();
 		}
-		return getCholesterolOthers();
 	}
 
 }
