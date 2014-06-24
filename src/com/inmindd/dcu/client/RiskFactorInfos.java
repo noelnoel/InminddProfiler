@@ -141,7 +141,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 10:
-						if(score.getCholesterolOthers() != 0){
+						if(score.getCholesterol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
 						} else {
