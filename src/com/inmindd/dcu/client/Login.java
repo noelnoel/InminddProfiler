@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.googlecode.gwt.crypto.bouncycastle.digests.SHA1Digest;
+import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
@@ -207,7 +208,7 @@ public class Login  {
 
 
 	    		//  generate digest of the password
-	    		hashedPassword = getSHA1for((password.getText()));
+	    		hashedPassword = Crypto.getSHA1for((password.getText()));
 	    		// AsyncCallback<User> callback = new AuthenticationHandler<User>();
 
 	    		AsyncCallback<User> callback = new AsyncCallback<User>() {
@@ -331,7 +332,7 @@ public class Login  {
 		*/
 		
 		//  generate digest of the password
-		hashedPassword = getSHA1for((passwordReg.getText()));
+		hashedPassword = Crypto.getSHA1for((passwordReg.getText()));
 		// encrypt the password
 		//TripleDesCipher cipher = new TripleDesCipher();
 		//cipher.setKey(GWT_DES_KEY);
@@ -350,25 +351,6 @@ public class Login  {
 		   
 		return true;
 	}
-	
-	String getSHA1for(String text) {
-		  SHA1Digest sd = new SHA1Digest();
-		  byte[] bs = text.getBytes();
-		  sd.update(bs, 0, bs.length);
-		  byte[] result = new byte[20];
-		  sd.doFinal(result, 0);
-		  return byteArrayToHexString(result);
-		}
-
-		String byteArrayToHexString(final byte[] b) {
-		  final StringBuffer sb = new StringBuffer(b.length * 2);
-		  for (int i = 0, len = b.length; i < len; i++) {
-		    int v = b[i] & 0xff;
-		    if (v < 16) sb.append('0');
-		    sb.append(Integer.toHexString(v));
-		  }
-		  return sb.toString();
-		}
 		
     private boolean callServiceSetup() {
     			// set up rpc call
