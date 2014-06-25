@@ -213,24 +213,6 @@ public class Login  {
 
 	    		AsyncCallback<User> callback = new AsyncCallback<User>() {
 
-	    			AsyncCallback<User> callbackUser = new AsyncCallback<User>() {
-	    				@Override
-	    				public void onSuccess(User user) {
-	    					if (user == null) {
-	    						System.out.println("[login::getUserConnected] \\ user null");
-	    						Window.alert("please connect without errors");
-	    					} else {
-	    						//Window.alert("ok "+ user.toString());
-	    					}
-	    				}
-
-	    				@Override
-	    				public void onFailure(Throwable caught) {
-	    					System.out.println("[login::getUserConnected] \\ exception null");
-	    					// TODO print error
-	    				}
-	    			};
-
 	    			public void onSuccess(User user) {
 	    				if ((user == null)){	            		
 	    					InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check Caps lock");
@@ -242,7 +224,6 @@ public class Login  {
 	    					InlineLabel error = new InlineLabel("You are now logged on to Inmindd. Please proceed to input panels");
 	    					showErrorPopupPanel(error, "green");	            			
 	    					setUser(user);	
-	    					InminddServiceSvc.getUserConnected(callbackUser);
 	    					// Clear screens of previous input
 	    					if(PatientInfo.lastinstance != null)
 	    						PatientInfo.clearInputs();	
