@@ -59,8 +59,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = " + idUser);
-			result = pstmt.executeQuery("SELECT * FROM user where userId = " + idUser);
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt.setString(1, idUser);
+			result = pstmt.executeQuery();
+			
 			while (result.next()) {
 				if (result.getString(2).equals(password)) {
 					//System.out.println(result.getString(4));
