@@ -46,6 +46,16 @@
     <url-pattern>/RiskFactorInfos/Inmindd</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>InminddLandingPage</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddLandingPage</servlet-name>
+    <url-pattern>/LandingPage/Inmindd</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>InminddProfiler.html</welcome-file>
