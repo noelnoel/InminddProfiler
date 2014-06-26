@@ -51,8 +51,8 @@ public class SupportGoal implements Serializable {
 	public String toJSON(){
 		return "{ \"id\":" + getId() +
 				",\"goalNb\":" + getGoalNb() +
-				", \"name\":  \"" + getName() +
-				"\" ,\"text\": \"" + getText() +
+				", \"name\":  \"" +  (getName() == null || getName() == "null" ? "" : getName()) +
+				"\" ,\"text\": \"" +  (getText() == null || getText() == "null" ? "" : getText()) +
 				"\" ,\"image_url\": \"" + getImage_url() +
 				"\" }";
 	}

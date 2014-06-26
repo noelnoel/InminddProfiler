@@ -1722,16 +1722,30 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM `support_goals_users` WHERE `id_user` = " + idUser);
-			result = pstmt.executeQuery("SELECT * FROM `support_goals_users` WHERE `id_user` = " + idUser);
+			pstmt = conn.prepareStatement("SELECT  s.*, g.*, r.`name` AS `riskfactor_name`, r.`image_url` AS `riskfactor_image_url` FROM `inmindd`.`support_goals_users` AS `s`, `inmindd`.`support_goals` AS `g`, `inmindd`.`support_riskfactors` AS `r` WHERE s.id_goal = g.id AND g.id_riskfactor = r.id AND s.`id_user` = ?;");
+			pstmt.setString(1, idUser);
+			result = pstmt.executeQuery();
 
-			while (result.last()) {
-				SupportGoalUser goal = new SupportGoalUser();
-				goal.setId_goal(result.getInt(1));
-				goal.setId_user(result.getString(2));
-				goal.setTimestamp(result.getTimestamp(3).toString());
-				goal.setComment(result.getString(4));
-				goals.add(goal);
+			while (result.next()) {
+				SupportGoalUser goalUser = new SupportGoalUser();
+				SupportGoal goal = new SupportGoal(result.getInt("id"), result.getInt("goal_nb"), result.getString("goal_name"), result.getString("description"), result.getString("image_url"));
+				if(goal.getName() == "null"){
+					goal.setName("");
+				}
+				if(goal.getText() == "null"){
+					goal.setText("");
+				}
+				goalUser.setId_goal(result.getInt(1));
+				goalUser.setId_user(result.getString(2));
+				goalUser.setTimestamp(result.getTimestamp(3).toString());
+				goalUser.setComment(result.getString(4));
+				if(goalUser.getComment() == "null"){
+					goalUser.setComment("");
+				}
+				goalUser.setRiskfactor_name(result.getString("riskfactor_name"));
+				goalUser.setRiskfactor_image_url(result.getString("riskfactor_image_url"));
+				goalUser.setGoal(goal);
+				goals.add(goalUser);
 			}
 			conn.close();
 			return (goals.size() > 0 ? true : false);

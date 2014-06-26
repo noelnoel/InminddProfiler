@@ -36,9 +36,39 @@ function load(){
 	$("#loadingPanel").css("display", "none");
 }
 
+function loadGlobal(){
+	data = $("#goalsInputRPC").val();
+	data = JSON.parse(data);
+	console.info(data);
+
+	$("#globalGoals tbody").html("");
+	for (var i = 0; i < data.length; i++) {
+		var tr = $("<tr></tr>");
+		var img = $("<img />").attr("src", data[i].riskfactor_image_url).addClass("img-noncircle");
+		var td = $("<td></td>").append(img);
+		tr.append(td);
+		td = $("<td></td>")
+		if(data[i].goal != null){
+			img = $("<img />").attr("src", data[i].goal.image_url).addClass("img-circle");
+			td.append(img).append($("<br />")).append($("<strong></strong>").html(data[i].goal.name));
+		}
+		tr.append(td);
+		td = $("<td></td>").html(data[i].goal.text + "<br />"+ data[i].comment);
+		tr.append(td);
+		$("#globalGoals tbody").append(tr);
+	};
+	$("#globalGoals").attr("style", "");
+	$("#loadingPanel").css("display", "none");
+}
+
 function trigeredByGWT() {
 	console.info("trigered!");
 	load();
+}
+
+function trigeredGlobalByGWT() {
+	console.info("trigeredGlobal!");
+	loadGlobal();
 }
 
 function clickFactors(event){

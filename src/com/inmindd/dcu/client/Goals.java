@@ -29,7 +29,11 @@ public class Goals implements EntryPoint {
 		Goals.exportClickGoals();
 		callServiceSetup();
 		String riskFactor = com.google.gwt.user.client.Window.Location.getParameter("riskFactor");
-		this.riskFactor = Integer.parseInt(riskFactor);
+		if(riskFactor == null){
+			this.riskFactor = -1;
+		} else {
+			this.riskFactor = Integer.parseInt(riskFactor);
+		}
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
@@ -84,12 +88,50 @@ public class Goals implements EntryPoint {
 				// TODO print error
 			}
 		};
+		
+		AsyncCallback<ArrayList<SupportGoalUser>> callbackGlobal = new AsyncCallback<ArrayList<SupportGoalUser>>() {
+			@Override
+			public void onSuccess(ArrayList<SupportGoalUser> goals) {
+				if (goals == null || goals.size() < 1) {
+					System.out.println("[RB_Goals::getRisksFactors] \\ risksFactors null");
+					Window.alert("please connect before check your goals");
+					// TODO print error
+				} else {
+					String output = "[";
+					boolean firstTime = true;
+					for(SupportGoalUser goal : goals){
+						if(!firstTime){ output += ","; }
+						else { firstTime = false; }
+						output += goal.toJSON();
+					}
+					output += "]";
 
-		InminddServiceSvc.querySupportGoals(this.riskFactor, callback);
+					DOM.getElementById("goalsInputRPC").setAttribute("value",output);
+
+					trigerGlobalJavascript();
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("[RB_goals::getUser] \\ exception null");
+				// TODO print error
+			}
+		};
+
+		if(this.riskFactor != -1){
+			InminddServiceSvc.querySupportGoals(this.riskFactor, callback);
+		} else {
+			InminddServiceSvc.querySupportGoalUser(this.user, callbackGlobal);
+		}
 	}
 	
 	public static native void trigerJavascript() /*-{
 		$wnd.trigeredByGWT();
+	 }-*/;
+	
+	public static native void trigerGlobalJavascript() /*-{
+		$wnd.trigeredGlobalByGWT();
 	 }-*/;
 	
 	public static void clickGoals(int goalNb, String comment) {

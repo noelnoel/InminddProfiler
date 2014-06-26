@@ -21,7 +21,7 @@ public class LandingPage implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		callServiceSetup();
-		EventListener eventProfiler = new EventListener() {
+		EventListener eventRegister= new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
 				if (Event.ONCLICK == event.getTypeInt()) {
@@ -97,6 +97,16 @@ public class LandingPage implements EntryPoint {
 			}
 		};
 		
+		EventListener eventProfiler = new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if (Event.ONCLICK == event.getTypeInt()) {
+					DOM.getElementById("profilerPanel").setAttribute("style", "");
+					DOM.getElementById("indexPanel").setAttribute("style", "display:none");
+				}
+			}
+		};
+		
 		Element elem = DOM.getElementById("linkProfiler");
 		DOM.sinkEvents(elem, Event.ONCLICK);
 		DOM.setEventListener(elem, eventProfiler);
@@ -106,6 +116,9 @@ public class LandingPage implements EntryPoint {
 		Element elem2 = DOM.getElementById("linkLogin");
 		DOM.sinkEvents(elem2, Event.ONCLICK);
 		DOM.setEventListener(elem2, eventLogin);
+		Element elem3 = DOM.getElementById("linkRegister");
+		DOM.sinkEvents(elem3, Event.ONCLICK);
+		DOM.setEventListener(elem3, eventRegister);
 		
 		DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 		DOM.getElementById("indexPanel").setAttribute("style", "");
