@@ -57,6 +57,6 @@ public interface InminddService extends RemoteService {
 	
 	public User getUserConnected() throws IllegalArgumentException;
 	public Boolean updateSupportGoalUser(SupportGoalUser history)	throws IllegalArgumentException;
-	public SupportGoalUser querySupportGoalUser(User user) 			throws IllegalArgumentException;
+	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) 			throws IllegalArgumentException;
 	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)		throws IllegalArgumentException;
 }

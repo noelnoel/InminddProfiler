@@ -84,7 +84,7 @@ public interface InminddServiceAsync {
 	void updateSupportGoalUser(SupportGoalUser goal, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 
-	void querySupportGoalUser(User user, AsyncCallback<SupportGoalUser> callback)
+	void querySupportGoalUser(User user, AsyncCallback<ArrayList<SupportGoalUser>> callback)
 			throws IllegalArgumentException;
 
 	void querySupportGoals(int riskFactor, AsyncCallback<ArrayList<SupportGoal>> callback)

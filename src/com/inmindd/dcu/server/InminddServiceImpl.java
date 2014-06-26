@@ -48,7 +48,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	private CognitiveTwoInfo cognitiveTwo;
 	private CognitiveOneInfo cognitiveOne;
 	private DietInfo diet;
-	private SupportGoalUser goal;
 
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
@@ -1694,18 +1693,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	}
 
-	public SupportGoalUser querySupportGoalUser(User user) {
+	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) {
 		//open database connection
-		goal = new SupportGoalUser();
+		ArrayList<SupportGoalUser> goals = new ArrayList<SupportGoalUser>();
 		initDBConnection();
 
-		if (getSupportGoalUser(user)) {
+		if (getSupportGoalUser(user, goals)) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return goal;
+			return goals;
 		}
 		else {
 			try {
@@ -1713,11 +1712,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return goal;
+			return goals;
 		}
 	}
 
-	private boolean getSupportGoalUser(User user) {
+	private boolean getSupportGoalUser(User user, ArrayList<SupportGoalUser> goals) {
 		String idUser = user.getUserId();
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
@@ -1727,15 +1726,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			result = pstmt.executeQuery("SELECT * FROM `support_goals_users` WHERE `id_user` = " + idUser);
 
 			while (result.last()) {
+				SupportGoalUser goal = new SupportGoalUser();
 				goal.setId_goal(result.getInt(1));
 				goal.setId_user(result.getString(2));
 				goal.setTimestamp(result.getTimestamp(3).toString());
 				goal.setComment(result.getString(4));
-				conn.close();
-				return true;
+				goals.add(goal);
 			}
 			conn.close();
-			return false;
+			return (goals.size() > 0 ? true : false);
 		}
 		catch (SQLException e) {
 			user = null;
