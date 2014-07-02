@@ -1645,6 +1645,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public User getUserConnected() throws IllegalArgumentException {
 		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
 	}
+	
+	@Override
+	public Boolean unsetUserConnected() throws IllegalArgumentException {
+		getThreadLocalRequest().getSession().setAttribute("current_user", null);
+		return true;
+	}
 
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {

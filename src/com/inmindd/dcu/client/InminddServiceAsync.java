@@ -80,6 +80,9 @@ public interface InminddServiceAsync {
 	
 	void getUserConnected(AsyncCallback<com.inmindd.dcu.shared.User> callback)
 			throws IllegalArgumentException;
+	
+	void unsetUserConnected(AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
 
 	void updateSupportGoalUser(SupportGoalUser goal, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
