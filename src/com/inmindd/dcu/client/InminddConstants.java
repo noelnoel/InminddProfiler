@@ -123,4 +123,11 @@ public interface InminddConstants extends Constants{
 	 	String experts_8();
 	 	String experts_9();
 	 	
+	 	String goal_1();
+	 	String goal_2();
+	 	String back();
+	 	String goal_4();
+	 	String goal_5();
+	 	String goal_6();	
+	 	
 }

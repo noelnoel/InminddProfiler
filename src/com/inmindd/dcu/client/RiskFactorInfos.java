@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.User;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class RiskFactorInfos implements EntryPoint {
 	
@@ -21,8 +22,13 @@ public class RiskFactorInfos implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
+		globalize();
 		callServiceSetup();
 		String riskFactor = com.google.gwt.user.client.Window.Location.getParameter("riskfactor");
+		if(riskFactor == null){
+			Window.alert("Error");
+			return;
+		}
 		this.riskFactor = Integer.parseInt(riskFactor);
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
@@ -31,6 +37,7 @@ public class RiskFactorInfos implements EntryPoint {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
 					Window.alert("please connect before check your goals");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					setUser(user);
@@ -53,6 +60,7 @@ public class RiskFactorInfos implements EntryPoint {
 			// TODO print error
 			System.out.println("[RB_RiskFactors::getScore] \\ user null");
 			Window.alert("please connect before check your score");
+			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 			return;
 
 		}
@@ -68,7 +76,6 @@ public class RiskFactorInfos implements EntryPoint {
 				} else {
 					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-					Window.alert("truc");
 					DOM.getElementById("infosPanel").setAttribute("style", "");
 					switch(riskFactor){
 					case 1:
@@ -214,5 +221,26 @@ public class RiskFactorInfos implements EntryPoint {
 		return true;
 
 	}
+	
+	private void globalize(){
+		InminddConstants constants = 
+				   (InminddConstants)GWT.create(InminddConstants.class);
+		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
+		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
+		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
+		DOM.getElementById("menu-support-profile").setInnerHTML(constants.menu_support_profile());
+		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
+		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
+		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
+		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
+		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
+		
+		DOM.getElementById("goal-2").setInnerHTML(constants.goal_2());
+		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_5());
+		DOM.getElementById("back").setInnerHTML(constants.back());
+	}
+
 
 }
