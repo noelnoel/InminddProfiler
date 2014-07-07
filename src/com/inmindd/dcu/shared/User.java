@@ -2,11 +2,15 @@ package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
 
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+
 public class User implements Serializable {
 	private String userId;
 	private String password;	
 	//private String countryCode;
 	//private String practice;
+	private String lang;
 	
 	public User() {
 		
@@ -33,8 +37,34 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getLang() {
+		if(lang == null || lang == ""){
+			setLangFromCountryCode();
+		}
+		return lang;
+	}
+	
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
 
-	
-	
+	public void setLangFromCountryCode() {
+		RegExp regExp = RegExp.compile("^([0-9]{2})[0-9]{5}$");
+		MatchResult matcher = regExp.exec(userId);
+		boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr); 
+
+		if (matchFound) {
+			if (matcher.getGroup(1).equals("44")) {
+				lang = "fr";
+			} else if (matcher.getGroup(1).equals("22")) {
+				lang = "en";
+			} else if (matcher.getGroup(1).equals("33")) {
+				lang = "nl";
+			} else {
+				lang = "en";
+			}
+		}
+	}
 
 }

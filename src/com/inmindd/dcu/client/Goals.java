@@ -124,7 +124,7 @@ public class Goals implements EntryPoint {
 		};
 
 		if(this.riskFactor != -1){
-			InminddServiceSvc.querySupportGoals(this.riskFactor, callback);
+			InminddServiceSvc.querySupportGoals(this.riskFactor, this.user.getLang(), callback);
 		} else {
 			InminddServiceSvc.querySupportGoalUser(this.user, callbackGlobal);
 		}

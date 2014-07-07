@@ -18,6 +18,7 @@ import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 /**
@@ -58,6 +59,7 @@ public interface InminddService extends RemoteService {
 	public User getUserConnected() throws IllegalArgumentException;
 	public Boolean unsetUserConnected() throws IllegalArgumentException;
 	public Boolean updateSupportGoalUser(SupportGoalUser history)	throws IllegalArgumentException;
+	public SupportRiskFactorInfos querySupportRiskFactorInfos(User user, int riskfactorId) throws IllegalArgumentException;
 	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) 			throws IllegalArgumentException;
-	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)		throws IllegalArgumentException;
+	public ArrayList<SupportGoal> querySupportGoals(int riskFactor, String lang)		throws IllegalArgumentException;
 }

@@ -21,6 +21,7 @@ import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 import java.sql.PreparedStatement;
@@ -1651,6 +1652,61 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		getThreadLocalRequest().getSession().setAttribute("current_user", null);
 		return true;
 	}
+	
+	@Override
+	public SupportRiskFactorInfos querySupportRiskFactorInfos(User user, int riskfactorId) {
+		SupportRiskFactorInfos infos = new SupportRiskFactorInfos();
+		//open database connection
+		initDBConnection();
+
+		if (getSupportRiskFactorInfos(user, riskfactorId, infos)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return infos;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	private boolean getSupportRiskFactorInfos(User user, int riskfactorId, SupportRiskFactorInfos infos) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT  * FROM `inmindd`.`support_riskfactors` WHERE id = ? AND lang = ?;");
+			pstmt.setInt(1, riskfactorId);
+			pstmt.setString(2, user.getLang());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				infos.setId(result.getInt("id"));
+				infos.setLang(result.getString("lang"));
+				infos.setName(result.getString("name"));
+				infos.setImage_url(result.getString("image_url"));
+				infos.setDesc_keep(result.getString("desc_keep"));
+				infos.setDesc_improv(result.getString("desc_improv"));
+				conn.close();
+				return true;
+			}
+			conn.close();
+			return false;
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+
+	}
 
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
@@ -1699,6 +1755,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	}
 
+	@Override
 	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) {
 		//open database connection
 		ArrayList<SupportGoalUser> goals = new ArrayList<SupportGoalUser>();
@@ -1728,8 +1785,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT  s.*, g.*, r.`name` AS `riskfactor_name`, r.`image_url` AS `riskfactor_image_url` FROM `inmindd`.`support_goals_users` AS `s`, `inmindd`.`support_goals` AS `g`, `inmindd`.`support_riskfactors` AS `r` WHERE s.id_goal = g.id AND g.id_riskfactor = r.id AND s.`id_user` = ?;");
+			pstmt = conn.prepareStatement("SELECT  s.*, g.*, r.`name` AS `riskfactor_name`, r.`image_url` AS `riskfactor_image_url` FROM `inmindd`.`support_goals_users` AS `s`, `inmindd`.`support_goals` AS `g`, `inmindd`.`support_riskfactors` AS `r` WHERE s.id_goal = g.id AND g.id_riskfactor = r.id AND g.`lang` = r.`lang` AND s.`id_user` = ? AND g.`lang` = ?;");
 			pstmt.setString(1, idUser);
+			pstmt.setString(2, user.getLang());
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
@@ -1765,13 +1823,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 	@Override
-	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)
+	public ArrayList<SupportGoal> querySupportGoals(int riskFactor, String lang)
 			throws IllegalArgumentException {
 		//open database connection
 		ArrayList<SupportGoal> goals = new ArrayList<SupportGoal>();
 		initDBConnection();
 
-		if (getSupportGoals(riskFactor, goals)) {
+		if (getSupportGoals(riskFactor, lang, goals)) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
@@ -1790,13 +1848,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 
-	private boolean getSupportGoals(int riskFactor, ArrayList<SupportGoal> goalsList) {
+	private boolean getSupportGoals(int riskFactor, String lang, ArrayList<SupportGoal> goalsList) {
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = ?;");
+			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = ? AND `lang` = ?;");
 			pstmt.setInt(1, riskFactor);
+			pstmt.setString(2, lang);
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
