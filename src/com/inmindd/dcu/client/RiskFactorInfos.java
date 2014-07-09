@@ -185,10 +185,10 @@ public class RiskFactorInfos implements EntryPoint {
 					case 8:
 						if(score.getHighCognitiveActivity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/coginitive_activity_amber.png");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_amber.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/coginitive_activity_blue.png");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_blue.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");

@@ -103,7 +103,7 @@ public class Score implements EntryPoint {
 					}*/
 					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() +
 							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() +
-							"}, \"coginitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
+							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
 							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() +
 							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() +
 							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() +
