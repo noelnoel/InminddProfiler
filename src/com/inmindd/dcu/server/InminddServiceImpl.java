@@ -19,6 +19,7 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
@@ -1864,6 +1865,55 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			}
 			conn.close();
 			return (goalsList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportFAQ> querySupportFAQ(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportFAQ> faqs = new ArrayList<SupportFAQ>();
+		initDBConnection();
+
+		if (getSupportFAQ(lang, faqs)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return faqs;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return faqs;
+		}
+	}
+
+
+	private boolean getSupportFAQ(String lang, ArrayList<SupportFAQ> faqList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_faq` WHERE `lang` = ?;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportFAQ f = new SupportFAQ(result.getInt("id"), result.getString("lang"), result.getString("question"), result.getString("answer")); 
+				faqList.add(f);
+			}
+			conn.close();
+			return (faqList.size() > 0);
 		}
 		catch (SQLException e) {
 			user = null;

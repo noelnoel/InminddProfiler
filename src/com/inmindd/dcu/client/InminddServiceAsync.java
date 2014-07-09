@@ -14,6 +14,7 @@ import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
@@ -95,6 +96,9 @@ public interface InminddServiceAsync {
 			throws IllegalArgumentException;
 	
 	void querySupportRiskFactorInfos(User user, int riskfactorId, AsyncCallback<SupportRiskFactorInfos> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportFAQ(String lang, AsyncCallback<ArrayList<SupportFAQ>> callback)
 			throws IllegalArgumentException;
 }
 
