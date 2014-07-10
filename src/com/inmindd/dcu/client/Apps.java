@@ -7,34 +7,30 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.inmindd.dcu.shared.SupportExperts;
+import com.inmindd.dcu.shared.SupportApps;
 import com.inmindd.dcu.shared.User;
 
-
-public class Experts implements EntryPoint {
+public class Apps implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
-	private static Experts lastInstance;
 
 	@Override
 	public void onModuleLoad() {
 		globalize();
 		callServiceSetup();
-		lastInstance = this;
-		Experts.exportClickMail();
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onSuccess(User user) {
 				if (user == null) {
-					System.out.println("[RB_Experts::getUser] \\ user null");
-					Window.alert("please connect before check Experts");
+					System.out.println("[RB_Apps::getUser] \\ user null");
+					Window.alert("please connect before check Apps");
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					setUser(user);
-					getExperts();
+					getApps();
 				}
 			}
 
@@ -48,76 +44,51 @@ public class Experts implements EntryPoint {
 		InminddServiceSvc.getUserConnected(callback);
 	}
 	
-	public static void clickEmail(String email, String body) {
-		AsyncCallback<Boolean> callbackMail = new AsyncCallback<Boolean>() {
-			
-			@Override
-			public void onSuccess(Boolean result) {
-				if(result){
-					Window.alert("OK - mail sent");
-				} else {
-					Window.alert("ERROR of - mail not sent");
-				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR EXCCEPTIOn - mail not sent"+ caught.getMessage());
-			}
-		};
-		lastInstance.InminddServiceSvc.sendMail(email, body, callbackMail);
-	}
-	
-	public static native void exportClickMail() /*-{
-		$wnd.mailClick =
-		$entry(@com.inmindd.dcu.client.Experts::clickEmail(Ljava/lang/String;Ljava/lang/String;));
-	}-*/;
-	
-	private void getExperts(){
+	private void getApps(){
 		String lang = user.getLang();
 		
 		
-		AsyncCallback<ArrayList<SupportExperts>> callback = new AsyncCallback<ArrayList<SupportExperts>>() {
-			
+		AsyncCallback<ArrayList<SupportApps>> callback = new AsyncCallback<ArrayList<SupportApps>>() {
+
 			@Override
-			public void onSuccess(ArrayList<SupportExperts> result) {
+			public void onFailure(Throwable caught) {
+				Window.alert("Error: NO APPS");
+			}
+
+			@Override
+			public void onSuccess(ArrayList<SupportApps> result) {
 				if(result == null || result.size() < 1){
-					Window.alert("Error: No Experts");
+					Window.alert("Error: No APPS");
 				} else {
 					String output = "[";
 					boolean firstTime = true;
-					for(SupportExperts expert : result){
+					for(SupportApps expert : result){
 						if(!firstTime){ output += ","; }
 						else { firstTime = false; }
 						output += expert.toJSON();
 					}
 					output += "]";
 
-					DOM.getElementById("expertsInputRPC").setAttribute("value",output);
+					DOM.getElementById("appsInputRPC").setAttribute("value",output);
 
 					trigerJavascript();
-				}
-				
+				}				
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error: NO FAQ");
-			}
 		};
-		InminddServiceSvc.querySupportExperts(lang, callback);
+		InminddServiceSvc.querySupportApps(lang, callback);
 		return;
 		
 	}
 	
-	public static native void trigerJavascript() /*-{
-		$wnd.trigeredByGWT();
-	 }-*/;
-
 	private void setUser(User user) {
 		this.user = user;				
 	}
 	
+	
+	public static native void trigerJavascript() /*-{
+		$wnd.trigeredByGWT();
+	 }-*/;
 	
 	private boolean callServiceSetup() {
 		// set up rpc call
@@ -144,16 +115,8 @@ public class Experts implements EntryPoint {
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
 		
-		DOM.getElementById("askTheExperts").setInnerHTML(constants.askTheExperts());
-		DOM.getElementById("askExperts1").setInnerHTML(constants.askExperts1());
-		DOM.getElementById("askExperts2").setInnerHTML(constants.askExperts2());
-		DOM.getElementById("askExperts3").setInnerHTML(constants.askExperts3());
-		DOM.getElementById("askExperts4").setInnerHTML(constants.askExperts4());
-		DOM.getElementById("askExperts5").setInnerHTML(constants.askExperts5());
-		DOM.getElementById("askExperts6").setInnerHTML(constants.askExperts6());
-		DOM.getElementById("askExperts7").setInnerHTML(constants.askExperts7());
-		DOM.getElementById("askExperts8").setInnerHTML(constants.askExperts8());
-		DOM.getElementById("askExperts9").setInnerHTML(constants.askExperts9());
+		DOM.getElementById("apps1").setInnerHTML(constants.apps1());
+		DOM.getElementById("apps2").setInnerHTML(constants.apps2());
 	}
 
 }

@@ -20,6 +20,7 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportApps;
 import com.inmindd.dcu.shared.SupportExperts;
 import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
@@ -43,6 +44,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 /*end of mail*/
+
 
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -1978,6 +1980,55 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			}
 			conn.close();
 			return (expertList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportApps> querySupportApps(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportApps> apps = new ArrayList<SupportApps>();
+		initDBConnection();
+
+		if (getSupportApps(lang, apps)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return apps;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return apps;
+		}
+	}
+
+
+	private boolean getSupportApps(String lang, ArrayList<SupportApps> appsList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_apps` WHERE `lang` = ? ORDER BY `category`;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportApps f = new SupportApps(result.getInt("id"), result.getString("lang"), result.getString("name"), result.getString("logo_url"), result.getString("category"), result.getString("description")); 
+				appsList.add(f);
+			}
+			conn.close();
+			return (appsList.size() > 0);
 		}
 		catch (SQLException e) {
 			user = null;

@@ -16,6 +16,7 @@ import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportApps;
 import com.inmindd.dcu.shared.SupportExperts;
 import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
@@ -67,5 +68,6 @@ public interface InminddService extends RemoteService {
 	public ArrayList<SupportFAQ> querySupportFAQ(String lang)		throws IllegalArgumentException;
 	public ArrayList<SupportExperts> querySupportExperts(String lang)		throws IllegalArgumentException;
 	public Boolean sendMail(String email, String body)  	throws IllegalArgumentException;
+	public ArrayList<SupportApps> querySupportApps(String lang)			throws IllegalArgumentException;
 	
 }

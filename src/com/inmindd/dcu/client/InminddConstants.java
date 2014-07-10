@@ -143,4 +143,8 @@ public interface InminddConstants extends Constants{
 	 	String askExperts8();
 	 	String askExperts9();
 	 	
+
+	 	String apps1();
+	 	String apps2();
+	 	
 }
