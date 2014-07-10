@@ -128,6 +128,8 @@ public interface InminddConstants extends Constants{
 	 	String back();
 	 	String goal_4();
 	 	String goal_5();
-	 	String goal_6();	
+	 	String goal_6();
+	 	
+	 	String faq();
 	 	
 }
