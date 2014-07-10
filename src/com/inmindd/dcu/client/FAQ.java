@@ -116,6 +116,8 @@ public class FAQ implements EntryPoint {
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
+		
+		DOM.getElementById("faqh1").setInnerHTML(constants.faq());
 	}
 
 }
