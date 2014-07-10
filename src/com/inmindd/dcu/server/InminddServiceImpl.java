@@ -19,6 +19,7 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportExperts;
 import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
@@ -1914,6 +1915,55 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			}
 			conn.close();
 			return (faqList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportExperts> querySupportExperts(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportExperts> experts = new ArrayList<SupportExperts>();
+		initDBConnection();
+
+		if (getSupportExperts(lang, experts)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return experts;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return experts;
+		}
+	}
+
+
+	private boolean getSupportExperts(String lang, ArrayList<SupportExperts> expertList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_experts` WHERE `lang` = ? ORDER BY `country`;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportExperts f = new SupportExperts(result.getInt("id"), result.getString("lang"), result.getString("country"), result.getString("image_url"), result.getString("description")); 
+				expertList.add(f);
+			}
+			conn.close();
+			return (expertList.size() > 0);
 		}
 		catch (SQLException e) {
 			user = null;

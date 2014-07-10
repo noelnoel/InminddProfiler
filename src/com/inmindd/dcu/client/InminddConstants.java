@@ -132,4 +132,15 @@ public interface InminddConstants extends Constants{
 	 	
 	 	String faq();
 	 	
+	 	String askTheExperts();
+	 	String askExperts1();
+	 	String askExperts2();
+	 	String askExperts3();
+	 	String askExperts4();
+	 	String askExperts5();
+	 	String askExperts6();
+	 	String askExperts7();
+	 	String askExperts8();
+	 	String askExperts9();
+	 	
 }
