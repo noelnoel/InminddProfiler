@@ -434,7 +434,14 @@ public class Login  {
 				
 			return false;
 		}
-		
+		if (!(id.startsWith("11") || id.startsWith("22") || id.startsWith("33") || id.startsWith("44"))) // valid country code ??
+		{
+			InlineLabel error  = new InlineLabel("Invalid User Id - Please re-enter. Check your caps lock");	
+			showErrorPopupPanel(error,"red");
+				
+			return false;
+		}
+			
 		return true;
 	}
     private void showErrorPopupPanel(InlineLabel error, String color) {
@@ -450,7 +457,7 @@ public class Login  {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(450,676);
+		popup.setPopupPosition(450,576);
 		popup.setWidth("650px");
 		popup.show();
 

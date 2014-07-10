@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,8 +56,13 @@ public class CognitiveOne {
 	private TextBox plantSimulYears;
 	private TextBox elementaryYears;
 	private TextBox elementarySimulYears;
+	private int leftMargin;
 	
 	public static CognitiveOne lastinstance;
+	
+	static  InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
+	
 	public CognitiveOne() {
 		lastinstance = this;
 	}
@@ -91,14 +97,14 @@ public class CognitiveOne {
 	public FlowPanel setupCognitiveOnePanel(Login login) {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"About Your Cognitive Activities (Part 1)</h1>");
-		
+				
+		constants.cognitive_p1() + "</h1>");
 	
 		HTMLPanel educ = new HTMLPanel("<h3>" +
-				"Education</h3>");
+				constants.education() + "</h3>");
 		educ.getElement().getStyle().setProperty("textDecoration", "underline");
 
-		Button prev = new Button("Retrieve previous data ?");
+		Button prev = new Button(constants.review());
 
 
 		// Listen for mouse events on the previous button.
@@ -121,9 +127,9 @@ public class CognitiveOne {
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
 		HTMLPanel occup = new HTMLPanel("<h3>" +
-				"Occupation</h3>");
+				constants.occupations() + "</h3>");
 		occup.getElement().getStyle().setProperty("textDecoration", "underline");
-		InlineLabel jobLabel = new InlineLabel("Below is a list of different types of jobs organised into job levels. Unless you have never been employed, please indicate for each job level the number of years you have worked at a job at that level");
+		InlineLabel jobLabel = new InlineLabel(constants.type_job());
 		jobLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		cognitiveOnePanel.add(occup);
@@ -311,15 +317,17 @@ public class CognitiveOne {
 		yearsFormalEducation.setMaxLength(4);
 		yearsFormalEducation.setWidth("2em"); 
 	 
-		yearsFormalEducation.getElement().getStyle().setProperty("marginLeft", "50px");
-		yearsEducation = new InlineLabel("Years of formal education [including postgraduate studies and any specialisation]");
+		//yearsFormalEducation.getElement().getStyle().setProperty("marginLeft", "50px");
+		yearsFormalEducation.setStyleName("pos7");
+		yearsEducation = new InlineLabel(constants.formal_education());
 		yearsEducation.getElement().getStyle().setProperty("fontWeight", "bold");		
 		cogoLine.add(yearsEducation);
 		
 		cogoLine.add(yearsFormalEducation);
-		InlineLabel years = new InlineLabel("years");
+		InlineLabel years = new InlineLabel(constants.years());
 		years.getElement().getStyle().setProperty("fontWeight", "bold");
-		years.getElement().getStyle().setProperty("marginLeft", "5px");
+		//years.getElement().getStyle().setProperty("marginLeft", "5px");
+		years.setStyleName("pos8");
 		cogoLine.add(years);
 		return cogoLine;
 		
@@ -334,42 +342,52 @@ public class CognitiveOne {
 		yearsNonformalEducation.setMaxLength(4);
 		
 		yearsNonformalEducation.setWidth("2em"); 
-	 
-		yearsNonformalEducation.getElement().getStyle().setProperty("marginLeft", "348px");
-		yearsNonForEducation = new InlineLabel("Years of non-formal education");
+		
+		//yearsNonformalEducation.getElement().getStyle().setProperty("marginLeft", "348px");
+		yearsNonformalEducation.setStyleName("pos7");
+		cogoLine.add(yearsNonformalEducation);
+		InlineLabel years = new InlineLabel(constants.years());
+		years.getElement().getStyle().setProperty("fontWeight", "bold");
+		//years.getElement().getStyle().setProperty("marginLeft", "5px");
+		years.setStyleName("pos8");
+		cogoLine.add(years);
+		yearsNonForEducation = new InlineLabel(constants.non_formal());
 		yearsNonForEducation.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "Non-formal education refers to all organised learning activities outside regular or formal education. This may also be referred to as non-formal education and training. Normally you have to register for organised learning activities. Non-formal education could involve attending/participating in a course or seminar to get or to improve skills, knowledge and competence, which may or may not lead to a certificate. The courses can be attended to improve job-related knowledge or improve skills for social and personal purposes.It could involve attending/participating in a correspondence course,a tele-teaching or a comparable measure of teacher supported distance learning to improve skills, knowledge or competence. Examples of organised learning activities are music lessons, night classes, arts courses, courses in photography, foreign language lessons, letter writing, courses on using computers or the internet, driving lessons etc. (courses for personal/social reasons)";
+		String title = constants.non_formal_title();
 		cogoLine.add(yearsNonForEducation);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
-		cogoLine.add(yearsNonformalEducation);
-		InlineLabel years = new InlineLabel("years");
-		years.getElement().getStyle().setProperty("fontWeight", "bold");
-		years.getElement().getStyle().setProperty("marginLeft", "5px");
-		cogoLine.add(years);
+		
+		
 		return cogoLine;
 		
 	}
 	
 	
-	private HorizontalPanel addManagers() {
-		HorizontalPanel cogoLine  = new HorizontalPanel();
+	private FlowPanel addManagers() {
+		FlowPanel cogoLine  = new FlowPanel();
 		managerYears = new TextBox();
 		managerSimulYears = new TextBox();
 		managerYears.setMaxLength(3);
 		managerYears.setWidth("2em");
-		managerYears.getElement().getStyle().setProperty("marginLeft", "465px");
-		InlineLabel label1 = new InlineLabel("Managers");
+		
+		
+		//managerYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		managerYears.setStyleName("pos5");
+		
+		InlineLabel label1 = new InlineLabel(constants.managers());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
+		label1.getElement().getStyle().setProperty("marginRight", "10px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g managing director, senior government official, hotel or restaurant manager, etc.";
+		String title = constants.director();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(managerYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		managerYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -389,18 +407,23 @@ public class CognitiveOne {
 		professionalSimulYears = new TextBox();
 		professionalYears.setMaxLength(3);
 		professionalYears.setWidth("2em");
-		professionalYears.getElement().getStyle().setProperty("marginLeft", "438px");
-		InlineLabel label1 = new InlineLabel("Professionals");
+
+		
+		professionalYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		professionalYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.professionals());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g medical doctor, teacher, engineer, artist, accountant, etc.";
+		String title = constants.pro();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(professionalYears);
-		InlineLabel label2 = new InlineLabel("years");
+	
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		professionalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -420,18 +443,20 @@ public class CognitiveOne {
 		technicianYears = new TextBox();
 		technicianYears.setMaxLength(3);
 		technicianYears.setWidth("2em");
-		technicianYears.getElement().getStyle().setProperty("marginLeft", "270px");
-		InlineLabel label1 = new InlineLabel("Technicians & associate professionals");
+		//technicianYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		technicianYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.technicians());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g engineering technician, photographer, ICT operations technician, etc.";
+		String title = constants.technicianexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(technicianYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		technicianYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -451,18 +476,20 @@ public class CognitiveOne {
 		clericalYears = new TextBox();
 		clericalYears.setMaxLength(3);
 		clericalYears.setWidth("2em");
-		clericalYears.getElement().getStyle().setProperty("marginLeft", "370px");
-		InlineLabel label1 = new InlineLabel("Clerical support workers");
+		//clericalYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		clericalYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.clerical_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g receptionist, office supervisor, clerical worker, etc.";
+		String title = constants.clericalexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(clericalYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		clericalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -482,18 +509,20 @@ public class CognitiveOne {
 		serviceYears = new TextBox();
 		serviceYears.setMaxLength(3);
 		serviceYears.setWidth("2em");
-		serviceYears.getElement().getStyle().setProperty("marginLeft", "370px");
-		InlineLabel label1 = new InlineLabel("Service & sales workers");
+		//serviceYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		serviceYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.services_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g shopkeeper, chef, child care worker, hairdresser, waitress, etc.";
+		String title = constants.servicesexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(serviceYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		serviceYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -514,18 +543,20 @@ public class CognitiveOne {
 		agriculturalYears = new TextBox();
 		agriculturalYears.setMaxLength(3);
 		agriculturalYears.setWidth("2em");
-		agriculturalYears.getElement().getStyle().setProperty("marginLeft", "238px");
-		InlineLabel label1 = new InlineLabel("Skilled agriculture, forestry, fishery workers");
+		//agriculturalYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		agriculturalYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.agriculture_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g forestry worker, vegetable grower, farmer, etc.";
+		String title = constants.agriculturalexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(agriculturalYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		agriculturalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -545,18 +576,20 @@ public class CognitiveOne {
 		craftYears = new TextBox();
 		craftYears.setMaxLength(3);
 		craftYears.setWidth("2em");
-		craftYears.getElement().getStyle().setProperty("marginLeft", "333px");
-		InlineLabel label1 = new InlineLabel("Craft & related trades workers");
+		//craftYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		craftYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.craft_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g carpenter, electrician, builder,  jewellery maker, baker, plumber, etc.";
+		String title = constants.craftexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(craftYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		craftYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -576,18 +609,20 @@ public class CognitiveOne {
 		plantYears = new TextBox();
 		plantYears.setMaxLength(3);
 		plantYears.setWidth("2em");
-		plantYears.getElement().getStyle().setProperty("marginLeft", "260px");
-		InlineLabel label1 = new InlineLabel("Plant & machine operators & assemblers");
+		//plantYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		plantYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.plant_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g machine operator, van driver, etc.";
+		String title = constants.plantexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(plantYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		plantYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -607,18 +642,20 @@ public class CognitiveOne {
 		elementaryYears = new TextBox();
 		elementaryYears.setMaxLength(3);
 		elementaryYears.setWidth("2em");
-		elementaryYears.getElement().getStyle().setProperty("marginLeft", "375px");
-		InlineLabel label1 = new InlineLabel("Elementary occupations");
+		//elementaryYears.getElement().getStyle().setProperty("marginLeft", "auto");
+		elementaryYears.setStyleName("pos5");
+		InlineLabel label1 = new InlineLabel(constants.elementary_1());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
-		String title = "e.g cleaner, farm labourer, building construction labourer, etc.";
+		String title = constants.elementaryexample();
 		cogoLine.add(label1);
 		String leftMargin = "25px";
 		cogoLine.add(getInfoLogo(title, leftMargin));
 		cogoLine.add(elementaryYears);
-		InlineLabel label2 = new InlineLabel("years");
+		InlineLabel label2 = new InlineLabel(constants.years());
 		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		//label2.getElement().getStyle().setProperty("marginLeft", "5px");
+		label2.setStyleName("pos6");
 		cogoLine.add(label2);
 		elementaryYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -637,6 +674,7 @@ public class CognitiveOne {
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
 		logo.getElement().getStyle().setProperty("marginLeft", leftMargin);
+		logo.getElement().getStyle().setProperty("marginRight", "25px");
 		logo.getElement().getStyle().setProperty("width", "25px");
 		logo.setTitle(title);
 		return logo;
@@ -662,15 +700,15 @@ public class CognitiveOne {
 	private void showSimul(TextBox simulYears ) {
 		 
 		final PopupPanel popup = new PopupPanel(true, true);			
-		InlineLabel quest1 = new InlineLabel("Did you hold another job simultaneously at this level?");
+		InlineLabel quest1 = new InlineLabel(constants.simul_job());
 		
 		FlowPanel vertPanel = new FlowPanel();
 		quest1.getElement().getStyle().setProperty("color", "red");
 		quest1.getElement().getStyle().setProperty("fontWeight", "bold");
 		quest1.getElement().getStyle().setProperty("marginLeft", "25px");
-		RadioButton Yes = new RadioButton("simul", "YES");
+		RadioButton Yes = new RadioButton("simul", constants.yes());
 		Yes.getElement().getStyle().setProperty("marginLeft", "10px");
-		RadioButton No = new RadioButton("simul", "NO");
+		RadioButton No = new RadioButton("simul", constants.no());
 		No.getElement().getStyle().setProperty("marginLeft", "10px");
 		vertPanel.add(quest1);
 		vertPanel.add(Yes);
@@ -810,6 +848,9 @@ class MyHandler implements ClickHandler
 	      
 	    }	    
 	    PopupPanel pop;
+	    
+	    static  InminddConstants constants = 
+				   (InminddConstants)GWT.create(InminddConstants.class);
 	    void setPop(PopupPanel pop)   {
 	        this.pop = pop;
 	    }
@@ -819,7 +860,7 @@ class MyHandler implements ClickHandler
 		public void onClick(ClickEvent event) 
 	    {
 	    	PopupPanel popup = new PopupPanel(true, true);			
-			InlineLabel quest2 = new InlineLabel("Please indicate the number of years that you worked at this job");
+			InlineLabel quest2 = new InlineLabel(constants.simul_years());
 			
 			FlowPanel vertPanel = new FlowPanel();
 			quest2.getElement().getStyle().setProperty("color", "red");

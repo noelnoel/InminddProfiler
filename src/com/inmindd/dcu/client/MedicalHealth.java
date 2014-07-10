@@ -191,7 +191,8 @@ public class MedicalHealth {
 	
 	private InlineLabel error;
 	private  MedicalInfo medicalData;  
-	
+	private static InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	public MedicalHealth() {
 		lastinstance = this;
 	}
@@ -199,14 +200,14 @@ public class MedicalHealth {
 	public FlowPanel setupMedicalHealthPanel(Login login) {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"About Your medical health</h1>");
+				constants.medical() + "</h1>");
 		HTMLPanel header = new HTMLPanel("<h3>" +
-				"The following questions are about your health </h3>");
+				constants.health() + " </h3>");
 
 		medicalHealthPanel.add(mainHeader);
 		medicalHealthPanel.add(header);
 
-		Button prev = new Button("Retrieve previous data ?");
+		Button prev = new Button(constants.review());
 
 		// Listen for mouse events on the previous data button.
 		prev.addClickHandler(new ClickHandler() {
@@ -217,7 +218,7 @@ public class MedicalHealth {
 		medicalHealthPanel.add(prev);
 		medicalHealthPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 
-		heightCent = new DataField("What is your height in cm ? ");
+		heightCent = new DataField(constants.height());
 		heightCent.getElement().getStyle().setProperty("fontWeight", "bold");
 		heightCent.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
@@ -246,12 +247,12 @@ public class MedicalHealth {
 			}
 		});
 
-		heightFeet = new DataField("OR in feet ");
+		heightFeet = new DataField(constants.feet());
 
 		heightFeet.getElement().getStyle().setProperty("marginLeft", "52px");
 		heightFeet.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		heightInches = new DataField("inches ");
+		heightInches = new DataField(constants.inches());
 		heightInches.getElement().getStyle().setProperty("marginLeft", "20px");
 		heightInches.getElement().getStyle().setProperty("fontWeight", "bold");
 
@@ -262,7 +263,7 @@ public class MedicalHealth {
 				double feet = heightFeet.getDoubleValue();	    	
 
 				if ((feet >=  4)  && (feet <8)) {
-
+					heightInputFeet = feet;
 				}		    	
 				else {
 					error = new InlineLabel("Height entered is outside range. Please reenter if incorrect.");
@@ -280,6 +281,9 @@ public class MedicalHealth {
 			public void onValueChange(ValueChangeEvent<String> event) {
 				double feet = heightFeet.getDoubleValue();
 				double inches = heightInches.getDoubleValue();
+				if (inches < 0) {
+					inches = 0;
+				}
 
 				double totalInches = (feet * 12 ) + inches;	  
 				if ((totalInches  >=  MIN_HEIGHT_INCHES) && (totalInches <=  MAX_HEIGHT_INCHES)) {
@@ -311,14 +315,14 @@ public class MedicalHealth {
 
 		medicalHealthPanel.setWidth("100%");		
 
-		weightKilos = new DataField("What is your  weight in kgs ? ");
+		weightKilos = new DataField(constants.weight());
 		weightKilos.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		weightStone = new DataField("OR in stones ");
+		weightStone = new DataField(constants.stones());
 		weightStone.getElement().getStyle().setProperty("marginLeft", "63px");
 		weightStone.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		weightLbs = new DataField("lbs ");
+		weightLbs = new DataField(constants.lbs());
 		weightLbs.getElement().getStyle().setProperty("marginLeft", "33px");
 		weightLbs.getElement().getStyle().setProperty("fontWeight", "bold");
 
@@ -356,7 +360,7 @@ public class MedicalHealth {
 				double stone = weightStone.getDoubleValue();	    	
 
 				if ((stone >=  (MIN_WEIGHT_LBS/14))  && (stone <= (MAX_WEIGHT_LBS/15))) {  
-
+					weightInputStone = stone;
 				}
 
 				else {
@@ -490,17 +494,17 @@ public class MedicalHealth {
 		dockChol =  new DockPanel();
 		HorizontalPanel hPanel = new HorizontalPanel();
 		HorizontalPanel hPanel2 = new HorizontalPanel();
-		cholLabel = new InlineLabel("Do you know your total cholesterol levels?");
+		cholLabel = new InlineLabel(constants.cholesterol());
 
 		cholLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 		hPanel.setWidth("750x");
 		hPanel2.setWidth("550x");
 		hPanel.add(cholLabel);
-		cholYes = new RadioButton("chol", "YES");
+		cholYes = new RadioButton("chol", constants.yes());
 		cholYes.getElement().getStyle().setProperty("marginLeft", "303px");
-		cholNo = new RadioButton("chol", "I DON'T KNOW");
+		cholNo = new RadioButton("chol", constants.dontknow());
 		cholNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		mmol = new DataField("Please enter it", "mmol");
+		mmol = new DataField(constants.enterchol(), "mmol/l");
 		mmol.getElement().getStyle().setProperty("fontWeight", "bold");
 		mmol.getElement().getStyle().setProperty("marginLeft", "20px");
 		mmol.getElement().getStyle().setProperty("backgroundColor", "cyan");
@@ -533,10 +537,10 @@ public class MedicalHealth {
 	private  DockPanel getHighTotalCholesterol() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		totalCholLabel = new InlineLabel("Have you ever been told by a doctor that you have ");
+		totalCholLabel = new InlineLabel(constants.told());
 		totalCholLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl_2 = new InlineLabel(" high total cholesterol? ");
+		InlineLabel lbl_2 = new InlineLabel(constants.highchol());
 
 		lbl_2.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.add(totalCholLabel);
@@ -544,11 +548,11 @@ public class MedicalHealth {
 		vPanel.add(lbl_2);
 
 		vPanel.setWidth("580px");
-		totalCholYes = new RadioButton("highchol", "YES");
+		totalCholYes = new RadioButton("highchol", constants.yes());
 		totalCholYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		totalCholNo = new RadioButton("highchol", "NO");
+		totalCholNo = new RadioButton("highchol", constants.no());
 		totalCholNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		totalCholDontKnow = new RadioButton("highchol", "I DON'T KNOW / CAN'T REMEMBER");
+		totalCholDontKnow = new RadioButton("highchol", constants.cantremember());
 		totalCholDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel,DockPanel.WEST);
 
@@ -566,10 +570,10 @@ public class MedicalHealth {
 		VerticalPanel vPanel = new VerticalPanel();
 
 
-		lifestyleLabel = new InlineLabel("Are you currently receiving advice about lifestyle changes ");
+		lifestyleLabel = new InlineLabel(constants.lifestyle());
 		lifestyleLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl_2 = new InlineLabel("to address total cholesterol? ");
+		InlineLabel lbl_2 = new InlineLabel(constants.address());
 		lbl_2.getElement().getStyle().setProperty("fontWeight", "bold");
 
 		vPanel.add(lifestyleLabel);
@@ -577,11 +581,11 @@ public class MedicalHealth {
 		vPanel.add(lbl_2);
 
 		vPanel.setWidth("580px");
-		lifestyleYes = new RadioButton("lifestyle", "YES");
+		lifestyleYes = new RadioButton("lifestyle", constants.yes());
 		lifestyleYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		lifestyleNo = new RadioButton("lifestyle", "NO");
+		lifestyleNo = new RadioButton("lifestyle", constants.no());
 		lifestyleNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		lifestyleDontKnow = new RadioButton("lifestyle", "I DON'T KNOW");
+		lifestyleDontKnow = new RadioButton("lifestyle", constants.dontknow());
 		lifestyleDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel,DockPanel.WEST);
 
@@ -595,17 +599,17 @@ public class MedicalHealth {
 	private  DockPanel getMedication() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		medicationLabel = new InlineLabel("Do you take medication for high total cholesterol level?");
+		medicationLabel = new InlineLabel(constants.medication());
 		medicationLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("580px");
 		vPanel.add(medicationLabel);
-		medicationYes = new RadioButton("medic", "YES CURRENTLY");
+		medicationYes = new RadioButton("medic", constants.yescurrent());
 		medicationYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		medicationPast = new RadioButton("medic", "YES, IN THE PAST BUT NOT CURRENTLY");
+		medicationPast = new RadioButton("medic", constants.yespast());
 		medicationPast.getElement().getStyle().setProperty("marginLeft", "10px");
-		medicationNever = new RadioButton("medic", "NEVER");
+		medicationNever = new RadioButton("medic", constants.never());
 		medicationNever.getElement().getStyle().setProperty("marginLeft", "10px");
-		medicationDontKnow = new RadioButton("medic", "I DON'T KNOW");
+		medicationDontKnow = new RadioButton("medic", constants.dontknow());
 		medicationDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel, DockPanel.WEST);
 		dock.add(medicationDontKnow, DockPanel.EAST);
@@ -621,24 +625,27 @@ public class MedicalHealth {
 		VerticalPanel vPanel = new VerticalPanel();
 
 
-		heartDiseaseLabel  = new InlineLabel("Have you ever been told by a doctor or other health professional");
+		heartDiseaseLabel  = new InlineLabel(constants.cvd_1());
 		heartDiseaseLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl_2 = new InlineLabel("that you have cardiovascular / heart disease");
+		InlineLabel lbl_2 = new InlineLabel(constants.cvd_2());
 		lbl_2.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl_3 = new InlineLabel("	(which includes the following conditions: heart attack, angina, heart failure, stroke, including mini-stroke)?");
+		InlineLabel lbl_3 = new InlineLabel(constants.includes_1());
 		lbl_3.getElement().getStyle().setProperty("fontWeight", "bold");
+		InlineLabel lbl_4 = new InlineLabel(constants.includes_2());
+		lbl_4.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.add(heartDiseaseLabel);		
 		vPanel.add(lbl_2);
 		vPanel.add(lbl_3);
+		vPanel.add(lbl_4);
 
 		vPanel.setWidth("580px");
-		heartDiseaseYes = new RadioButton("heart", "YES");
+		heartDiseaseYes = new RadioButton("heart", constants.yes());
 		heartDiseaseYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		heartDiseaseNo = new RadioButton("heart", "NO");
+		heartDiseaseNo = new RadioButton("heart", constants.no());
 		heartDiseaseNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		heartDiseaseDontKnow = new RadioButton("lifestyle", "I DON'T KNOW");
+		heartDiseaseDontKnow = new RadioButton("lifestyle", constants.dontknow());
 		heartDiseaseDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel,DockPanel.WEST); 
 		dock.add(heartDiseaseDontKnow,DockPanel.EAST);
@@ -651,15 +658,15 @@ public class MedicalHealth {
 	private  DockPanel getHypertension() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		hyperLabel = new InlineLabel("Have you ever been told by a doctor that you have high blood pressure?");
+		hyperLabel = new InlineLabel(constants.highblood());
 		hyperLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("580px");
 		vPanel.add(hyperLabel);
-		hyperYes = new RadioButton("hyper", "YES");
+		hyperYes = new RadioButton("hyper", constants.yes());
 		hyperYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		hyperNo = new RadioButton("hyper", "NO");
+		hyperNo = new RadioButton("hyper", constants.no());
 		hyperNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		hyperDontKnow = new RadioButton("hyper", "I DON'T KNOW");
+		hyperDontKnow = new RadioButton("hyper", constants.dontknow());
 		hyperDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel, DockPanel.WEST);
 		dock.add(hyperDontKnow, DockPanel.EAST);
@@ -673,17 +680,17 @@ public class MedicalHealth {
 	private  DockPanel getHypertensionMed() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		hyperMedLabel  = new InlineLabel("Do you take medication for high blood pressure?");
+		hyperMedLabel  = new InlineLabel(constants.medbp());
 		hyperMedLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("580px");
 		vPanel.add(hyperMedLabel);
-		hyperMedYes = new RadioButton("hypermed", "YES CURRENTLY");
+		hyperMedYes = new RadioButton("hypermed", constants.yescurrent());
 		hyperMedYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		hyperMedPast = new RadioButton("hypermed", "YES, IN THE PAST BUT NOT CURRENTLY");
+		hyperMedPast = new RadioButton("hypermed", constants.yespast());
 		hyperMedPast.getElement().getStyle().setProperty("marginLeft", "10px");
-		hyperMedNever = new RadioButton("hypermed", "NEVER");
+		hyperMedNever = new RadioButton("hypermed", constants.never());
 		hyperMedNever.getElement().getStyle().setProperty("marginLeft", "10px");
-		hyperMedDontKnow = new RadioButton("hypermed", "I DON'T KNOW");
+		hyperMedDontKnow = new RadioButton("hypermed", constants.dontknow());
 		hyperMedDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel, DockPanel.WEST);
 		dock.add(hyperMedDontKnow, DockPanel.EAST);
@@ -696,17 +703,17 @@ public class MedicalHealth {
 	private  DockPanel getMellitus() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		mellitusLabel = new InlineLabel("Have you ever been told by a doctor that you have diabetes? ");
+		mellitusLabel = new InlineLabel(constants.tolddiabetes());
 		mellitusLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		vPanel.add(mellitusLabel);
 
 		vPanel.setWidth("580px");
-		mellitusYes = new RadioButton("mellitus", "YES");
+		mellitusYes = new RadioButton("mellitus", constants.yes());
 		mellitusYes.getElement().getStyle().setProperty("marginLeft", "10px");
 
-		mellitusNo = new RadioButton("mellitus", "NO");
+		mellitusNo = new RadioButton("mellitus", constants.no());
 		mellitusNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		mellitusDontKnow = new RadioButton("mellitus", "I DON'T KNOW / CAN'T REMEMBER");
+		mellitusDontKnow = new RadioButton("mellitus", constants.dontknow());
 		mellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		
 		dock.add(vPanel,DockPanel.WEST);
@@ -721,8 +728,7 @@ public class MedicalHealth {
 	}
     private VerticalPanel getMellitusNote() {
     	VerticalPanel note = new VerticalPanel();
-    	InlineLabel mellitusNote = new InlineLabel("(Please note that does not include gestational diabetes, a type of diabetes " +
-    	"that effects women in pregnancy)");
+    	InlineLabel mellitusNote = new InlineLabel(constants.preg());
     	mellitusNote.getElement().getStyle().setProperty("fontWeight", "bold");
     	note.add(mellitusNote);
     	return note;
@@ -731,15 +737,15 @@ public class MedicalHealth {
 	private  DockPanel getDiabetesTreatment() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		mellitusTreatmentLabel = new InlineLabel("Are you currently receiving treatment for diabetes?");
+		mellitusTreatmentLabel = new InlineLabel(constants.diabetestreat());
 		mellitusTreatmentLabel .getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("580px");
 		vPanel.add(mellitusTreatmentLabel );
-		mellitusTreatmentYes = new RadioButton("diabetes", "YES");
+		mellitusTreatmentYes = new RadioButton("diabetes", constants.yes());
 		mellitusTreatmentYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		mellitusTreatmentNo = new RadioButton("diabetes", "NO");
+		mellitusTreatmentNo = new RadioButton("diabetes", constants.no());
 		mellitusTreatmentNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		mellitusTreatmentDontKnow = new RadioButton("diabetes", "I DON'T KNOW");
+		mellitusTreatmentDontKnow = new RadioButton("diabetes", constants.dontknow());
 		mellitusTreatmentDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel, DockPanel.WEST);
 		dock.add(mellitusTreatmentDontKnow, DockPanel.EAST);
@@ -751,21 +757,21 @@ public class MedicalHealth {
 	private  DockPanel getSugarLevel() {
 		DockPanel dock = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		sugarLabel = new InlineLabel("Have you ever been told by a doctor");
+		sugarLabel = new InlineLabel(constants.toldurine());
 		sugarLabel.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl_2 = new InlineLabel("that you have high sugar levels in your blood or in your urine?");
+		InlineLabel lbl_2 = new InlineLabel(constants.toldurine_2());
 		lbl_2.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.add(sugarLabel);
 
 		vPanel.add(lbl_2);
 
 		vPanel.setWidth("580px");
-		sugarYes = new RadioButton("sugar", "YES");
+		sugarYes = new RadioButton("sugar", constants.yes());
 		sugarYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		sugarNo = new RadioButton("sugar", "NO");
+		sugarNo = new RadioButton("sugar", constants.no());
 		sugarNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		sugarDontKnow = new RadioButton("sugar", "I DON'T KNOW");
+		sugarDontKnow = new RadioButton("sugar", constants.dontknow());
 		sugarDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel,DockPanel.WEST);
 
@@ -780,13 +786,13 @@ public class MedicalHealth {
 
 		dockBlood = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		bloodPressureLabel = new InlineLabel("Do you know what your blood pressure is ?");
+		bloodPressureLabel = new InlineLabel(constants.bp());
 		bloodPressureLabel .getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("580px");
 		vPanel.add(bloodPressureLabel );
-		bloodPressureYes = new RadioButton("blood", "YES");
+		bloodPressureYes = new RadioButton("blood", constants.yes());
 		bloodPressureYes.getElement().getStyle().setProperty("marginLeft", "10px");
-		bloodPressureNo = new RadioButton("blood", "NO");
+		bloodPressureNo = new RadioButton("blood", constants.no());
 		bloodPressureNo.getElement().getStyle().setProperty("marginLeft", "10px");
 		dockBlood.add(vPanel, DockPanel.WEST);
 
@@ -802,17 +808,17 @@ public class MedicalHealth {
 
 		bloodReadingsPanel = new FlowPanel();
 		FlowPanel firstPanel  = new FlowPanel();
-		InlineLabel lbl1 = new InlineLabel("Please record your most recent blood pressure.");
+		InlineLabel lbl1 = new InlineLabel(constants.recentbp());
 		lbl1.getElement().getStyle().setProperty("fontWeight", "bold");
 
 		//firstPanel.setWidth("580px");
 		firstPanel.add(lbl1);
 		FlowPanel secondPanel = new FlowPanel();
 
-		InlineLabel lbl2 = new InlineLabel("Only include those that have been taken in the last year : ");
+		InlineLabel lbl2 = new InlineLabel(constants.recentlastyear());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		InlineLabel lbl3 = new InlineLabel("Systolic blood pressure.");
+		InlineLabel lbl3 = new InlineLabel(constants.systolic());
 
 		lbl3.getElement().getStyle().setProperty("fontWeight", "bold");
 		lbl3.getElement().getStyle().setProperty("marginLeft", "200px");
@@ -838,7 +844,7 @@ public class MedicalHealth {
 		secondPanel.add(lbl4);
 		secondPanel.add(lbl7);
 
-		InlineLabel lbl5 = new InlineLabel("Diastolic blood pressure.");
+		InlineLabel lbl5 = new InlineLabel(constants.diastolic());
 
 		lbl5.getElement().getStyle().setProperty("fontWeight", "bold");
 		lbl5.getElement().getStyle().setProperty("marginLeft", "60px");
@@ -880,15 +886,15 @@ public class MedicalHealth {
 		private  DockPanel getKidneyDisease() {
 			DockPanel dock = new DockPanel();
 			VerticalPanel vPanel = new VerticalPanel();
-			kidneyLabel = new InlineLabel("Have you ever been told by a doctor that you have a chronic kidney disease?");
+			kidneyLabel = new InlineLabel(constants.toldkidney());
 			kidneyLabel.getElement().getStyle().setProperty("fontWeight", "bold");			
 			vPanel.add(kidneyLabel);				
 			vPanel.setWidth("580px");
-			kidneyYes = new RadioButton("kidney", "YES");
+			kidneyYes = new RadioButton("kidney", constants.yes());
 			kidneyYes.getElement().getStyle().setProperty("marginLeft", "10px");
-			kidneyNo = new RadioButton("kidney", "NO");
+			kidneyNo = new RadioButton("kidney", constants.no());
 			kidneyNo.getElement().getStyle().setProperty("marginLeft", "10px");
-			kidneyDontKnow = new RadioButton("kidney", "I DON'T KNOW");
+			kidneyDontKnow = new RadioButton("kidney", constants.dontknow());
 			kidneyDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 			
 			dock.add(vPanel,DockPanel.WEST);	

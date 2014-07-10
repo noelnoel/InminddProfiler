@@ -47,7 +47,8 @@ public class Feelings {
 		private Login login;
 		private static User user;
 		private InminddServiceAsync InminddServiceSvc;
-		
+		static InminddConstants constants = 
+				   (InminddConstants)GWT.create(InminddConstants.class);
 		
 		
 		public static Feelings lastinstance;
@@ -84,19 +85,18 @@ public class Feelings {
 		
 			scroll.setSize("700", "500");
 			HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-					"About Your mood</h1>");
+					constants.feeling() + "</h1>");
 			HTMLPanel header = new HTMLPanel("<h3>" +
-					"We would next like you to tell us  about your mood in the last week." + "<br>" +
-					"Below are a set of statements."  +
-					 " For each statement, please indicate how often you have felt this way. </h3>");
+					constants.lastweek() + "<br>" +
+					constants.statement() + " </h3>");
 				
 			HTMLPanel week = new HTMLPanel("<p style='margin-left:65%;'>" +
-					"<b><u>During the Past Week</u></b></p>");
+					"<b><u>" + constants.pastweek() + "</u></b></p>");
 			HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px' >" +
-					"                          Some or a <br>" +            
-					"Rarely or none of        little of the        Occasionally or a            Most or all of <br>" +
-					"the time (less than      time (1-2          moderate amount of time        the time (5-7<br>" +
-					"1 day)                     days)               (3-4 days)                    days) <br> </pre><hr>");
+					"                         " + constants.some() + " <br>" +            
+					constants.rarely() +  "        " +        constants.little() + constants.occasionally() + constants.most() + "<br>" +
+					constants.time()   +    constants.time_1() +  constants.moderate() + constants.fivedays() + "<br>" +
+					constants.oneday() + constants.days() + constants.threedays()  + constants.days() + " <br> </pre><hr>");
 		
 			HTMLPanel line = new HTMLPanel("<hr>");
 		
@@ -111,7 +111,7 @@ public class Feelings {
 		  //  cesdPanel.addNorth(prev,3);
 		    cesdPanel.addNorth(line,1);
 		
-		    Button prev = new Button("Retrieve previous data ?");
+		    Button prev = new Button(constants.review());
 			
 
 			// Listen for mouse events on the previous data button.
@@ -124,27 +124,27 @@ public class Feelings {
 			
 		    pnl.add(prev);  // get previous data button 
 		    pnl.add(new HTMLPanel("<span>  <br>  </span>"));
-		    setQuestionsAndAnswers("1. I was bothered by things that usually don't bother me.", 1);
-		    setQuestionsAndAnswers("2. I did not feel like eating, my appetite was poor.",2);
-		    setQuestionsAndAnswers("3. I felt that I could not shake off the blues, even with help from my  family and friends.",3);
+		    setQuestionsAndAnswers(constants.ces1(), 1);
+		    setQuestionsAndAnswers(constants.ces2(),2);
+		    setQuestionsAndAnswers(constants.ces3(),3);
 
-		    setQuestionsAndAnswers("4. I felt I was just as good as other people.", 4);
-		    setQuestionsAndAnswers("5.I had trouble keeping my mind on what I was doing.",5 );
-		    setQuestionsAndAnswers("6. I felt depressed.", 6);
-		    setQuestionsAndAnswers("7. I felt that everything I did was an effort.", 7);
-		    setQuestionsAndAnswers("8. I felt hopeful about the future.", 8);
-		    setQuestionsAndAnswers("9. I thought my life had been a failure.", 9);
-		    setQuestionsAndAnswers("10 I felt fearful.", 10);
-		    setQuestionsAndAnswers("11. My sleep was restless.", 11);
-		    setQuestionsAndAnswers("12. I was happy.", 12);
-		    setQuestionsAndAnswers("13. I talked less than usual.", 13);
-		    setQuestionsAndAnswers("14. I felt lonely.", 14);
-		    setQuestionsAndAnswers("15. People were unfriendly.", 15);
-		    setQuestionsAndAnswers("16. I enjoyed life.", 16);
-		    setQuestionsAndAnswers("17. I had crying spells.", 17);
-		    setQuestionsAndAnswers("18. I felt sad.", 18);
-		    setQuestionsAndAnswers("19. I felt that people disliked me.", 19);
-		    setQuestionsAndAnswers("20. I could not get \"going\".", 20);
+		    setQuestionsAndAnswers(constants.ces4(), 4);
+		    setQuestionsAndAnswers(constants.ces5(),5 );
+		    setQuestionsAndAnswers(constants.ces6(), 6);
+		    setQuestionsAndAnswers(constants.ces7(), 7);
+		    setQuestionsAndAnswers(constants.ces8(), 8);
+		    setQuestionsAndAnswers(constants.ces9(), 9);
+		    setQuestionsAndAnswers(constants.ces10(), 10);
+		    setQuestionsAndAnswers(constants.ces11(), 11);
+		    setQuestionsAndAnswers(constants.ces12(), 12);
+		    setQuestionsAndAnswers(constants.ces13(), 13);
+		    setQuestionsAndAnswers(constants.ces14(), 14);
+		    setQuestionsAndAnswers(constants.ces15(), 15);
+		    setQuestionsAndAnswers(constants.ces16(), 16);
+		    setQuestionsAndAnswers(constants.ces17(), 17);
+		    setQuestionsAndAnswers(constants.ces18(), 18);
+		    setQuestionsAndAnswers(constants.ces19(), 19);
+		    setQuestionsAndAnswers(constants.ces20(), 20);
 		    pnl.add(getDepressed());		
 		    pnl.add(new HTMLPanel("<span>  <br>  </span>"));
 		    pnl.add(getDepressionTreatment());
@@ -248,15 +248,15 @@ public class Feelings {
 	private  DockPanel getDepressed() {
 		dock1 = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		InlineLabel lbl = new InlineLabel("Have you ever been diagnosed by a doctor or other health professional with depressed mood or depression ?");
+		InlineLabel lbl = new InlineLabel(constants.ces21());
 		lbl.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("780px");
 		vPanel.add(lbl);
-		depressedYes = new RadioButton("depress", "Yes");
+		depressedYes = new RadioButton("depress", constants.yes());
 		depressedYes.getElement().getStyle().setProperty("marginLeft", "90px");
 		depressedYes.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
-		depressedNo = new RadioButton("depress", "No");
+		depressedNo = new RadioButton("depress", constants.no());
 		depressedNo.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
 		depressedNo.getElement().getStyle().setProperty("marginLeft", "20px");
 		dock1.add(vPanel, DockPanel.WEST);
@@ -271,14 +271,14 @@ public class Feelings {
 
 		dock2 = new DockPanel();
 		VerticalPanel vPanel = new VerticalPanel();
-		InlineLabel lbl = new InlineLabel("Have you ever been treated for a depressed mood or depression e.g. with medication or psychotherapy ?");
+		InlineLabel lbl = new InlineLabel(constants.ces22());
 
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		vPanel.setWidth("780px");
 		vPanel.add(lbl);
-		treatYes = new RadioButton("depressTreatment", "Yes");
+		treatYes = new RadioButton("depressTreatment", constants.yes());
 		treatYes.getElement().getStyle().setProperty("marginLeft", "90px");
-		treatNo = new RadioButton("depressTreatment", "No");
+		treatNo = new RadioButton("depressTreatment", constants.no());
 		treatNo.getElement().getStyle().setProperty("marginLeft", "20px");
 		dock2.add(vPanel, DockPanel.WEST);
 

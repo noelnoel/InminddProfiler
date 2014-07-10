@@ -1,5 +1,6 @@
 package com.inmindd.dcu.client;
 
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,22 +23,26 @@ import com.inmindd.dcu.shared.User;
 
 public class PhysicalActivity {
 	private FlowPanel physicalActivityPanel = new FlowPanel();
+	
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
 	private InminddServiceAsync InminddServiceSvc;
 	public static PhysicalActivity lastinstance;
 	private VerticalPanel pnl = new VerticalPanel();
 	private HorizontalPanel horizPanel = new HorizontalPanel();
-	private HorizontalPanel walkingPanel1 = new HorizontalPanel();
+	//private HorizontalPanel walkingPanel1 = new HorizontalPanel();
+	private VerticalPanel walkingPanel1 = new VerticalPanel();
 	private HorizontalPanel walkingPanel2 = new HorizontalPanel();
-	private HorizontalPanel cyclingPanel1 = new HorizontalPanel();
+	//private VerticalPanel walkingPanel2 = new VerticalPanel();
+	private VerticalPanel cyclingPanel1 = new VerticalPanel();
 	private HorizontalPanel cyclingPanel2 = new HorizontalPanel();
-	private HorizontalPanel gardenPanel1 = new HorizontalPanel();
+	private VerticalPanel gardenPanel1 = new VerticalPanel();
 	private HorizontalPanel gardenPanel2 = new HorizontalPanel();
-	private HorizontalPanel homePanel = new HorizontalPanel();
-	private HorizontalPanel exercisePanel1 = new HorizontalPanel();
+	private VerticalPanel homePanel = new VerticalPanel();
+	private VerticalPanel exercisePanel1 = new VerticalPanel();
+	
 	private HorizontalPanel exercisePanel2 = new HorizontalPanel();
-	private HorizontalPanel houseworkPanel1 = new HorizontalPanel();
+	private VerticalPanel houseworkPanel1 = new VerticalPanel();
 	private HorizontalPanel houseworkPanel2 = new HorizontalPanel();
 	private ScrollPanel scroll = new ScrollPanel();
 	
@@ -58,11 +63,15 @@ public class PhysicalActivity {
 	private DataField houseworkSummer;	
 	private TextBox  houseworkWinter;
 	private DataField stairs;
+	private DataField vig;
 	private RadioButton sweatYes; 
 	private RadioButton sweatNo; 
 	private User user;
 	private Login login;	
 	PhysicalActivityInfo activity;
+	
+	private static InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	
 	public PhysicalActivity() {
 		lastinstance = this;
@@ -87,13 +96,14 @@ public class PhysicalActivity {
 		lastinstance.walkingSummer.setText("");
 		lastinstance.walkingWinter.setText("");
 		lastinstance.stairs.setText("");
+		lastinstance.vig.setText("");
 	}
 	public FlowPanel setupPhysicalActivityPanel(Login login) {		
 		this.login = login;	
 		HTMLPanel mainheader = new HTMLPanel("<h1>" +
-				"About Your Physical Activity</h1>");
+				constants.physical() + "</h1>");
 		physicalActivityPanel.add(mainheader);
-		Button prev = new Button("Retrieve previous data ?");
+		Button prev = new Button(constants.review());
 		
 
 		// Listen for mouse events on the previous button.
@@ -105,18 +115,18 @@ public class PhysicalActivity {
 		physicalActivityPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 	
 		HTMLPanel header = new HTMLPanel("<h3>" +
-				"The next questions are about your physical activity</h3>");
+				constants.physical_act() + "</h3>");
 
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
 		physicalActivityPanel.add(header);
 		physicalActivityPanel.add(prev);
 		physicalActivityPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		InlineLabel lbl = new InlineLabel("First, we would like to know the type and amount of physical activity involved in your work.");
+		InlineLabel lbl = new InlineLabel(constants.physical_1());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		pnl.add(lbl);
 
 
-		InlineLabel lbl2 = new InlineLabel("From the five possibilities, please indicate which best corresponds with your present occupation :");
+		InlineLabel lbl2 = new InlineLabel(constants.physical_2());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 
 		lbl2.setStyleName("flow");
@@ -124,43 +134,43 @@ public class PhysicalActivity {
 		physicalActivityPanel.add(pnl);
 
 
-		InlineLabel sed = new InlineLabel("Sedentary Occupation");
+		InlineLabel sed = new InlineLabel(constants.sedentary());
 		sed.getElement().getStyle().setProperty("marginLeft", "20px");
 		sed.getElement().getStyle().setProperty("fontWeight", "bold");
 		horizPanel.add(sed);
 		sedBtn = new RadioButton("occupationBtn", "");
 
 		horizPanel.add(sedBtn);
-		horizPanel.add(getLogo("You spend most of your time sitting (such as in an office)"));
+		horizPanel.add(getLogo(constants.sedent_popup()));
 
-		InlineLabel standing = new InlineLabel("Standing Occupation");
+		InlineLabel standing = new InlineLabel(constants.standing());
 		standing.getElement().getStyle().setProperty("fontWeight", "bold");
 		standing.getElement().getStyle().setProperty("marginLeft", "80px");
 		horizPanel.add(standing);
 		standingBtn = new RadioButton("occupationBtn", "");
 		horizPanel.add(standingBtn);
-		horizPanel.add(getLogo("You spend most of your time standing or walking. However, your work does not require intense physical effort (e.g shop assistant,  hairdresser,  guard,etc.)"));
+		horizPanel.add(getLogo(constants.standing_popup()));
 
-		InlineLabel manual = new InlineLabel("Manual work");
+		InlineLabel manual = new InlineLabel(constants.manual());
 		manual.getElement().getStyle().setProperty("fontWeight", "bold");
 		manual.getElement().getStyle().setProperty("marginLeft", "80px");
 		horizPanel.add(manual);
 		manualBtn = new RadioButton("occupationBtn", "");
 		horizPanel.add(manualBtn);
-		horizPanel.add(getLogo("This involves some physical effort including handling of heavy objects and use of tools (e.g plumber,  electrician,  carpenter"));
+		horizPanel.add(getLogo(constants.manual_popup()));
 
 
 		
-		InlineLabel heavyManual = new InlineLabel("Heavy manual work");
+		InlineLabel heavyManual = new InlineLabel(constants.heavy_manual());
 		heavyManual.getElement().getStyle().setProperty("fontWeight", "bold");
 		heavyManual.getElement().getStyle().setProperty("marginLeft", "80px");
 		horizPanel.add(heavyManual);
 		heavyManualBtn = new RadioButton("occupationBtn", "");
 		horizPanel.add(heavyManualBtn);
-		horizPanel.add(getLogo("This implies very vigorous physical effort including handling of very heavy objects (e.g docker,  miner,  bricklayer,  construction worker, etc.)"));
+		horizPanel.add(getLogo(constants.heavy_manual_popup()));
 		
 
-		InlineLabel na = new InlineLabel("Not applicable");
+		InlineLabel na = new InlineLabel(constants.na());
 		na.getElement().getStyle().setProperty("fontWeight", "bold");
 		na.getElement().getStyle().setProperty("marginLeft", "80px");
 		horizPanel.add(na);
@@ -173,7 +183,7 @@ public class PhysicalActivity {
 
 		physicalActivityPanel.add(horizPanel);
 		physicalActivityPanel.add(new HTMLPanel("<span>  <br>  </span>"));  
-		InlineLabel lbl3= new InlineLabel("In a typical week during the past year, how many hours did you spend per week on each of the following activities :");
+		InlineLabel lbl3= new InlineLabel(constants.typical_week());
 		lbl3.getElement().getStyle().setProperty("fontWeight", "bold");
 		lbl3.getElement().getStyle().setProperty("textDecoration", "underline");
 		physicalActivityPanel.add(lbl3);
@@ -195,19 +205,46 @@ public class PhysicalActivity {
 		addHousework();
 		physicalActivityPanel.add(new HTMLPanel("<span>  <br>  </span>")); 
 
-		HorizontalPanel horiz = new HorizontalPanel();
-		InlineLabel lbl10 = new InlineLabel("In a typical week during the past year, did you engage in any of these activities" +
-				" vigorously enough to cause sweating or faster heartbeat ?");
+		 HorizontalPanel horiz = new HorizontalPanel();
+		final HorizontalPanel vigor = new HorizontalPanel();
+		InlineLabel lbl10 = new InlineLabel(constants.vigorous());
 		lbl10.getElement().getStyle().setProperty("fontWeight", "bold");
 		horiz.add(lbl10);
 		sweatYes = new RadioButton("sweatGroup", "Yes");
+		// Listen for mouse events on the sweat yes button.
+				sweatYes.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						vigor.setVisible(true);
+					} 
+					
+		});
+				
 		sweatNo = new RadioButton("sweatGroup", "No");
+		
+		// Listen for mouse events on the sweat no button.
+		sweatNo.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				vigor.setVisible(false);
+			} 
+			
+		});
 		horiz.add(sweatYes);
 		horiz.add(sweatNo);
 		physicalActivityPanel.add(horiz);
+		InlineLabel label = new InlineLabel(constants.perform_vigorous());
+		label.getElement().getStyle().setProperty("fontWeight", "bold");
+		
+		vigor.add(label); 
+	  
+		vig = new DataField("", constants.hrs_week());
+		vig.getElement().getStyle().setProperty("fontWeight", "bold");
+		vig.getElement().getStyle().setProperty("marginLeft", "143px");
+		
+		vigor.add(vig);
+		physicalActivityPanel.add(vigor);
+		vigor.setVisible(false);
 		// stairs climbed
-		stairs = new DataField("In a typical week during the past year, how many flights of stairs did " +
-				" you climb per day? ", "floors per day");
+		stairs = new DataField(constants.stairs(), constants.floors());
 		stairs.getElement().getStyle().setProperty("fontWeight", "bold");
 		physicalActivityPanel.add(stairs);
 
@@ -241,16 +278,16 @@ public class PhysicalActivity {
 	}
 
 
-private void addWalking() {
+	private void addWalking() {
 		
-		InlineLabel lbl = new InlineLabel("Walking, including walking to work, shopping and leisure time");
+		InlineLabel lbl = new InlineLabel(constants.walking());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		walkingPanel1.add(lbl);
 		
-	   // walkingPanel1.add(getLogo("Including walking to work, shopping and leisure time"));
+	   
 	
-		walkingSummer = new DataField("In Summer ", "hrs/week");
+		walkingSummer = new DataField(constants.summer(), constants.hrs_week());
 		
 		walkingSummer.getElement().getStyle().setProperty("fontWeight", "bold");
 		walkingSummer.getElement().getStyle().setProperty("marginLeft", "70px");
@@ -259,16 +296,17 @@ private void addWalking() {
 		
 		physicalActivityPanel.add(walkingPanel1);
 		
-		InlineLabel winter = new InlineLabel("In Winter");
-		InlineLabel suffix = new InlineLabel("hrs/Week");
+		InlineLabel winter = new InlineLabel(constants.winter());
+		InlineLabel suffix = new InlineLabel(constants.hrs_week());
 		suffix.getElement().getStyle().setProperty("fontWeight", "bold");
+		
 		walkingWinter = new TextBox();
 		walkingWinter.setMaxLength(3);
 		walkingWinter.setWidth("2em");
 		walkingWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "485px");
-		walkingWinter.getElement().getStyle().setProperty("marginLeft", "16px");
+		winter.getElement().getStyle().setProperty("marginLeft", "70px");
+		walkingWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		walkingPanel2.add(winter);
@@ -280,29 +318,29 @@ private void addWalking() {
 	
 	private void addCycling(){
 		
-		InlineLabel cycling = new InlineLabel("Cycling,including cycling to work, shopping and leisure time");
+		InlineLabel cycling = new InlineLabel(constants.cycling());
 		cycling.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		cyclingPanel1.add(cycling);
 		
 	    //cyclingPanel1.add(getLogo("Including cycling to work, shopping and leisure time"));
 	  
-		cyclingSummer = new DataField("In Summer ", "hrs/week");
+		cyclingSummer = new DataField(constants.summer(), constants.hrs_week());
 		cyclingSummer.getElement().getStyle().setProperty("fontWeight", "bold");
 		cyclingSummer.getElement().getStyle().setProperty("marginLeft", "80px");
 		cyclingPanel1.add(cyclingSummer);
 		physicalActivityPanel.add(cyclingPanel1);
 		
-		InlineLabel winter = new InlineLabel("In Winter");
-		InlineLabel suffix = new InlineLabel("hrs/Week");
+		InlineLabel winter = new InlineLabel(constants.winter());
+		InlineLabel suffix = new InlineLabel(constants.hrs_week());
 		suffix.getElement().getStyle().setProperty("fontWeight", "bold");
 		cyclingWinter  = new TextBox();
 		cyclingWinter.setMaxLength(3);
 		cyclingWinter.setWidth("2em");
 		cyclingWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "485px");
-		cyclingWinter.getElement().getStyle().setProperty("marginLeft", "17px");
+		winter.getElement().getStyle().setProperty("marginLeft", "80px");
+		cyclingWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		cyclingPanel2.add(winter);
@@ -315,29 +353,29 @@ private void addWalking() {
 	
 	private void addGardening(){
 		
-		InlineLabel label = new InlineLabel("Gardening");
+		InlineLabel label = new InlineLabel(constants.gardening());
 		label.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		gardenPanel1.add(label);
 		
 	    //gardenPanel1.add(getLogo("Including cycling to work, shopping and leisure time"));
 	  
-		gardeningSummer = new DataField("In Summer ", "hrs/week");
+		gardeningSummer = new DataField(constants.summer(), constants.hrs_week());
 		gardeningSummer.getElement().getStyle().setProperty("fontWeight", "bold");
-		gardeningSummer.getElement().getStyle().setProperty("marginLeft", "417px");
+		gardeningSummer.getElement().getStyle().setProperty("marginLeft", "75px");
 		gardenPanel1.add(gardeningSummer);
 		physicalActivityPanel.add(gardenPanel1);
 		
-		InlineLabel winter = new InlineLabel("In Winter");
-		InlineLabel suffix = new InlineLabel("hrs/Week");
+		InlineLabel winter = new InlineLabel(constants.winter());
+		InlineLabel suffix = new InlineLabel(constants.hrs_week());
 		suffix.getElement().getStyle().setProperty("fontWeight", "bold");
 		gardeningWinter  = new TextBox();
 		gardeningWinter.setMaxLength(3);
 		gardeningWinter.setWidth("2em");
 		gardeningWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "484px");
-		gardeningWinter.getElement().getStyle().setProperty("marginLeft", "18px");
+		winter.getElement().getStyle().setProperty("marginLeft", "75px");
+		gardeningWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		gardenPanel2.add(winter);
@@ -350,79 +388,82 @@ private void addWalking() {
 	
 	private void addHomeActivities(){
 		
-		InlineLabel label = new InlineLabel("Do-it-yourself activities at home");
+		InlineLabel label = new InlineLabel(constants.diy());
 		label.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		homePanel.add(label); 
 	  
-		diy = new DataField("", "hrs/week");
+		diy = new DataField("", constants.hrs_week());
 		diy.getElement().getStyle().setProperty("fontWeight", "bold");
-		diy.getElement().getStyle().setProperty("marginLeft", "345px");
+		diy.getElement().getStyle().setProperty("marginLeft", "143px");
 		homePanel.add(diy);
 		physicalActivityPanel.add(homePanel);		
 	}
 	
 	private void addPhysicalExercise() {
 		
-		InlineLabel label = new InlineLabel("Physical exercise,");
+		InlineLabel label = new InlineLabel(constants.exercise());
 		label.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		exercisePanel1.add(label);
 		
-	   // exercisePanel1.add(getLogo("Such as fitness, aerobics,  swimming,  jogging,  tennis, etc."));
-	  
-		exerciseSummer = new DataField("In Summer ", "hrs/week");
+	
+	
+		
+		
+		
+		exerciseSummer = new DataField(constants.summer(), constants.hrs_week());
 		exerciseSummer.getElement().getStyle().setProperty("fontWeight", "bold");
-		exerciseSummer.getElement().getStyle().setProperty("marginLeft", "360px");
+		exerciseSummer.getElement().getStyle().setProperty("marginLeft", "70px");
 		exercisePanel1.add(exerciseSummer);
-		physicalActivityPanel.add(exercisePanel1);
-		InlineLabel label2 = new InlineLabel(" such as fitness, aerobics,  swimming,  jogging,  tennis, etc.");
-		label2.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel winter = new InlineLabel("In Winter");
-		InlineLabel suffix = new InlineLabel("hrs/Week");
+		
+		InlineLabel winter = new InlineLabel(constants.winter());
+		InlineLabel suffix = new InlineLabel(constants.hrs_week());
 		suffix.getElement().getStyle().setProperty("fontWeight", "bold");
+		
 		exerciseWinter  = new TextBox();
 		exerciseWinter.setMaxLength(3);
 		exerciseWinter.setWidth("2em");
 		exerciseWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "93px");
-		exerciseWinter.getElement().getStyle().setProperty("marginLeft", "17px");
+		winter.getElement().getStyle().setProperty("marginLeft", "70px");
+		exerciseWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
-		exercisePanel2.add(label2);
+		
 		exercisePanel2.add(winter);
 		exercisePanel2.add(exerciseWinter);
 		exercisePanel2.add(suffix);
-		
+		physicalActivityPanel.add(exercisePanel1);
 		physicalActivityPanel.add(exercisePanel2);
+		//physicalActivityPanel.add(exercisePanel3); 
 		
 	}
 	
 	private void addHousework() {
 		
-		InlineLabel label = new InlineLabel("Housework,such as cleaning, washing, cooking, child care etc.");
+		InlineLabel label = new InlineLabel(constants.housework());
 		label.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 		houseworkPanel1.add(label);
 		
 	    //houseworkPanel1.add(getLogo("such as cleaning, washing, cooking, child care etc."));
 	  
-		houseworkSummer = new DataField("In Summer ", "hrs/week");
+		houseworkSummer = new DataField(constants.summer(), constants.hrs_week());
 		houseworkSummer.getElement().getStyle().setProperty("fontWeight", "bold");
 		houseworkSummer.getElement().getStyle().setProperty("marginLeft", "60px");
 		houseworkPanel1.add(houseworkSummer);
 		physicalActivityPanel.add(houseworkPanel1);
 		
-		InlineLabel winter = new InlineLabel("In Winter");
-		InlineLabel suffix = new InlineLabel("hrs/Week");
+		InlineLabel winter = new InlineLabel(constants.winter());
+		InlineLabel suffix = new InlineLabel(constants.hrs_week());
 		suffix.getElement().getStyle().setProperty("fontWeight", "bold");
 		houseworkWinter  = new TextBox();
 		houseworkWinter.setMaxLength(3);
 		houseworkWinter.setWidth("2em");
 		houseworkWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "485px");
-		houseworkWinter.getElement().getStyle().setProperty("marginLeft", "17px");
+		winter.getElement().getStyle().setProperty("marginLeft", "60px");
+		houseworkWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		houseworkPanel2.add(winter);
@@ -595,6 +636,7 @@ private boolean checkHours(TextBox hours) {
 		activity.setWinterHouseworkHours(getValueAsInt(houseworkWinter));
 		activity.setDiyHours(getValueAsInt(diy));
 		activity.setFlightStairs(getValueAsInt(stairs));
+		activity.setVigorousHours(getValueAsInt(vig));
 		if (standingBtn.getValue()) {
 			activity.setPhysicalWork("standing");
 		}

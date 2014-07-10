@@ -789,12 +789,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		int winterPhysicalHours = activity.getWinterPhysicalHours();
 		int summerHouseworkHours = activity.getSummerHouseworkHours();
 		int winterHouseworkHours = activity.getWinterHouseworkHours();
+		int vigorousHours = activity.getVigorousHours();
 		int flightStairs = activity.getFlightStairs();
 		String workActivity = activity.getPhysicalWork();
 		String vigorous = activity.getVigorous();
 		String insert = "insert  into physical_activities_info(patient_id,timestamp,diy_hours,  summer_walking_hours, winter_walking_hours, summer_cycling_hours, winter_cycling_hours, summer_garden_hours, winter_garden_hours,"
-				+ "summer_physical_hours, winter_physical_hours,summer_housework_hours, winter_housework_hours, flight_stairs, physical_activity_work, vigorous)"
-				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "summer_physical_hours, winter_physical_hours,summer_housework_hours, winter_housework_hours, flight_stairs, vigorous_hours, physical_activity_work, vigorous)"
+				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement updateActivitiesInfo = (PreparedStatement) conn.prepareStatement(insert);
@@ -811,9 +812,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			updateActivitiesInfo.setInt(11, winterPhysicalHours);
 			updateActivitiesInfo.setInt(12, summerHouseworkHours);			
 			updateActivitiesInfo.setInt(13, winterHouseworkHours);
-			updateActivitiesInfo.setInt(14, flightStairs);
-			updateActivitiesInfo.setString(15, workActivity);
-			updateActivitiesInfo.setString(16, vigorous);
+			updateActivitiesInfo.setInt(14, flightStairs);	
+			updateActivitiesInfo.setInt(15, vigorousHours);
+			
+			
+			updateActivitiesInfo.setString(16, workActivity);
+			updateActivitiesInfo.setString(17, vigorous);
 			
 			
 			
@@ -1621,9 +1625,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				physical.setSummerHouseworkHours(result.getInt(12));
 				physical.setWinterHouseworkHours(result.getInt(13));
 				physical.setFlightStairs(result.getInt(14));
-				
-				physical.setPhysicalWork(result.getString(15));
-				physical.setVigorous(result.getString(16));
+				physical.setVigorousHours(result.getInt(15));
+				physical.setPhysicalWork(result.getString(16));
+				physical.setVigorous(result.getString(17));
 				conn.close();
 				return true;
 				

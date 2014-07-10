@@ -1,10 +1,12 @@
 package com.inmindd.dcu.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DefaultLocalizedNames;
-import com.google.gwt.user.client.Element;
+//import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -17,7 +19,9 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.dom.client.Element;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
@@ -26,6 +30,7 @@ public class PatientInfo {
 	private FlowPanel patientPanel;
 	private ScrollPanel scroll = new ScrollPanel();
 	public DataField age;
+
 	public RadioButton male;
 	public RadioButton female;
 	public  FlowPanel sex = new FlowPanel();
@@ -33,19 +38,22 @@ public class PatientInfo {
 	public ListBox country = new ListBox();
 	public ListBox marital = new ListBox();
 	public ListBox livingArrangements = new ListBox();
-	public ListBox educationLevel = new ListBox();
+	public TextBox otherLivingArrangements = new TextBox();
+	public ListBox educationLevelIE = new ListBox();
+	public ListBox educationLevelSC = new ListBox();
+	public ListBox educationLevelNL = new ListBox();
+	public ListBox educationLevelFR = new ListBox();
+	public final ListBox countryEducated = new ListBox();
 	
 	public ListBox occupation = new ListBox();
 	public ListBox employmentStatus = new ListBox();
+	public TextBox otherEmploymentStatus;
 	private User user;
 	private Login login;
 	public static PatientInfo lastinstance;
-	// save reference for clearing fields if user logs out.
-	//{
-	//	lastinstance = this;
-	//}
+
 	private InminddServiceAsync InminddServiceSvc;
-	InminddConstants constants = 
+	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
 	public  PatientInfo(){
 		lastinstance = this;
@@ -57,7 +65,13 @@ public class PatientInfo {
 		lastinstance.age.setText("");
 		lastinstance.country.setSelectedIndex(0);
 		lastinstance.livingArrangements.setSelectedIndex(0);
-		lastinstance.educationLevel.setSelectedIndex(0);
+		lastinstance.otherLivingArrangements.setText("");
+		lastinstance.otherEmploymentStatus.setText("");
+		lastinstance.educationLevelIE.setSelectedIndex(0);
+		lastinstance.educationLevelSC.setSelectedIndex(0);
+		lastinstance.educationLevelNL.setSelectedIndex(0);
+		lastinstance.educationLevelFR.setSelectedIndex(0);
+		lastinstance.countryEducated.setSelectedIndex(0);
 		lastinstance.occupation.setSelectedIndex(0);
 		lastinstance.employmentStatus.setSelectedIndex(0);
 		lastinstance.marital.setSelectedIndex(0);
@@ -69,24 +83,19 @@ public class PatientInfo {
 				
 		text = constants.yourself();
 		HTMLPanel header = new HTMLPanel("<h3>" + text + "</h3>");
-		header.getElement().getStyle().setProperty("textDecoration", "underline");
-	
-		 
-	   
+		header.getElement().getStyle().setProperty("textDecoration", "underline");	
 		
-		
-		patientPanel = new FlowPanel();
-	
+		patientPanel = new FlowPanel();	
 	
 		patientPanel.setWidth("100%");
 		patientPanel.add(mainHeader);
 		patientPanel.add(header);
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		FlowPanel flp = new FlowPanel();
-		Button prev = new Button("Retrieve previous data ?");
+		Button prev = new Button(constants.review());
 		
-
-		// Listen for mouse events on the preious button.
+	
+		// Listen for mouse events on the review button.
 		prev.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -113,7 +122,16 @@ public class PatientInfo {
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		patientPanel.add( getLivingArrangements());
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		patientPanel.add(getEducation());
+		
+		patientPanel.add(getCountryEducated());
+		InlineLabel theSelection = new InlineLabel(constants.educationlevel());
+		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+		patientPanel.add(theSelection);
+		patientPanel.add(getEducationIE());
+		patientPanel.add(getEducationSC());
+		patientPanel.add(getEducationNL());
+		patientPanel.add(getEducationFR());
+		
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
 		patientPanel.add(getOccupation());
@@ -209,45 +227,157 @@ public class PatientInfo {
 	private FlowPanel getLivingArrangements() {
 		FlowPanel living = new FlowPanel();
 		
-		InlineLabel theSelection = new InlineLabel("Which of the following best describes your current living arrangements ? ");
+		InlineLabel theSelection = new InlineLabel(constants.living());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-	
+	   
+	    otherLivingArrangements.getElement().getStyle().setProperty("marginLeft", "10px");
+	    final InlineLabel please = new InlineLabel(constants.please());
+	    please.getElement().getStyle().setProperty("marginLeft", "20px");
+	    please.getElement().getStyle().setProperty("fontWeight", "bold");
+	    please.setVisible(false);
+	    otherLivingArrangements.setVisible(false);
 		livingArrangements.addItem("Please select one");
-		livingArrangements.addItem("Living alone");
-		livingArrangements.addItem("Living with family members(i.e. spouse/partner and/or children/grandchildren)");
-		livingArrangements.addItem("Living with another relative (other than spouse/partner or children/grandchildren");
-		livingArrangements.addItem("Living with unrelated people only, apart from spouse/partner");		
-		livingArrangements.addItem("Other, Please specifiy :");		
+		livingArrangements.addItem(constants.livingarrangement1());
+		livingArrangements.addItem(constants.livingarrangement2());
+		livingArrangements.addItem(constants.livingarrangement3());
+		livingArrangements.addItem(constants.livingarrangement4());		
+		livingArrangements.addItem(constants.livingarrangement5());		
 		
 	      
 		living.add(theSelection);
 		living.add(livingArrangements);
-		
+		living.add(please);
+		living.add(otherLivingArrangements);
 		living.setWidth("100%");
-	
+	    livingArrangements.addChangeHandler(new ChangeHandler() {
+	    	public void onChange(ChangeEvent event) {
+	    		int selectedIndex = livingArrangements.getSelectedIndex();
+	    		if (selectedIndex == 5){
+	    			please.setVisible(true);
+	    			otherLivingArrangements.setVisible(true);
+	    			otherLivingArrangements.setVisibleLength(35);
+	    			otherLivingArrangements.setFocus(true);
+	    		}
+	    		else if (selectedIndex != 5){
+	    			
+	    			please.setVisible(false);
+	    			otherLivingArrangements.setVisible(false);
+	    			
+	    		}
+	    	}
+	    });
 		return living;
 	} 
 	
-	private FlowPanel getEducation() {
+	private FlowPanel getCountryEducated() {
+
+		FlowPanel country = new FlowPanel();
+		InlineLabel theSelection = new InlineLabel("Please select country in which you were educated");
+		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+
+		countryEducated.addItem("Please select one");
+		countryEducated.addItem("Ireland");
+		countryEducated.addItem("Scotland");
+		countryEducated.addItem("Netherlands");
+		countryEducated.addItem("France");
+		country.add(theSelection);
+		country.add(countryEducated);
+		countryEducated.addChangeHandler(new ChangeHandler() 
+			{ public void onChange(ChangeEvent event)
+			{int selectedIndex = countryEducated.getSelectedIndex();
+			if (selectedIndex == 2)
+			{
+				educationLevelSC.setVisible(true);
+				educationLevelIE.setVisible(false);
+				educationLevelNL.setVisible(false);
+				educationLevelFR.setVisible(false);
+			}
+			if (selectedIndex == 1)	{
+				educationLevelIE.setVisible(true);
+				educationLevelSC.setVisible(false);
+				educationLevelNL.setVisible(false);
+				educationLevelFR.setVisible(false);
+			}
+	
+			if (selectedIndex == 3)	{
+				educationLevelNL.setVisible(true);
+				educationLevelSC.setVisible(false);
+				educationLevelIE.setVisible(false);
+				educationLevelFR.setVisible(false);
+			}
+			if (selectedIndex == 4)	{
+				educationLevelFR.setVisible(true);
+				educationLevelSC.setVisible(false);
+				educationLevelIE.setVisible(false);
+				educationLevelNL.setVisible(false);
+			}
+			}
+			});
+
+		return country;
+	}
+
+	private FlowPanel getEducationIE() {
+		
+		
 		FlowPanel education = new FlowPanel();
 		
-		InlineLabel theSelection = new InlineLabel("What is the highest level of education that you have completed to date ? ");
-		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+		//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
+		//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		
-		educationLevel.addItem("Please select one");
-		educationLevel.addItem("No formal education or training");
-		educationLevel.addItem("Primary Education");
-		educationLevel.addItem("Lower Secondary");
-		educationLevel.addItem("Upper Secondary");
-		educationLevel.addItem("Technical or Vocational");
-		educationLevel.addItem("Higher Certificate");
-		educationLevel.addItem("Ordinary degree or higher diploma");
-		educationLevel.addItem("Honour Bachelor degree/professional qualification or both");
-		educationLevel.addItem("Postgraduate diploma or degree");
-		educationLevel.addItem("Doctorate (PhD) or higher");
-		   
-		education.add(theSelection);
-		education.add(educationLevel);
+		educationLevelIE.addItem("Please select one");
+		educationLevelIE.addItem("No formal education or training");
+		educationLevelIE.addItem("Primary Education");
+		educationLevelIE.addItem("Lower Secondary");
+		educationLevelIE.addItem("Upper Secondary");
+		educationLevelIE.addItem("Technical or Vocational");
+		educationLevelIE.addItem("Advanced Certificate/Completed Apprenticeship");
+		educationLevelIE.addItem("Higher Certificate");
+		educationLevelIE.addItem("Ordinary degree or higher diploma");
+		educationLevelIE.addItem("Honour Bachelor degree/professional qualification or both");
+		educationLevelIE.addItem("Postgraduate diploma or degree");
+		educationLevelIE.addItem("Doctorate (PhD) or higher");
+		educationLevelIE.setVisible(false);  
+		//education.add(theSelection);
+		
+		Element.as(educationLevelIE.getElement().getChild(2)).setTitle("NFQ Levels 1 or 2"
+				+ "\nFETAC Level 1 or 2 Certificate");
+		Element.as(educationLevelIE.getElement().getChild(3)).setTitle("NFQ Levels 3"
+				+ "\nJunior/Intermediate/Group Certificate"
+				+ "\nFETAC Level 3 Certificate"
+				+ "\nFAS Introductory Skills Certificate"
+				+ "\nNCVA Foundation Certificate or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(4)).setTitle("NFQ Levels 4 or 5"
+				+ "\nLeaving Certificate (including Applied and Vocational Programmes");
+		Element.as(educationLevelIE.getElement().getChild(5)).setTitle("NFQ Levels 4 or 5"				
+				+ "\nFETAC Level 4/5 Certificate"
+				+ "\nNCVA Level 1/2"
+				+ "\nFAS Specific Skills Certificate"
+				+ "\nTeagasc Cert in Agriculture"
+				+ "\nCERT Craft Cert or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(6)).setTitle("NFQ Level 6"				
+				+ "\nFETAC Advanced Certificate"
+				+ "\nNCVA Level 3"
+				+ "\nFAS National Craft Cert"
+				+ "\nTeagasc Farming Certificate"
+				+ "\nCERT Professional Cooking Cert or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(6)).setTitle("NFQ Level 6"				
+				+ "\nFETAC Advanced Certificate"
+				+ "\nNCVA Level 3"
+				+ "\nFAS National Craft Cert"
+				+ "\nTeagasc Farming Certificate"
+				+ "\nCERT Professional Cooking Cert or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(7)).setTitle("NFQ Level 6"
+				+ "\nNCEA.HETAC National Cert or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(8)).setTitle("NFQ Level 7");
+		Element.as(educationLevelIE.getElement().getChild(9)).setTitle("NFQ Level 8");
+		Element.as(educationLevelIE.getElement().getChild(10)).setTitle("NFQ Level 9"
+				+ "\nPostgraduate Diploma, Masters degree or equivalent");
+		Element.as(educationLevelIE.getElement().getChild(11)).setTitle("NFQ Level 10");
+	
+		
+		
+		education.add(educationLevelIE);
 			
 		education.setWidth("100%");
 
@@ -255,35 +385,126 @@ public class PatientInfo {
 		return education;
 	} 
        
+private FlowPanel getEducationSC() {
+		
+		
+		FlowPanel education = new FlowPanel();
+		
+		InlineLabel theSelection = new InlineLabel(constants.educationlevel());
+		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+		
+		educationLevelSC.addItem("Please select one");
+		educationLevelSC.addItem("No formal education or training");
+		educationLevelSC.addItem("Primary Education");
+		educationLevelSC.addItem("O Grade, Standard Grade [Includes School Leaving Certificate, GCSE, GCE o Level, CSE, NQ Access 3 Cluster. Intermediate 1, Intermediate 2, Senior Certiciate or equivalent]");
+		educationLevelSC.addItem("GNVQ/GSVQ Foundation or Intermediate, SVQ Level 1, SVQ Level 2, SCOTVEC/National Certificate, Module,City and Guilds Craft, Diploma or equivalent");
+		educationLevelSC.addItem("Higher Grade, Advanced Higher, CSYS, A Level, AS Level,Advanced Senior Certificate or equivalent");
+		educationLevelSC.addItem("GNVQ/GSVQ Advanced, SVQ Level 3,ONC, OND, SCOTVEC National Diploma, City and Guilds Advanced Craft, RSA Advanced or equivalent");
+		educationLevelSC.addItem("Post school pre-higher education: HNC,HND,SVQ Level 4, RSA Higher Diploma or equivalent");
+		educationLevelSC.addItem("First Degree, Higher degree, SVQ level 5 or equivalent");
+		educationLevelSC.addItem("Professional qualifications e.g teaching, accountancy");
+		educationLevelSC.addItem("Other school qualifications not already mentioned");
+		educationLevelSC.addItem("Other post- but pre-Higher Education qualifications not already mentioned");
+		educationLevelSC.addItem("Other higher education qualifications not already mentioned");
+		educationLevelSC.setVisible(false);  
+		//education.add(theSelection);
+		education.add(educationLevelSC);
+			
+		education.setWidth("100%");
+
+		        
+		return education;
+	} 
+private FlowPanel getEducationNL() {
+	
+	
+	FlowPanel education = new FlowPanel();
+	
+	//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
+	//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+	
+	educationLevelNL.addItem("Please select one");
+	educationLevelNL.addItem("Geen formel onderwijs of opleiding");
+	educationLevelNL.addItem("Basisschool");
+	educationLevelNL.addItem("VMBO");
+	educationLevelNL.addItem("HAVO");
+	educationLevelNL.addItem("VWO");
+	educationLevelNL.addItem("Middelbaar beroepsonderwijs, Hoger onderwijs");
+	educationLevelNL.addItem("HBO");
+	educationLevelNL.addItem("Universiteit");
+	
+	educationLevelNL.setVisible(false);  
+	//education.add(theSelection);
+	Element.as(educationLevelNL.getElement().getChild(3)).setTitle("Basisberoepsgerichte leerweg"
+			+ "\nKaderberoepsgerichte leerweg"
+			+ "\nGemengde leerweg"
+			+ "\nTheoretische leerweg");
+	Element.as(educationLevelNL.getElement().getChild(7)).setTitle("Bachelor"
+			+ "\nMaster");
+	Element.as(educationLevelNL.getElement().getChild(8)).setTitle("Bachelor"
+			+ "\nMaster"
+			+ "\nDoctoraat of hoger");
+	education.add(educationLevelNL);
+		
+	education.setWidth("100%");
+
+	        
+	return education;
+} 
+private FlowPanel getEducationFR() {
+	
+	
+	FlowPanel education = new FlowPanel();
+	
+	//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
+	//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+	
+	educationLevelFR.addItem("Please select one");
+	educationLevelFR.addItem("Aucun éducation formelle ou  formation");
+	educationLevelFR.addItem("Enseignement primaire ");
+	educationLevelFR.addItem("BEPC, BEP,  CAP");
+	educationLevelFR.addItem("Formation technique et professionnelle (ex : brevet de technicien sup : BTS)");
+	educationLevelFR.addItem("Baccalauréat général");
+	educationLevelFR.addItem("Diplôme d’enseignement supérieur");
+	educationLevelFR.addItem("Diplôme de second cycle (DEUG, Licence, Maîtrise)");
+	
+	educationLevelFR.setVisible(false);  
+	//education.add(theSelection);
+	education.add(educationLevelFR);
+		
+	education.setWidth("100%");
+
+	        
+	return education;
+} 
 	private FlowPanel getOccupation() {
 		FlowPanel occupationPanel = new FlowPanel();
 	
-		InlineLabel theSelection = new InlineLabel("Which of the following best describes your current occupation ? ");
+		InlineLabel theSelection = new InlineLabel(constants.occupation());
 		
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 	
 		occupation.addItem("Please select one");
-		occupation.addItem("Manager");
-        
-		occupation.addItem("Professional");
-		occupation.addItem("Technician");		
-		occupation.addItem("Clerical");
-		occupation.addItem("Services");
-		occupation.addItem("Skilled Agricultural");
-		occupation.addItem("Craft");		
-		occupation.addItem("Plant");
-		occupation.addItem("Elementary");
+		occupation.addItem(constants.manager());        
+		occupation.addItem(constants.professional());
+		occupation.addItem(constants.technician());		
+		occupation.addItem(constants.clerical());
+		occupation.addItem(constants.services());
+		occupation.addItem(constants.agricultural());
+		occupation.addItem(constants.craft());		
+		occupation.addItem(constants.plant());
+		occupation.addItem(constants.elementary());
 		
 		
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(1)).setTitle("e.g managing director, senior government official, hotel or restaurant manager, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(2)).setTitle("e.g medical doctor, teacher, engineer, artist, accountant, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(3)).setTitle("e.g engineering technician, photographer, ICT operations technician, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(4)).setTitle("e.g receptionist, office supervisor, clerical worker, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(5)).setTitle("e.g shopkeeper, chef, child care worker, hairdresser, waitress, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(6)).setTitle("e.g forestry worker, vegetable grower, farmer, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(7)).setTitle("e.g carpenter, electrician, builder, jewellery maker, baker, plumber, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(8)).setTitle("e.g machine operator, van driver, etc.");
-		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(9)).setTitle("e.g cleaner, farm labourer, building construction labourer, etc.");
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(1)).setTitle(constants.managerexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(2)).setTitle(constants.professionalexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(3)).setTitle(constants.technicianexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(4)).setTitle(constants.clericalexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(5)).setTitle(constants.servicesexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(6)).setTitle(constants.agriculturalexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(7)).setTitle(constants.craftexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(8)).setTitle(constants.plantexample());
+		com.google.gwt.dom.client.Element.as(occupation.getElement().getChild(9)).setTitle(constants.elementaryexample());
 		
 		occupationPanel.add(theSelection);
 		occupationPanel.add(occupation);
@@ -297,22 +518,48 @@ public class PatientInfo {
 	private FlowPanel getEmployment() {
 		FlowPanel employment = new FlowPanel();
 	
-		InlineLabel theSelection = new InlineLabel("Which of the following best describes your current main employment status?");
+		InlineLabel theSelection = new InlineLabel(constants.employment());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
+		otherEmploymentStatus = new TextBox();
+		otherEmploymentStatus.getElement().getStyle().setProperty("marginLeft", "10px");
+		final InlineLabel please = new InlineLabel(constants.please());
+		please.getElement().getStyle().setProperty("marginLeft", "20px");
+		please.getElement().getStyle().setProperty("fontWeight", "bold");
+		please.setVisible(false);
+		otherEmploymentStatus.setVisible(false);
 	
 		employmentStatus.addItem("Please select one");
-		employmentStatus.addItem("Paid employment");
-		employmentStatus.addItem("Looking for first regular job");
-		employmentStatus.addItem("Unemployed");
-		employmentStatus.addItem("Student");
-		employmentStatus.addItem("Looking after home & family");
-		employmentStatus.addItem("Retired from employment");
-		employmentStatus.addItem("Unable to  work  due  to  permanent illness or  disability");
-		employmentStatus.addItem("Other, Please specify");
+		employmentStatus.addItem(constants.paid());
+		employmentStatus.addItem(constants.looking());
+		employmentStatus.addItem(constants.unemployed());
+		employmentStatus.addItem(constants.student());
+		employmentStatus.addItem(constants.family());
+		employmentStatus.addItem(constants.retired());
+		employmentStatus.addItem(constants.unable());
+		employmentStatus.addItem(constants.other());
 		employment.add(theSelection);
 		employment.add(employmentStatus);
+		employment.add(please);
+		employment.add(otherEmploymentStatus);
 			
-		employment.setWidth("100%");
+		//employmentStatus.setWidth("100%"); 
+		employmentStatus.addChangeHandler(new ChangeHandler() {
+	    	public void onChange(ChangeEvent event) {
+	    		int selectedIndex = employmentStatus.getSelectedIndex();
+	    		if (selectedIndex == 8){
+	    			please.setVisible(true);
+	    			otherEmploymentStatus.setVisible(true);
+	    			otherEmploymentStatus.setVisibleLength(35);
+	    			otherEmploymentStatus.setFocus(true);
+	    		}
+	    		else if (selectedIndex != 8){
+	    			
+	    			please.setVisible(false);
+	    			otherEmploymentStatus.setVisible(false);
+	    			
+	    		}
+	    	}
+	    });
 	
 		return employment;
 	} 
@@ -433,13 +680,52 @@ public class PatientInfo {
 	}
 
 	private boolean checkEducationLevel() {
-		educationLevel.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your education level");
-		if (educationLevel.getSelectedIndex() <= 0) {
-			showErrorPopupPanel(error);
-			educationLevel.getElement().getStyle().setProperty("color", "red");
-			return false;		   
+		int index = countryEducated.getSelectedIndex();
+		
+		if (index == 2 )  { // scotland 
+			educationLevelSC.getElement().getStyle().setProperty("color", "black");	
+			error = new InlineLabel("Please select your education level");
+			if (educationLevelSC.getSelectedIndex() <= 0) {
+				showErrorPopupPanel(error);
+				educationLevelSC.getElement().getStyle().setProperty("color", "red");
+				return false;		   
+			}
+			else return true;
 		}
+		if (index == 1 )  { // ireland 
+			educationLevelIE.getElement().getStyle().setProperty("color", "black");	
+			error = new InlineLabel("Please select your education level");
+			if (educationLevelIE.getSelectedIndex() <= 0) {
+				showErrorPopupPanel(error);
+				educationLevelIE.getElement().getStyle().setProperty("color", "red");
+				return false;		   
+			}
+			else return true;
+		}
+		
+		if (index == 3 )  { // netherland 
+			educationLevelNL.getElement().getStyle().setProperty("color", "black");	
+			error = new InlineLabel("Please select your education level");
+			if (educationLevelNL.getSelectedIndex() <= 0) {
+				showErrorPopupPanel(error);
+				educationLevelNL.getElement().getStyle().setProperty("color", "red");
+				return false;		   
+			}
+			else return true;
+		}
+		
+		if (index == 4 )  { // france 
+			educationLevelFR.getElement().getStyle().setProperty("color", "black");	
+			error = new InlineLabel("Please select your education level");
+			if (educationLevelFR.getSelectedIndex() <= 0) {
+				showErrorPopupPanel(error);
+				educationLevelFR.getElement().getStyle().setProperty("color", "red");
+				return false;		   
+			}
+			else return true;
+		}
+		
+		
 		return true;
 	}
 
@@ -470,7 +756,7 @@ public class PatientInfo {
 	 }
 	 
 	 private void updatePatientDB() {
-		Patient patient = createPatient();
+		 Patient patient = createPatient();
 		 callServiceSetup();
 		 lastinstance = this;
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
@@ -498,9 +784,7 @@ public class PatientInfo {
 		  
     	  InminddServiceSvc.updatePatientInfo(patient, callback);
 	 }
-    	 
-	
-	
+    	
 
 	 private Patient createPatient() {
 		 Patient patient = new Patient();
@@ -511,18 +795,44 @@ public class PatientInfo {
 		 if (male.getValue()) 
 			 patient.setGender("male");
 		 else patient.setGender("female");
-		 int index = country.getSelectedIndex();
-		 patient.setCountryOfBirth(country.getItemText(index));
-		 index = marital.getSelectedIndex();
+		 int indexCountry  = country.getSelectedIndex();
+		 patient.setCountryOfBirth(country.getItemText(indexCountry));
+		 int index = marital.getSelectedIndex();
 		 patient.setMaritalStatus(marital.getItemText(index));
 		 index = livingArrangements.getSelectedIndex();
-		 patient.setLivingArrangements(livingArrangements.getItemText(index));
+		 if (index == 5) {
+			 patient.setLivingArrangements(otherLivingArrangements.getText());
+		 }
+		 else if(index != 5) {
+			 patient.setLivingArrangements(livingArrangements.getItemText(index));
+		 }
 		 index = occupation.getSelectedIndex();
 		 patient.setOccupationalGroup(occupation.getItemText(index));
-		 index = educationLevel.getSelectedIndex();
-		 patient.setEducationLevel(educationLevel.getItemText(index));
+		 int indexCountryEducated  = countryEducated.getSelectedIndex();
+		 if (indexCountryEducated == 2) {
+			 index = educationLevelSC.getSelectedIndex();
+			 patient.setEducationLevel(educationLevelSC.getItemText(index));
+		 }
+		 if (indexCountryEducated == 1) {
+			 index = educationLevelIE.getSelectedIndex();
+			 patient.setEducationLevel(educationLevelIE.getItemText(index));
+		 }
+		 if (indexCountryEducated == 3) {
+			 index = educationLevelNL.getSelectedIndex();
+			 patient.setEducationLevel(educationLevelNL.getItemText(index));
+		 }
+		 if (indexCountryEducated == 4) {
+			 index = educationLevelSC.getSelectedIndex();
+			 patient.setEducationLevel(educationLevelFR.getItemText(index));
+		 }
 		 index = employmentStatus.getSelectedIndex();
-		 patient.setEmploymentStatus(employmentStatus.getItemText(index));
+		 if (index == 8) {
+			 patient.setEmploymentStatus(otherEmploymentStatus.getText());
+		 }
+		 else if(index != 8) {
+			 patient.setEmploymentStatus(employmentStatus.getItemText(index));
+		 }
+		
 		 return  patient;
 	 }
 	 
@@ -568,6 +878,12 @@ public class PatientInfo {
 	 
 	 private void populatePanel(Patient patient) {
 		 
+		 
+		 educationLevelSC.setVisible(false);
+		 educationLevelIE.setVisible(false);
+		 educationLevelNL.setVisible(false);
+		 educationLevelFR.setVisible(false);
+		 
 		 int index = 0;
 		 String patientValue = "";
 		 int itemCount = 0;
@@ -601,22 +917,76 @@ public class PatientInfo {
 		 
 		 patientValue = patient.getLivingArrangements();
 		 itemCount = livingArrangements.getItemCount();
+		 
 		 for (index = 0; index < itemCount; index++) {
 			 if ( livingArrangements.getItemText(index).equals(patientValue)) {
 				 livingArrangements.setSelectedIndex(index);
+				
 				 break;
 			 }
 		 }
-		 
-		 patientValue = patient.getEducationLevel();
-		 itemCount = educationLevel.getItemCount();
-		 for (index = 0; index < itemCount; index++) {
-			 if ( educationLevel.getItemText(index).equals(patientValue)) {
-				 educationLevel.setSelectedIndex(index);
-				 break;
+		 if (index == 6)  { // has to be "other"
+			 //otherLivingArrangements = new TextBox();
+			 otherLivingArrangements.getElement().getStyle().setProperty("marginLeft", "10px");
+			 final InlineLabel please = new InlineLabel(constants.please());
+			 please.getElement().getStyle().setProperty("marginLeft", "20px");
+			 please.getElement().getStyle().setProperty("fontWeight", "bold");
+			 please.setVisible(false);
+			 otherLivingArrangements.setVisible(true);
+			 otherLivingArrangements.setText(patientValue);
+			 otherLivingArrangements.setStyleName("pos12");
+			 //patientPanel.add(otherLivingArrangements);
+		 }
+		 User user = login.getUser();
+		 if (user.getUserId().startsWith("11")) { // ireland
+			 countryEducated.setSelectedIndex(1);
+			 patientValue = patient.getEducationLevel();
+			 itemCount = educationLevelIE.getItemCount();
+			 for (index = 0; index < itemCount; index++) {
+				 if ( educationLevelIE.getItemText(index).equals(patientValue)) {
+					 educationLevelIE.setSelectedIndex(index);
+					 
+					 educationLevelIE.setVisible(true);
+					 break;
+				 }
 			 }
 		 }
-		 
+		 else if (user.getUserId().startsWith("22")) { //scotland
+			 countryEducated.setSelectedIndex(2);
+				 patientValue = patient.getEducationLevel();
+				 itemCount = educationLevelSC.getItemCount();
+				 for (index = 0; index < itemCount; index++) {
+					 if ( educationLevelSC.getItemText(index).equals(patientValue)) {
+						 educationLevelSC.setSelectedIndex(index);
+						 educationLevelSC.setVisible(true);
+						 break;
+					 }
+				 }
+			 }
+		 else if (user.getUserId().startsWith("33")) {  //the netherlands
+			 countryEducated.setSelectedIndex(3);
+			 patientValue = patient.getEducationLevel();
+			 itemCount = educationLevelNL.getItemCount();
+			 for (index = 0; index < itemCount; index++) {
+				 if ( educationLevelNL.getItemText(index).equals(patientValue)) {
+					 educationLevelNL.setSelectedIndex(index);
+					 educationLevelNL.setVisible(true);
+					 break;
+				 }
+			 }
+		 }
+		 else if (user.getUserId().startsWith("44")) {  //france
+			 countryEducated.setSelectedIndex(4);
+			 patientValue = patient.getEducationLevel();
+			 itemCount = educationLevelFR.getItemCount();
+			 for (index = 0; index < itemCount; index++) {
+				 if ( educationLevelFR.getItemText(index).equals(patientValue)) {
+					 educationLevelFR.setSelectedIndex(index);
+					 educationLevelFR.setVisible(true);
+					 break;
+				 }
+			 }
+		 }
 		 patientValue = patient.getOccupationalGroup();
 		 itemCount = occupation.getItemCount();
 		 for (index = 0; index < itemCount; index++) {
@@ -637,11 +1007,7 @@ public class PatientInfo {
 			 
  }
 	 
- //public void clearPanel() {
-
-
-//	 Window.Location.reload();
-// }
+ 
 		
 		 
 		 
@@ -680,7 +1046,7 @@ public class PatientInfo {
 			vertPanel.add(error);
 			popup.setWidget(vertPanel);
 			//popup.setGlassEnabled(true);
-			popup.setPopupPosition(190,645);
+			popup.setPopupPosition(190,700);
 			popup.setWidth("550px");
 			popup.show();
 

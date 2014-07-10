@@ -59,6 +59,10 @@ public class Diet {
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
 	public static Diet lastinstance;
+	
+	static  InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
+	
 	public Diet() {	
 		lastinstance = this;
 	}
@@ -105,8 +109,8 @@ public class Diet {
 	public FlowPanel setupDietPanel(Login login) {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"Information about your Diet</h1>");
-		Button prev = new Button("Retrieve previous data ?");
+				constants.diet() + "</h1>");
+		Button prev = new Button(constants.review());
 
 
 		// Listen for mouse events on the previous button.
@@ -117,7 +121,7 @@ public class Diet {
 		});
 	
 		HTMLPanel lbl1 = new HTMLPanel("<h3>" +
-				"Please answer the following questions.</h3>");
+				constants.diet_questions() + "</h3>");
 		lbl1.getElement().getStyle().setProperty("textDecoration", "underline");
 		
 	
@@ -164,10 +168,13 @@ public class Diet {
 
 		 // Listen for mouse events on the submit button.
 	    btn.addClickHandler(new ClickHandler() {
-	      public void onClick(ClickEvent event) {
-	        checkUser();
-	        updateDietDB();
-	      }
+	    	public void onClick(ClickEvent event) {
+	    		if (checkUser()) {
+	    			if (validateInput()) {
+	    			updateDietDB();
+	    			}
+	    		}
+	    	}
 	     
 	    });
 		scroll.setSize("100%", "70%");
@@ -181,16 +188,17 @@ public class Diet {
 	  
 
 }
-	private void checkUser() {
+	
+	private boolean checkUser() {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
 			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
 			showErrorPopupPanel(error, "red");
-			return;
+			return  false;
 			
 		}
-	
+		return true;
 	}
 	
 	private boolean callServiceSetup() {
@@ -205,32 +213,141 @@ public class Diet {
 	}
 	private void updateDietDB() {
 		
-		 callServiceSetup();
-		 diet  = createDietInfo();
-		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
-			 @Override	 
-	       public void onSuccess(Boolean result) {
-	       		if ((result == false)){	            		
-	       			InlineLabel error = new InlineLabel("Diet  info not updated");
-	       			showErrorPopupPanel(error, "red");            			
-	       		}            		
-	       		else {
-	       			InlineLabel error = new InlineLabel("Diet  updated  -  Proceed to next Panel");
-	       			showErrorPopupPanel(error, "green");            			            			
-	       		}
-	            
-	         }
-			@Override
-			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Database update error");
-				showErrorPopupPanel(error, "red");			
-				
-			}
-		  };
-		  
-		  InminddServiceSvc.updateDiet(diet, callback);
+			 callServiceSetup();
+			 diet  = createDietInfo();
+			 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
+				 @Override	 
+		       public void onSuccess(Boolean result) {
+		       		if ((result == false)){	            		
+		       			InlineLabel error = new InlineLabel("Diet  info not updated");
+		       			showErrorPopupPanel(error, "red");            			
+		       		}            		
+		       		else {
+		       			InlineLabel error = new InlineLabel("Diet  updated  -  Proceed to next Panel");
+		       			showErrorPopupPanel(error, "green");            			            			
+		       		}
+		            
+		         }
+				@Override
+				public void onFailure(Throwable caught) {
+					InlineLabel error = new InlineLabel("Database update error");
+					showErrorPopupPanel(error, "red");			
+					
+				}
+			  };
+			  
+			  InminddServiceSvc.updateDiet(diet, callback);
+	}
+		
+
+	private boolean validateInput() {
+		if (!(culFatYes.getValue() || culFatNo.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer culinary Fat question");
+   			showErrorPopupPanel(error, "red"); 
+   			culFatYes.getElement().getStyle().setProperty("color","red");
+   			culFatNo.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(oilZero.getValue() || oilTwo.getValue() | oilFour.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer olive oil  question");
+   			showErrorPopupPanel(error, "red"); 
+   			oilZero.getElement().getStyle().setProperty("color","red");
+   			oilTwo.getElement().getStyle().setProperty("color","red");
+   			oilFour.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(vegZero.getValue() || vegThree.getValue() || vegFive.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer vegetable servings  question");
+   			showErrorPopupPanel(error, "red"); 
+   			vegZero.getElement().getStyle().setProperty("color","red");
+   			vegThree.getElement().getStyle().setProperty("color","red");
+   			vegFive.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(fruitZero.getValue() || fruitOne.getValue() || fruitTwo.getValue() || fruitThree.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer fruit  servings  question");
+   			showErrorPopupPanel(error, "red"); 
+   			fruitZero.getElement().getStyle().setProperty("color","red");
+   			fruitOne.getElement().getStyle().setProperty("color","red");
+   			fruitTwo.getElement().getStyle().setProperty("color","red");
+   			fruitThree.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(meatZero.getValue() || meatOne.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer meat question");
+   			showErrorPopupPanel(error, "red"); 
+   			meatZero.getElement().getStyle().setProperty("color","red");
+   			meatOne.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(butterZero.getValue() || butterOne.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer butter question");
+   			showErrorPopupPanel(error, "red"); 
+   			butterZero.getElement().getStyle().setProperty("color","red");
+   			butterOne.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(beverageZero.getValue() || beverageOne.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer sweet beverages question");
+   			showErrorPopupPanel(error, "red"); 
+   			beverageZero.getElement().getStyle().setProperty("color","red");
+   			beverageOne.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(wineZero.getValue() || wineSeven.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer wine consumption question");
+   			showErrorPopupPanel(error, "red"); 
+   			wineZero.getElement().getStyle().setProperty("color","red");
+   			wineSeven.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(legumesZero.getValue() || legumesThree.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer legumes  question");
+   			showErrorPopupPanel(error, "red"); 
+   			legumesZero.getElement().getStyle().setProperty("color","red");
+   			legumesThree.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(fishZero.getValue() || fishThree.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer fish consumption question");
+   			showErrorPopupPanel(error, "red"); 
+   			fishZero.getElement().getStyle().setProperty("color","red");
+   			fishThree.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(cakeZero.getValue() || cakeThree.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer cakes question");
+   			showErrorPopupPanel(error, "red"); 
+   			cakeZero.getElement().getStyle().setProperty("color","red");
+   			cakeThree.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		if (!(nutsZero.getValue() || nutsThree.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer nuts question");
+   			showErrorPopupPanel(error, "red"); 
+   			nutsZero.getElement().getStyle().setProperty("color","red");
+   			nutsThree.getElement().getStyle().setProperty("color","red");
+   			return false;
 		}
 		
+		if (!(chickenYes.getValue() || chickenNo.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer chicken  question");
+   			showErrorPopupPanel(error, "red"); 
+   			chickenYes.getElement().getStyle().setProperty("color","red");
+   			chickenNo.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}		
+
+		if (!(pastaZero.getValue() || pastaTwo.getValue())) {
+			InlineLabel error = new InlineLabel("Please answer pasta sauce / question");
+   			showErrorPopupPanel(error, "red"); 
+   			pastaZero.getElement().getStyle().setProperty("color","red");
+   			pastaTwo.getElement().getStyle().setProperty("color","red");
+   			return false;
+		}
+		return true;
+		
+	}	
 		
 	private DietInfo createDietInfo() {
 		
@@ -354,28 +471,28 @@ public class Diet {
 	}
 	
 	private void addCulinaryFat() {
-		dietPanel.add(addLabel("Do you use olive oil or rape seed oil as your main culinary fat?"));
+		dietPanel.add(addLabel(constants.culinary_fat()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		culFatYes =  new RadioButton("cul","Yes");
+		culFatYes =  new RadioButton("cul",constants.yes());
 		culFatYes.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(culFatYes);
-		culFatNo = new RadioButton("cul","No");
+		culFatNo = new RadioButton("cul",constants.no());
 		culFatNo.getElement().getStyle().setProperty("marginLeft","20px");
 		pnl1.add(culFatNo);
 		dietPanel.add(pnl1);
 	}
 	
 	private void addOilConsume() {		
-		dietPanel.add(addLabel("How much olive oil or rape seed oil do you consume in a given day (including oil used for frying, salads, out-of-house meals, etc.) ? "));
+		dietPanel.add(addLabel(constants.oil()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		oilZero = new RadioButton("consume","0 - 1 tablespoons");
+		oilZero = new RadioButton("consume",constants.tablespoon_1());
 		oilZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(oilZero);
-		oilTwo = new RadioButton("consume","2 - 3 tablespoons");
+		oilTwo = new RadioButton("consume",constants.tablespoon_2());
 		oilTwo.getElement().getStyle().setProperty("marginLeft","20px");
 		pnl1.add(oilTwo);
 		
-		oilFour = new RadioButton("consume","4+ tablespoons");
+		oilFour = new RadioButton("consume",constants.tablespoon_4());
 		oilFour.getElement().getStyle().setProperty("marginLeft","20px");
 		pnl1.add(oilFour);
 		dietPanel.add(pnl1);
@@ -383,7 +500,7 @@ public class Diet {
 	}
 	
 	private void addVegetables() {		
-		dietPanel.add(addLabel("How many vegetable servings do you consume per day (1 serving = 200g) ? "));
+		dietPanel.add(addLabel(constants.veg_servings()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		vegZero = new RadioButton("veg","0-2");
 		vegZero.getElement().getStyle().setProperty("marginLeft","220px");
@@ -392,7 +509,7 @@ public class Diet {
 		vegThree.getElement().getStyle().setProperty("marginLeft","112px");
 		pnl1.add(vegThree);
 		
-		vegFive = new RadioButton("veg","5 or more");
+		vegFive = new RadioButton("veg",constants.five());
 		vegFive.getElement().getStyle().setProperty("marginLeft","113px");
 		pnl1.add(vegFive);
 		dietPanel.add(pnl1);
@@ -400,7 +517,7 @@ public class Diet {
 	}
 	
 	private void addFruit() {		
-		dietPanel.add(addLabel("How many fruit units (including natural fruit juices) do you consume per day ? "));
+		dietPanel.add(addLabel(constants.fruit_units()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		fruitZero = new RadioButton("fruit","0");
 		fruitZero.getElement().getStyle().setProperty("marginLeft","220px");
@@ -413,7 +530,7 @@ public class Diet {
 		fruitTwo.getElement().getStyle().setProperty("marginLeft","113px");
 		pnl1.add(fruitTwo);
 		
-		fruitThree = new RadioButton("fruit","3 or more");
+		fruitThree = new RadioButton("fruit",constants.three());
 		fruitThree.getElement().getStyle().setProperty("marginLeft","113px");
 		pnl1.add(fruitThree);
 		dietPanel.add(pnl1);
@@ -421,12 +538,12 @@ public class Diet {
 	}
 	
 	private void addMeat() {		
-		dietPanel.add(addLabel("How many servings of red meat, hamburger or meat products (ham, sausage etc.) do you consume per day ( 1 serving = 100-150g) ?"));
+		dietPanel.add(addLabel(constants.meat()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		meatZero = new RadioButton("meat","Less than 1");
+		meatZero = new RadioButton("meat",constants.less_1());
 		meatZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(meatZero);
-		meatOne = new RadioButton("meat","1 or more");
+		meatOne = new RadioButton("meat",constants.more_1());
 		meatOne.getElement().getStyle().setProperty("marginLeft","53px");
 		pnl1.add(meatOne);			
 		dietPanel.add(pnl1);
@@ -434,24 +551,24 @@ public class Diet {
 	}
 	
 	private void addButter() {		
-		dietPanel.add(addLabel("How many servings of butter, margarine or cream do you consume per day ( 1 serving = 12g) ?"));
+		dietPanel.add(addLabel(constants.butter()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		butterZero = new RadioButton("butter","Less than 1");
+		butterZero = new RadioButton("butter",constants.less_1());
 		butterZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(butterZero);
-		butterOne = new RadioButton("butter","1 or more");
+		butterOne = new RadioButton("butter",constants.more_1());
 		butterOne.getElement().getStyle().setProperty("marginLeft","53px");
 		pnl1.add(butterOne);		
 		dietPanel.add(pnl1);
 		
 	}
 	private void addBeverages() {		
-		dietPanel.add(addLabel("How many sweet or carbonated beverages do you drink per day ?"));
+		dietPanel.add(addLabel(constants.sweet_beverages()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		beverageZero = new RadioButton("sweet","Less than 1");
+		beverageZero = new RadioButton("sweet",constants.less_1());
 		beverageZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(beverageZero);
-		beverageOne = new RadioButton("sweet","1 or more");
+		beverageOne = new RadioButton("sweet",constants.more_1());
 		beverageOne.getElement().getStyle().setProperty("marginLeft","53px");
 		pnl1.add(beverageOne);			
 		dietPanel.add(pnl1);
@@ -459,12 +576,12 @@ public class Diet {
 	}
 	
 	private void addWine() {		
-		dietPanel.add(addLabel("How much wine do you drink per week ?"));
+		dietPanel.add(addLabel(constants.wine()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		wineZero = new RadioButton("wine","0 - 6 glasses");
+		wineZero = new RadioButton("wine",constants.six_glasses());
 		wineZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(wineZero);
-		wineSeven = new RadioButton("wine","7 or more glasses");
+		wineSeven = new RadioButton("wine",constants.seven_glasses());
 		wineSeven.getElement().getStyle().setProperty("marginLeft","46px");
 		pnl1.add(wineSeven);		
 		dietPanel.add(pnl1);
@@ -472,12 +589,12 @@ public class Diet {
 	}
 	
 	private void addLegumes() {		
-		dietPanel.add(addLabel("How many servings of legumes (that is beans, peas or lentils) do you consume per week ( 1 serving = 150g) ?"));
+		dietPanel.add(addLabel(constants.legumes()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		legumesZero = new RadioButton("legumes","0 - 2");
 		legumesZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(legumesZero);
-		legumesThree = new RadioButton("legumes","3 or more");
+		legumesThree = new RadioButton("legumes",constants.three());
 		legumesThree.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(legumesThree);			
 		dietPanel.add(pnl1);
@@ -485,12 +602,12 @@ public class Diet {
 	}
 	
 	private void addFish() {		
-		dietPanel.add(addLabel("How many servings of fish or shellfish do you consume per week ? ( 1 serving = 100-150g of fish or 4-5 units or 200g of shellfish)"));
+		dietPanel.add(addLabel(constants.fish()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		fishZero = new RadioButton("fish","0 - 2");
 		fishZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(fishZero);
-		fishThree = new RadioButton("fish","3 or more");
+		fishThree = new RadioButton("fish",constants.three());
 		fishThree.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(fishThree);		
 		dietPanel.add(pnl1);
@@ -498,12 +615,12 @@ public class Diet {
 	}
 	
 	private void addCake() {		
-		dietPanel.add(addLabel("How many times per week do you consume commercial sweets or pastries (not homemade) such as cakes, cookies, biscuits or custard ?"));
+		dietPanel.add(addLabel(constants.cakes()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		cakeZero = new RadioButton("cake","0 - 2");
 		cakeZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(cakeZero);
-		cakeThree = new RadioButton("cake","3 or more");
+		cakeThree = new RadioButton("cake",constants.three());
 		cakeThree.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(cakeThree);		
 		dietPanel.add(pnl1);
@@ -511,12 +628,12 @@ public class Diet {
 	}
 	
 	private void addNuts() {		
-		dietPanel.add(addLabel("How many servings of nuts (including peanuts) do you consume per week ( 1 serving = 30g) ?"));
+		dietPanel.add(addLabel(constants.nuts()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		nutsZero = new RadioButton("nuts","0 - 2");
 		nutsZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(nutsZero);
-		nutsThree = new RadioButton("nuts","3 or more");
+		nutsThree = new RadioButton("nuts",constants.three());
 		nutsThree.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(nutsThree);		
 		dietPanel.add(pnl1);
@@ -524,12 +641,12 @@ public class Diet {
 	}
 	
 	private void addChicken() {		
-		dietPanel.add(addLabel("Do you preferentially consume chicken, turkey or rabbit meat instead of veal, pork, hamburger or sausage ?"));
+		dietPanel.add(addLabel(constants.prefer_chicken()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
-		chickenYes = new RadioButton("chicken","Yes");
+		chickenYes = new RadioButton("chicken",constants.yes());
 		chickenYes.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(chickenYes);
-		chickenNo = new RadioButton("chicken","No");
+		chickenNo = new RadioButton("chicken",constants.no());
 		chickenNo.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(chickenNo);		
 		dietPanel.add(pnl1);
@@ -537,13 +654,12 @@ public class Diet {
 	}
 	
 	private void addPasta() {		
-		dietPanel.add(addLabel("How many times per week do you consume vegetables, pasta, rice or"
-				+ " other dishes seasoned with a tomato sauce made with onion, leek or garlic and olive oil?"));
+		dietPanel.add(addLabel(constants.sauce()));
 		HorizontalPanel pnl1 = new HorizontalPanel();
 		pastaZero = new RadioButton("pasta","0 - 1");
 		pastaZero.getElement().getStyle().setProperty("marginLeft","220px");
 		pnl1.add(pastaZero);
-		pastaTwo = new RadioButton("pasta","2 or more");
+		pastaTwo = new RadioButton("pasta",constants.two());
 		pastaTwo.getElement().getStyle().setProperty("marginLeft","95px");
 		pnl1.add(pastaTwo);		
 		dietPanel.add(pnl1);
@@ -561,7 +677,7 @@ public class Diet {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		
-		popup.setPopupPosition(190,700);
+		popup.setPopupPosition(190,720);
 		popup.setWidth("550px");
 		popup.show();
 
@@ -597,7 +713,7 @@ public class Diet {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Diet Two data Database error");
+				InlineLabel error = new InlineLabel("Diet data Database error");
 				showErrorPopupPanel(error, "red");			
 	
 			}

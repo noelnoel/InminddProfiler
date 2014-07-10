@@ -5,7 +5,6 @@ package com.inmindd.dcu.client;
 
 
 
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,8 +41,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.User;
-
 import com.google.gwt.user.client.ui.TextBox;
+
+
 
 
 
@@ -96,14 +96,13 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	static final String TOKEN_PATIENT = "About You";
 	static final String TOKEN_CESD = "About Your mood";	
 	static final String TOKEN_MEDICAL= "Medical health";
-	static final String TOKEN_HISTORY = "Your family medical history";
-	//static final String TOKEN_PHYSICAL = "Your physical activity";
+	static final String TOKEN_HISTORY = "Family medical history";
 	static final String TOKEN_PHYSICAL = constants.physical();
 	static final String TOKEN_COGNITIVE1 = "Cognitive Activity 1";
 	static final String TOKEN_COGNITIVE2 = "Cognitive Activity 2";
 	static final String TOKEN_SMOKE_ALCOHOL = "Smoking & Alcohol intake";
 	static final String TOKEN_DIET = "Diet";
-	static final String TOKEN_LOGIN = "Login to Inmindd";
+	static final String TOKEN_LOGIN = "Login";
 	
 	
 	
@@ -212,12 +211,15 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	TabLayoutPanel content;
 
 	/**
-	 * The image logo.
+	 * The image logo. for INmindd
 	 */
 	Image logo;
 	
+	Image euFlag;
+	
 
-	/**
+	
+	/*
 	 * Here we set up the logo by creating a new Image widget, and prevent the 
 	 * default browser action from occuring on it.
 	 */
@@ -238,7 +240,11 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		};
 		logo.setWidth("250px");
 		logo.setHeight("45px");	
-		
+		euFlag =  new Image(GWT.getModuleBaseURL() + "../" + "EU flag.jpg");
+		euFlag.setWidth("100px");
+		euFlag.setHeight("60px");	
+		euFlag.setStyleName("pos10");
+			
 	}
 	
 	public void startProfiler() {
@@ -314,7 +320,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	private void buildTabContent(){
 
 		// Create the login Panel
-		Login login = new Login();
+		login = new Login();
 		loginPanel = login.setupLoginPanel();// Create the login Panel
 
 	
@@ -432,10 +438,11 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 		content.setSize("100%",  "130%");
 		Label welLabel = new Label(constants.welcome());
-		
+		Label euLabel = new Label(constants.eufunding_banner());
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");
 		if (logoSlot!=null)logoSlot.add(logo);
+		logoSlot.add(euFlag);
 		
 		RootPanel welcomeSlot = RootPanel.get("welcome");
 		if (welcomeSlot != null) welcomeSlot.add(welLabel);
@@ -480,7 +487,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	 @Override
 		public void onModuleLoad() {
 			
-	    		
+		 
 	// Create the user interface
 		setUpGui();		
 	// Set up history management
@@ -501,8 +508,17 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	 */
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
+	// Put this back !!!!
+		/* User user = login.getUser();
+				 if (user.getUserId() == null ) {
+
+					 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+					 showErrorPopupPanel(error);
+					 showLogin();
+					 return;
+
+				 }  */
 	
-		
 		// Get the token from the event
 		String page = event.getValue().trim();
 		// Check if the token is null or empty
@@ -630,7 +646,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,676);
+		popup.setPopupPosition(450,576);
 		popup.setWidth("550px");
 		popup.show();
 

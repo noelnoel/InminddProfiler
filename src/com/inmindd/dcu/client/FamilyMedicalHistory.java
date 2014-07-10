@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -64,7 +65,9 @@ public class FamilyMedicalHistory {
 	private Login login;
 	public static FamilyMedicalHistory lastinstance;
 	
-
+	private static InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
+	
 	public FamilyMedicalHistory() {
 		lastinstance = this;
 	}
@@ -105,13 +108,13 @@ public class FamilyMedicalHistory {
 	public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"About Your family medical history</h1>");
+				constants.familymed()+ "</h1>");
 
 		HTMLPanel header = new HTMLPanel("<h3>" +
-				"We would like to ask you some questions about your family medical history</h3>");
+				constants.familyquestions() + "</h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
 
-		Button prev = new Button("Retrieve previous data ?");
+		Button prev = new Button(constants.review());
 
 
 		// Listen for mouse events on the previous button.
@@ -161,7 +164,9 @@ public class FamilyMedicalHistory {
 
 		HorizontalPanel sibling_cardio =  setupSiblingQuestionsTwo();
 		familyMedicalHistory.add(sibling_cardio);
-
+		InlineLabel lbl3 = new InlineLabel(constants.history_8());
+		lbl3.getElement().getStyle().setProperty("fontWeight", "bold");
+		familyMedicalHistory.add(lbl3);
 		HorizontalPanel sibling_diabetes = setupSiblingQuestionsThree();
 		familyMedicalHistory.add(sibling_diabetes);
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -487,27 +492,30 @@ public class FamilyMedicalHistory {
 	 
 	private HorizontalPanel setupMotherQuestionsOne() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("Was your mother");
+		InlineLabel lbl = new InlineLabel(constants.history_1());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Dementia");
+		InlineLabel lbl2 = new InlineLabel(constants.dementia());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "300%");
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "300%");
 		
-		
-		String title = "Dementia is an umbrella term used to describe a number of conditions that are progressive and largely affect older people. Many different diseases can produce the symptoms of dementia. The most common types of dementia are Alzheimer's disease and Vascular Dementia. Other less common types include Lewy Bodies Disease (LBD), Frontotemporal dementia (FTD) and Korsakoff's Disease";
+		lbl2.setStyleName("pos9");
+		///String title = "Dementia is an umbrella term used to describe a number of conditions that are progressive and largely affect older people. Many different diseases can produce the symptoms of dementia. The most common types of dementia are Alzheimer's disease and Vascular Dementia. Other less common types include Lewy Bodies Disease (LBD), Frontotemporal dementia (FTD) and Korsakoff's Disease";
 	
 		family.add(lbl);
 		family.add(lbl2);
-		family.add(getInfoLogo(title));
+		family.add(getInfoLogo(constants.dementia_popup()));
 		HorizontalPanel horPanel = new HorizontalPanel();
-		motherDementiaYes = new RadioButton("motherDementia", "YES");
-		motherDementiaNo = new RadioButton("motherDementia", "NO");
-		motherDementiaDontKnow = new RadioButton("motherDementia", "DON'T KNOW");
+		motherDementiaYes = new RadioButton("motherDementia", constants.yes());
+		motherDementiaNo = new RadioButton("motherDementia", constants.no());
+		motherDementiaDontKnow = new RadioButton("motherDementia", constants.dontknow());
 		
 		
-		motherDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
-		motherDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		motherDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		//motherDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
+		motherDementiaYes.setStyleName("pos10");
+		//motherDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherDementiaNo.setStyleName("pos7");
+		///motherDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherDementiaDontKnow.setStyleName("pos11");
 		
 		horPanel.add(motherDementiaYes);
 		horPanel.add(motherDementiaNo);
@@ -520,30 +528,33 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupMotherQuestionsTwo() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("ever told by a doctor");
+		InlineLabel lbl = new InlineLabel(constants.history_2());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Cardiovascular disease");
+		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
-		
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "10pc");
+		lbl2.setStyleName("pos9");
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
-		logo.getElement().getStyle().setProperty("marginLeft", "10px");
+		logo.getElement().getStyle().setProperty("marginLeft", "325px");
 		logo.getElement().getStyle().setProperty("width", "25px");
-		logo.setTitle("This includes any of the following conditions : heart attack, angina, heart failure mini-strokes & stroke");
+		logo.setTitle(constants.heart_popup());
 		
 		family.add(lbl);
 		family.add(lbl2);
 		family.add(logo);
 		HorizontalPanel horPanel = new HorizontalPanel();
-		motherCardioYes = new RadioButton("motherCardio", "YES");
-		motherCardioNo = new RadioButton("motherCardio", "NO");
-		motherCardioDontKnow = new RadioButton("motherCardio", "DON'T KNOW");
+		motherCardioYes = new RadioButton("motherCardio", constants.yes());
+		motherCardioNo = new RadioButton("motherCardio", constants.no());
+		motherCardioDontKnow = new RadioButton("motherCardio", constants.dontknow());
 		
 		
-		motherCardioYes.getElement().getStyle().setProperty("marginLeft", "148px");
-		motherCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		motherCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		//motherCardioYes.getElement().getStyle().setProperty("marginLeft", "148px");
+		motherCardioYes.setStyleName("pos10");
+		//motherCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherCardioNo.setStyleName("pos7");
+		//motherCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherCardioDontKnow.setStyleName("pos11");
 		
 		horPanel.add(motherCardioYes);
 		horPanel.add(motherCardioNo);
@@ -555,25 +566,28 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupMotherQuestionsThree() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("that she had :");
+		InlineLabel lbl = new InlineLabel(constants.history_3());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		InlineLabel lbl2 = new InlineLabel("Diabetes ");
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "208px");
-	
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "13pc");
+		lbl2.setStyleName("pos9");
 		
 		family.add(lbl);
 		family.add(lbl2);
 	
 		HorizontalPanel horPanel = new HorizontalPanel();
-		motherMellitusYes = new RadioButton("motherMellitus", "YES");
-		motherMellitusNo = new RadioButton("motherMellitus", "NO");
-		motherMellitusDontKnow = new RadioButton("motherMellitus", "DON'T KNOW");
+		motherMellitusYes = new RadioButton("motherMellitus", constants.yes());
+		motherMellitusNo = new RadioButton("motherMellitus", constants.no());
+		motherMellitusDontKnow = new RadioButton("motherMellitus", constants.dontknow());
 		
 		
-		motherMellitusYes.getElement().getStyle().setProperty("marginLeft", "280px");
-		motherMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		motherMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		//motherMellitusYes.getElement().getStyle().setProperty("marginLeft", "280px");
+		motherMellitusYes.setStyleName("pos10");
+		//motherMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherMellitusNo.setStyleName("pos7");
+		//motherMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		motherMellitusDontKnow.setStyleName("pos11");
 		
 		horPanel.add(motherMellitusYes);
 		horPanel.add(motherMellitusNo);
@@ -585,30 +599,33 @@ public class FamilyMedicalHistory {
 		
 		private HorizontalPanel setupFatherQuestionsOne() {
 			HorizontalPanel family = new HorizontalPanel();
-			InlineLabel lbl = new InlineLabel("Was your father");
+			InlineLabel lbl = new InlineLabel(constants.history_1());
 			lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-			InlineLabel lbl2 = new InlineLabel("Dementia");
+			InlineLabel lbl2 = new InlineLabel(constants.dementia());
 			lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-			lbl2.getElement().getStyle().setProperty("marginLeft", "195px");
-			
+			//lbl2.getElement().getStyle().setProperty("marginLeft", "195px");
+			lbl2.setStyleName("pos9");
 			Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 			logo.getElement().getStyle().setProperty("height", "25px");
-			logo.getElement().getStyle().setProperty("marginLeft", "10px");
+			logo.getElement().getStyle().setProperty("marginLeft", "260px");
 			logo.getElement().getStyle().setProperty("width", "25px");
-			logo.setTitle("Dementia is an umbrella term used to describe a number of conditions that are progressive and largely affect older people. Many different diseases can produce the symptoms of dementia. The most common types of dementia are Alzheimer's disease and Vascular Dementia. Other less common types include Lewy Bodies Disease (LBD), Frontotemporal dementia (FTD) and Korsakoff's Disease");
+			logo.setTitle(constants.dementia_popup());
 			
 			family.add(lbl);
 			family.add(lbl2);
 			family.add(logo);
 			HorizontalPanel horPanel = new HorizontalPanel();
-			fatherDementiaYes = new RadioButton("fatherDementia", "YES");
-			fatherDementiaNo = new RadioButton("fatherDementia", "NO");
-			fatherDementiaDontKnow = new RadioButton("fatherDementia", "DON'T KNOW");
+			fatherDementiaYes = new RadioButton("fatherDementia", constants.yes());
+			fatherDementiaNo = new RadioButton("fatherDementia", constants.no());
+			fatherDementiaDontKnow = new RadioButton("fatherDementia", constants.dontknow());
 			
 			
-			fatherDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
-			fatherDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
-			fatherDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+			//fatherDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
+			fatherDementiaYes.setStyleName("pos10");
+			//fatherDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
+			fatherDementiaNo.setStyleName("pos7");
+			//fatherDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");	
+			fatherDementiaDontKnow.setStyleName("pos11");
 			
 			horPanel.add(fatherDementiaYes);
 			horPanel.add(fatherDementiaNo);
@@ -622,31 +639,34 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupFatherQuestionsTwo() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("ever told by a doctor");
+		InlineLabel lbl = new InlineLabel(constants.history_4());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Cardiovascular disease");
+		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
 		
+		lbl2.setStyleName("pos9");
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
-		logo.getElement().getStyle().setProperty("marginLeft", "10px");
+		logo.getElement().getStyle().setProperty("marginLeft", "325px");
 		logo.getElement().getStyle().setProperty("width", "25px");
-		logo.setTitle("This includes any of the following conditions : heart attack, angina, heart failure mini-strokes & stroke");
+		logo.setTitle(constants.heart_popup());
 		
 		family.add(lbl);
 		family.add(lbl2);
 		family.add(logo);
 		HorizontalPanel horPanel = new HorizontalPanel();
-		fatherCardioYes = new RadioButton("fatherCardio", "YES");
-		fatherCardioNo =  new RadioButton("fatherCardio", "NO");
-		fatherCardioDontKnow = new RadioButton("fatherCardio", "DON'T KNOW");
+		fatherCardioYes = new RadioButton("fatherCardio", constants.yes());
+		fatherCardioNo =  new RadioButton("fatherCardio", constants.no());
+		fatherCardioDontKnow = new RadioButton("fatherCardio", constants.dontknow());
 		
 		
-		fatherCardioYes.getElement().getStyle().setProperty("marginLeft", "148px");
-		fatherCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		fatherCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
-		
+		//fatherCardioYes.getElement().getStyle().setProperty("marginLeft", "148px");
+		fatherCardioYes.setStyleName("pos10");
+		//fatherCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		fatherCardioNo.setStyleName("pos7");
+		//fatherCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		fatherCardioDontKnow.setStyleName("pos11");
 		horPanel.add(fatherCardioYes);
 		horPanel.add(fatherCardioNo);
 		horPanel.add(fatherCardioDontKnow);
@@ -657,26 +677,29 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupFatherQuestionsThree() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("that he had :");
+		InlineLabel lbl = new InlineLabel(constants.history_5());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		InlineLabel lbl2 = new InlineLabel("Diabetes");
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "215px");
-	
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "215px");
+		lbl2.setStyleName("pos9");
 		
 		family.add(lbl);
 		family.add(lbl2);
 	
 		HorizontalPanel horPanel = new HorizontalPanel();
-		fatherMellitusYes = new RadioButton("fatherMellitus", "YES");
-		fatherMellitusNo = new RadioButton("fatherMellitus", "NO");
-		fatherMellitusDontKnow = new RadioButton("fatherMellitus", "DON'T KNOW");
+		fatherMellitusYes = new RadioButton("fatherMellitus", constants.yes());
+		fatherMellitusNo = new RadioButton("fatherMellitus", constants.no());
+		fatherMellitusDontKnow = new RadioButton("fatherMellitus", constants.dontknow());
 		
 		
-		fatherMellitusYes.getElement().getStyle().setProperty("marginLeft", "280px");
-		fatherMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		fatherMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		//fatherMellitusYes.getElement().getStyle().setProperty("marginLeft", "280px");
+		fatherMellitusYes.setStyleName("pos10");
+		//fatherMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		fatherMellitusNo.setStyleName("pos7");
 		
+		//fatherMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		fatherMellitusDontKnow.setStyleName("pos11");
 		horPanel.add(fatherMellitusYes);
 		horPanel.add(fatherMellitusNo);
 		horPanel.add(fatherMellitusDontKnow);
@@ -688,31 +711,33 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupSiblingQuestionsOne() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("Were any of your siblings");
+		InlineLabel lbl = new InlineLabel(constants.history_6());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Dementia");
+		InlineLabel lbl2 = new InlineLabel(constants.dementia());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "130px");
-		
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "130px");
+		lbl2.setStyleName("pos9");
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
-		logo.getElement().getStyle().setProperty("marginLeft", "10px");
+		logo.getElement().getStyle().setProperty("marginLeft", "210px");
 		logo.getElement().getStyle().setProperty("width", "25px");
-		logo.setTitle("Dementia is an umbrella term used to describe a number of conditions that are progressive and largely affect older people. Many different diseases can produce the symptoms of dementia. The most common types of dementia are Alzheimer's disease and Vascular Dementia. Other less common types include Lewy Bodies Disease (LBD), Frontotemporal dementia (FTD) and Korsakoff's Disease");
+		logo.setTitle(constants.dementia_popup());
 		
 		family.add(lbl);
 		family.add(lbl2);
 		family.add(logo);
 		HorizontalPanel horPanel = new HorizontalPanel();
-		siblingDementiaYes = new RadioButton("siblingDementia", "YES");
-		siblingDementiaNo = new RadioButton("siblingDementia", "NO");
-		siblingDementiaDontKnow = new RadioButton("dementiaButton", "DON'T KNOW");
+		siblingDementiaYes = new RadioButton("siblingDementia", constants.yes());
+		siblingDementiaNo = new RadioButton("siblingDementia", constants.no());
+		siblingDementiaDontKnow = new RadioButton("dementiaButton", constants.dontknow());
 		
 		
-		siblingDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
-		siblingDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		siblingDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
-		
+		//siblingDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
+		siblingDementiaYes.setStyleName("pos10");
+		//siblingDementiaNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingDementiaNo.setStyleName("pos7");
+		//siblingDementiaDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingDementiaDontKnow.setStyleName("pos11");
 		horPanel.add(siblingDementiaYes);
 		horPanel.add(siblingDementiaNo);
 		horPanel.add(siblingDementiaDontKnow);
@@ -724,9 +749,10 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupSiblingQuestionsTwo() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("ever told by a doctor");
+		InlineLabel lbl = new InlineLabel(constants.history_7());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Cardiovascular disease");
+		
+		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 		lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
 		
@@ -734,20 +760,24 @@ public class FamilyMedicalHistory {
 		logo.getElement().getStyle().setProperty("height", "25px");
 		logo.getElement().getStyle().setProperty("marginLeft", "10px");
 		logo.getElement().getStyle().setProperty("width", "25px");
-		logo.setTitle("This includes any of the following conditions: heart attack, angina, heart failure mini-strokes & stroke");
+		logo.setTitle(constants.heart_popup());
 		
 		family.add(lbl);
+		
 		family.add(lbl2);
 		family.add(logo);
 		HorizontalPanel horPanel = new HorizontalPanel();
-		siblingCardioYes = new RadioButton("siblingCardio", "YES");
-		siblingCardioNo = new RadioButton("siblingCardio", "NO");
-		siblingCardioDontKnow = new RadioButton("siblingCardio", "DON'T KNOW");
+		siblingCardioYes = new RadioButton("siblingCardio", constants.yes());
+		siblingCardioNo = new RadioButton("siblingCardio", constants.no());
+		siblingCardioDontKnow = new RadioButton("siblingCardio", constants.dontknow());
 		
 		
-		siblingCardioYes.getElement().getStyle().setProperty("marginLeft", "146px");
-		siblingCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		siblingCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		//siblingCardioYes.getElement().getStyle().setProperty("marginLeft", "146px");
+		siblingCardioYes.setStyleName("pos10");
+		//siblingCardioNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingCardioNo.setStyleName("pos7");
+		//siblingCardioDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingCardioDontKnow.setStyleName("pos11");
 		
 		horPanel.add(siblingCardioYes);
 		horPanel.add(siblingCardioNo);
@@ -760,26 +790,28 @@ public class FamilyMedicalHistory {
 	
 	private HorizontalPanel setupSiblingQuestionsThree() {
 		HorizontalPanel family = new HorizontalPanel();
-		InlineLabel lbl = new InlineLabel("that s/he had :");
+		InlineLabel lbl = new InlineLabel(constants.history_9());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		InlineLabel lbl2 = new InlineLabel("Diabetes");
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "203px");
-	
+		//lbl2.getElement().getStyle().setProperty("marginLeft", "203px");
+		lbl2.setStyleName("pos9");
 		
 		family.add(lbl);
 		family.add(lbl2);
 	
 		HorizontalPanel horPanel = new HorizontalPanel();
-		siblingMellitusYes = new RadioButton("siblingMellitus", "YES");
-		siblingMellitusNo = new RadioButton("siblingMellitus", "NO");
-		siblingMellitusDontKnow = new RadioButton("siblingMellitus", "DON'T KNOW");
+		siblingMellitusYes = new RadioButton("siblingMellitus", constants.yes());
+		siblingMellitusNo = new RadioButton("siblingMellitus", constants.no());
+		siblingMellitusDontKnow = new RadioButton("siblingMellitus", constants.dontknow());
 		
 		
-		siblingMellitusYes.getElement().getStyle().setProperty("marginLeft", "277px");
-		siblingMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
-		siblingMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
-		
+		//siblingMellitusYes.getElement().getStyle().setProperty("marginLeft", "277px");
+		siblingMellitusYes.setStyleName("pos10");
+		//siblingMellitusNo.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingMellitusNo.setStyleName("pos7");
+		//siblingMellitusDontKnow.getElement().getStyle().setProperty("marginLeft", "55px");
+		siblingMellitusDontKnow.setStyleName("pos11");
 		horPanel.add(siblingMellitusYes);
 		horPanel.add(siblingMellitusNo);
 		horPanel.add(siblingMellitusDontKnow);
@@ -808,7 +840,7 @@ public class FamilyMedicalHistory {
 	private Image getInfoLogo(String title) {
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
-		logo.getElement().getStyle().setProperty("marginLeft", "200px");
+		logo.getElement().getStyle().setProperty("marginLeft", "260px");
 		logo.getElement().getStyle().setProperty("width", "25px");
 		logo.setTitle(title);
 		return logo;

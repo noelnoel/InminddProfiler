@@ -29,7 +29,16 @@ public class PhysicalActivityInfo  implements Serializable{
 	private int summerHouseworkHours;
 	private int winterHouseworkHours;
 	private String vigorous;
-	//private int activityHours;
+	private int vigorousHours;
+	public int getVigorousHours() {
+		return vigorousHours;
+	}
+
+	public void setVigorousHours(int vigorousHours) {
+		this.vigorousHours = vigorousHours;
+	}
+
+
 	private int flightStairs;
 	
 

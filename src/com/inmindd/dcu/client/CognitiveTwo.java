@@ -27,28 +27,27 @@ public class CognitiveTwo {
 	private Login login;
 	
 	private FlowPanel cognitiveTwoPanel;
+	static  InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	
 	private CognitiveTwoInfo cognitiveTwo;
 	private InminddServiceAsync InminddServiceSvc;
 	private ScrollPanel scroll = new ScrollPanel();
-	private static final String  NEVER = "Never/Rarely (i.e less than or equal to 2 times/week) ";
-	private static final String  NEVER_AFTER = "Never/Rarely ";
-	private static final String OFTEN = "Often/Always (i.e more than or equal to 3 times/week)  ";
-	private static final String OFTEN_AFTER = "Often/Always ";
-	private static final String  NEVER_MONTH = "Never/Rarely (i.e less than or equal to 2 times/month) ";
-	private static final String OFTEN_MONTH = "Often/Always (i.e more than or equal to 3 times/month)  ";
+	private static final String  NEVER = constants.never_1();
+	private static final String  NEVER_AFTER = constants.never_rarely();
+	private static final String OFTEN = constants.often_1();
+	private static final String OFTEN_AFTER = constants.often_always();
+	private static final String  NEVER_MONTH = constants.never_2();
+	private static final String OFTEN_MONTH = constants.often_2();
 	private static final String  NEVER_MONTH_AFTER = "Never/Rarely ";
 	private static final String OFTEN_MONTH_AFTER = "Often/Always  ";
-	private static final String  NEVER_YEAR = "Never/Rarely (i.e less than or equal to 2 times/year) ";
-	private static final String OFTEN_YEAR = "Often/Always (i.e more than or equal to 3 times/year)  ";
+	private static final String  NEVER_YEAR = constants.never_3();
+	private static final String OFTEN_YEAR = constants.often_3();
 	private static final String  NEVER_YEAR_AFTER = "Never/Rarely ";
 	private static final String OFTEN_YEAR_AFTER = "Often/Always  ";
-	private static final String IF_OFTEN = "Please estimate the number of years over your adult life" +
-"	(i.e from 18 years onwards) that you engaged in this activity on a weekly basis ";
-	private static final String IF_OFTEN_MONTH = "Please estimate the number of years over your adult life" +
-			"	(i.e from 18 years onwards) that you engaged in this activity on a monthly basis ";
-	private static final String IF_OFTEN_YEAR = "Please estimate the number of years over your adult life" +
-			"	(i.e from 18 years onwards) that you engaged in this activity on a yearly basis ";
+	private static final String IF_OFTEN = constants.activity_weekly();
+	private static final String IF_OFTEN_MONTH = constants.activity_monthly();
+	private static final String IF_OFTEN_YEAR = constants.activity_yearly();
 	
 	// buttons
 	
@@ -131,6 +130,7 @@ public class CognitiveTwo {
 	
 	public static CognitiveTwo  lastinstance;
 	
+	
 	public CognitiveTwo() {
 		lastinstance = this;
 	}
@@ -194,8 +194,8 @@ public class CognitiveTwo {
 		this.login = login;
 		cognitiveTwoPanel = new FlowPanel();
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
-				"About Your cognitive activities part 2</h1>");
-		Button prev = new Button("Retrieve previous data ?");
+				constants.cognitive_p2() + "</h1>");
+		Button prev = new Button(constants.review());
 
 
 		// Listen for mouse events on the previous button.
@@ -205,14 +205,14 @@ public class CognitiveTwo {
 			}
 		});
 		HTMLPanel header = new HTMLPanel("<h3>" +
-				"Social & Leisure Activities</h3>");
+				constants.leisure_social() + "<h3>");
 		header.getElement().getStyle().setProperty("textDecoration", "underline");
 		
-		InlineLabel lbl = new InlineLabel("The following questions are about activities that you have carried out throughout your adult life (i.e from 18 years onwards). " 
-				+ " Please exclude all paid activities when responding to these questions.");
+		InlineLabel lbl = new InlineLabel(constants.adult_life() 
+		 + constants.paid_1());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");	
 		
-		InlineLabel lbl2 = new InlineLabel("During your adult life, have you engaged in the following activities on a weekly basis ? ");
+		InlineLabel lbl2 = new InlineLabel(constants.weekly_activities());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 		lbl2.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");  
 		lbl2.setStyleName("flow");	
@@ -223,6 +223,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(prev);
 		cognitiveTwoPanel.add(header);
 		cognitiveTwoPanel.add(lbl);
+		
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(lbl2);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -234,7 +235,7 @@ public class CognitiveTwo {
 		addLeisure();
 		addTech();
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		InlineLabel lbl3 = new InlineLabel("During your adult life, have you engaged in the following activities on a monthly basis ? ");
+		InlineLabel lbl3 = new InlineLabel(constants.monthly_activities());
 		lbl3.getElement().getStyle().setProperty("fontWeight", "bold");	
 		lbl3.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");  
 		lbl3.setStyleName("flow");	
@@ -249,7 +250,7 @@ public class CognitiveTwo {
 		addArtistic();
 		
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		InlineLabel lbl4 = new InlineLabel("During your adult life, have you engaged in the following activities on a yearly basis ? ");
+		InlineLabel lbl4 = new InlineLabel(constants.yearly_activities());
 		lbl4.getElement().getStyle().setProperty("fontWeight", "bold");	
 		lbl4.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");  
 		lbl4.setStyleName("flow");	
@@ -454,7 +455,7 @@ public class CognitiveTwo {
 		
 	
 	private void addReadingNewspapers() {
-		readingLabel = new InlineLabel("Reading newspapers and magazines:	");
+		readingLabel = new InlineLabel(constants.newspapers());
 		readingLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		readingLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -462,18 +463,18 @@ public class CognitiveTwo {
 
 		readingNever = new RadioButton("readingButton", NEVER);
 		readingNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		readingNever.getElement().getStyle().setProperty("marginLeft", "216px");	
-		
+		//readingNever.getElement().getStyle().setProperty("marginLeft", "216px");	
+		readingNever.setStyleName("pos1");
 		readingOften = new RadioButton("readingButton", OFTEN);
 		readingOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		readingOften.getElement().getStyle().setProperty("marginLeft", "50px");	
-		
-		
+		//readingOften.getElement().getStyle().setProperty("marginLeft", "50px");	
+		readingOften.setStyleName("pos3");
+	
 		cognitiveTwoPanel.add(readingNever);
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(readingOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenRead = new DataField(IF_OFTEN, "years");
+		oftenRead = new DataField(IF_OFTEN, constants.year());
 		oftenRead.setVisible(false);
 		oftenRead.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenRead.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -502,7 +503,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addHouseholdActivities() {
-		householdLabel = new InlineLabel("Household activities (cooking, washing, ironing etc.)	");
+		householdLabel = new InlineLabel(constants.household());
 		householdLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		householdLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -510,18 +511,18 @@ public class CognitiveTwo {
 
 		householdNever = new RadioButton("householdButton", NEVER_AFTER);
 		householdNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		householdNever.getElement().getStyle().setProperty("marginLeft", "110px");	
-		
+		//householdNever.getElement().getStyle().setProperty("marginLeft", "110px");	
+		householdNever.setStyleName("pos1");
 		householdOften = new RadioButton("householdButton", OFTEN_AFTER);
 		householdOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		householdOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//householdOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		householdOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(householdNever);
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(householdOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenHousehold = new DataField(IF_OFTEN, "years");
+		oftenHousehold = new DataField(IF_OFTEN, constants.year());
 		oftenHousehold.setVisible(false);
 		oftenHousehold.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenHousehold.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -552,7 +553,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addDriving() {
-		drivingLabel = new InlineLabel("Driving (not biking)");
+		drivingLabel = new InlineLabel(constants.driving());
 		drivingLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		drivingLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -560,18 +561,18 @@ public class CognitiveTwo {
 
 		drivingNever = new RadioButton("drivingButton", NEVER_AFTER);
 		drivingNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		drivingNever.getElement().getStyle().setProperty("marginLeft", "337px");	
-		
+		//drivingNever.getElement().getStyle().setProperty("marginLeft", "337px");	
+		drivingNever.setStyleName("pos1");
 		drivingOften = new RadioButton("drivingButton", OFTEN_AFTER);
 		drivingOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		drivingOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//drivingOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		drivingOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(drivingNever);
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(drivingOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenDrive = new DataField(IF_OFTEN, "years");
+		oftenDrive = new DataField(IF_OFTEN, constants.year());
 		oftenDrive.setVisible(false);
 		oftenDrive.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenDrive.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -600,7 +601,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addLeisure() {
-		leisureLabel = new InlineLabel("Leisure activities (sports, hunting, dancing, cards, bowling etc.)	");
+		leisureLabel = new InlineLabel(constants.leisure_activities());
 		leisureLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		leisureLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -608,18 +609,18 @@ public class CognitiveTwo {
 
 		leisureNever = new RadioButton("leisureButton", NEVER_AFTER);
 		leisureNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		leisureNever.getElement().getStyle().setProperty("marginLeft", "32px");	
-		
+		//leisureNever.getElement().getStyle().setProperty("marginLeft", "32px");	
+		leisureNever.setStyleName("pos1");
 		leisureOften = new RadioButton("leisureButton", OFTEN_AFTER);
 		leisureOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		leisureOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//leisureOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		leisureOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(leisureNever);
 		
 		cognitiveTwoPanel.add(leisureOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenLeisure = new DataField(IF_OFTEN, "years");
+		oftenLeisure = new DataField(IF_OFTEN, constants.year());
 		oftenLeisure.setVisible(false);
 		oftenLeisure.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenLeisure.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -649,7 +650,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addTech() {
-		techLabel = new InlineLabel("Using new technologies (digital camera, computer, internet etc.)	");
+		techLabel = new InlineLabel(constants.new_tech());
 		techLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		techLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -657,18 +658,18 @@ public class CognitiveTwo {
 
 		techNever = new RadioButton("techButton", NEVER_AFTER);
 		techNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		techNever.getElement().getStyle().setProperty("marginLeft", "32px");	
-		
+		//techNever.getElement().getStyle().setProperty("marginLeft", "32px");	
+		techNever.setStyleName("pos1");
 		techOften = new RadioButton("techButton", OFTEN_AFTER);
 		techOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		techOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//techOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		techOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(techNever);
 		
 		cognitiveTwoPanel.add(techOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenTech = new DataField(IF_OFTEN, "years");
+		oftenTech = new DataField(IF_OFTEN, constants.year());
 		oftenTech.setVisible(false);
 		oftenTech.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenTech.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -696,7 +697,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addSocial() {
-		socialLabel = new InlineLabel("Social activities (parties, going out with friends, local community events etc.)");
+		socialLabel = new InlineLabel(constants.social_activities());
 		socialLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		socialLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -704,18 +705,18 @@ public class CognitiveTwo {
 
 		socialNever = new RadioButton("socialButton", NEVER_MONTH);
 		socialNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		socialNever.getElement().getStyle().setProperty("marginLeft", "32px");	
-		
+		//socialNever.getElement().getStyle().setProperty("marginLeft", "32px");	
+		socialNever.setStyleName("pos4");
 		socialOften = new RadioButton("socialButton", OFTEN_MONTH);
 		socialOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		socialOften.getElement().getStyle().setProperty("marginLeft", "47px");	
-		
+		//socialOften.getElement().getStyle().setProperty("marginLeft", "47px");	
+		socialOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(socialNever);
 		
 		cognitiveTwoPanel.add(socialOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenSocial = new DataField(IF_OFTEN_MONTH, "years");
+		oftenSocial = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenSocial.setVisible(false);
 		oftenSocial.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenSocial.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -743,26 +744,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addCinema() {
-		cinemaLabel = new InlineLabel("Cinema, theater.");
+		cinemaLabel = new InlineLabel(constants.cinema());
 		cinemaLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		cinemaLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(cinemaLabel);
 
-		cinemaNever = new RadioButton("cinemaButton", NEVER_MONTH_AFTER);
+		cinemaNever = new RadioButton("cinemaButton", constants.never_rarely());
 		cinemaNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		cinemaNever.getElement().getStyle().setProperty("marginLeft", "446px");	
-		
-		cinemaOften = new RadioButton("cinemaButton", OFTEN_MONTH_AFTER);
+		//cinemaNever.getElement().getStyle().setProperty("marginLeft", "446px");	
+		cinemaNever.setStyleName("pos1");
+		cinemaOften = new RadioButton("cinemaButton", constants.often_always());
 		cinemaOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		cinemaOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//cinemaOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		cinemaOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(cinemaNever);
 		
 		cognitiveTwoPanel.add(cinemaOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenCinema = new DataField(IF_OFTEN_MONTH, "years");
+		oftenCinema = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenCinema.setVisible(false);
 		oftenCinema.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenCinema.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -792,26 +793,26 @@ public class CognitiveTwo {
 	
 	
 	private void addGardening() {
-		gardeningLabel = new InlineLabel("Gardening, handicraft, knitting, embroidery, etc.	");
+		gardeningLabel = new InlineLabel(constants.gardening_2());
 		gardeningLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		gardeningLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(gardeningLabel);
 
-		gardeningNever = new RadioButton("gardenButton", NEVER_MONTH_AFTER);
+		gardeningNever = new RadioButton("gardenButton", constants.never_rarely());
 		gardeningNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		gardeningNever.getElement().getStyle().setProperty("marginLeft", "230px");	
-		
-		gardeningOften = new RadioButton("gardenButton", OFTEN_MONTH_AFTER);
+		//gardeningNever.getElement().getStyle().setProperty("marginLeft", "230px");	
+		gardeningNever.setStyleName("pos1");
+		gardeningOften = new RadioButton("gardenButton", constants.often_always());
 		gardeningOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		gardeningOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//gardeningOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		gardeningOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(gardeningNever);
 		
 		cognitiveTwoPanel.add(gardeningOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenGardening = new DataField(IF_OFTEN_MONTH, "years");
+		oftenGardening = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenGardening.setVisible(false);
 		oftenGardening.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenGardening.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -839,26 +840,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addCare() {
-		careLabel = new InlineLabel("Taking care of children or elderly	");
+		careLabel = new InlineLabel(constants.children());
 		careLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		careLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(careLabel);
 
-		careNever = new RadioButton("careButton", NEVER_MONTH_AFTER);
+		careNever = new RadioButton("careButton", constants.never_rarely());
 		careNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		careNever.getElement().getStyle().setProperty("marginLeft", "332px");	
-		
-		careOften = new RadioButton("careButton", OFTEN_MONTH_AFTER);
+		//careNever.getElement().getStyle().setProperty("marginLeft", "332px");	
+		careNever.setStyleName("pos1");
+		careOften = new RadioButton("careButton", constants.often_always());
 		careOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		careOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//careOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		careOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(careNever);
 		
 		cognitiveTwoPanel.add(careOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenCare = new DataField(IF_OFTEN_MONTH, "years");
+		oftenCare = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenCare.setVisible(false);
 		oftenCare.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenCare.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -888,26 +889,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addVolunteering() {
-		volunteerLabel  = new InlineLabel("Volunteering");
+		volunteerLabel  = new InlineLabel(constants.volunteer());
 		volunteerLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		volunteerLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(volunteerLabel);
 
-		volunteerNever = new RadioButton("volunteerButton", NEVER_MONTH_AFTER);
+		volunteerNever = new RadioButton("volunteerButton", constants.never_rarely());
 		volunteerNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		volunteerNever.getElement().getStyle().setProperty("marginLeft", "472px");	
-		
-		volunteerOften = new RadioButton("volunteerButton", OFTEN_MONTH_AFTER);
+		//volunteerNever.getElement().getStyle().setProperty("marginLeft", "472px");	
+		volunteerNever.setStyleName("pos1");
+		volunteerOften = new RadioButton("volunteerButton", constants.often_always());
 		volunteerOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		volunteerOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//volunteerOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		volunteerOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(volunteerNever);
 		
 		cognitiveTwoPanel.add(volunteerOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenVolunteer = new DataField(IF_OFTEN_MONTH, "years");
+		oftenVolunteer = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenVolunteer.setVisible(false);
 		oftenVolunteer.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenVolunteer.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -935,26 +936,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addArtistic() {
-		artisticLabel = new InlineLabel("Artistic activities (playing an instrument, painting, writing, etc.)	");
+		artisticLabel = new InlineLabel(constants.artistic());
 		artisticLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		artisticLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(artisticLabel);
 
-		artisticNever = new RadioButton("artisticButton", NEVER_MONTH_AFTER);
+		artisticNever = new RadioButton("artisticButton", constants.never_rarely());
 		artisticNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		artisticNever.getElement().getStyle().setProperty("marginLeft", "127px");	
-		
-		artisticOften = new RadioButton("artisticButton", OFTEN_MONTH_AFTER);
+		//artisticNever.getElement().getStyle().setProperty("marginLeft", "127px");	
+		artisticNever.setStyleName("pos1");
+		artisticOften = new RadioButton("artisticButton", constants.often_always());
 		artisticOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		artisticOften.getElement().getStyle().setProperty("marginLeft", "325px");	
-		
+		//artisticOften.getElement().getStyle().setProperty("marginLeft", "325px");	
+		artisticOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(artisticNever);
 		
 		cognitiveTwoPanel.add(artisticOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenArtistic = new DataField(IF_OFTEN_MONTH, "years");
+		oftenArtistic = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenArtistic.setVisible(false);
 		oftenArtistic.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenArtistic.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -982,7 +983,7 @@ public class CognitiveTwo {
 	}
 	
 	private void addExhib() {
-		exhibLabel  = new InlineLabel("Exhibitions, concerts, conferences	");
+		exhibLabel  = new InlineLabel(constants.exhibitions());
 		exhibLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		exhibLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
@@ -990,18 +991,19 @@ public class CognitiveTwo {
 
 		exhibNever = new RadioButton("exhibButton", NEVER_YEAR);
 		exhibNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		exhibNever.getElement().getStyle().setProperty("marginLeft", "215px");	
+		// Never.getElement().getStyle().setProperty("marginLeft", "215px");
+		exhibNever.setStyleName("pos1");
 		
 		exhibOften = new RadioButton("exhibButton", OFTEN_YEAR);
 		exhibOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		exhibOften.getElement().getStyle().setProperty("marginLeft", "55px");	
-		
+		//exhibOften.getElement().getStyle().setProperty("marginLeft", "55px");	
+		exhibOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(exhibNever);
 		
 		cognitiveTwoPanel.add(exhibOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenExhib = new DataField(IF_OFTEN_YEAR, "years");
+		oftenExhib = new DataField(IF_OFTEN_YEAR, constants.year());
 		oftenExhib.setVisible(false);
 		oftenExhib.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenExhib.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1032,26 +1034,26 @@ public class CognitiveTwo {
 	
 	
 	private void addHolidays() {
-		holidayLabel = new InlineLabel("Holidays (lasting at least several days)	");
+		holidayLabel = new InlineLabel(constants.holidays());
 		holidayLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		holidayLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(holidayLabel);
 
-		holidayNever = new RadioButton("holidayButton", NEVER_YEAR_AFTER);
+		holidayNever = new RadioButton("holidayButton", constants.never_rarely());
 		holidayNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		holidayNever.getElement().getStyle().setProperty("marginLeft", "185px");	
-		
-		holidayOften = new RadioButton("holidayButton", OFTEN_YEAR_AFTER);
+		//holidayNever.getElement().getStyle().setProperty("marginLeft", "185px");	
+		holidayNever.setStyleName("pos1");
+		holidayOften = new RadioButton("holidayButton", constants.often_always());
 		holidayOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		holidayOften.getElement().getStyle().setProperty("marginLeft", "320px");	
-		
+		//holidayOften.getElement().getStyle().setProperty("marginLeft", "320px");	
+		holidayOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(holidayNever);
 		
 		cognitiveTwoPanel.add(holidayOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenHoliday = new DataField(IF_OFTEN_YEAR, "years");
+		oftenHoliday = new DataField(IF_OFTEN_YEAR, constants.year());
 		oftenHoliday.setVisible(false);
 		oftenHoliday.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenHoliday.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1079,26 +1081,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addBooks() {
-		booksLabel  = new InlineLabel("Reading books");
+		booksLabel  = new InlineLabel(constants.books());
 		booksLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		booksLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(booksLabel);
 
-		booksNever = new RadioButton("booksButton", NEVER_YEAR_AFTER);
+		booksNever = new RadioButton("booksButton", constants.never_rarely());
 		booksNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		booksNever.getElement().getStyle().setProperty("marginLeft", "350px");	
-		
-		booksOften = new RadioButton("booksButton", OFTEN_YEAR_AFTER);
+		//booksNever.getElement().getStyle().setProperty("marginLeft", "350px");	
+		booksNever.setStyleName("pos1");
+		booksOften = new RadioButton("booksButton", constants.often_always());
 		booksOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		booksOften.getElement().getStyle().setProperty("marginLeft", "320px");	
-		
+		//booksOften.getElement().getStyle().setProperty("marginLeft", "320px");	
+		booksOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(booksNever);
 		
 		cognitiveTwoPanel.add(booksOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenBooks = new DataField(IF_OFTEN_YEAR, "years");
+		oftenBooks = new DataField(IF_OFTEN_YEAR, constants.year());
 		oftenBooks.setVisible(false);
 		oftenBooks.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenBooks.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1130,7 +1132,7 @@ public class CognitiveTwo {
 	private void addRaisedChildren() {
 		
 		HorizontalPanel pnl = new HorizontalPanel();
-		childrenLabel = new InlineLabel("Have you raised any children ?");
+		childrenLabel = new InlineLabel(constants.raised_children());
 		childrenLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		
 		childrenLabel.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0"); 
@@ -1138,20 +1140,20 @@ public class CognitiveTwo {
 		
 		pnl.add(childrenLabel);
 
-		childYes= new RadioButton("raisedChild", "Yes");
+		childYes= new RadioButton("raisedChild", constants.yes());
 		childYes.getElement().getStyle().setProperty("fontWeight", "bold");	
-		childYes.getElement().getStyle().setProperty("marginLeft", "242px");	
-		
-		childNo = new RadioButton("raisedChild", "No");
+		//childYes.getElement().getStyle().setProperty("marginLeft", "242px");	
+		childYes.setStyleName("pos1");
+		childNo = new RadioButton("raisedChild", constants.no());
 		childNo.getElement().getStyle().setProperty("fontWeight", "bold");	
-		childNo.getElement().getStyle().setProperty("marginLeft", "50px");	
-		
+		//childNo.getElement().getStyle().setProperty("marginLeft", "50px");	
+		childNo.setStyleName("pos3");
 		
 		pnl.add(childYes);
 		
 		pnl.add(childNo);
-		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		numberChildren = new DataField("If yes, please indicate number of children ", "");
+		
+		numberChildren = new DataField(constants.number_children(), "");
 		numberChildren.setVisible(false);
 		numberChildren.getElement().getStyle().setProperty("fontWeight", "bold");	
 		numberChildren.getElement().getStyle().setProperty("marginLeft", "25px");
@@ -1181,27 +1183,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addPets() {
-		petsLabel = new InlineLabel("During your adult life, have you taken care of pets ?");
+		petsLabel = new InlineLabel(constants.pets());
 		petsLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		petsLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(petsLabel);
 
-		petsNever = new RadioButton("petsButton", NEVER_YEAR_AFTER);
+		petsNever = new RadioButton("petsButton", constants.never_rarely());
 		petsNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		petsNever.getElement().getStyle().setProperty("marginLeft", "102px");	
-		
-		petsOften = new RadioButton("petsButton", OFTEN_YEAR_AFTER);
+		//petsNever.getElement().getStyle().setProperty("marginLeft", "102px");	
+		petsNever.setStyleName("pos1");
+		petsOften = new RadioButton("petsButton", constants.often_always());
 		petsOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		petsOften.getElement().getStyle().setProperty("marginLeft", "320px");	
-		
+		//petsOften.getElement().getStyle().setProperty("marginLeft", "320px");	
+		petsOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(petsNever);
 		
 		cognitiveTwoPanel.add(petsOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenPets = new DataField("Please estimate the number of years over your adult life" +
-				"(i.e from 18 years onwards) that you engaged in this activity", "years");
+		oftenPets = new DataField(constants.activity_adult(), constants.year());
 		oftenPets.setVisible(false);
 		oftenPets.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenPets.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1232,27 +1233,26 @@ public class CognitiveTwo {
 	}
 	
 	private void addBank() {
-		bankLabel = new InlineLabel("During your adult life, have you managed your own bank account ?");
+		bankLabel = new InlineLabel(constants.bank());
 		bankLabel.getElement().getStyle().setProperty("fontWeight", "bold");	
 		bankLabel.setStyleName("flow");
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(bankLabel);
 
-		bankNever = new RadioButton("bankButton", NEVER_YEAR_AFTER);
+		bankNever = new RadioButton("bankButton", constants.never_rarely());
 		bankNever.getElement().getStyle().setProperty("fontWeight", "bold");	
-		bankNever.getElement().getStyle().setProperty("marginLeft", "5px");	
-		
-		bankOften = new RadioButton("bankButton", OFTEN_YEAR_AFTER);
+		//bankNever.getElement().getStyle().setProperty("marginLeft", "5px");	
+		bankNever.setStyleName("pos1");
+		bankOften = new RadioButton("bankButton", constants.often_always());
 		bankOften.getElement().getStyle().setProperty("fontWeight", "bold");	
-		bankOften.getElement().getStyle().setProperty("marginLeft", "320px");	
-		
+		//bankOften.getElement().getStyle().setProperty("marginLeft", "320px");	
+		bankOften.setStyleName("pos3");
 		
 		cognitiveTwoPanel.add(bankNever);
 		
 		cognitiveTwoPanel.add(bankOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenBank = new DataField("Please estimate the number of years over your adult life" +
-				"(i.e from 18 years onwards) that you engaged in this activity", "years");
+		oftenBank = new DataField(constants.activity_adult(), constants.year());
 		oftenBank.setVisible(false);
 		oftenBank.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenBank.getElement().getStyle().setProperty("marginLeft", "255px");
