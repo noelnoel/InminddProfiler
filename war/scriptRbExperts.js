@@ -35,7 +35,12 @@ function trigeredByGWT() {
 	load();
 }
 
+function mailClickJS(event){
+	console.info($("#emailForm").val());
+	console.info($("#questionForm").val());
+	window.mailClick($("#emailForm").val(), $("#questionForm").val());
+}
+
 $(document).ready(function(){
-	//$(document).on("mouseenter",".img-circle", clickFactors);
-	//$(document).on("click",".goalsButtons", goalClickJS);
+	$(document).on("click","#askExperts8", mailClickJS);
 });

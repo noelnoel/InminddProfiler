@@ -66,5 +66,6 @@ public interface InminddService extends RemoteService {
 	public ArrayList<SupportGoal> querySupportGoals(int riskFactor, String lang)		throws IllegalArgumentException;
 	public ArrayList<SupportFAQ> querySupportFAQ(String lang)		throws IllegalArgumentException;
 	public ArrayList<SupportExperts> querySupportExperts(String lang)		throws IllegalArgumentException;
+	public Boolean sendMail(String email, String body)  	throws IllegalArgumentException;
 	
 }

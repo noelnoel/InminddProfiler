@@ -1,5 +1,6 @@
 package com.inmindd.dcu.server;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,6 +31,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.ArrayList;
+
+/*mail purpose*/
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+/*end of mail*/
+
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -1969,6 +1983,40 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			user = null;
 			return false;
 		}
+	}
+	
+	
+	@Override
+	public Boolean sendMail(String email, String body)
+			throws IllegalArgumentException {
+		//open database connection
+		Properties props = new Properties();
+		Session session = Session.getDefaultInstance(props, null);
+		
+		try {
+		    Message msg = new MimeMessage(session);
+		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
+		    msg.addRecipient(Message.RecipientType.TO,
+		     new InternetAddress("romain@romainbeuque.fr", "Mr. User"));
+		    msg.setSubject("[ask-the-experts] new question");
+		    body = "Reply to: " + email + "\n\n" + body;
+		    System.out.println(body);
+		    msg.setText("Reply to: " + email + "\n\n" + body);
+		    Transport.send(msg);
+		    return true;
+		} catch (AddressException e) {
+			System.out.println("qddress exception"+ e.getMessage());
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			System.out.println("messaging exception"+ e.getMessage());
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("encoding exception"+ e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+		
 	}
 
 

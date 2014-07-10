@@ -13,29 +13,22 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.SupportExperts;
+import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.User;
 
-/*mail purpose*/
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-/*end of mail*/
 
 public class Experts implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
+	private static Experts lastInstance;
 
 	@Override
 	public void onModuleLoad() {
 		globalize();
 		callServiceSetup();
+		lastInstance = this;
+		Experts.exportClickMail();
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
@@ -59,45 +52,32 @@ public class Experts implements EntryPoint {
 		};
 
 		InminddServiceSvc.getUserConnected(callback);
-		
-		EventListener eventSendMail = new EventListener() {
+	}
+	
+	public static void clickEmail(String email, String body) {
+		AsyncCallback<Boolean> callbackMail = new AsyncCallback<Boolean>() {
+			
 			@Override
-			public void onBrowserEvent(Event event) {
-				if (Event.ONCLICK == event.getTypeInt()) {
-					String emailFrom = DOM.getElementById("emailForm").getAttribute("value");
-					String body = DOM.getElementById("questionForm").getAttribute("value");
-					if(emailFrom == "" || body == ""){
-						return;
-					}
-					
-					Properties props = new Properties();
-					Session session = Session.getDefaultInstance(props, null);
-					
-					try {
-					    Message msg = new MimeMessage(session);
-					    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
-					    msg.addRecipient(Message.RecipientType.TO,
-					     new InternetAddress("romain@romainbeuque.fr", "Mr. User"));
-					    msg.setSubject("[ask-the-experts] new question");
-					    msg.setText(body);
-					    Transport.send(msg);
-					} catch (AddressException e) {
-					    // ...
-					} catch (MessagingException e) {
-					    // ...
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
+			public void onSuccess(Boolean result) {
+				if(result){
+					Window.alert("OK - mail sent");
+				} else {
+					Window.alert("ERROR of - mail not sent");
 				}
 			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR EXCCEPTIOn - mail not sent"+ caught.getMessage());
+			}
 		};
-		
-		Element elem = DOM.getElementById("askExperts8");
-		DOM.sinkEvents(elem, Event.ONCLICK);
-		DOM.setEventListener(elem, eventSendMail);
+		lastInstance.InminddServiceSvc.sendMail(email, body, callbackMail);
 	}
+	
+	public static native void exportClickMail() /*-{
+		$wnd.mailClick =
+		$entry(@com.inmindd.dcu.client.Experts::clickEmail(Ljava/lang/String;Ljava/lang/String;));
+	}-*/;
 	
 	private void getExperts(){
 		String lang = user.getLang();
