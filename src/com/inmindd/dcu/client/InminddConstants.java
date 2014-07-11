@@ -350,9 +350,6 @@ public interface InminddConstants extends Constants{
 	 	String landing_support_6();
 	 	String landing_support_7();
 	 	String landing_support_8();
-	 	String landing_support_9();
-	 	String landing_support_10();
-	 	String landing_support_11();
 	 	String keepthisup();
 	 	String rfi();
 	 	String rmw();
@@ -405,6 +402,7 @@ public interface InminddConstants extends Constants{
 	 	String experts_8();
 	 	String experts_9();
 	 	
+	 	String goal_0();
 	 	String goal_1();
 	 	String goal_2();
 	 	String back();
