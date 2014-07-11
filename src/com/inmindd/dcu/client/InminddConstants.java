@@ -146,5 +146,12 @@ public interface InminddConstants extends Constants{
 
 	 	String apps1();
 	 	String apps2();
+		String contact1();
+		String contact2();
+		String contact3();
+		String ireland();
+		String scotland();
+		String france();
+		String netherlands();
 	 	
 }
