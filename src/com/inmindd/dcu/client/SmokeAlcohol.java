@@ -54,7 +54,7 @@ public class SmokeAlcohol {
 	private  Image logo = new Image();
 	public static SmokeAlcohol lastinstance;
 	private InminddServiceAsync InminddServiceSvc;
-	private static final String LOGO_IMAGE_NAME = "Standard drink in Ireland.png";
+	private static final String LOGO_IMAGE_NAME = "Standard_drink_in_Ireland.png";
 	private static Button btn;;
 	public SmokeAlcohol() {
 		lastinstance = this;
@@ -697,14 +697,14 @@ public class SmokeAlcohol {
 				smokeAlcoholPanel.remove(drinksBandOther);
 				if (selectedIndex == 2) { // 		scotland
 	
-					displayAlcohol("Scottish drinks.png");
+					displayAlcohol("Scottish_drinks.png");
 					
 	
 	
 				}
 				if (selectedIndex == 1)	{ 		//ireland is different, we have a different drop down list box
 				
-					logo = getLogo("Standard drink in Ireland.png");
+					logo = getLogo("Standard_drink_in_Ireland.png");
 					logo.setVisible(true);
 					smokeAlcoholPanel.add(logo);
 					
@@ -722,11 +722,11 @@ public class SmokeAlcohol {
 				}
 	
 				if (selectedIndex == 3)	{  		// netherland
-					displayAlcohol("Dutch alcohol.png");
+					displayAlcohol("Dutch_alcohol.png");
 	
 				}
 				if (selectedIndex == 4)	{ 		// france
-					displayAlcohol("French drinks.png");
+					displayAlcohol("French_drinks.png");
 	
 				}
 				}

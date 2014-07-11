@@ -240,7 +240,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		};
 		logo.setWidth("250px");
 		logo.setHeight("45px");	
-		euFlag =  new Image(GWT.getModuleBaseURL() + "../" + "EU flag.jpg");
+		euFlag =  new Image(GWT.getModuleBaseURL() + "../" + "EU_flag.jpg");
 		euFlag.setWidth("100px");
 		euFlag.setHeight("60px");	
 		euFlag.setStyleName("pos10");
