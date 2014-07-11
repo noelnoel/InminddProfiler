@@ -509,7 +509,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 	// Put this back !!!!
-		/* User user = login.getUser();
+		 User user = login.getUser();
 				 if (user.getUserId() == null ) {
 
 					 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
@@ -517,7 +517,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 					 showLogin();
 					 return;
 
-				 }  */
+				 } 
 	
 		// Get the token from the event
 		String page = event.getValue().trim();
