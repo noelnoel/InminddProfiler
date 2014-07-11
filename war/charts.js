@@ -59,7 +59,9 @@ require(["dojox/charting/Chart", "dojox/charting/axis2d/Default",  "dojox/charti
 
       chart1.render();
       //var clusteredColumnsLegend = new SelectableLegend({chart: chart1}, "chart1Legend");   
-    
+      window.setTimeout(function(){
+        $("#chart1").css("margin", "0 auto");
+      }, 200);
     });
   });      
 
@@ -112,7 +114,7 @@ require([
     });
  
     // Define the data
-    var chartData = [{y:graphdata.pie.keep, tooltip:"keep this up"}, {y:graphdata.pie.manage, tooltip:"remember to manage well!"}, {y:graphdata.pie.improvement, tooltip:"room for improvment"}]; 
+    var chartData = [{y:graphdata.pie.keep, tooltip:text.keepthisup, color:"#62C0EA"}, {y:graphdata.pie.manage, tooltip:text.rmw, color:"#E1630C"}, {y:graphdata.pie.improvement, tooltip:text.rfi, color:"#F9B233"}]; 
  
     // Create the chart within it's "holding" node
     var chart = new Chart("chartNode");
@@ -123,7 +125,7 @@ require([
     // Add the only/default plot
     chart.addPlot("default", {
         type: Donut,
-        markers: true,
+        markers: false,
         radius:155
     });
  
@@ -142,6 +144,12 @@ require([
  
     // Render the chart!
     chart.render();
- 
+    window.setTimeout(function(){
+      $("#chartNode").css("margin", "0 auto");
+      texts = $("#chartNode").find("div div");
+      $(texts[0]).html("");
+      $(texts[1]).html("");
+      $(texts[2]).html("");
+    }, 200);
 });
 }

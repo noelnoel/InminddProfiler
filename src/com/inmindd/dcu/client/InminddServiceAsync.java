@@ -14,8 +14,12 @@ import com.inmindd.dcu.shared.MedicalInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportApps;
+import com.inmindd.dcu.shared.SupportExperts;
+import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 /**
@@ -80,6 +84,9 @@ public interface InminddServiceAsync {
 	
 	void getUserConnected(AsyncCallback<com.inmindd.dcu.shared.User> callback)
 			throws IllegalArgumentException;
+	
+	void unsetUserConnected(AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
 
 	void updateSupportGoalUser(SupportGoalUser goal, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
@@ -87,7 +94,22 @@ public interface InminddServiceAsync {
 	void querySupportGoalUser(User user, AsyncCallback<ArrayList<SupportGoalUser>> callback)
 			throws IllegalArgumentException;
 
-	void querySupportGoals(int riskFactor, AsyncCallback<ArrayList<SupportGoal>> callback)
+	void querySupportGoals(int riskFactor, String lang, AsyncCallback<ArrayList<SupportGoal>> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportRiskFactorInfos(User user, int riskfactorId, AsyncCallback<SupportRiskFactorInfos> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportFAQ(String lang, AsyncCallback<ArrayList<SupportFAQ>> callback)
+			throws IllegalArgumentException;
+	
+	void querySupportExperts(String lang, AsyncCallback<ArrayList<SupportExperts>> callback)
+			throws IllegalArgumentException;
+	
+	void sendMail(String email, String body, AsyncCallback<Boolean> callback)  
+			throws IllegalArgumentException;
+	
+	void querySupportApps(String lang, AsyncCallback<ArrayList<SupportApps>> callback)
 			throws IllegalArgumentException;
 }
 

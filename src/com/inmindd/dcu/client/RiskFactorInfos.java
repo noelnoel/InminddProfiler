@@ -11,18 +11,26 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class RiskFactorInfos implements EntryPoint {
 	
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
 	private int riskFactor;
+	private SupportRiskFactorInfos riskFactorInfos;
 
 	@Override
 	public void onModuleLoad() {
+		globalize();
 		callServiceSetup();
 		String riskFactor = com.google.gwt.user.client.Window.Location.getParameter("riskfactor");
+		if(riskFactor == null){
+			Window.alert("Error");
+			return;
+		}
 		this.riskFactor = Integer.parseInt(riskFactor);
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
@@ -31,10 +39,11 @@ public class RiskFactorInfos implements EntryPoint {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
 					Window.alert("please connect before check your goals");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					setUser(user);
-					getScore();
+					getRiskFactorsInfos();
 				}
 			}
 
@@ -48,11 +57,48 @@ public class RiskFactorInfos implements EntryPoint {
 		InminddServiceSvc.getUserConnected(callback);
 	}
 	
+	private void getRiskFactorsInfos()
+	{
+		if (user == null) {
+			// TODO print error
+			System.out.println("[RB_RiskFactors::getRiskFactorsInfos] \\ user null");
+			Window.alert("please connect before check riskfactor infos");
+			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+			return;
+
+		}
+
+		AsyncCallback<SupportRiskFactorInfos> callback = new AsyncCallback<SupportRiskFactorInfos>() {
+
+			@Override
+			public void onSuccess(SupportRiskFactorInfos infos) {
+				if (infos == null) {
+					System.out.println("[RB_RiskFactors::getRiskFactorsInfos] \\ score null");
+					// TODO print error
+				} else {
+					riskFactorInfos = infos;
+					getScore();
+				}
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("[RB_Score::getScore] \\ exception null");
+				// TODO print error
+			}
+		};
+
+		InminddServiceSvc.querySupportRiskFactorInfos(user, this.riskFactor, callback);
+		return;
+	}
+	
 	private void getScore() {
 		if (user == null) {
 			// TODO print error
 			System.out.println("[RB_RiskFactors::getScore] \\ user null");
 			Window.alert("please connect before check your score");
+			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 			return;
 
 		}
@@ -68,15 +114,16 @@ public class RiskFactorInfos implements EntryPoint {
 				} else {
 					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-					Window.alert("truc");
 					DOM.getElementById("infosPanel").setAttribute("style", "");
 					switch(riskFactor){
 					case 1:
 						if(score.getMidlifeHypertension() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -84,8 +131,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getDepression() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -93,8 +142,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getPhysicalInactivity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -102,8 +153,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getSmoking() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -111,8 +164,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getAlcohol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -120,17 +175,21 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getMidlifeObesity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 8:
 						if(score.getHighCognitiveActivity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/coginitive_activity_amber.png");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/coginitive_activity_blue.png");
+							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -138,8 +197,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getHealthyDiet() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -147,8 +208,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getCholesterol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -158,8 +221,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getDiabetes() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -168,8 +233,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getCoronaryHeartDisease() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -178,8 +245,10 @@ public class RiskFactorInfos implements EntryPoint {
 						if(score.getChronicKidneyDisease() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_blue.png");
+							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
 						}
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
@@ -214,5 +283,26 @@ public class RiskFactorInfos implements EntryPoint {
 		return true;
 
 	}
+	
+	private void globalize(){
+		InminddConstants constants = 
+				   (InminddConstants)GWT.create(InminddConstants.class);
+		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
+		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
+		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
+		DOM.getElementById("menu-support-profile").setInnerHTML(constants.menu_support_profile());
+		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
+		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
+		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
+		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
+		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
+		
+		DOM.getElementById("goal-2").setInnerHTML(constants.goal_2());
+		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_5());
+		DOM.getElementById("back").setInnerHTML(constants.back());
+	}
+
 
 }

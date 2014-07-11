@@ -35,6 +35,9 @@
                 width:300px; 
                 height:90px;
             }
+            .btn {
+                white-space: normal;
+            }
         </style>
     </head>
     <body class="tundra">
@@ -51,67 +54,61 @@
                 <div id="main" style="background-color:#fff">
                     <div class="full">
                         <div class="row">
-                            <div class="col-md-2 col-md-offset-3 text-center">
+                            <div class="col-md-2 col-md-offset-2 text-center">
                                 <img src="images/inmindd_logo.png" alt="logo">
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <nav id="nav" class="nav-holder">
                                     <ul class="menu">
-                                        <li class="menu-item menu-item-type-post_type menu-item-object-page current_page_item page_item menu-item-has-children">
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page current_page_item "><a href="index.html" id="menu-home">Home</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="index.html?page=profiler" id="menu-profiler">In-MINDD Profiler</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page page_item menu-item-has-children">
                                             <!-- current-menu-item -->
-                                            <a href="index.html">In-MINDD</a>
+                                            <a href="index.html?page=support" id="menu-support">In-MINDD Support Environment</a>
                                             <ul class="sub-menu">
-                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html">Change my inputs</a></li>
-                                                <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item"><a href="score.html">What is my LIBRA score?</a></li>
-                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="goals.html">What are my goals?</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="score.html" id="menu-support-profile">Your LIBRA Profile And Personlised Plan </a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html" id="menu-support-experts">Ask the Experts</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html" id="menu-support-faq">FAQs</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html" id="menu-support-blog">In-MINDD Blog</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html" id="menu-support-forum">In-MINDD Forum</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="InminddProfiler.html" id="menu-support-apps">Useful Apps</a></li>
+                                                <!--<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item"><a href="score.html">What is my LIBRA score?</a></li>-->
                                             </ul>
                                         </li>
-                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">Ask the experts</a></li>
-                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/">InMINDD Home</a></li>
-                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="http://www.inmindd.eu/media-centre/">Media Centre</a>
-                                            <ul class="sub-menu">
-                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">Blog</a></li>
-                                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">Facebook page</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/contact/">Contact</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/" id="menu-inmindd">In-MINDD Website</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/contact/" id="menu-contact">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
-                            <!--<div class="col-md-5 text-center">
-                                <h1 style="margin-top: 26px; font-size:60px">Score</h1>
-                            </div>-->
                         </div>
                         <hr />
                         <div class="row" style="text-align:center;margin-top:150px;" id="loadingPanel">
-                            <h1>Loading...</h1><br />
+                            <h1 id="landing-loading">Loading...</h1><br />
                             <img src="images/loading.GIF" alt="loading" width="64" height="64" />
                         </div>
                         <div id="indexPanel" style="display:none">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <h1 style="text-align:center">Welcome to In-MINDD trial !</h1>
+                                    <h1 style="text-align:center" id="landing-index-1">Welcome to In-MINDD trial !</h1>
                                     <br />
-                                    <h2>What is In-MInDD trial ?</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
+                                    <h2 id="landing-index-2">What is In-MInDD trial ?</h2>
+                                    <p id="landing-index-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
+                                    <p id="landing-index-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-2">
                                     <div class="jumbotron" style="background-color:#dff0d8">
-                                        <h3>Go to the In-MINDD profiler</h3>
-                                        <p>The In-MINDD profiler is the place where you are going to enter personal details and be prepared for risk factors evaluations</p>
-                                        <p style="text-align: right;"><a class="btn btn-primary btn-lg" id="linkProfiler" role="button">Access the In-MINDD profiler</a></p>
+                                        <h3 id="landing-index-5">Go to the In-MINDD profiler</h3>
+                                        <p id="landing-index-6">Please click here to register and access the In-MINDD profiler</p>
+                                        <p style="text-align: right;"><a class="btn btn-primary btn-lg" id="linkProfiler" role="button">Access the In-MINDD Profiler</a></p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="jumbotron" style="background-color: #d9edf7">
-                                        <h3>Go to the In-MINDD Support Environment</h3>
-                                        <p>The In-MINDD support environment is the place where you will discover which risk factors you have to improve and get help on working on these risks</p>
+                                        <h3 id="landing-index-8">Go to the In-MINDD Support Environment</h3>
+                                        <p id="landing-index-9">If you have completed the In-MINDD Profiler, click here to log-in and access the In-MINDD support environment</p>
+                                        <p id="landing-index-10">Remember that if you have completed the In-MINDD profiler and have been randomised to the control arm, you will have to wait six months before you can access the In-MINDD support environment</p>
                                         <p style="text-align: right;"><a class="btn btn-primary btn-lg" id="linkSupport" role="button">Access the In-MINDD support environment</a></p>
                                     </div>
                                 </div>
@@ -120,22 +117,22 @@
                         <div id="profilerPanel" style="display:none">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <h1 style="text-align:center">Welcome to In-MINDD Profiler !</h1>
+                                    <h1 style="text-align:center" id="landing-profiler-1">Welcome to In-MINDD Profiler !</h1>
                                     <br />
-                                    <h2>What is In-MINDD Profiler ?</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <h2>What happens after I complete the In-MINDD Profiler ?</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
+                                    <h2 id="landing-profiler-2">What is In-MINDD Profiler ?</h2>
+                                    <p id="landing-profiler-3">The In-MINDD profiler is an online questionnaire for people aged 40-60 years. It assesses the presence or absence of a range of factors that are known to either increase or decrease a person’s risk of developing dementia in later life. The factors we are assessing are related to lifestyle (e.g. smoking, obesity, physical activity) and can be either modified or managed by lifestyle changes. The In-MINDD profiler has been developed by the In-MINDD research team and the tool is based on the best evidence that is currently available on modifiable risk factors for dementia.</p>
+                                    <p id="landing-profiler-4">We are asking you to complete the In-MINDD profiler to help us test how well it and the In-MINDD support environment works in practice. We will use the information that you give us to generate a LIfestyle for BRAin Health (LIBRA) profile and score. This is a personalised profile highlighting those areas where you are doing well in terms of protecting your brain health and those areas where you can think about adopting and adhering to lifestyle behavioural changes.</p>
+                                    <h2 id="landing-profiler-5">What happens after I complete the In-MINDD Profiler? </h2>
+                                    <p id="landing-profiler-6">Once you have completed the In-MINDD profiler, you will be randomly allocated to either the In-MINDD or control arm of the trial. Randomisation is a way of randomly allocating you to either the In-MINDD or control arm of the trial in a way that the research team cannot interfere with. You have an equal chance of being assigned to the In-MINDD or control arm. The participant information sheet that you have been given explains what happens if you are randomised to the In-MINDD arm of the trial or to the control arm. The researchers are available to answer any questions that you might have about randomisation.</p>
+                                    <p id="landing-profiler-7">Please click here to start the In-MINDD profiler</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-2">
                                     <div class="jumbotron" style="background-color:#dff0d8">
-                                        <h3>Go to the In-MINDD profiler</h3>
-                                        <p>You will be able to <strong>Register</strong> and complete the In-MINDD Profiler</p>
-                                        <p style="text-align: right;"><a class="btn btn-primary btn-lg" id="linkRegister" role="button">Access the In-MINDD profiler</a></p>
+                                        <h3 id="landing-index-5-1">Go to the In-MINDD profiler</h3>
+                                        <p id="landing-index-6-1">Please click here to register and access the In-MINDD profiler</p>
+                                        <p style="text-align: right;"><a class="btn btn-primary btn-lg" id="linkRegister" role="button">Access the In-MINDD Profiler</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +140,7 @@
                         <div id="loginPanel" style="display:none">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <h1 style="text-align:center">Login into In-MINDD Support Environment</h1>
+                                    <h1 style="text-align:center" id="landing-login-1">Login into In-MINDD Support Environment</h1>
                                     <br /><br />
                                     <div class="form-horizontal" style="max-width:600px; margin:0 auto" role="form">
                                       <div class="form-group">
@@ -171,24 +168,25 @@
                         <div id="supportPanel" style="display:none">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <h1 style="text-align:center">Welcome to the In-MINDD Support Environment!</h1>
+                                    <h1 style="text-align:center" id="landing-support-1">Welcome to the In-MINDD Support Environment!</h1>
                                     <br />
-                                    <h2>What is In-MINDD Support Environment?</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mauris dolor, sagittis ut nulla a, tempor placerat lacus. Donec tortor enim, congue eu pharetra nec, egestas ac massa. Suspendisse potenti. Etiam condimentum metus libero, sed congue nulla sollicitudin non. Ut vehicula mi felis, in fermentum arcu consequat vitae. Cras commodo mauris in tortor lacinia, a bibendum neque sagittis. Nam semper vehicula libero vitae egestas. </p>
+                                    <h2 id="landing-support-2">What is In-MINDD Support Environment?</h2>
+                                    <p id="landing-support-3">The Support environment will provide you with your personal Lifestyle for Brain Health Score (LIBRA) and your personalised plan.  You will also have access to other features such as a FAQ page, a blog where you can share your thoughts and experience of participating in the IN-MINDD study.  We also encourage you to visit the user forum to link in with other participants in the study, the forum will provide you with the opportunity to talk to other users and discuss any topics that relate to brain health and share any tips and supports on adopting and maintaining a healthy lifestyle to improve long term brain health.</p>
+                                    <p id="landing-support-4">Feel free to visit the support environment as often or little as you wish. There are a number of ways for you to get involved, you can revisit your personalised plan as often as you like, chat to other users on the forum or contribute to the IN-MINDD blog.  If you have any questions on your personalised plan go to our FAQ page, if you don’t find what you are looking for please use the Ask the Expert feature and we will be happy to answer your question.  We hope that you will find the many features helpful and informative. If you have any thoughts or suggestions on the support environment please feel free to contact us here.</p>
+                                    <p id="landing-support-5">Thank you for your participation in the study.  We hope it will be a positive experience for you and support you to maintain long term brain health.</p>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="jumbotronRb bg-success">
                                                 <a href="score.html"><img src="images/landing/profile.jpg" alt="" /></a>
-                                                <p>Your LIBRA Personalised Plan</p>
-                                                <div class="linkItems"><a href="score.html">Go /></a></div>
+                                                <p id="landing-support-6">Your LIBRA Personalised Plan</p>
+                                                <div class="linkItems"><a href="score.html" id="go1">Go /></a></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="jumbotronRb bg-info">
                                                 <a href="goals.html"><img src="images/landing/goals.jpg" alt="" /></a>
-                                                <p>Your Goals</p>
-                                                <div class="linkItems"><a href="goals.html">Go /></a></div>
+                                                <p id="landing-support-7">Your Goals</p>
+                                                <div class="linkItems"><a href="goals.html" id="go2">Go /></a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -196,22 +194,22 @@
                                         <div class="col-md-4">
                                             <div class="jumbotronRb bg-warning">
                                                 <a href="#"><img src="images/landing/experts.jpg" alt="" /></a>
-                                                <p>Ask the Experts and FAQs</p>
-                                                <div class="linkItems"><a href="#">Go /></a></div>
+                                                <p id="landing-support-8">Ask the Experts and FAQs</p>
+                                                <div class="linkItems"><a href="#" id="go3">Go /></a></div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="jumbotronRb bg-danger">
                                                 <a href="#"><img src="images/landing/blog.jpg" alt="" /></a>
-                                                <p>The In-MINDD Blog</p>
-                                                <div class="linkItems"><a href="#">Go /></a></div>
+                                                <p id="landing-support-9">The In-MINDD Blog</p>
+                                                <div class="linkItems"><a href="#" id="go4">Go /></a></div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="jumbotronRb bg-success">
                                                 <a href="#"><img src="images/landing/forum.jpg" alt="" /></a>
-                                                <p>The In-MINDD Discution Forum</p>
-                                                <div class="linkItems"><a href="#">Go /></a></div>
+                                                <p id="landing-support-10">The In-MINDD Discution Forum</p>
+                                                <div class="linkItems"><a href="#" id="go5">Go /></a></div>
                                             </div>
                                         </div>
                                     </div>

@@ -55,6 +55,46 @@
     <servlet-name>InminddLandingPage</servlet-name>
     <url-pattern>/LandingPage/Inmindd</url-pattern>
   </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>InminddFAQ</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddFAQ</servlet-name>
+    <url-pattern>/FAQ/Inmindd</url-pattern>
+  </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>InminddExperts</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddExperts</servlet-name>
+    <url-pattern>/Experts/Inmindd</url-pattern>
+  </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>InminddApps</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddApps</servlet-name>
+    <url-pattern>/Apps/Inmindd</url-pattern>
+  </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>InminddContact</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddContact</servlet-name>
+    <url-pattern>/Contact/Inmindd</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

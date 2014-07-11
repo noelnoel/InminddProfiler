@@ -26,6 +26,7 @@ public class Goals implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		lastInstance = this;
+		globalize();
 		Goals.exportClickGoals();
 		callServiceSetup();
 		String riskFactor = com.google.gwt.user.client.Window.Location.getParameter("riskFactor");
@@ -41,6 +42,7 @@ public class Goals implements EntryPoint {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
 					Window.alert("please connect before check your goals");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					setUser(user);
@@ -65,6 +67,7 @@ public class Goals implements EntryPoint {
 				if (goals == null || goals.size() < 1) {
 					System.out.println("[RB_Goals::getRisksFactors] \\ risksFactors null");
 					Window.alert("please connect before check your goals");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					String output = "[";
@@ -95,6 +98,7 @@ public class Goals implements EntryPoint {
 				if (goals == null || goals.size() < 1) {
 					System.out.println("[RB_Goals::getRisksFactors] \\ risksFactors null");
 					Window.alert("please connect before check your goals");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					String output = "[";
@@ -120,7 +124,7 @@ public class Goals implements EntryPoint {
 		};
 
 		if(this.riskFactor != -1){
-			InminddServiceSvc.querySupportGoals(this.riskFactor, callback);
+			InminddServiceSvc.querySupportGoals(this.riskFactor, this.user.getLang(), callback);
 		} else {
 			InminddServiceSvc.querySupportGoalUser(this.user, callbackGlobal);
 		}
@@ -178,6 +182,24 @@ public class Goals implements EntryPoint {
 		target.setServiceEntryPoint(moduleRelativeURL);
 		return true;
 
+	}
+	
+	private void globalize(){
+		InminddConstants constants = 
+				   (InminddConstants)GWT.create(InminddConstants.class);
+		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
+		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
+		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
+		DOM.getElementById("menu-support-profile").setInnerHTML(constants.menu_support_profile());
+		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
+		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
+		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
+		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
+		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
+		
+		DOM.getElementById("goalsh1").setInnerHTML(constants.landing_support_7());
 	}
 
 }

@@ -7,21 +7,15 @@
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="css/stylesGoals.css" rel="stylesheet">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic" rel="stylesheet" type="text/css">
-        <script type="text/javascript" language="javascript" src="RiskFactorInfos/RiskFactorInfos.nocache.js"></script>
-        <style type="text/css">
-        h3, .h-color {
-            color:#F9B233;
-        }
-        </style>
-
+        <script type="text/javascript" language="javascript" src="Apps/Apps.nocache.js"></script>
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body class="tundra">
+    <body>
         <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
         <noscript>
             <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
@@ -58,40 +52,46 @@
                     </nav>
                 </div>
             </div>
-            <hr />
-        </div>
-        <div class="container">
-            <div class="row" style="text-align:center;margin-top:150px" id="loadingPanel">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <hr />
+                </div>
+            </div>
+            <div class="row" style="text-align:center;margin-top:150px;" id="loadingPanel">
                 <h1>Loading...</h1><br />
                 <img src="images/loading.GIF" alt="loading" width="64" height="64" />
             </div>
-            <div class="row" id="infosPanel" style="display:none">
-
-                <div class="col-md-3">
-                    <h2 id="goal-2">Informations:</h2>
-                    <img src="images/libra/diet_blue.png" style="height:200px;width:200px;display:none;" id="image-amber"></a>
+            <div class="row" style="display:none;" id="appsIntroDiv">
+                <h1 class="text-center" id="apps1">Useful Apps and Online resources</h1>
                 <br />
-                <div class="text-center">
-                    <a href="score.html" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-fast-backward"></span> <span id="back">Back</span></a>
+                <div id="apps2" class="col-md-8 col-md-offset-2">
+                    <p>Below you will find information on popular health and lifestyle apps. Most of these apps are free to download to your phone.</p>
+                    <p>While apps are often a good way to track and support fitness and health the In-MINDD research team is not endorsing any particular app for use. It is not necessary to use an app to participate in the In-MINDD study. The following information is simply a guide to some of the most widely used apps which some users may find helpful. </p>
+                    <p>Review of popular apps </p>
+                    <p>The following websites offer reviews of the most popular apps used today, apps are categorised under fitness, diet, mental health and much more.  </p>
+                    <p>http://apps.nhs.uk/<br />
+                    http://myhealthapps.net/</p>
                 </div>
             </div>
-            <div class="col-md-9" style="margin-top:80px" id="riskFactorMainInfos">
-                <p>Your risk factor level on Cholesterol is to high... lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at sapien ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta mollis auctor. </p><p>Click on the icons to discover more about a risk factor</p><p>Curabitur vitae sapien ut ligula lobortis vehicula. Sed in elit adipiscing, luctus ligula vitae, ultrices tortor. Ut orci tellus, dignissim sit amet dolor vel, accumsan pharetra libero. Nullam sit amet eros sit amet lacus consectetur fermentum sit amet viverra diam. Aenean commodo odio ac dui posuere, viverra porttitor arcu aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse sit amet nibh porta, iaculis enim non, venenatis dolor. Praesent interdum rhoncus velit, vitae molestie arcu tristique eu. Praesent nisi justo, gravida quis ipsum non, lobortis venenatis purus. Morbi ullamcorper quis risus porttitor faucibus. Sed nisi nisl, hendrerit in elementum sed, posuere quis nibh. Donec placerat vehicula cursus. Sed ac nulla eros.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at sapien ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec porta mollis auctor. Curabitur vitae sapien ut ligula lobortis vehicula. Sed in elit adipiscing, luctus ligula vitae, ultrices tortor. Ut orci tellus, dignissim sit amet dolor vel, accumsan pharetra libero. Nullam sit amet eros sit amet lacus consectetur fermentum sit amet viverra diam. Aenean commodo odio ac dui posuere, viverra porttitor arcu aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse sit amet nibh porta, iaculis enim non, venenatis dolor. Praesent interdum rhoncus velit, vitae molestie arcu tristique eu. Praesent nisi justo, gravida quis ipsum non, lobortis venenatis purus. Morbi ullamcorper quis risus porttitor faucibus. Sed nisi nisl, hendrerit in elementum sed, posuere quis nibh. Donec placerat vehicula cursus. Sed ac nulla eros.
+            <div class="row" style="display:none;" id="appsDiv">
+                <div class="col-md-8 col-md-offset-2">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td><img src="images/libra/blood_pressure_amber.png" class="img-noncircle"></td>
+                                <td>My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
-        <div class="row" style="display:none" id="goalButton">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <a href="goals.html" id="linkGoalButton" class="btn btn-warning btn-lg btn-block">Choose some goals to improve that risk factor</a><br />
-            </div>
-        </div>
-    </div>
-    <!-- /sidebar -->
-    <!-- /main -->
-
-    <!-- script references -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-</body>
+        <input text="text" style="display:none" id="appsInputRPC"  value="" />
+        <!-- script references -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="scriptRbApps.js"></script>
+    </body>
 </html>

@@ -1,5 +1,6 @@
 package com.inmindd.dcu.server;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,14 +20,32 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportApps;
+import com.inmindd.dcu.shared.SupportExperts;
+import com.inmindd.dcu.shared.SupportFAQ;
 import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.ArrayList;
+
+/*mail purpose*/
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+/*end of mail*/
+
+
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -1649,6 +1668,67 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public User getUserConnected() throws IllegalArgumentException {
 		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
 	}
+	
+	@Override
+	public Boolean unsetUserConnected() throws IllegalArgumentException {
+		getThreadLocalRequest().getSession().setAttribute("current_user", null);
+		return true;
+	}
+	
+	@Override
+	public SupportRiskFactorInfos querySupportRiskFactorInfos(User user, int riskfactorId) {
+		SupportRiskFactorInfos infos = new SupportRiskFactorInfos();
+		//open database connection
+		initDBConnection();
+
+		if (getSupportRiskFactorInfos(user, riskfactorId, infos)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return infos;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	private boolean getSupportRiskFactorInfos(User user, int riskfactorId, SupportRiskFactorInfos infos) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT  * FROM `inmindd`.`support_riskfactors` WHERE id = ? AND lang = ?;");
+			pstmt.setInt(1, riskfactorId);
+			pstmt.setString(2, user.getLang());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				infos.setId(result.getInt("id"));
+				infos.setLang(result.getString("lang"));
+				infos.setName(result.getString("name"));
+				infos.setImage_url(result.getString("image_url"));
+				infos.setDesc_keep(result.getString("desc_keep"));
+				infos.setDesc_improv(result.getString("desc_improv"));
+				conn.close();
+				return true;
+			}
+			conn.close();
+			return false;
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+
+	}
 
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
@@ -1697,6 +1777,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	}
 
+	@Override
 	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) {
 		//open database connection
 		ArrayList<SupportGoalUser> goals = new ArrayList<SupportGoalUser>();
@@ -1726,8 +1807,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT  s.*, g.*, r.`name` AS `riskfactor_name`, r.`image_url` AS `riskfactor_image_url` FROM `inmindd`.`support_goals_users` AS `s`, `inmindd`.`support_goals` AS `g`, `inmindd`.`support_riskfactors` AS `r` WHERE s.id_goal = g.id AND g.id_riskfactor = r.id AND s.`id_user` = ?;");
+			pstmt = conn.prepareStatement("SELECT  s.*, g.*, r.`name` AS `riskfactor_name`, r.`image_url` AS `riskfactor_image_url` FROM `inmindd`.`support_goals_users` AS `s`, `inmindd`.`support_goals` AS `g`, `inmindd`.`support_riskfactors` AS `r` WHERE s.id_goal = g.id AND g.id_riskfactor = r.id AND g.`lang` = r.`lang` AND s.`id_user` = ? AND g.`lang` = ?;");
 			pstmt.setString(1, idUser);
+			pstmt.setString(2, user.getLang());
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
@@ -1763,13 +1845,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 	@Override
-	public ArrayList<SupportGoal> querySupportGoals(int riskFactor)
+	public ArrayList<SupportGoal> querySupportGoals(int riskFactor, String lang)
 			throws IllegalArgumentException {
 		//open database connection
 		ArrayList<SupportGoal> goals = new ArrayList<SupportGoal>();
 		initDBConnection();
 
-		if (getSupportGoals(riskFactor, goals)) {
+		if (getSupportGoals(riskFactor, lang, goals)) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
@@ -1788,13 +1870,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 
-	private boolean getSupportGoals(int riskFactor, ArrayList<SupportGoal> goalsList) {
+	private boolean getSupportGoals(int riskFactor, String lang, ArrayList<SupportGoal> goalsList) {
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = ?;");
+			pstmt = conn.prepareStatement("SELECT * FROM `support_goals` WHERE `id_riskfactor` = ? AND `lang` = ?;");
 			pstmt.setInt(1, riskFactor);
+			pstmt.setString(2, lang);
 			result = pstmt.executeQuery();
 
 			while (result.next()) {
@@ -1808,6 +1891,187 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			user = null;
 			return false;
 		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportFAQ> querySupportFAQ(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportFAQ> faqs = new ArrayList<SupportFAQ>();
+		initDBConnection();
+
+		if (getSupportFAQ(lang, faqs)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return faqs;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return faqs;
+		}
+	}
+
+
+	private boolean getSupportFAQ(String lang, ArrayList<SupportFAQ> faqList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_faq` WHERE `lang` = ?;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportFAQ f = new SupportFAQ(result.getInt("id"), result.getString("lang"), result.getString("question"), result.getString("answer")); 
+				faqList.add(f);
+			}
+			conn.close();
+			return (faqList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportExperts> querySupportExperts(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportExperts> experts = new ArrayList<SupportExperts>();
+		initDBConnection();
+
+		if (getSupportExperts(lang, experts)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return experts;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return experts;
+		}
+	}
+
+
+	private boolean getSupportExperts(String lang, ArrayList<SupportExperts> expertList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_experts` WHERE `lang` = ? ORDER BY `country`;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportExperts f = new SupportExperts(result.getInt("id"), result.getString("lang"), result.getString("country"), result.getString("image_url"), result.getString("description")); 
+				expertList.add(f);
+			}
+			conn.close();
+			return (expertList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<SupportApps> querySupportApps(String lang)
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<SupportApps> apps = new ArrayList<SupportApps>();
+		initDBConnection();
+
+		if (getSupportApps(lang, apps)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return apps;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return apps;
+		}
+	}
+
+
+	private boolean getSupportApps(String lang, ArrayList<SupportApps> appsList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM `support_apps` WHERE `lang` = ? ORDER BY `category`;");
+			pstmt.setString(1, lang);
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportApps f = new SupportApps(result.getInt("id"), result.getString("lang"), result.getString("name"), result.getString("logo_url"), result.getString("category"), result.getString("description")); 
+				appsList.add(f);
+			}
+			conn.close();
+			return (appsList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public Boolean sendMail(String email, String body)
+			throws IllegalArgumentException {
+		//open database connection
+		Properties props = new Properties();
+		Session session = Session.getDefaultInstance(props, null);
+		
+		try {
+		    Message msg = new MimeMessage(session);
+		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
+		    msg.addRecipient(Message.RecipientType.TO,
+		     new InternetAddress("romain@romainbeuque.fr", "Mr. User"));
+		    msg.setSubject("[ask-the-experts] new question");
+		    body = "Reply to: " + email + "\n\n" + body;
+		    System.out.println(body);
+		    msg.setText("Reply to: " + email + "\n\n" + body);
+		    Transport.send(msg);
+		    return true;
+		} catch (AddressException e) {
+			System.out.println("qddress exception"+ e.getMessage());
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			System.out.println("messaging exception"+ e.getMessage());
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("encoding exception"+ e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+		
 	}
 
 
