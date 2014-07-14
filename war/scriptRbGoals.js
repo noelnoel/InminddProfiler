@@ -34,10 +34,11 @@ function load(){
 		var h4 = $("<h4></h4>").html(data[i].name);
 		var p = $("<p></p>").attr("id", "tranlateText"+ data[i].goalNb).html(data[i].text);
 		var button = $("<a></a>").attr("href", "#").addClass("btn btn-success btn-lg btn-block goalsButtons").html("Choose this program").attr("id", "buttonGoal"+data[i].goalNb);
-		var div = $("<div class=\"col-md-"+data.colSpan+" col-md-offset-"+(data.colSpan*i + data.marginCol)+" text\"></div>").attr("x-goal", data[i].goalNb).attr("id","text"+data[i].goalNb).append(h4).append(p).append($("<br />")).append(button);
+		var div = $("<div></div>").addClass("text").attr("x-goal", data[i].goalNb).attr("id","text"+data[i].goalNb).append(h4).append(p).append($("<br />")).append(button);
 		$("#textGoals").append(div);
 	};
 	$("#imagesGoals").attr("style", "");
+	$("#goalResume").attr("style", "");
 	$("#loadingPanel").css("display", "none");
 }
 
@@ -77,8 +78,10 @@ function trigeredGlobalByGWT() {
 }
 
 function clickFactors(event){
-	$(".text").css("display", "");
-	$("#text"+ $(event.target).attr("x-image")).css("display", "block");
+	//$(".text").css("display", "");
+	//$("#text"+ $(event.target).attr("x-image")).css("display", "block");
+	$("#goalResume .text").detach().appendTo("#textGoals");
+	$("#textGoals #text"+ $(event.target).attr("x-image")).detach().appendTo("#goalResume");
 }
 
 function goalClickJS(event){

@@ -52,7 +52,7 @@ public class SupportGoal implements Serializable {
 		return "{ \"id\":" + getId() +
 				",\"goalNb\":" + getGoalNb() +
 				", \"name\":  \"" +  (getName() == null || getName() == "null" ? "" : getName()) +
-				"\" ,\"text\": \"" +  (getText() == null || getText() == "null" ? "" : getText()) +
+				"\" ,\"text\": \"" +  (getText() == null || getText() == "null" ? "" : getText().replace("\\", "\\\\").replace("\"", "\\\"")) +
 				"\" ,\"image_url\": \"" + getImage_url() +
 				"\" }";
 	}

@@ -200,6 +200,7 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
 		
 		DOM.getElementById("goalsh1").setInnerHTML(constants.goal_0());
+		DOM.getElementById("goal-7").setInnerHTML(constants.goal_7());
 	}
 
 }
