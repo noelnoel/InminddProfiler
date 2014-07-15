@@ -38,7 +38,7 @@ public class RiskFactorInfos implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
-					Window.alert("please connect before check your goals");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -62,7 +62,7 @@ public class RiskFactorInfos implements EntryPoint {
 		if (user == null) {
 			// TODO print error
 			System.out.println("[RB_RiskFactors::getRiskFactorsInfos] \\ user null");
-			Window.alert("please connect before check riskfactor infos");
+			Window.alert(constants.errorNotLoggedIn());
 			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 			return;
 
@@ -97,7 +97,7 @@ public class RiskFactorInfos implements EntryPoint {
 		if (user == null) {
 			// TODO print error
 			System.out.println("[RB_RiskFactors::getScore] \\ user null");
-			Window.alert("please connect before check your score");
+			Window.alert(constants.errorNotLoggedIn());
 			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 			return;
 
@@ -219,7 +219,6 @@ public class RiskFactorInfos implements EntryPoint {
 					case 3:
 						//special icon
 						if(score.getDiabetes() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
@@ -231,7 +230,6 @@ public class RiskFactorInfos implements EntryPoint {
 					case 11:
 						//special icon
 						if(score.getCoronaryHeartDisease() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
@@ -243,7 +241,6 @@ public class RiskFactorInfos implements EntryPoint {
 					case 12:
 						//special icon
 						if(score.getChronicKidneyDisease() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
 						} else {
@@ -253,6 +250,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					}
+					DOM.getElementById("sources").setInnerHTML(riskFactorInfos.getSources());
 				}
 
 			}
@@ -284,8 +282,9 @@ public class RiskFactorInfos implements EntryPoint {
 
 	}
 	
+	private InminddConstants constants;
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

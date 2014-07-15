@@ -434,5 +434,6 @@ public interface InminddConstants extends Constants{
 		String scotland();
 		String france();
 		String netherlands();
+		String errorNotLoggedIn();
 	 	
 }
