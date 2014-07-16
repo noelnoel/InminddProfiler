@@ -1,4 +1,5 @@
 function load(){
+	labelGoalButton = $("#goalsButtonTextRPC").val();
 	data = $("#goalsInputRPC").val();
 	data = data.replace(/\t/g, "");
 	data = JSON.parse(data);
@@ -33,7 +34,7 @@ function load(){
 
 		var h4 = $("<h4></h4>").html(data[i].name);
 		var p = $("<p></p>").attr("id", "tranlateText"+ data[i].goalNb).html(data[i].text);
-		var button = $("<a></a>").attr("href", "#").addClass("btn btn-success btn-lg btn-block goalsButtons").html("Choose this program").attr("id", "buttonGoal"+data[i].goalNb);
+		var button = $("<a></a>").attr("href", "#").addClass("btn btn-success btn-lg btn-block goalsButtons").html(labelGoalButton).attr("id", "buttonGoal"+data[i].goalNb);
 		var div = $("<div></div>").addClass("text").attr("x-goal", data[i].goalNb).attr("id","text"+data[i].goalNb).append(h4).append(p).append($("<br />")).append(button);
 		$("#textGoals").append(div);
 	};

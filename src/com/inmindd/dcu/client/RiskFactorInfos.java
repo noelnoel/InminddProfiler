@@ -299,7 +299,7 @@ public class RiskFactorInfos implements EntryPoint {
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
 		
 		DOM.getElementById("goal-2").setInnerHTML(constants.goal_2());
-		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_5());
+		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4());
 		DOM.getElementById("back").setInnerHTML(constants.back());
 	}
 

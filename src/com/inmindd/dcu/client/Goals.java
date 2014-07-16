@@ -22,6 +22,7 @@ public class Goals implements EntryPoint {
 	private static Goals lastInstance;
 	private User user;
 	private int riskFactor;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -80,6 +81,8 @@ public class Goals implements EntryPoint {
 					output += "]";
 
 					DOM.getElementById("goalsInputRPC").setAttribute("value",output);
+					System.out.println(constants.goal_5());
+					DOM.getElementById("goalsButtonTextRPC").setAttribute("value",constants.goal_5());
 
 					trigerJavascript();
 				}
@@ -185,8 +188,7 @@ public class Goals implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
-				   (InminddConstants)GWT.create(InminddConstants.class);
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
