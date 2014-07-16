@@ -56,6 +56,10 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	text.keepthisup = $("#keepthisup").html();
 	graph(dataGraph);
 	
+	$("#score-ktu-Num").html("" + dataGraph.pie["keep"].toFixed(2) + "%");
+	$("#score-rfi-Num").html("" + dataGraph.pie["improvement"].toFixed(2) + "%");
+	$("#score-rmw-Num").html("" + dataGraph.pie["manage"].toFixed(2) + "%");
+
 	$("#loadingPanel").css("display","none");
 	$("#scorePanel").attr("style", "");
 }
