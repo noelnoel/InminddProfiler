@@ -251,6 +251,7 @@ public class RiskFactorInfos implements EntryPoint {
 						break;
 					}
 					DOM.getElementById("sources").setInnerHTML(riskFactorInfos.getSources());
+					trigerJavascript();
 				}
 
 			}
@@ -269,6 +270,10 @@ public class RiskFactorInfos implements EntryPoint {
 	private void setUser(User user) {
 		this.user = user;
 	}
+	
+	public static native void trigerJavascript() /*-{
+		$wnd.trigeredByGWT();
+	 }-*/;
 
 	private boolean callServiceSetup() {
 		// set up rpc call
