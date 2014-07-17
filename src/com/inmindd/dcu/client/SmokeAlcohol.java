@@ -712,7 +712,7 @@ public class SmokeAlcohol {
 				smokeAlcoholPanel.remove(drinksBandOther);
 				if (selectedIndex == 2) { // 		scotland
 	
-					displayAlcohol("Scottish_drinks.png");
+					displayAlcohol("Scottish_drinks.PNG");
 					
 	
 	
@@ -741,7 +741,7 @@ public class SmokeAlcohol {
 	
 				}
 				if (selectedIndex == 4)	{ 		// france
-					displayAlcohol("French_drinks.png");
+					displayAlcohol("French_drinks.PNG");
 	
 				}
 				}
