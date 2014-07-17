@@ -149,7 +149,6 @@ public class Experts implements EntryPoint {
 		DOM.getElementById("askExperts2").setInnerHTML(constants.askExperts2());
 		DOM.getElementById("askExperts3").setInnerHTML(constants.askExperts3());
 		DOM.getElementById("askExperts4").setInnerHTML(constants.askExperts4());
-		DOM.getElementById("askExperts5").setInnerHTML(constants.askExperts5());
 		DOM.getElementById("askExperts6").setInnerHTML(constants.askExperts6());
 		DOM.getElementById("askExperts7").setInnerHTML(constants.askExperts7());
 		DOM.getElementById("askExperts8").setInnerHTML(constants.askExperts8());

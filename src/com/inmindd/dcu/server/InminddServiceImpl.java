@@ -1716,6 +1716,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				infos.setImage_url(result.getString("image_url"));
 				infos.setDesc_keep(result.getString("desc_keep"));
 				infos.setDesc_improv(result.getString("desc_improv"));
+				infos.setSources(result.getString("sources"));
 				conn.close();
 				return true;
 			}

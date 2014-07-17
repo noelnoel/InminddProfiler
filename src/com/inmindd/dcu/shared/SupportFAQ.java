@@ -49,8 +49,8 @@ public class SupportFAQ implements Serializable {
 	public String toJSON(){
 		return "{ \"id\":" + getId() +
 				",\"lang\": \"" + getLang() +
-				"\" , \"question\":  \"" +  getQuestion() +
-				"\" ,\"answer\": \"" +  getAnswer() +
+				"\" , \"question\":  \"" +  getQuestion().replace("\\", "\\\\").replace("\"", "\\\"") +
+				"\" ,\"answer\": \"" +  getAnswer().replace("\\", "\\\\").replace("\"", "\\\"") +
 				"\" }";
 	}
 

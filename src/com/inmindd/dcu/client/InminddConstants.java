@@ -348,7 +348,6 @@ public interface InminddConstants extends Constants{
 	 	String landing_support_4();
 	 	String landing_support_5();
 	 	String landing_support_6();
-	 	String landing_support_7();
 	 	String landing_support_8();
 	 	String keepthisup();
 	 	String rfi();
@@ -392,6 +391,9 @@ public interface InminddConstants extends Constants{
 	 	String score_25();
 	 	String score_27();
 	 	String score_28();
+	 	String score_26();
+	 	String score_29();
+	 	String score_30();
 	 	String experts_1();
 	 	String experts_2();
 	 	String experts_3();
@@ -409,6 +411,8 @@ public interface InminddConstants extends Constants{
 	 	String goal_4();
 	 	String goal_5();
 	 	String goal_6();
+	 	String goal_7();
+	 	String goal_8();
 	 	
 	 	String faq();
 	 	
@@ -417,7 +421,6 @@ public interface InminddConstants extends Constants{
 	 	String askExperts2();
 	 	String askExperts3();
 	 	String askExperts4();
-	 	String askExperts5();
 	 	String askExperts6();
 	 	String askExperts7();
 	 	String askExperts8();
@@ -433,5 +436,6 @@ public interface InminddConstants extends Constants{
 		String scotland();
 		String france();
 		String netherlands();
+		String errorNotLoggedIn();
 	 	
 }

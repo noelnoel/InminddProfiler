@@ -10,17 +10,19 @@ public class SupportRiskFactorInfos implements Serializable {
 	private String image_url;
 	private String desc_keep;
 	private String desc_improv;
+	private String sources;
 	
 	public SupportRiskFactorInfos(){
 	}
 	
-	public SupportRiskFactorInfos(int id, String lang, String name, String image_url, String desc_keep, String desc_improv){
+	public SupportRiskFactorInfos(int id, String lang, String name, String image_url, String desc_keep, String desc_improv, String sources){
 		setId(id);
 		setLang(lang);
 		setName(name);
 		setImage_url(image_url);
 		setDesc_keep(desc_keep);
 		setDesc_improv(desc_improv);
+		setSources(sources);
 	}
 	
 	public int getId() {
@@ -41,6 +43,9 @@ public class SupportRiskFactorInfos implements Serializable {
 	public String getDesc_improv() {
 		return desc_improv;
 	}
+	public String getSources() {
+		return sources;
+	}
 	
 	public void setId(int id) {
 		this.id = id;
@@ -59,5 +64,8 @@ public class SupportRiskFactorInfos implements Serializable {
 	}
 	public void setDesc_improv(String desc_improv) {
 		this.desc_improv = desc_improv;
+	}
+	public void setSources(String sources) {
+		this.sources = sources;
 	}
 }

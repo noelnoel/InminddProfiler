@@ -59,7 +59,7 @@ public class SupportExperts implements Serializable {
 				",\"lang\": \"" + getLang() +
 				"\" , \"country\":  \"" +  getCountry() +
 				"\" ,\"image_url\": \"" +  getImage_url() +
-				"\" ,\"description\": \"" +  getDescription() +
+				"\" ,\"description\": \"" +  getDescription().replace("\\", "\\\\").replace("\"", "\\\"") +
 				"\" }";
 	}
 	

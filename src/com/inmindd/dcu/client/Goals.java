@@ -22,6 +22,7 @@ public class Goals implements EntryPoint {
 	private static Goals lastInstance;
 	private User user;
 	private int riskFactor;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -80,6 +81,8 @@ public class Goals implements EntryPoint {
 					output += "]";
 
 					DOM.getElementById("goalsInputRPC").setAttribute("value",output);
+					System.out.println(constants.goal_5());
+					DOM.getElementById("goalsButtonTextRPC").setAttribute("value",constants.goal_5());
 
 					trigerJavascript();
 				}
@@ -139,7 +142,7 @@ public class Goals implements EntryPoint {
 	 }-*/;
 	
 	public static void clickGoals(int goalNb, String comment) {
-		SupportGoalUser goal = new SupportGoalUser(lastInstance.user.getUserId(), goalNb, comment.equals("") ? null : comment);
+		SupportGoalUser goal = new SupportGoalUser(lastInstance.user.getUserId(), goalNb, (comment == null || comment.equals("")) ? null : comment);
 
 		AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
 
@@ -149,7 +152,8 @@ public class Goals implements EntryPoint {
 					System.out.println("[RB_goals::sendGoal] \\ echec");
 				}
 				else {
-					Window.alert("beau gosse");
+					Window.alert(lastInstance.constants.goal_8());
+					Window.Location.assign(GWT.getHostPageBaseURL() + "score.html");
 				}
 			}
 
@@ -185,8 +189,7 @@ public class Goals implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
-				   (InminddConstants)GWT.create(InminddConstants.class);
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
@@ -200,6 +203,7 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
 		
 		DOM.getElementById("goalsh1").setInnerHTML(constants.goal_0());
+		DOM.getElementById("goal-7").setInnerHTML(constants.goal_7());
 	}
 
 }
