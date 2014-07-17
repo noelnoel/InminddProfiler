@@ -8,6 +8,8 @@ public interface InminddConstants extends Constants{
 	// @DefaultStringValue("Welcome to the InMINDD Profiler")
 	 	String welcome();
 	 	String eufunding_banner();
+	 	
+	 	String registration();
 	 	/*
 	 	 * 
 	 	 * Patient Info
@@ -65,10 +67,13 @@ public interface InminddConstants extends Constants{
 	 	String retired();
 	 	String other();
 	 	String unemployed();
-	 	
+	 	String gender_error();
 	 	/*
 	 	 * Feelings 
 	 	 */
+	 	String feelings_error_1();
+		String feelings_error_2();
+		String mood_complete();
 	 	String feeling();
 	 	String lastweek();
 	 	
@@ -115,6 +120,12 @@ public interface InminddConstants extends Constants{
 	 	/*
 	 	 * Medical health
 	 	 */
+	 	String mmol_error();
+	 	String med_error_1();
+	 	String systolic_error();
+	 	String systolic_range();
+	 	String diastolic_error();
+	 	String diastolic_range();
 	 	String medical();
 	 	String health();
 	 	String height();
@@ -152,12 +163,12 @@ public interface InminddConstants extends Constants{
 	 	String toldurine();
 	 	String toldurine_2();
 	 	String toldkidney();
-	 	
+	 	String med_complete();
 	 	/*
 	 	 * family medical history
 	 	 * 
 	 	 */
-	 	
+	 	String family_med_error();
 	 	String familymed();
 	 	String familyquestions();
 	 	String history_1();
@@ -169,11 +180,14 @@ public interface InminddConstants extends Constants{
 	 	String history_7();
 	 	String history_8();
 	 	String history_9();
-	 	
+	 	String history_10();
 	 	String dementia();
 	 	String cardio();
 	 	String dementia_popup();
 	 	String heart_popup();
+	 	
+	 	
+	 	String physical_error();
 	 	String physical_act();
 	 	String physical_1();
 	 	String physical_2();
@@ -207,6 +221,8 @@ public interface InminddConstants extends Constants{
 	 	String cognitive_p1();
 	 	String education();
 	 	String formal_education();
+	 	String formal_error();
+	 	String non_formal_error();
 	 	String managers();
 	 	String non_formal();
 	 	String non_formal_title();
@@ -227,6 +243,7 @@ public interface InminddConstants extends Constants{
 	 	String simul_years();
 	 	
 	 	String cognitive_p2();
+	 	String cognitive_2_error();
 	 	String leisure_social();
 	 	String adult_life();
 	 	String paid_1();
@@ -278,7 +295,8 @@ public interface InminddConstants extends Constants{
 	 	String alcohol_consumption();
 	 	String how_often_drink();	 	
 	 	String stop_smoking();
-	 	
+	 	String smoking_error();
+	 	String smoke_complete();
 	 // diet
 	 	String diet();
 	 	String diet_questions();
