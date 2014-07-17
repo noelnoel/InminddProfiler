@@ -293,19 +293,33 @@ public class CognitiveOne {
 		}
 		yearsEducation.getElement().getStyle().setProperty("color", "black");
 		yearsNonForEducation.getElement().getStyle().setProperty("color", "black");
-		double years = 0;
+		
 		try {
-			years  = Double.parseDouble(yearsFormalEducation.getText());	
+			double years  = Double.parseDouble(yearsFormalEducation.getText());	
 		}
 
 		catch (Exception e)
 		{
-			InlineLabel error = new InlineLabel("Please enter a value for years education (Formal or Nonformal)");	
+			InlineLabel error = new InlineLabel(constants.formal_error());	
 			showErrorPopupPanel(error, "red");
 			yearsEducation.getElement().getStyle().setProperty("color", "red");
 			yearsNonForEducation.getElement().getStyle().setProperty("color", "red");
 			return false;
 		}
+		
+		try {
+			double years  = Double.parseDouble(yearsNonformalEducation.getText());	
+		}
+
+		catch (Exception e)
+		{
+			InlineLabel error = new InlineLabel(constants.non_formal_error());	
+			showErrorPopupPanel(error, "red");
+			yearsEducation.getElement().getStyle().setProperty("color", "red");
+			yearsNonForEducation.getElement().getStyle().setProperty("color", "red");
+			return false;
+		}
+	
 	
 		return true;
 	}

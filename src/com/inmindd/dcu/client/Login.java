@@ -32,7 +32,8 @@ public class Login  {
 	private  Patient patient = new Patient();
 	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
   
-	
+	static InminddConstants constants = 
+			   (InminddConstants)GWT.create(InminddConstants.class);
 	
 	/**
 	 * rpc call
@@ -389,7 +390,7 @@ public class Login  {
     		}
     		
     		else {
-    			InlineLabel error = new InlineLabel("Congratulations, you are now registered with Inmindd. Please proceed to input panels");
+    			InlineLabel error = new InlineLabel(constants.registration());
     			showErrorPopupPanel(error, "green");
     			if(PatientInfo.lastinstance != null)
 					PatientInfo.clearInputs();	
@@ -457,8 +458,8 @@ public class Login  {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(450,576);
-		popup.setWidth("650px");
+		popup.setPopupPosition(420,240);
+		popup.setWidth("750px");
 		popup.show();
 
 	}

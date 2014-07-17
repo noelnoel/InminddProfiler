@@ -3,6 +3,11 @@
  */
 package com.inmindd.dcu.client;
 
+/*
+ * Entry point to the Inmindd Profler Web Application
+ * 
+ * @Author Noel O'Kelly DCU School of Computing
+ */
 
 
 import com.google.gwt.core.client.EntryPoint;
@@ -403,7 +408,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		
 		// Indicate that we should show the HOME tab initially.
 		content.selectTab(DECK_LOGIN);
-		
+	
 	}	
 	
 	/**
@@ -646,7 +651,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(450,576);
+		popup.setPopupPosition(470,240);
 		popup.setWidth("550px");
 		popup.show();
 

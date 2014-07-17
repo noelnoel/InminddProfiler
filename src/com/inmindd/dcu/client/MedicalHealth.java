@@ -515,7 +515,7 @@ public class MedicalHealth {
 				double mmolInput = mmol.getDoubleValue();
 
 				if (!((mmolInput >=  MIN_MMOL) && (mmolInput <=  MAX_MMOL))) {
-					error = new InlineLabel("MMOL entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.mmol_error());
 					showErrorPopupPanel(error,"red");
 					mmol.setFocus();
 
@@ -964,7 +964,7 @@ public class MedicalHealth {
 				}
 			}		
 
-			error = new InlineLabel("Please select the question  button indicated above");			
+			error = new InlineLabel(constants.med_error_1());			
 			showErrorPopupPanel(error,"red");
 			label.getElement().getStyle().setProperty("color", "red");			  
 			return false;		
@@ -981,9 +981,9 @@ public class MedicalHealth {
 				}
 
 				catch (Exception e)	{					
-					error = new InlineLabel("MMol reading entered is non numeric. Please re-enter");
+					error = new InlineLabel(constants.mmol_error());
 					showErrorPopupPanel(error,"red");
-					systolic.setFocus(true);				
+					mmol.setFocus();				
 					return false;
 
 				}
@@ -1051,14 +1051,14 @@ public class MedicalHealth {
 				}
 
 				catch (Exception e)	{					
-					error = new InlineLabel("Systolic reading entered is non numeric. Please re-enter");
+					error = new InlineLabel(constants.systolic_error());
 					showErrorPopupPanel(error, "red");
 					systolic.setFocus(true);				
 					return false;
 
 				}
 				if (!((systolicInput >=  MIN_SYSTOLIC) && (systolicInput <=  MAX_SYSTOLIC))) {
-					error = new InlineLabel("Systolic reading entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.systolic_range());
 					showErrorPopupPanel(error,"red");
 					systolic.setFocus(true);
 					return false;
@@ -1074,14 +1074,14 @@ public class MedicalHealth {
 					diastolicInput  = Double.parseDouble(diastolic.getText());	
 				}
 				catch (Exception e)
-				{	error = new InlineLabel("Diastolic is  non numeric. Please re-enter");
+				{	error = new InlineLabel(constants.diastolic_error());
 					showErrorPopupPanel(error, "red");
 					systolic.setFocus(true);
 					return false;
 
 				}
 				if (!((diastolicInput >=  MIN_DIASTOLIC) && (diastolicInput <=  MAX_DIASTOLIC))) {
-					error = new InlineLabel("Diastolic reading entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.diastolic_range());
 					showErrorPopupPanel(error, "red");
 					diastolic.setFocus(true);
 					return false;
@@ -1309,7 +1309,7 @@ public class MedicalHealth {
 	            			showErrorPopupPanel(error, "red");            			
 	            		}            		
 	            		else {
-	            			InlineLabel error = new InlineLabel("Medical health Info updated  -  Proceed to next Panel");
+	            			InlineLabel error = new InlineLabel(constants.med_complete());
 	            			showErrorPopupPanel(error, "green");            			            			
 	            		}
 	                 
@@ -1444,7 +1444,7 @@ public class MedicalHealth {
 			popup.setWidget(vertPanel);
 			//popup.setGlassEnabled(true);
 			popup.setPopupPosition(190,700);
-			popup.setWidth("550px");
+			popup.setWidth("750px");
 			popup.show();
 
 		}

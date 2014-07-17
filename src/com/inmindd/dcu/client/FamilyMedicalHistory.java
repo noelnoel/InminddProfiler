@@ -203,57 +203,57 @@ public class FamilyMedicalHistory {
 			
 		}
 		if (!(motherDementiaYes.getValue() || motherDementiaNo.getValue() || motherDementiaDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  mother's dementia question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(motherCardioYes.getValue() || motherCardioNo.getValue() || motherCardioDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  mother's Cardiovascular questions");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(motherMellitusYes.getValue() || motherMellitusNo.getValue() || motherMellitusDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  mother's Diabetes question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 
 		if (!(fatherDementiaYes.getValue() || fatherDementiaNo.getValue() || fatherDementiaDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  father's dementia question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(fatherCardioYes.getValue() || fatherCardioNo.getValue() || fatherCardioDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  father's Cardiovascular questions");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(fatherMellitusYes.getValue() || fatherMellitusNo.getValue() || fatherMellitusDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  father's Diabetes question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 
 		if (!(siblingDementiaYes.getValue() || siblingDementiaNo.getValue() || siblingDementiaDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  sibling's dementia question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(siblingCardioYes.getValue() || siblingCardioNo.getValue() || siblingCardioDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  sibling's Cardiovascular questions");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 
 		else if (!(siblingMellitusYes.getValue() || siblingMellitusNo.getValue() || siblingMellitusDontKnow.getValue())) {
-			InlineLabel error = new InlineLabel("Please select button regarding  sibling's Diabetes question");
+			InlineLabel error = new InlineLabel(constants.family_med_error());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
@@ -439,7 +439,7 @@ public class FamilyMedicalHistory {
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("History data retrieved- Edit as necessary");
+					 InlineLabel error = new InlineLabel("Family history data retrieved- Edit as necessary");
 					 showErrorPopupPanel(error, "green");  
 					 populatePanel(history);
 					
@@ -599,7 +599,7 @@ public class FamilyMedicalHistory {
 		
 		private HorizontalPanel setupFatherQuestionsOne() {
 			HorizontalPanel family = new HorizontalPanel();
-			InlineLabel lbl = new InlineLabel(constants.history_1());
+			InlineLabel lbl = new InlineLabel(constants.history_10());
 			lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 			InlineLabel lbl2 = new InlineLabel(constants.dementia());
 			lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
@@ -833,7 +833,7 @@ public class FamilyMedicalHistory {
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
 		popup.setPopupPosition(190,680);
-		popup.setWidth("550px");
+		popup.setWidth("700px");
 		popup.show();
 
 	}

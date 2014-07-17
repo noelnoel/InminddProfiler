@@ -78,7 +78,7 @@ public class Feelings {
 	
 			cesdPanel = new DockLayoutPanel(Unit.EM);
 			cesdPanel.setHeight("90%");
-			
+			cesdPanel.setWidth("95%");
 			questions.getElement().getStyle().setProperty("width", "48%");
 			
 			answers.getElement().getStyle().setProperty("width", "40%");
@@ -313,7 +313,7 @@ public class Feelings {
 
 		if ((most.getValue() == false) && (some.getValue() == false) && (occasional.getValue() == false) 
 				&& (rare.getValue() == false)) {
-			String question = "Please select a button for Question Number " + index;
+			String question = constants.feelings_error_1() + index;
 			error = new InlineLabel(question);
 			showErrorPopupPanel(error, "red");
 			hr.getElement().getStyle().setProperty("backgroundColor", "#ffffff");  
@@ -328,7 +328,7 @@ public class Feelings {
 
 		// either one checked
 		dock1.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select one of the Depressed  buttons");	
+		error = new InlineLabel(constants.feelings_error_2());	
 		if ( !(depressedYes.getValue() || depressedNo.getValue())) {
 			showErrorPopupPanel(error, "red");
 			dock1.getElement().getStyle().setProperty("color", "red");			  
@@ -342,7 +342,7 @@ public class Feelings {
 
 		// either one checked
 		dock2.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select one of the Treatment  buttons");	
+		error = new InlineLabel(constants.feelings_error_2());	
 		if ( !(treatYes.getValue() || treatNo.getValue())) {
 			showErrorPopupPanel(error, "red");
 			dock2.getElement().getStyle().setProperty("color", "red");			  
@@ -363,8 +363,8 @@ public class Feelings {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		
-		popup.setPopupPosition(190,730);
-		popup.setWidth("550px");
+		popup.setPopupPosition(150,330);
+		popup.setWidth("700px");
 		popup.show();
 	}
 	
@@ -391,7 +391,7 @@ public class Feelings {
             			showErrorPopupPanel(error, "red");            			
             		}            		
             		else {
-            			InlineLabel error = new InlineLabel("Feelings Info updated  -  Proceed to next Panel");
+            			InlineLabel error = new InlineLabel(constants.mood_complete());
             			showErrorPopupPanel(error, "green");            			            			
             		}
                  

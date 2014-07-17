@@ -273,7 +273,7 @@ public class SmokeAlcohol {
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel("Smoking & Alcohol  updated  -  Proceed to next Panel");
+	       			InlineLabel error = new InlineLabel(constants.smoke_complete());
 	       			showErrorPopupPanel(error, "green");            			            			
 	       		}
 	            
@@ -478,13 +478,20 @@ public class SmokeAlcohol {
 		}
 
 		if (currentSmoker.getValue()) {
-			if (currentYearStart.getValue() == "" || smokePerDay.getDoubleValue() == 0) {
-				InlineLabel error = new InlineLabel("Please input current smoking data");
+			if (currentYearStart.getValue() == "") {
+				InlineLabel error = new InlineLabel(constants.smoking_error());
 				showErrorPopupPanel(error, "red");
-				currentYearStart.getElement().getStyle().setProperty("color", "red");
-				smokePerDay.getElement().getStyle().setProperty("color", "red");
+				currentYearStart.getElement().getStyle().setProperty("color", "red");				
 				return false;
 			}	
+			
+			if (smokePerDay.getDoubleValue() <= 0) {
+				InlineLabel error = new InlineLabel("Please input smokes per day");
+				showErrorPopupPanel(error, "red");
+			
+				smokePerDay.getElement().getStyle().setProperty("color", "red");
+				return false;
+			}
 			if ((getValueAsInt(currentYearStart) < 1964) ||  getValueAsInt(currentYearStart) > 2015) {
 				InlineLabel error = new InlineLabel("Please input a valid start year");
 				showErrorPopupPanel(error, "red");
@@ -505,6 +512,14 @@ public class SmokeAlcohol {
 			}			
 			if ((getValueAsInt(formerYearStart) < 1964) ||  getValueAsInt(formerYearStart) > 2015) {
 				InlineLabel error = new InlineLabel("Please input a valid start year");
+				showErrorPopupPanel(error, "red");
+				formerYearStart.getElement().getStyle().setProperty("color", "red");
+				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
+				return false;
+			}
+			
+			if ((getValueAsInt(formerSmokePerDay) <= 0)) {
+				InlineLabel error = new InlineLabel("Please input smokes per day");
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
@@ -536,7 +551,7 @@ public class SmokeAlcohol {
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
 		popup.setPopupPosition(190,700);
-		popup.setWidth("550px");
+		popup.setWidth("700px");
 		popup.show();
 
 	}

@@ -505,7 +505,7 @@ public class PhysicalActivity {
 		}
 		InlineLabel error;
 		if (!(standingBtn.getValue() || manualBtn.getValue() || sedBtn.getValue() || heavyManualBtn.getValue() || naBtn.getValue()))  {
-			error = new InlineLabel("Please select button regarding  your occupation");
+			error = new InlineLabel(constants.physical_error());
 			showErrorPopupPanel(error);
 			return false;
 		}	

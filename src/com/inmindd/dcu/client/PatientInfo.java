@@ -55,6 +55,7 @@ public class PatientInfo {
 	private InminddServiceAsync InminddServiceSvc;
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
+	
 	public  PatientInfo(){
 		lastinstance = this;
 	}
@@ -626,7 +627,7 @@ private FlowPanel getEducationFR() {
 	private boolean checkGender() {
 		// either one checked
 		sex.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select one of the gender buttons");	
+		error = new InlineLabel(constants.gender_error());	
 		if ( !(male.getValue() || female.getValue())) {
 			showErrorPopupPanel(error);
 			sex.getElement().getStyle().setProperty("color", "red");			  

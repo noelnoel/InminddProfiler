@@ -1342,7 +1342,7 @@ public class CognitiveTwo {
 			}
 		}		
 
-		error = new InlineLabel("Please select a question  button indicated above");			
+		error = new InlineLabel(constants.cognitive_2_error());			
 		showErrorPopupPanel(error, "red");
 		label.getElement().getStyle().setProperty("color", "red");			  
 		return false;		
