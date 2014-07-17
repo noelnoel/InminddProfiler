@@ -111,6 +111,45 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 		return user;
 	}
+	
+	@Override
+	public User authenticateUserSupportEnvironement(String idUser, String password) throws IllegalArgumentException {	
+		//open database connection
+		initDBConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ? AND scored = 1 AND randomised_group = 'Control';");
+			pstmt.setString(1, idUser);
+			pstmt.setString(2, password);
+			result = pstmt.executeQuery();
+			
+			while (result.next()) {
+					user = new User();
+					user.setUserId(result.getString(1));
+					conn.close();
+					getThreadLocalRequest().getSession().setAttribute("current_user", user);
+					return user;
+			}
+			user = null;
+			getThreadLocalRequest().getSession().setAttribute("current_user", null);
+			conn.close();
+			return user;
+
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			// Cleanup
+			//  result.close();
+			//   pstmt.close();
+			//c//onn.close();
+		}
+
+		return user;
+	}
 
 	@Override
 	public Boolean registerUser(User user) throws IllegalArgumentException {

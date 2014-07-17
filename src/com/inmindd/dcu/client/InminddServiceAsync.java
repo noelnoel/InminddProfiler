@@ -29,6 +29,9 @@ public interface InminddServiceAsync {
 	void authenticateUser(String idUser,String password, AsyncCallback<User> callback)
 			throws IllegalArgumentException;
 	
+	void authenticateUserSupportEnvironement(String idUser,String password, AsyncCallback<User> callback)
+			throws IllegalArgumentException;
+	
 	void registerUser(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	

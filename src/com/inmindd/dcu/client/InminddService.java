@@ -30,6 +30,7 @@ import com.inmindd.dcu.shared.User;
 @RemoteServiceRelativePath("Inmindd")
 public interface InminddService extends RemoteService {
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException;
+	public User authenticateUserSupportEnvironement(String idUser, String password) throws IllegalArgumentException;
 	public Boolean registerUser(User user)throws IllegalArgumentException;
 	
 	public Boolean updatePatientInfo(Patient patient)	throws IllegalArgumentException;
