@@ -412,6 +412,7 @@ public interface InminddConstants extends Constants{
 	 	String goal_5();
 	 	String goal_6();
 	 	String goal_7();
+	 	String goal_8();
 	 	
 	 	String faq();
 	 	

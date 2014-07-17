@@ -89,7 +89,7 @@ function goalClickJS(event){
 	var parent = $(event.target).parent();
 	var goalNb = parent.attr("x-goal");
 	var textarea = parent.find("textarea").val();
-	window.goalClick(goalNb, textarea);
+	window.goalClick(parseInt(goalNb), textarea);
 }
 
 $(document).ready(function(){

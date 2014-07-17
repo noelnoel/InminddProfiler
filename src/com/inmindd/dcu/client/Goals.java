@@ -142,7 +142,7 @@ public class Goals implements EntryPoint {
 	 }-*/;
 	
 	public static void clickGoals(int goalNb, String comment) {
-		SupportGoalUser goal = new SupportGoalUser(lastInstance.user.getUserId(), goalNb, comment.equals("") ? null : comment);
+		SupportGoalUser goal = new SupportGoalUser(lastInstance.user.getUserId(), goalNb, (comment == null || comment.equals("")) ? null : comment);
 
 		AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
 
@@ -152,7 +152,8 @@ public class Goals implements EntryPoint {
 					System.out.println("[RB_goals::sendGoal] \\ echec");
 				}
 				else {
-					Window.alert("beau gosse");
+					Window.alert(lastInstance.constants.goal_8());
+					Window.Location.assign(GWT.getHostPageBaseURL() + "score.html");
 				}
 			}
 
