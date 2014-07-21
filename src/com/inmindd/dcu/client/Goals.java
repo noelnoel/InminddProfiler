@@ -153,7 +153,7 @@ public class Goals implements EntryPoint {
 				}
 				else {
 					Window.alert(lastInstance.constants.goal_8());
-					Window.Location.assign(GWT.getHostPageBaseURL() + "score.html");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "goals.html");
 				}
 			}
 
