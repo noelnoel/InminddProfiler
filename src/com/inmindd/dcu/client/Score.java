@@ -199,8 +199,6 @@ public class Score implements EntryPoint {
 		DOM.getElementById("score-22").setInnerHTML(constants.score_22());
 		DOM.getElementById("score-23").setInnerHTML(constants.score_23());
 		DOM.getElementById("score-24").setInnerHTML(constants.score_24());
-		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
-		DOM.getElementById("score-26").setInnerHTML(constants.score_26());
 		DOM.getElementById("score-27").setInnerHTML(constants.score_27());
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());

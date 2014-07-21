@@ -103,6 +103,7 @@ public class LandingPage implements EntryPoint {
 			public void onBrowserEvent(Event event) {
 				if (event == null || Event.ONCLICK == event.getTypeInt()) {
 					DOM.getElementById("profilerPanel").setAttribute("style", "");
+					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 					DOM.getElementById("indexPanel").setAttribute("style", "display:none");
 				}
 			}
