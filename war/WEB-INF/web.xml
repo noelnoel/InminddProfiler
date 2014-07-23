@@ -95,6 +95,16 @@
     <servlet-name>InminddContact</servlet-name>
     <url-pattern>/Contact/Inmindd</url-pattern>
   </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>InminddAdmin</servlet-name>
+    <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>InminddAdmin</servlet-name>
+    <url-pattern>/Admin/Inmindd</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
