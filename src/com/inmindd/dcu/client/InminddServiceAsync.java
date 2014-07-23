@@ -114,5 +114,11 @@ public interface InminddServiceAsync {
 	
 	void querySupportApps(String lang, AsyncCallback<ArrayList<SupportApps>> callback)
 			throws IllegalArgumentException;
+	
+	void isAdministrator(AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	
+	void queryAllUsers(AsyncCallback<ArrayList<String>> callback)
+			throws IllegalArgumentException;
+	
 }
 

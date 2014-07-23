@@ -2082,6 +2082,100 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 	@Override
+	public ArrayList<String> queryAllUsers()
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<String> users = new ArrayList<String>();
+		initDBConnection();
+
+		if (getAllUsers(users)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		}
+	}
+
+
+	private boolean getAllUsers(ArrayList<String> userList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		User user = getUserConnected();
+		try {	          
+			pstmt = conn.prepareStatement("SELECT userId FROM `user` WHERE `userId` LIKE ?;");
+			pstmt.setString(1, user.getUserId().substring(0, 2) + "%");
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				userList.add(result.getString("userId"));
+			}
+			conn.close();
+			return (userList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean isAdministrator() throws IllegalArgumentException {
+		initDBConnection();
+		User user = getUserConnected();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT administrator FROM `user` WHERE `userId` = ?;");
+			pstmt.setString(1, user.getUserId());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				if(result.getInt("administrator") == 1){
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return true;
+				} else {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return false;
+				}
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		catch (SQLException e) {
+			try {
+				conn.close();
+			} catch (SQLException ee) {
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	
+	@Override
 	public Boolean sendMail(String email, String body)
 			throws IllegalArgumentException {
 		//open database connection
