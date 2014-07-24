@@ -175,7 +175,7 @@ public class Diet {
 	    			updateDietDB();
 	    			if (Window.confirm("Please confirm that you have completed all Input screens for the Profiler"))
 	    				callRandomiserService();
-	    			Window.Location.assign("1-dot-inmindd-profiler.appspot.com/index.html?page=support");
+	    				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 	    			}
 	    		}
 	    	}
