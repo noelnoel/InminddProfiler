@@ -90,8 +90,8 @@ public class Feelings {
 					constants.lastweek() + "<br>" +
 					constants.statement() + " </h3>");
 				
-			HTMLPanel week = new HTMLPanel("<p style='margin-left:65%;'>" +
-					"<b><u>" + constants.pastweek() + "</u></b></p>");
+			HTMLPanel week = new HTMLPanel("<span style='margin-left:65%;'>" +
+					"<b><u>" + constants.pastweek() + "</u></b></span>");
 			HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px' >" +
 					"                         " + constants.some() + " <br>" +            
 					constants.rarely() +  "        " +        constants.little() + constants.occasionally() + constants.most() + "<br>" +
@@ -179,11 +179,11 @@ public class Feelings {
 		     
 		    });
 		    
-		    scroll.setSize("100%", "70%");
+		    scroll.setSize("100%", "65%");
 		    scroll.add(pnl);
 		    scroll.setAlwaysShowScrollBars(true);
 		    scroll.scrollToTop();
-
+		
 		    cesdPanel.add(scroll);
 
 

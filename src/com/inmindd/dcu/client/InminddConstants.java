@@ -10,6 +10,7 @@ public interface InminddConstants extends Constants{
 	 	String eufunding_banner();
 	 	
 	 	String registration();
+	 	String reset();
 	 	/*
 	 	 * 
 	 	 * Patient Info
@@ -456,4 +457,6 @@ public interface InminddConstants extends Constants{
 		String netherlands();
 		String errorNotLoggedIn();
 	 	
+		
+		
 }

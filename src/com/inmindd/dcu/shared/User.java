@@ -8,8 +8,21 @@ import com.google.gwt.regexp.shared.RegExp;
 public class User implements Serializable {
 	private String userId;
 	private String password;	
-	//private String countryCode;
-	//private String practice;
+	private String maidenName;
+	private String favoriteColour;
+	public String getMaidenName() {
+		return maidenName;
+	}
+	public void setMaidenName(String maidenName) {
+		this.maidenName = maidenName;
+	}
+	public String getFavoriteColour() {
+		return favoriteColour;
+	}
+	public void setFavoriteColour(String favoriteColour) {
+		this.favoriteColour = favoriteColour;
+	}
+
 	private String lang;
 	
 	public User() {

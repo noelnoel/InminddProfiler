@@ -1,9 +1,14 @@
 package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.rmi.RemoteException;
+
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.client.ServiceClient;
 
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
@@ -47,6 +52,13 @@ import javax.mail.internet.MimeMessage;
 
 
 
+
+
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.client.ServiceClient;
+import org.tempuri.ServiceStub;
+import org.tempuri.ServiceStub.RandResult;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -56,6 +68,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
 	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
+	
+	
+	// autherisation key for Glasgow randomisation wev service
+	
+	private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
 	private   String decryptedPassword;
 	protected Connection conn; 
 	private Patient patient;
@@ -86,8 +103,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					//System.out.println(result.getString(4));
 					user = new User();
 					user.setUserId(result.getString(1));
-				//	user.setCountryCode(result.getString(2));
-				//	user.setPractice(result.getString(3));
+				
 					conn.close();
 					getThreadLocalRequest().getSession().setAttribute("current_user", user);
 					return user;
@@ -111,41 +127,226 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 		return user;
 	}
+	
+	
+	@Override
+	public Boolean duplicateUser(String id) throws IllegalArgumentException {	
+		//open database connection
+		initDBConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt.setString(1, id);
+			result = pstmt.executeQuery();
+			
+			while (result.next()) {
+				if (result.getString(1).equals(id)) {
+					
+					return true;  // already exists
+				}
+				else {
+					return false;
+				}
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} 
+
+		return false;
+	}
 
 	@Override
-	public Boolean registerUser(User user) throws IllegalArgumentException {
+	public Boolean resetPassword(User user) throws IllegalArgumentException {	
+		//open database connection
+		initDBConnection();
+		String id = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt.setString(1, id);
+			result = pstmt.executeQuery();
+			
+			while (result.next()) {
+				if (result.getString(1).equals(id)) {
+					String hashMaidenName = result.getString(8);
+					String hashFavColour = result.getString(9);
+					if (hashMaidenName.equals(user.getMaidenName()) && hashFavColour.equals(user.getFavoriteColour())) {  // maiden name and colour correct; reset password
+						updatePassword(user);
+						return true;  // password reset
+					}
+					return false;
+				}
+				else {
+					return false;
+				}
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} 
+
+		return false;
+	}
+
+	
+	private Boolean updatePassword(User user ) {
 
 		//open database connection
 		initDBConnection();
 		// Verify that the input is valid. 
-		String passwordhash = user.getPassword();
+		String idUser = user.getUserId();
+		try {	          
 
-		String userId = user.getUserId();
-	/*	String countryCode = user.getCountryCode();
-		String practice = user.getPractice(); */
-		long time = System.currentTimeMillis();
-		
-		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
-		String insert = "insert  into user (userId,passwordhash,timestamp)  values(?,?,?)";
+			String passhash = user.getPassword();
+			// create the java mysql update preparedstatement
+			String query = "update ignore user set passwordhash =  ? where userId =" + idUser;
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString (1, passhash);
+
+			// execute the java preparedstatement
+			preparedStmt.executeUpdate();
 			
 
-		try {
-			PreparedStatement updatePatientInfo = conn.prepareStatement(insert);
-			updatePatientInfo.setString(1, userId);
-			
-			updatePatientInfo.setString(2, passwordhash);
-
-			updatePatientInfo.setTimestamp(3, timestamp);
-			updatePatientInfo.executeUpdate();
-			conn.close();
-		} catch (SQLException e) {
-
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
 			return false;
 		}
-
 		return true;
 	}
 
+		
+	@Override
+	public Boolean registerUser(User user) throws IllegalArgumentException {
+			String userId = user.getUserId();
+			if (duplicateUser(userId))  // this user already in database
+				return false;
+			//open database connection
+			initDBConnection();
+			// Verify that the input is valid. 
+			String passwordHash = user.getPassword();
+			String maidenNameHash = user.getMaidenName();
+			String favColourHash = user.getFavoriteColour();
+			long time = System.currentTimeMillis();
+			
+			java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
+			String insert = "insert  into user (userId,passwordhash,timestamp, maiden_name_hash, favorite_colour_hash)  values(?,?,?,?,?)";			
+	
+			try {
+				PreparedStatement updateUserInfo = conn.prepareStatement(insert);
+				updateUserInfo.setString(1, userId);				
+				updateUserInfo.setString(2, passwordHash);	
+				updateUserInfo.setTimestamp(3, timestamp);
+				updateUserInfo.setString(4, maidenNameHash);
+				updateUserInfo.setString(5, favColourHash);
+				
+				updateUserInfo.executeUpdate();
+				conn.close();
+			} catch (SQLException e) {
+	
+				return false;
+			}
+	
+			return true;
+		
+	}
+
+	
+	public Boolean randomiseUser(User user) throws IllegalArgumentException {
+		String userId = user.getUserId();
+		String countryCode = userId.substring(0, 2);
+		String practiceCode = userId.substring(2,4);
+		String userNo = userId.substring(4,7);
+		String randNo = null;
+		String randResultCode = null;
+		String randTreatmentGroup = null;
+		org.tempuri.ServiceStub.RandomiseParticipantResponse resp = null;
+		try {
+			ServiceStub ser = new ServiceStub();
+			ServiceClient serClient = ser._getServiceClient();
+			serClient.engageModule("addressing");
+			ServiceStub.RandomiseParticipant rand = new ServiceStub.RandomiseParticipant();
+			rand.setSNo(userId);
+			rand.setCountryID(countryCode);
+			rand.setPracticeID(practiceCode);
+			rand.setUserID(userNo);
+			rand.setAuthKey(AUTH_KEY);
+			try {
+				resp = ser.randomiseParticipant(rand);
+				RandResult randRes = resp.getRandomiseParticipantResult();
+				
+				if (randRes.isResultCodeSpecified()) {
+					randResultCode = randRes.getResultCode();
+					if (randResultCode.equals("alreadyrand"))
+						return true;  // already randomised
+				}
+				if (randRes.isRandNoSpecified())
+					randNo  = randRes.getRandNo();
+				
+				if (randRes.isTreatmentGroupSpecified())
+					randTreatmentGroup = randRes.getTreatmentGroup();
+				if (randRes.isResultCodeSpecified()) {  // did we get a result from the randomiser ervice ??
+					randResultCode = randRes.getResultCode();
+					if (randResultCode.equals("ok")) {  						
+						updateUser(user, randNo, randTreatmentGroup);
+					}
+				}
+
+				ServiceStub.ReturnRandInfo retRand = new ServiceStub.ReturnRandInfo();
+				ser.returnRandInfo(retRand);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (AxisFault e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		return true;
+
+	}
+
+	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
+
+		//open database connection
+		initDBConnection();
+		// Verify that the input is valid. 
+		String idUser = user.getUserId();
+		try {	          
+
+			int randInt = Integer.parseInt(randNo);
+			// create the java mysql update preparedstatement
+			String query = "update ignore user set randomised_group =  ? where userId =" + idUser;
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString   (1, randTreatmentGroup);
+
+			// execute the java preparedstatement
+			preparedStmt.executeUpdate();
+
+			query = "update ignore user set randomised_number =  ? where userId =" + idUser;;
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, randInt);
+			preparedStmt.executeUpdate();
+
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+		return true;
+	}
+
+		
+
+	
 	
 	@Override
 	public Boolean updatePatientInfo(Patient patient) throws IllegalArgumentException {

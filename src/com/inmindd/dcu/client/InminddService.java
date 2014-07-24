@@ -31,6 +31,10 @@ import com.inmindd.dcu.shared.User;
 public interface InminddService extends RemoteService {
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException;
 	public Boolean registerUser(User user)throws IllegalArgumentException;
+	public Boolean duplicateUser(String id) throws IllegalArgumentException;
+	public Boolean resetPassword(User user) throws IllegalArgumentException;
+	public Boolean randomiseUser(User user)throws IllegalArgumentException;
+
 	
 	public Boolean updatePatientInfo(Patient patient)	throws IllegalArgumentException;
 	public Patient queryPatientInfo(User user) 		throws IllegalArgumentException;

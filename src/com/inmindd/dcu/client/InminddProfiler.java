@@ -43,10 +43,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.User;
 import com.google.gwt.user.client.ui.TextBox;
+
 
 
 
@@ -442,6 +444,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		styleTabPanelUsingUIObject();	
 
 		content.setSize("100%",  "130%");
+		
 		Label welLabel = new Label(constants.welcome());
 		Label euLabel = new Label(constants.eufunding_banner());
 		// Add the logo to the DOM element with id of "logo"
@@ -456,9 +459,9 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		RootPanel contentSlot = RootPanel.get("content");
 
 		if (contentSlot!=null) contentSlot.add(content);
-		
+		 
 		RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
-		//rootLayoutPanel.add(val);
+		
 		rootLayoutPanel.add(content);
 
 

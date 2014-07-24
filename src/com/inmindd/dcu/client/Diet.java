@@ -3,6 +3,7 @@ package com.inmindd.dcu.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -133,7 +134,7 @@ public class Diet {
 		
 		dietPanel.add(lbl1);
 		
-		// rape
+		
 		addCulinaryFat();
 		dietPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		addOilConsume();
@@ -172,6 +173,9 @@ public class Diet {
 	    		if (checkUser()) {
 	    			if (validateInput()) {
 	    			updateDietDB();
+	    			if (Window.confirm("Please confirm that you have completed all Input screens for the Profiler"))
+	    				callRandomiserService();
+	    			Window.Location.assign("1-dot-inmindd-profiler.appspot.com/index.html?page=support");
 	    			}
 	    		}
 	    	}
@@ -182,13 +186,43 @@ public class Diet {
 		scroll.setAlwaysShowScrollBars(true);
 		scroll.scrollToTop();
 		FlowPanel diet = new FlowPanel();
-		diet.add(scroll);
-			
-		return diet;
-	  
+		diet.add(scroll);			
+		return diet;  
 
 }
 	
+	
+	private void callRandomiserService() {
+		
+		 callServiceSetup();
+		 User user = login.getUser();
+			
+		
+		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
+			 @Override	 
+	       public void onSuccess(Boolean result) {
+	       		if ((result == false)){	            		
+	       			InlineLabel error = new InlineLabel("Randomiser service Failed");
+	       			showErrorPopupPanel(error, "red");            			
+	       		}            		
+	       		else {
+	       			InlineLabel error = new InlineLabel("Randomiser service successful completion");
+	       			showErrorPopupPanel(error, "green");            			            			
+	       		}
+	            
+	         }
+			@Override
+			public void onFailure(Throwable caught) {
+				InlineLabel error = new InlineLabel("Database update error");
+				showErrorPopupPanel(error, "red");			
+				
+			}
+		  };
+		  
+		  InminddServiceSvc.randomiseUser(user, callback);
+}
+	
+
 	private boolean checkUser() {
 		User user = login.getUser();
 		if (user.getUserId() == null) {

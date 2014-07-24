@@ -32,49 +32,67 @@ public interface InminddServiceAsync {
 	void registerUser(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
+	void duplicateUser(String id, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
+	
+	void resetPassword(User user, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
+	
+	void randomiseUser(User user, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
+	
 	void updatePatientInfo(Patient patient, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;	
+	
 	void queryPatientInfo(User user, AsyncCallback<Patient> callback)
 				throws IllegalArgumentException;
 	
 	void updateFeelingsInfo(FeelingsInfo feelings, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;	
+	
 	void queryFeelingsInfo(User user, AsyncCallback<FeelingsInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateMedicalHealth(MedicalInfo medical, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
+	
 	void queryMedicalHealth(User user, AsyncCallback<MedicalInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateFamilyHistory(FamilyHistoryInfo family, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
+	
 	void queryFamilyHistory(User user, AsyncCallback<FamilyHistoryInfo> callback)
 			throws IllegalArgumentException;
 	
 	
 	void updatePhysicalActivity(PhysicalActivityInfo activity, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;	
+			throws IllegalArgumentException;
+	
 	void queryPhysicalActivity(User user, AsyncCallback<PhysicalActivityInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateCognitiveOne(CognitiveOneInfo cognitiveOne, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
+	
 	void queryCognitiveOne(User user, AsyncCallback<CognitiveOneInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateCognitiveTwo(CognitiveTwoInfo cognitiveTwo, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
+	
 	void queryCognitiveTwo(User user, AsyncCallback<CognitiveTwoInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;	
+			throws IllegalArgumentException;
+	
 	void querySmokeAlcohol(User user, AsyncCallback<SmokeAlcoholInfo> callback)
 			throws IllegalArgumentException;
 	
 	void updateDiet(DietInfo diet, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
+	
 	void queryDiet(User user, AsyncCallback<DietInfo> callback)
 			throws IllegalArgumentException;
 	

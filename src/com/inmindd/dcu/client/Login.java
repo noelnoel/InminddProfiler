@@ -1,5 +1,8 @@
 package com.inmindd.dcu.client;
 
+
+
+import java.rmi.RemoteException;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -19,18 +22,26 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
-import com.googlecode.gwt.crypto.bouncycastle.digests.SHA1Digest;
+//import com.googlecode.gwt.crypto.bouncycastle.DataLengthException;
+//import com.googlecode.gwt.crypto.bouncycastle.InvalidCipherTextException;
+//import com.googlecode.gwt.crypto.bouncycastle.digests.SHA1Digest;
+//import com.googlecode.gwt.crypto.client.TripleDesCipher;
 import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 
+/*
+ * @Author Noel O'Kelly DCU School of Computing
+ * Login or Register User with  RPC calls to update Mysql user table
+ * 
+ */
 public class Login  {
 
-	private  User user = new User();;
+	private  User user = new User();
 	private  Patient patient = new Patient();
-	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
+	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
   
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -50,37 +61,55 @@ public class Login  {
 	
 	/**Decorator panel for the login form*/
     private DecoratorPanel decPanel = new DecoratorPanel();
+    private DecoratorPanel decPanelForgot = new DecoratorPanel();
     
     
     /**Grid for login form elements*/
     private FlexTable loginLayout = new FlexTable(); 
+    private FlexTable forgotLayout = new FlexTable();
   
 	
     
     private InlineLabel loginHead = new InlineLabel("Login");
     private InlineLabel loginRegister = new InlineLabel("Register");
+    private InlineLabel loginReset = new InlineLabel("Reset Password");
+  
 
   
 	private String userIdLabel = "User Id: ";
     private String passwordLabel = "Password: ";
-    private String passwordRepeat  = "Repeat Password:";
-    //private String country  = "Select a country";
-   // private String practice  = "Enter practice code";
-   // private ListBox countryCode = new ListBox();
+    private String passwordRepeat  = "Repeat password:";
+    private String mothersMaiden  = "Please enter mother's maiden name";
+    private String favColour  = "Please enter your favorite colour";
+   
     private TextBox userId = new TextBox();
-    private int idUser;
+  
+  
     private PasswordTextBox password = new PasswordTextBox();
     
     private TextBox userIdReg = new TextBox();
+    private TextBox userForgotIdReg = new TextBox();
+    
     private PasswordTextBox passwordReg = new PasswordTextBox();
     private PasswordTextBox passwordRegRepeat = new PasswordTextBox();
-    private TextBox practiceBox = new TextBox();
+    private PasswordTextBox motherBox = new PasswordTextBox();
+    private PasswordTextBox colourBox = new PasswordTextBox();
+    
+    private PasswordTextBox passwordForgotReg = new PasswordTextBox();
+    private PasswordTextBox passwordForgotRegRepeat = new PasswordTextBox();
+    private PasswordTextBox motherForgotBox = new PasswordTextBox();
+    private PasswordTextBox colourForgotBox = new PasswordTextBox();
   
     private Button loginbutton = new Button("Login");    
-    private Button registerbutton = new Button("Register");    
+    private Button registerbutton = new Button("Register");  
+    private Button forgotPasswordButton = new Button("Forgot Password ?");    
+    private Button resetPasswordButton = new Button("Reset Password!");    
   
     private String hashedPassword;
-    
+    private String hashedMaidenName;
+    private String hashedFavColour;
+    private Boolean duplicate = false;
+    private int idUser;
     
     public Login() {
     	
@@ -101,8 +130,8 @@ public class Login  {
 	public VerticalPanel setupLoginPanel() {
 		
     	
-    	practiceBox.setMaxLength(2);
-		practiceBox.setWidth("2em");
+    	motherBox.setMaxLength(30);
+		motherBox.setWidth("6em");
     	
     	int windowHeight = Window.getClientHeight();
 		int windowWidth = Window.getClientWidth();
@@ -116,8 +145,8 @@ public class Login  {
 
         // Add a title to the form
        // loginLayout.setHTML(0, 0, this.headline);
-       loginLayout.setWidget(0,0,loginHead);
-        cellFormatter.setColSpan(0, 0, 2);
+        loginLayout.setWidget(0,0,loginHead);
+        cellFormatter.setColSpan(0, 0, 3);
         cellFormatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
 
         // Add username and password fields
@@ -132,10 +161,12 @@ public class Login  {
         loginLayout.setWidget(1, 1, userId);
         loginLayout.setHTML(2, 0, passwordLabel);
         loginLayout.setWidget(2, 1, password);
+        loginLayout.setWidget(2, 2, forgotPasswordButton);
         
         //Add the loginbutton to the form
         loginLayout.setWidget(3, 0, loginbutton);
-        cellFormatter.setColSpan(3, 0, 2);
+       
+        cellFormatter.setColSpan(3, 0, 3);
         cellFormatter.setHorizontalAlignment(3, 0, HasHorizontalAlignment.ALIGN_CENTER);
         
         
@@ -144,7 +175,7 @@ public class Login  {
         
         loginLayout.setHTML(5, 0, "");
         loginLayout.setWidget(6, 0, this.loginRegister);
-        cellFormatter.setColSpan(6, 0, 2);
+        cellFormatter.setColSpan(6, 0, 3);
         cellFormatter.setHorizontalAlignment(6, 0, HasHorizontalAlignment.ALIGN_CENTER);
      
         
@@ -158,11 +189,19 @@ public class Login  {
        
         loginLayout.setHTML(9, 0, passwordRepeat);
         loginLayout.setWidget(9, 1, passwordRegRepeat);
-    
-        loginLayout.setWidget(10, 0, registerbutton);
+        motherBox.setWidth("145px");
+        loginLayout.setHTML(10, 0, mothersMaiden);
+        loginLayout.setWidget(10, 1, motherBox);
         
-        cellFormatter.setColSpan(10, 0, 2);
-        cellFormatter.setHorizontalAlignment(10, 0, HasHorizontalAlignment.ALIGN_CENTER);
+        motherBox.setWidth("145px");
+        loginLayout.setHTML(11, 0, favColour);
+        loginLayout.setWidget(11, 1, colourBox);
+    
+    
+        loginLayout.setWidget(12, 0, registerbutton);
+        
+        cellFormatter.setColSpan(12, 0, 3);
+        cellFormatter.setHorizontalAlignment(12, 0, HasHorizontalAlignment.ALIGN_CENTER);
         loginLayout.setCellSpacing(6);
      
 
@@ -183,18 +222,26 @@ public class Login  {
 	
         mainpanel.add(decPanel);
       
-        
+  
     	
 		 // Listen for mouse events on the registration  button.
         registerbutton.addClickHandler(new ClickHandler() {
         	@Override
         	public void onClick(ClickEvent event) {
         		if (validateUser()) {
+        			//  generate digest of the password
+        			hashedPassword = Crypto.getSHA1for((passwordReg.getText()));
+        			// generate digest of mother's maiden name
+        			hashedMaidenName = Crypto.getSHA1for((motherBox.getText()));
+        			// generate digest of favorite colour
+        			hashedFavColour = Crypto.getSHA1for((colourBox.getText()));
+        			
         			callServiceSetup();
-        			createUser();
+        			createUser(userIdReg.getText());
         			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
 
-        			InminddServiceSvc.registerUser(user, callback);
+        			InminddServiceSvc.registerUser(user, callback);       			
+
         		}
         	}
         });
@@ -204,13 +251,11 @@ public class Login  {
 	    	@Override
 	    	public void onClick(ClickEvent event) {
 
-
 	    		callServiceSetup();
-
 
 	    		//  generate digest of the password
 	    		hashedPassword = Crypto.getSHA1for((password.getText()));
-	    		// AsyncCallback<User> callback = new AuthenticationHandler<User>();
+	    		
 
 	    		AsyncCallback<User> callback = new AsyncCallback<User>() {
 
@@ -244,9 +289,9 @@ public class Login  {
 	    						SmokeAlcohol.clearInputs();
 	    					if (Diet.lastinstance != null)
 	    						Diet.clearInputs();
-
-	    					getScore();   
-
+	    					//userId.setText("");
+	    					password.setText("");
+	    					//getScore();   
 	    				}
 
 	    			}
@@ -263,25 +308,116 @@ public class Login  {
 	    	}
 
 	    });
-
+	    // Listen for mouse events on the forgot password   button.
+	    forgotPasswordButton.addClickHandler(new ClickHandler() {
+	    	@Override
+	    	public void onClick(ClickEvent event) {
+	    		forgotPassword();
+	    	}
+	    });
+	    
 	    return mainpanel;
 
+	}    
+	
+	private void forgotPassword() {
+		
+			loginReset.getElement().getStyle().setProperty("textDecoration", "underline");
+			loginReset.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+	        FlexCellFormatter cellFormatter = forgotLayout.getFlexCellFormatter();
+	       // loginLayout.setWidget(0,0,loginHead);
+	      //  cellFormatter.setColSpan(0, 0, 3);
+	      //  cellFormatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+
+	        //Add the loginbutton to the form
+	        forgotLayout.setWidget(0, 0, loginReset);
+	       
+	        cellFormatter.setColSpan(0, 0, 3);
+	        cellFormatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+	        
+	        
+	        
+	        forgotLayout.setHTML(1, 0, "");   
+	        
+	        forgotLayout.setHTML(2, 0, "");
+	    
+	        forgotLayout.setHTML(3, 0, this.userIdLabel);
+	        forgotLayout.setWidget(3, 1, userForgotIdReg);
+	        motherForgotBox.setWidth("145px");
+	        forgotLayout.setHTML(4, 0, mothersMaiden);
+	        forgotLayout.setWidget(4, 1, motherForgotBox);
+	        
+	        colourForgotBox.setWidth("145px");
+	        forgotLayout.setHTML(5, 0, favColour);
+	        forgotLayout.setWidget(5, 1, colourForgotBox);
+	       
+	       
+	        password.setWidth("150px");
+	       
+	        forgotLayout.setHTML(6, 0, passwordLabel);
+	        forgotLayout.setWidget(6, 1, passwordForgotReg);
+	       
+	        forgotLayout.setHTML(7, 0, passwordRepeat);
+	        forgotLayout.setWidget(7, 1, passwordForgotRegRepeat);
+	       
+	    
+	    
+	        forgotLayout.setWidget(12, 0, resetPasswordButton);
+	        
+	        cellFormatter.setColSpan(12, 0, 3);
+	        cellFormatter.setHorizontalAlignment(12, 0, HasHorizontalAlignment.ALIGN_CENTER);
+	        forgotLayout.setCellSpacing(6);
+	     
+
+	       
+	        password.setWidth("150px");
+	        // Wrap the content in a DecoratorPanel
+	        
+	        decPanelForgot.setWidget(forgotLayout);     
+	        if (!decPanelForgot.isVisible()) {
+	        	decPanelForgot.setVisible(true);
+	        }
+	        decPanel.setVisible(false);	     
+		
+	        mainpanel.add(decPanelForgot);
+	      
+	        // Listen for mouse events on the forgot password   button.
+		    resetPasswordButton.addClickHandler(new ClickHandler() {
+		    	@Override
+		    	public void onClick(ClickEvent event) {
+		    		if (validateForgotUser()) {
+	        			//  generate digest of the password
+	        			hashedPassword = Crypto.getSHA1for((passwordForgotReg.getText()));
+	        			// generate digest of mother's maiden name
+	        			hashedMaidenName = Crypto.getSHA1for((motherForgotBox.getText()));
+	        			// generate digest of favorite colour
+	        			hashedFavColour = Crypto.getSHA1for((colourForgotBox.getText()));
+	        			
+	        			callServiceSetup();
+	        			createUser(userForgotIdReg.getText());
+	        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReset<Boolean>();
+
+	        			InminddServiceSvc.resetPassword(user, callback);      
+		    		}
+		    	}
+		    });
+		    
+		
 	}
 	
-	private void createUser() {
-		
-		
-		user.setUserId(userIdReg.getText());
+	private void createUser(String userId) {		
+		user.setUserId(userId);
 		
 		user.setPassword(hashedPassword);
+		user.setMaidenName(hashedMaidenName);
+		user.setFavoriteColour(hashedFavColour);
 		return;
 		
 	}
 	
 	private boolean validateUser() {
-		if(!validateUserId(userIdReg.getText())) {
-			InlineLabel error = new InlineLabel("Please enter a valid , numeric, User Id");
-			showErrorPopupPanel(error, "red");
+		if(!validateUserId(userIdReg.getText())) {			
 			return false;
 		} 
 		
@@ -305,32 +441,75 @@ public class Login  {
 			return false;
 		}
 		
-		
-	/*	if (countryCode.getSelectedIndex() <= 0) {			
-			InlineLabel error = new InlineLabel("Please select a country code");		
-			showErrorPopupPanel(error, "red");			
+		if (motherBox.getText().equals("")) {
+			InlineLabel error = new InlineLabel("Please enter Mother's maiden name");
+			showErrorPopupPanel(error, "red");
 			return false;
 		}
-		*/
+	
+		if (colourBox.getText().equals("")) {
+			InlineLabel error = new InlineLabel("Please enter your favorite colour");
+			showErrorPopupPanel(error, "red");
+			return false;
+		}
+		return true;
 		
-		//  generate digest of the password
-		hashedPassword = Crypto.getSHA1for((passwordReg.getText()));
+	}
+		private boolean validateForgotUser() {
+			if(!validateUserId(userForgotIdReg.getText())) {			
+				return false;
+			} 
+			
+			if (userForgotIdReg.getText().equals("")) {
+				InlineLabel error = new InlineLabel("Please enter User Id");
+				showErrorPopupPanel(error, "red");
+				return false;
+			}
+		
+			String rep = passwordForgotRegRepeat.getText();
+			String psw = passwordForgotReg.getText();
+			if (rep.equals("") && psw.equals("")) {			
+				InlineLabel error = new InlineLabel("Please enter a valid password");
+				showErrorPopupPanel(error, "red");
+				return false;
+				
+			}
+			if (!(passwordForgotReg.getText().equals(rep))) {
+				InlineLabel error = new InlineLabel("Passwords don't match, please re-enter");
+				showErrorPopupPanel(error, "red");
+				return false;
+			}
+			
+			if (motherForgotBox.getText().equals("")) {
+				InlineLabel error = new InlineLabel("Please enter Mother's maiden name");
+				showErrorPopupPanel(error, "red");
+				return false;
+			}
+		
+			if (colourForgotBox.getText().equals("")) {
+				InlineLabel error = new InlineLabel("Please enter your favorite colour");
+				showErrorPopupPanel(error, "red");
+				return false;
+			}
+			
+		
+			
 		// encrypt the password
-		//TripleDesCipher cipher = new TripleDesCipher();
-		//cipher.setKey(GWT_DES_KEY);
+	/*	TripleDesCipher cipher = new TripleDesCipher();
+		cipher.setKey(GWT_DES_KEY);
+		String encryptedPassword = null;
 
-		
-		//
-		//try {
-		//  encryptedPassword =  cipher.encrypt(passwordReg.getText());
-		//} catch (DataLengthException e) {
-		////  e.printStackTrace();
-		//} catch (IllegalStateException e) {
-		//  e.printStackTrace();
-		//} catch (InvalidCipherTextException e) {
-		//  e.printStackTrace();
-	//	}
-		   
+
+		try {
+			encryptedPassword =  cipher.encrypt(passwordReg.getText());
+		} catch (DataLengthException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (InvalidCipherTextException e) {
+			e.printStackTrace();
+		}
+*/
 		return true;
 	}
 		
@@ -348,31 +527,7 @@ public class Login  {
     public VerticalPanel getMainPanel() {
 		return mainpanel;
 	}
-    
-    private class AuthenticationHandler<Boolean> implements AsyncCallback<User> {
-    	
-    	@Override
-		public void onFailure(Throwable ex) {
-    		RootPanel.get().add(new HTML("RPC failed"));
-    	}
-    	@Override
-		public void onSuccess(User user){
-    		if (!(user != null)){			
-    			
-    			
-    			InlineLabel error = new InlineLabel("Database Error - check entered fields");
-    			showErrorPopupPanel(error, "red");
-    		}
-    		
-    		else {
-    			InlineLabel error = new InlineLabel("Congratulations, you are now registered with Inmindd");
-    			// Clear screens of previous input
-				
-    		}
-    	}
-    	
-    	
-    }
+  
   
 		
   private class AuthenticationHandlerReg<t> implements AsyncCallback<Boolean> {
@@ -385,7 +540,7 @@ public class Login  {
 		public void onSuccess(Boolean result){
     		if (!result){
     		
-    			InlineLabel error = new InlineLabel("Database Error - check entered fields");
+    			InlineLabel error = new InlineLabel("Registration error - duplicate user");
     			showErrorPopupPanel(error, "red");
     		}
     		
@@ -410,22 +565,79 @@ public class Login  {
 					SmokeAlcohol.clearInputs();
 				if (Diet.lastinstance != null)
 					Diet.clearInputs();
+				passwordReg.setText("");
+				passwordRegRepeat.setText("");
+				//userIdReg.setText("");
+				motherBox.setText("");
+				colourBox.setText("");
+				
     		}
     	}
   }
+  
+  private class AuthenticationHandlerReset<t> implements AsyncCallback<Boolean> {
+  	
+  	@Override
+		public void onFailure(Throwable ex) {
+  		RootPanel.get().add(new HTML("RPC failed"));
+  	}
+  	@Override
+		public void onSuccess(Boolean result){
+  		if (!result){
+  		
+  			InlineLabel error = new InlineLabel("Reset Password failed - check Maiden name and Colour");
+  			showErrorPopupPanel(error, "red");
+  		}
+  		
+  		else {
+  			InlineLabel error = new InlineLabel(constants.reset());
+  			showErrorPopupPanel(error, "green");
+  			if(PatientInfo.lastinstance != null)
+					PatientInfo.clearInputs();	
+				if (Feelings.lastinstance != null)
+					Feelings.clearInputs();
+				if (MedicalHealth.lastinstance != null)
+					MedicalHealth.clearInputs();
+				if (FamilyMedicalHistory.lastinstance != null)
+					FamilyMedicalHistory.clearInputs();
+				if (PhysicalActivity.lastinstance != null)
+					PhysicalActivity.clearInputs();
+				if (CognitiveOne.lastinstance != null)
+					CognitiveOne.clearInputs();
+				if (CognitiveTwo.lastinstance != null)
+					CognitiveTwo.clearInputs();
+				if (SmokeAlcohol.lastinstance != null)
+					SmokeAlcohol.clearInputs();
+				if (Diet.lastinstance != null)
+					Diet.clearInputs();
+				passwordReg.setText("");
+				passwordRegRepeat.setText("");
+				//userIdReg.setText("");
+				motherBox.setText("");
+				colourBox.setText("");
+				decPanel.setVisible(true);
+				decPanelForgot.setVisible(false);
+				passwordForgotReg.setText("");
+				passwordForgotRegRepeat.setText("");
+				//userIdReg.setText("");
+				motherForgotBox.setText("");
+				colourForgotBox.setText("");
+  		}
+  	}
+}
+
     public String  getUserId() {
     	String userId = "";
     	if (user != null) {
-    		userId = user.getUserId();
-    		
+    		userId = user.getUserId();    		
     	}
     	return userId;
     }
+    
 	private boolean  validateUserId(String id) {
 		// make sure the entered string represents an integer
 		try {
-			idUser  = Integer.parseInt(id);	
-		
+			idUser  = Integer.parseInt(id);			
 		}
 
 		catch (Exception e)
@@ -437,14 +649,57 @@ public class Login  {
 		}
 		if (!(id.startsWith("11") || id.startsWith("22") || id.startsWith("33") || id.startsWith("44"))) // valid country code ??
 		{
-			InlineLabel error  = new InlineLabel("Invalid User Id - Please re-enter. Check your caps lock");	
+			InlineLabel error  = new InlineLabel("Invalid Country code in User Id. Check your caps lock");	
 			showErrorPopupPanel(error,"red");
 				
 			return false;
 		}
+		
+		String practice = id.substring(2, 4);
+		if (Integer.parseInt(practice) < 1 || Integer.parseInt(practice) > 20) {
 			
+			InlineLabel error  = new InlineLabel("Invalid practice code in User Id - Please re-enter. Check your caps lock");	
+			showErrorPopupPanel(error,"red");
+				
+			return false;
+			
+		}
+		//checkAlreadyRegistered(id);
 		return true;
+			
 	}
+	// not used 
+	private Boolean checkAlreadyRegistered(String id) {
+		 callServiceSetup();
+		 final Boolean dup;
+		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
+
+			 @Override	 
+			 public void onSuccess(Boolean duplicate) {
+				 if (duplicate){	            		
+					 InlineLabel error = new InlineLabel("Error - Duplicate user");
+					 showErrorPopupPanel(error, "red"); 
+					
+					
+				 }            		
+				 else {		
+					duplicate = false;
+					
+				 }
+
+			 }
+			 @Override
+			 public void onFailure(Throwable caught) {
+				 duplicate = true;
+
+			 }
+		 };
+
+		 InminddServiceSvc.duplicateUser(id, callback);
+		 
+		return duplicate;
+	}
+	
     private void showErrorPopupPanel(InlineLabel error, String color) {
 		PopupPanel popup = new PopupPanel(true, true);			
 
