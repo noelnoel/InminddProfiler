@@ -177,7 +177,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/axis2-transport-http-1.6.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/axis2-transport-local-1.6.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/axis2-xmlbeans-1.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jonny/workspace/InminddProfiler/war/WEB-INF/lib/addressing-1.6.2.mar"/>
-	<classpathentry kind="lib" path="C:/Users/jonny/workspace/InminddProfiler/war/WEB-INF/lib/neethi-3.0.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/addressing-1.6.2.mar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/neethi-3.0.3.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
