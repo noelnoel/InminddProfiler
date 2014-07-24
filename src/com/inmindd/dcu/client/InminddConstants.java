@@ -334,7 +334,6 @@ public interface InminddConstants extends Constants{
 	 	String menu_support_experts();
 	 	String menu_support_faq();
 	 	String menu_support_blog();
-	 	String menu_support_forum();
 	 	String menu_support_apps();
 	 	String menu_inmindd();
 	 	String menu_contact();
@@ -455,5 +454,7 @@ public interface InminddConstants extends Constants{
 		String france();
 		String netherlands();
 		String errorNotLoggedIn();
+		
+		String euFunding();
 	 	
 }

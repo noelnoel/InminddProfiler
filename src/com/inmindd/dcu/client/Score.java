@@ -143,7 +143,7 @@ public class Score implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
