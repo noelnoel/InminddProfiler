@@ -1,7 +1,10 @@
 package com.inmindd.dcu.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -47,6 +50,11 @@ public class LandingPage implements EntryPoint {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 							}
 							else {
+								Date now = new Date();
+								long nowLong = now.getTime();
+								nowLong = nowLong + (1000 * 60 * 60 * 24 * 21);
+								now.setTime(nowLong);
+								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}

@@ -58,7 +58,7 @@ public class User implements Serializable {
 			if (matcher.getGroup(1).equals("44")) {
 				lang = "fr";
 			} else if (matcher.getGroup(1).equals("22")) {
-				lang = "en";
+				lang = "sc";
 			} else if (matcher.getGroup(1).equals("33")) {
 				lang = "nl";
 			} else {
