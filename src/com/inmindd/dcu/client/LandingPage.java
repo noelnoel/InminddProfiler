@@ -55,8 +55,9 @@ public class LandingPage implements EntryPoint {
 								nowLong = nowLong + (1000 * 60 * 60 * 24 * 21);
 								now.setTime(nowLong);
 								Cookies.setCookie("gwtLocale", user.getLang(), now);
-								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-								DOM.getElementById("supportPanel").setAttribute("style", "");     			
+								Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}
 
 						}
