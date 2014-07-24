@@ -60,7 +60,12 @@ function loadGlobal(){
 			td.append(img).append($("<br />")).append($("<strong></strong>").html(data[i].goal.name));
 		}
 		tr.append(td);
-		td = $("<td></td>").html(data[i].goal.text + "<br />"+ data[i].comment);
+		td = $("<td></td>");
+		if(data[i].comment != ""){
+			td.html(data[i].comment);
+		} else {
+			td.html(data[i].goal.text);
+		}
 		tr.append(td);
 		$("#globalGoals tbody").append(tr);
 	};

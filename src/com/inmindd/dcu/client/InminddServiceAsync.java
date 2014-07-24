@@ -29,6 +29,9 @@ public interface InminddServiceAsync {
 	void authenticateUser(String idUser,String password, AsyncCallback<User> callback)
 			throws IllegalArgumentException;
 	
+	void authenticateUserSupportEnvironement(String idUser,String password, AsyncCallback<User> callback)
+			throws IllegalArgumentException;
+	
 	void registerUser(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
@@ -124,10 +127,16 @@ public interface InminddServiceAsync {
 	void querySupportExperts(String lang, AsyncCallback<ArrayList<SupportExperts>> callback)
 			throws IllegalArgumentException;
 	
-	void sendMail(String email, String body, AsyncCallback<Boolean> callback)  
+	void sendMail(String email, String lang, String body, AsyncCallback<Boolean> callback)  
 			throws IllegalArgumentException;
 	
 	void querySupportApps(String lang, AsyncCallback<ArrayList<SupportApps>> callback)
 			throws IllegalArgumentException;
+	
+	void isAdministrator(AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	
+	void queryAllUsers(AsyncCallback<ArrayList<String>> callback)
+			throws IllegalArgumentException;
+	
 }
 

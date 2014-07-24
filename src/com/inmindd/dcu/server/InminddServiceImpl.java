@@ -137,7 +137,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
 
-		try {	          
+		try {
 			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
 			pstmt.setString(1, id);
 			result = pstmt.executeQuery();
@@ -156,6 +156,45 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		} 
 
 		return false;
+	}
+
+	@Override
+	public User authenticateUserSupportEnvironement(String idUser, String password) throws IllegalArgumentException {	
+		//open database connection
+		initDBConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	    
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ? AND scored = 1 AND randomised_group = 'Control';");
+			pstmt.setString(1, idUser);
+			pstmt.setString(2, password);
+			result = pstmt.executeQuery();
+			
+			while (result.next()) {
+					user = new User();
+					user.setUserId(result.getString(1));
+					conn.close();
+					getThreadLocalRequest().getSession().setAttribute("current_user", user);
+					return user;
+			}
+			user = null;
+			getThreadLocalRequest().getSession().setAttribute("current_user", null);
+			conn.close();
+			return user;
+
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			// Cleanup
+			//  result.close();
+			//   pstmt.close();
+			//c//onn.close();
+		}
+
+		return user;
 	}
 
 	@Override
@@ -2244,7 +2283,101 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 	@Override
-	public Boolean sendMail(String email, String body)
+	public ArrayList<String> queryAllUsers()
+			throws IllegalArgumentException {
+		//open database connection
+		ArrayList<String> users = new ArrayList<String>();
+		initDBConnection();
+
+		if (getAllUsers(users)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return users;
+		}
+	}
+
+
+	private boolean getAllUsers(ArrayList<String> userList) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		User user = getUserConnected();
+		try {	          
+			pstmt = conn.prepareStatement("SELECT userId FROM `user` WHERE `userId` LIKE ?;");
+			pstmt.setString(1, user.getUserId().substring(0, 2) + "%");
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				userList.add(result.getString("userId"));
+			}
+			conn.close();
+			return (userList.size() > 0);
+		}
+		catch (SQLException e) {
+			user = null;
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean isAdministrator() throws IllegalArgumentException {
+		initDBConnection();
+		User user = getUserConnected();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT administrator FROM `user` WHERE `userId` = ?;");
+			pstmt.setString(1, user.getUserId());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				if(result.getInt("administrator") == 1){
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return true;
+				} else {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return false;
+				}
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		catch (SQLException e) {
+			try {
+				conn.close();
+			} catch (SQLException ee) {
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public Boolean sendMail(String email, String lang, String body)
 			throws IllegalArgumentException {
 		//open database connection
 		Properties props = new Properties();
@@ -2253,11 +2386,24 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		try {
 		    Message msg = new MimeMessage(session);
 		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
-		    msg.addRecipient(Message.RecipientType.TO,
-		     new InternetAddress("romain@romainbeuque.fr", "Mr. User"));
+		    if(lang == "en"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
+		    	msg.addRecipient(Message.RecipientType.TO,
+			   		     new InternetAddress("Muriel.redmond@dcu.ie", "Muriel Redmond"));
+		    	msg.addRecipient(Message.RecipientType.TO,
+			   		     new InternetAddress("inmindd@romainbeuque.fr", "Admin"));
+		    } else if(lang == "fr"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("valeria.manera@unice.fr", "Valeria Manera"));
+		    } else if (lang == "nl"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("kay.deckers@maastrichtuniversity.nl", "Kay Deckers"));
+		    } else if(lang == "sc"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("susan.browne@glasgow.ac.uk", "Susan Browne"));
+		    }
 		    msg.setSubject("[ask-the-experts] new question");
-		    body = "Reply to: " + email + "\n\n" + body;
-		    System.out.println(body);
 		    msg.setText("Reply to: " + email + "\n\n" + body);
 		    Transport.send(msg);
 		    return true;

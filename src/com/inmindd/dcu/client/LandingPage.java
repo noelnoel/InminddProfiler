@@ -1,7 +1,10 @@
 package com.inmindd.dcu.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -47,6 +50,11 @@ public class LandingPage implements EntryPoint {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 							}
 							else {
+								Date now = new Date();
+								long nowLong = now.getTime();
+								nowLong = nowLong + (1000 * 60 * 60 * 24 * 21);
+								now.setTime(nowLong);
+								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}
@@ -103,6 +111,7 @@ public class LandingPage implements EntryPoint {
 			public void onBrowserEvent(Event event) {
 				if (event == null || Event.ONCLICK == event.getTypeInt()) {
 					DOM.getElementById("profilerPanel").setAttribute("style", "");
+					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 					DOM.getElementById("indexPanel").setAttribute("style", "display:none");
 				}
 			}
@@ -154,7 +163,7 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());

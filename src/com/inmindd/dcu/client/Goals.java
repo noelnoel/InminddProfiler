@@ -153,7 +153,7 @@ public class Goals implements EntryPoint {
 				}
 				else {
 					Window.alert(lastInstance.constants.goal_8());
-					Window.Location.assign(GWT.getHostPageBaseURL() + "score.html");
+					Window.Location.assign(GWT.getHostPageBaseURL() + "goals.html");
 				}
 			}
 
@@ -197,13 +197,15 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
 		
 		DOM.getElementById("goalsh1").setInnerHTML(constants.goal_0());
 		DOM.getElementById("goal-7").setInnerHTML(constants.goal_7());
+		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
+		DOM.getElementById("score-26").setInnerHTML(constants.score_26());
 	}
 
 }

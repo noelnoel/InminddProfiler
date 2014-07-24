@@ -18,6 +18,10 @@
 
 	<!-- Other module inherits                                      -->
 	<inherits name='com.googlecode.gwt.crypto.Crypto' />
+	<inherits name="com.google.gwt.i18n.I18N"/>
+	<extend-property name="locale" values="nl" />
+	<extend-property name="locale" values="fr" />
+	<set-configuration-property name="locale.cookie" value="gwtLocale"/>
 	<!-- Specify the app entry point class.                         -->
 
 	<!-- Specify the paths for translatable code                    -->

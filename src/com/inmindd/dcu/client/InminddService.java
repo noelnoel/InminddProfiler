@@ -30,6 +30,7 @@ import com.inmindd.dcu.shared.User;
 @RemoteServiceRelativePath("Inmindd")
 public interface InminddService extends RemoteService {
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException;
+	public User authenticateUserSupportEnvironement(String idUser, String password) throws IllegalArgumentException;
 	public Boolean registerUser(User user)throws IllegalArgumentException;
 	public Boolean duplicateUser(String id) throws IllegalArgumentException;
 	public Boolean resetPassword(User user) throws IllegalArgumentException;
@@ -71,7 +72,8 @@ public interface InminddService extends RemoteService {
 	public ArrayList<SupportGoal> querySupportGoals(int riskFactor, String lang)		throws IllegalArgumentException;
 	public ArrayList<SupportFAQ> querySupportFAQ(String lang)		throws IllegalArgumentException;
 	public ArrayList<SupportExperts> querySupportExperts(String lang)		throws IllegalArgumentException;
-	public Boolean sendMail(String email, String body)  	throws IllegalArgumentException;
+	public Boolean sendMail(String email, String lang, String body)  	throws IllegalArgumentException;
 	public ArrayList<SupportApps> querySupportApps(String lang)			throws IllegalArgumentException;
-	
+	public boolean isAdministrator() throws IllegalArgumentException;
+	public ArrayList<String> queryAllUsers() throws IllegalArgumentException;
 }

@@ -143,7 +143,7 @@ public class Score implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-forum").setInnerHTML(constants.menu_support_forum());
+		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
@@ -199,8 +199,6 @@ public class Score implements EntryPoint {
 		DOM.getElementById("score-22").setInnerHTML(constants.score_22());
 		DOM.getElementById("score-23").setInnerHTML(constants.score_23());
 		DOM.getElementById("score-24").setInnerHTML(constants.score_24());
-		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
-		DOM.getElementById("score-26").setInnerHTML(constants.score_26());
 		DOM.getElementById("score-27").setInnerHTML(constants.score_27());
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());
