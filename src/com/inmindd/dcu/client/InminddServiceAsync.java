@@ -109,7 +109,7 @@ public interface InminddServiceAsync {
 	void querySupportExperts(String lang, AsyncCallback<ArrayList<SupportExperts>> callback)
 			throws IllegalArgumentException;
 	
-	void sendMail(String email, String body, AsyncCallback<Boolean> callback)  
+	void sendMail(String email, String lang, String body, AsyncCallback<Boolean> callback)  
 			throws IllegalArgumentException;
 	
 	void querySupportApps(String lang, AsyncCallback<ArrayList<SupportApps>> callback)

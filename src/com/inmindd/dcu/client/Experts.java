@@ -65,7 +65,7 @@ public class Experts implements EntryPoint {
 				Window.alert("ERROR EXCCEPTIOn - mail not sent"+ caught.getMessage());
 			}
 		};
-		lastInstance.InminddServiceSvc.sendMail(email, body, callbackMail);
+		lastInstance.InminddServiceSvc.sendMail(email, lastInstance.user.getLang(), body, callbackMail);
 	}
 	
 	public static native void exportClickMail() /*-{

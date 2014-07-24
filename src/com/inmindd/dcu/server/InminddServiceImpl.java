@@ -2176,7 +2176,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 	@Override
-	public Boolean sendMail(String email, String body)
+	public Boolean sendMail(String email, String lang, String body)
 			throws IllegalArgumentException {
 		//open database connection
 		Properties props = new Properties();
@@ -2185,11 +2185,24 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		try {
 		    Message msg = new MimeMessage(session);
 		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
-		    msg.addRecipient(Message.RecipientType.TO,
-		     new InternetAddress("romain@romainbeuque.fr", "Mr. User"));
+		    if(lang == "en"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
+		    	msg.addRecipient(Message.RecipientType.TO,
+			   		     new InternetAddress("Muriel.redmond@dcu.ie", "Muriel Redmond"));
+		    	msg.addRecipient(Message.RecipientType.TO,
+			   		     new InternetAddress("inmindd@romainbeuque.fr", "Admin"));
+		    } else if(lang == "fr"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("valeria.manera@unice.fr", "Valeria Manera"));
+		    } else if (lang == "nl"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("kay.deckers@maastrichtuniversity.nl", "Kay Deckers"));
+		    } else if(lang == "sc"){
+		    	msg.addRecipient(Message.RecipientType.TO,
+		   		     new InternetAddress("susan.browne@glasgow.ac.uk", "Susan Browne"));
+		    }
 		    msg.setSubject("[ask-the-experts] new question");
-		    body = "Reply to: " + email + "\n\n" + body;
-		    System.out.println(body);
 		    msg.setText("Reply to: " + email + "\n\n" + body);
 		    Transport.send(msg);
 		    return true;
