@@ -457,7 +457,7 @@ public interface InminddConstants extends Constants{
 		String errorNotLoggedIn();
 		
 		String euFunding();
-	 	
+	 	String logout();
 		
 		
 }

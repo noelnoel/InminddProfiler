@@ -131,11 +131,27 @@ public class LandingPage implements EntryPoint {
 		DOM.sinkEvents(elem3, Event.ONCLICK);
 		DOM.setEventListener(elem3, eventRegister);
 		
+		AsyncCallback<Boolean> callbackLogout = new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Unable to logout");
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				Window.alert("Successfully logged out!");
+				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html");
+			}
+		};
+		
 		String page = com.google.gwt.user.client.Window.Location.getParameter("page");
 		if(page != null && page.equals("support")){
 			eventSupport.onBrowserEvent(null);
 		} else if(page != null && page.equals("profiler")){
 			eventProfiler.onBrowserEvent(null);
+		} else if(page != null && page.equals("logout")){
+			InminddServiceSvc.unsetUserConnected(callbackLogout);
 		} else {
 			DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 			DOM.getElementById("indexPanel").setAttribute("style", "");
@@ -164,6 +180,8 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
+		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
