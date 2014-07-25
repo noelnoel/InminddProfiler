@@ -24,6 +24,16 @@ function goalClickJS(event){
 	$("#loadingPanel").css("display", "");
 }
 
+function adminReady(){
+	$("#hiddingMenu").css("display", "none");
+	$('a:visible').contents().unwrap();
+	window.setTimeout(function(){
+      window.print();
+    }, 1000);
+	
+}
+
 $(document).ready(function(){
+	isAdmin = true;
 	$(document).on("click","#userIdButton", goalClickJS);
 });
