@@ -54,7 +54,7 @@ function loadGlobal(){
 		var img = $("<img />").attr("src", data[i].riskfactor_image_url).addClass("img-noncircle");
 		var td = $("<td></td>").append(img);
 		tr.append(td);
-		td = $("<td></td>")
+		td = $("<td></td>").addClass("goalImageText");
 		if(data[i].goal != null){
 			img = $("<img />").attr("src", data[i].goal.image_url).addClass("img-circle");
 			td.append(img).append($("<br />")).append($("<strong></strong>").html(data[i].goal.name));
