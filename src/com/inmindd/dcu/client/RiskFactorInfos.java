@@ -74,7 +74,7 @@ public class RiskFactorInfos implements EntryPoint {
 			public void onSuccess(SupportRiskFactorInfos infos) {
 				if (infos == null) {
 					System.out.println("[RB_RiskFactors::getRiskFactorsInfos] \\ score null");
-					// TODO print error
+					Window.alert("No available content available in this language");
 				} else {
 					riskFactorInfos = infos;
 					getScore();
