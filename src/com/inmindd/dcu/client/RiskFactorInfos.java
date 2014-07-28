@@ -115,9 +115,9 @@ public class RiskFactorInfos implements EntryPoint {
 					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 					DOM.getElementById("infosPanel").setAttribute("style", "");
-					DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + riskFactorInfos.getName());
 					switch(riskFactor){
 					case 1:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_pressure());
 						if(score.getMidlifeHypertension() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_amber.png");
@@ -129,6 +129,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 2:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_mood());
 						if(score.getDepression() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_amber.png");
@@ -140,6 +141,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 4:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_activity());
 						if(score.getPhysicalInactivity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_amber.png");
@@ -151,6 +153,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 5:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_smoking());
 						if(score.getSmoking() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_amber.png");
@@ -162,6 +165,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 6:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_alchool());
 						if(score.getAlcohol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_amber.png");
@@ -173,6 +177,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 7:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_obesity());
 						if(score.getMidlifeObesity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_amber.png");
@@ -184,6 +189,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 8:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cognitive());
 						if(score.getHighCognitiveActivity() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_amber.png");
@@ -195,6 +201,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 9:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diet());
 						if(score.getHealthyDiet() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_amber.png");
@@ -206,6 +213,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 10:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cholesterol());
 						if(score.getCholesterol() != 0){
 							DOM.getElementById("goalButton").setAttribute("style","");
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
@@ -219,6 +227,7 @@ public class RiskFactorInfos implements EntryPoint {
 
 					case 3:
 						//special icon
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diabetes());
 						if(score.getDiabetes() != 0){
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
 							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
@@ -229,6 +238,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 11:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_heart());
 						//special icon
 						if(score.getCoronaryHeartDisease() != 0){
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
@@ -240,6 +250,7 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 12:
+						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_kidney());
 						//special icon
 						if(score.getChronicKidneyDisease() != 0){
 							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
