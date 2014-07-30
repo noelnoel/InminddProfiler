@@ -11,6 +11,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Dumping structure for table inmindd.cognitive_one_info
+DROP TABLE IF EXISTS `cognitive_one_info`;
 CREATE TABLE IF NOT EXISTS `cognitive_one_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `cognitive_one_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.cognitive_one_info: ~95 rows (approximately)
+-- Dumping data for table inmindd.cognitive_one_info: ~96 rows (approximately)
 /*!40000 ALTER TABLE `cognitive_one_info` DISABLE KEYS */;
 INSERT INTO `cognitive_one_info` (`patient_id`, `timestamp`, `formal_education_years`, `non_formal_education_years`, `manager`, `manager_simul_years`, `professional`, `professional_simul_years`, `technician`, `technician_simul_years`, `clerical`, `clerical_simul_years`, `service`, `service_simul_years`, `agriculture`, `agriculture_simul_years`, `craft`, `craft_simul_years`, `plant`, `plant_simul_years`, `elementary`, `elementary_simul_years`) VALUES
 	('110100', '2014-07-28 21:07:51', 18, 12, 5, 0, 12, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -108,6 +109,7 @@ INSERT INTO `cognitive_one_info` (`patient_id`, `timestamp`, `formal_education_y
 	('1129101', '2014-07-28 10:04:13', 17, 2, 0, 0, 10, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	('1129101', '2014-07-30 10:39:30', 17, 2, 0, 0, 10, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	('1129101', '2014-07-30 10:58:57', 17, 2, 0, 0, 10, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	('1129101', '2014-07-30 14:22:45', 18, 2, 3, 0, 10, 0, 0, 0, 2, 0, 3, 0, 0, 0, 0, 0, 1, 0, 1, 0),
 	('1175432', '2014-07-11 16:41:39', 17, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	('119', '2014-07-25 14:11:26', 2, 2, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	('1234', '2014-06-24 14:54:28', 18, 3, 0, 0, 14, 0, 0, 0, 4, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -139,6 +141,7 @@ INSERT INTO `cognitive_one_info` (`patient_id`, `timestamp`, `formal_education_y
 
 
 -- Dumping structure for table inmindd.cognitive_two_info
+DROP TABLE IF EXISTS `cognitive_two_info`;
 CREATE TABLE IF NOT EXISTS `cognitive_two_info` (
   `patient_id` varchar(7) NOT NULL,
   `reading_years` int(11) DEFAULT NULL,
@@ -179,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `cognitive_two_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.cognitive_two_info: ~91 rows (approximately)
+-- Dumping data for table inmindd.cognitive_two_info: ~89 rows (approximately)
 /*!40000 ALTER TABLE `cognitive_two_info` DISABLE KEYS */;
 INSERT INTO `cognitive_two_info` (`patient_id`, `reading_years`, `household_years`, `driving_years`, `leisure_years`, `technology_years`, `social_years`, `cinema_years`, `gardening_years`, `children_years`, `volunteering_years`, `artistic_years`, `exhibitions_years`, `holidays_years`, `books_years`, `number_children`, `pets_years`, `bank_account_years`, `reading`, `household`, `driving`, `leisure`, `technology`, `social`, `cinema`, `gardening`, `children`, `volunteering`, `artistic`, `exhibitions`, `holidays`, `books`, `raised_children`, `pets`, `bank_account`, `timestamp`) VALUES
 	('101', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'never', 'yes', 'never', 'never', '2014-07-08 11:29:12'),
@@ -247,6 +250,7 @@ INSERT INTO `cognitive_two_info` (`patient_id`, `reading_years`, `household_year
 	('1129101', 20, 0, 0, 0, 15, 20, 20, 0, 0, 0, 0, 20, 22, 20, 0, 8, 20, 'often', 'often', 'never', 'never', 'often', 'often', 'often', 'never', 'never', 'never', 'never', 'often', 'often', 'often', 'no', 'often', 'often', '2014-07-30 10:39:46'),
 	('1129101', 20, 0, 0, 0, 15, 20, 20, 0, 0, 0, 0, 20, 22, 20, 0, 8, 20, 'often', 'often', 'never', 'never', 'often', 'often', 'often', 'never', 'never', 'never', 'never', 'often', 'often', 'often', 'no', 'often', 'often', '2014-07-30 10:40:01'),
 	('1129101', 20, 0, 0, 0, 15, 20, 20, 0, 0, 0, 0, 20, 22, 20, 0, 8, 20, 'often', 'often', 'never', 'never', 'often', 'often', 'often', 'never', 'never', 'never', 'never', 'often', 'often', 'often', 'no', 'often', 'often', '2014-07-30 10:59:30'),
+	('1129101', 29, 29, 20, 29, 16, 29, 20, 0, 7, 0, 0, 0, 29, 29, 0, 22, 29, 'often', 'often', 'often', 'often', 'often', 'often', 'often', 'never', 'often', 'never', 'never', 'never', 'often', 'often', 'no', 'often', 'often', '2014-07-30 14:28:41'),
 	('1175432', 10, 20, 16, 0, 0, 0, 5, 0, 5, 0, 0, 10, 10, 20, 0, 0, 21, 'often', 'often', 'often', 'never', 'never', 'never', 'often', 'never', 'often', 'never', 'never', 'often', 'often', 'often', 'no', 'never', 'often', '2014-07-11 16:46:10'),
 	('119', 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 'never', 'never', 'never', 'never', 'often', 'never', 'never', 'never', 'never', 'never', 'often', 'never', 'never', 'never', 'yes', 'never', 'never', '2014-07-25 14:25:27'),
 	('1234', 26, 26, 0, 10, 16, 26, 26, 10, 10, 0, 6, 26, 15, 26, 0, 10, 26, 'often', 'often', 'never', 'often', 'often', 'often', 'often', 'often', 'often', 'never', 'often', 'often', 'often', 'often', 'no', 'often', 'often', '2014-06-24 14:58:20'),
@@ -274,6 +278,7 @@ INSERT INTO `cognitive_two_info` (`patient_id`, `reading_years`, `household_year
 
 
 -- Dumping structure for table inmindd.diet_info
+DROP TABLE IF EXISTS `diet_info`;
 CREATE TABLE IF NOT EXISTS `diet_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -294,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `diet_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.diet_info: ~287 rows (approximately)
+-- Dumping data for table inmindd.diet_info: ~353 rows (approximately)
 /*!40000 ALTER TABLE `diet_info` DISABLE KEYS */;
 INSERT INTO `diet_info` (`patient_id`, `timestamp`, `culinary_fat`, `oil_consume`, `vegetable_servings`, `fruit_units`, `red_meat`, `butter`, `carbonated_beverages`, `wine_week`, `legumes_week`, `fish_week`, `sweets_week`, `nuts_week`, `prefer_chicken`, `sauce_week`) VALUES
 	('110100', '2014-07-28 21:15:59', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 1, 2),
@@ -619,6 +624,7 @@ INSERT INTO `diet_info` (`patient_id`, `timestamp`, `culinary_fat`, `oil_consume
 	('1129101', '2014-07-28 10:05:26', 1, 0, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 1, 0),
 	('1129101', '2014-07-30 10:40:25', 1, 0, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 1, 0),
 	('1129101', '2014-07-30 11:00:00', 1, 0, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 1, 0),
+	('1129101', '2014-07-30 14:33:30', 1, 2, 3, 2, 0, 1, 0, 0, 0, 3, 3, 0, 1, 2),
 	('1130001', '2014-07-22 12:13:27', 0, 2, 3, 1, 1, 1, 1, 7, 3, 3, 3, 3, 0, 2),
 	('1130001', '2014-07-22 13:09:35', 0, 2, 3, 1, 1, 1, 1, 7, 3, 3, 3, 3, 0, 2),
 	('1130001', '2014-07-22 13:12:42', 0, 2, 3, 1, 1, 1, 1, 7, 3, 3, 3, 3, 0, 2),
@@ -653,6 +659,7 @@ INSERT INTO `diet_info` (`patient_id`, `timestamp`, `culinary_fat`, `oil_consume
 
 
 -- Dumping structure for table inmindd.family_history_info
+DROP TABLE IF EXISTS `family_history_info`;
 CREATE TABLE IF NOT EXISTS `family_history_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -668,7 +675,7 @@ CREATE TABLE IF NOT EXISTS `family_history_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.family_history_info: ~71 rows (approximately)
+-- Dumping data for table inmindd.family_history_info: ~72 rows (approximately)
 /*!40000 ALTER TABLE `family_history_info` DISABLE KEYS */;
 INSERT INTO `family_history_info` (`patient_id`, `timestamp`, `mother_dementia`, `mother_cvd`, `mother_diabetes`, `father_dementia`, `father_cvd`, `father_diabetes`, `sibling_dementia`, `sibling_cvd`, `sibling_diabetes`) VALUES
 	('110100', '2014-07-28 20:58:45', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no'),
@@ -725,6 +732,7 @@ INSERT INTO `family_history_info` (`patient_id`, `timestamp`, `mother_dementia`,
 	('1129101', '2014-07-28 10:03:21', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no'),
 	('1129101', '2014-07-30 10:39:15', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no'),
 	('1129101', '2014-07-30 10:58:11', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no'),
+	('1129101', '2014-07-30 14:16:48', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'no', 'no'),
 	('1175432', '2014-07-11 16:38:08', 'dont', 'dont', 'dont', 'dont', 'dont', 'dont', 'dont', 'dont', 'dont'),
 	('119', '2014-07-25 13:57:59', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'dont', 'dont', 'dont'),
 	('1234', '2014-06-24 14:50:58', 'no', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no'),
@@ -746,6 +754,7 @@ INSERT INTO `family_history_info` (`patient_id`, `timestamp`, `mother_dementia`,
 
 
 -- Dumping structure for table inmindd.feelings_info
+DROP TABLE IF EXISTS `feelings_info`;
 CREATE TABLE IF NOT EXISTS `feelings_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` varchar(45) NOT NULL,
@@ -774,7 +783,7 @@ CREATE TABLE IF NOT EXISTS `feelings_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.feelings_info: ~89 rows (approximately)
+-- Dumping data for table inmindd.feelings_info: ~90 rows (approximately)
 /*!40000 ALTER TABLE `feelings_info` DISABLE KEYS */;
 INSERT INTO `feelings_info` (`patient_id`, `timestamp`, `ces1`, `ces2`, `ces3`, `ces4`, `ces5`, `ces6`, `ces7`, `ces8`, `ces9`, `ces10`, `ces11`, `ces12`, `ces13`, `ces14`, `ces15`, `ces16`, `ces17`, `ces18`, `ces19`, `ces20`, `depression`, `treated`) VALUES
 	('110100', '2014-07-28 19:42:02', 'some', 'rarely', 'some', 'most', 'some', 'some', 'some', 'most', 'occasional', 'rarely', 'some', 'most', 'rarely', 'rarely', 'rarely', 'most', 'rarely', 'rarely', 'rarely', 'some', 'no', 'no'),
@@ -845,6 +854,7 @@ INSERT INTO `feelings_info` (`patient_id`, `timestamp`, `ces1`, `ces2`, `ces3`, 
 	('1129101', '2014-07-28 10:02:15', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'no', 'no'),
 	('1129101', '2014-07-30 10:38:39', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'no', 'no'),
 	('1129101', '2014-07-30 10:57:35', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'no', 'no'),
+	('1129101', '2014-07-30 14:12:08', 'some', 'rarely', 'some', 'occasional', 'most', 'rarely', 'some', 'most', 'rarely', 'rarely', 'rarely', 'most', 'rarely', 'rarely', 'rarely', 'occasional', 'rarely', 'rarely', 'rarely', 'some', 'no', 'no'),
 	('1175432', '2014-07-11 16:34:17', 'occasional', 'rarely', 'most', 'occasional', 'rarely', 'occasional', 'some', 'rarely', 'some', 'occasional', 'some', 'rarely', 'occasional', 'most', 'some', 'rarely', 'some', 'some', 'occasional', 'most', 'no', 'yes'),
 	('119', '2014-07-25 13:42:36', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'no', 'no'),
 	('119', '2014-07-25 13:42:52', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'rarely', 'no', 'no'),
@@ -870,6 +880,7 @@ INSERT INTO `feelings_info` (`patient_id`, `timestamp`, `ces1`, `ces2`, `ces3`, 
 
 
 -- Dumping structure for table inmindd.medical_info
+DROP TABLE IF EXISTS `medical_info`;
 CREATE TABLE IF NOT EXISTS `medical_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -897,7 +908,7 @@ CREATE TABLE IF NOT EXISTS `medical_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.medical_info: ~82 rows (approximately)
+-- Dumping data for table inmindd.medical_info: ~83 rows (approximately)
 /*!40000 ALTER TABLE `medical_info` DISABLE KEYS */;
 INSERT INTO `medical_info` (`patient_id`, `timestamp`, `cent`, `feet`, `inches`, `kilo`, `stone`, `lbs`, `mmol`, `systolic`, `diastolic`, `chol`, `highChol`, `lifestylechange`, `medchol`, `cvd`, `hyper`, `bloodpressure`, `medblood`, `mellitus`, `diabetestreatment`, `sugar`, `kidney`) VALUES
 	('110100', '2014-07-28 19:46:43', 0, 5, 2, 0, 9, 5, -1, 0, 0, 'dont', 'no', 'no', 'never', 'no', 'no', 'no', 'never', 'no', 'no', 'no', 'no'),
@@ -961,6 +972,7 @@ INSERT INTO `medical_info` (`patient_id`, `timestamp`, `cent`, `feet`, `inches`,
 	('1129101', '2014-07-28 10:03:09', 0, 5, 2, 0, 14, 8, -1, 0, 0, 'dont', 'no', 'yes', 'past', 'no', 'yes', 'no', 'currently', 'no', 'no', 'no', 'no'),
 	('1129101', '2014-07-30 10:39:10', 0, 5, 2, 0, 14, 8, -1, 0, 0, 'dont', 'no', 'yes', 'past', 'no', 'yes', 'no', 'currently', 'yes', 'yes', 'no', 'no'),
 	('1129101', '2014-07-30 10:58:03', 0, 5, 2, 0, 14, 8, -1, 0, 0, 'dont', 'no', 'yes', 'past', 'yes', 'yes', 'no', 'currently', 'yes', 'yes', 'no', 'no'),
+	('1129101', '2014-07-30 14:15:52', 168, 0, 0, 60, 0, 0, -1, 0, 0, 'dont', 'no', 'no', 'never', 'no', 'no', 'no', 'never', 'no', 'no', 'no', 'no'),
 	('1175432', '2014-07-11 16:36:36', 0, 5, 5, 0, 14, 0, -1, 0, 0, 'dont', 'no', 'no', 'never', 'no', 'yes', 'no', 'never', 'no', 'no', 'no', 'no'),
 	('119', '2014-07-25 13:46:29', 0, 6, 1, 0, 16, 1, -1, 0, 0, 'dont', 'yes', 'yes', 'currently', 'no', 'no', 'no', 'past', 'no', 'no', 'no', 'no'),
 	('1234', '2014-06-24 14:50:16', 0, 5, 2, 0, 8, 8, 4, 0, 0, 'yes', 'no', 'no', 'never', 'no', 'no', 'no', 'never', 'no', 'no', 'no', 'no'),
@@ -986,6 +998,7 @@ INSERT INTO `medical_info` (`patient_id`, `timestamp`, `cent`, `feet`, `inches`,
 
 
 -- Dumping structure for table inmindd.patient_info
+DROP TABLE IF EXISTS `patient_info`;
 CREATE TABLE IF NOT EXISTS `patient_info` (
   `patient_id` varchar(7) NOT NULL DEFAULT '1',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1001,7 +1014,7 @@ CREATE TABLE IF NOT EXISTS `patient_info` (
   UNIQUE KEY `timestamp_UNIQUE` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.patient_info: ~199 rows (approximately)
+-- Dumping data for table inmindd.patient_info: ~206 rows (approximately)
 /*!40000 ALTER TABLE `patient_info` DISABLE KEYS */;
 INSERT INTO `patient_info` (`patient_id`, `timestamp`, `age`, `gender`, `country_of_birth`, `marital_status`, `living_arrangements`, `occupational_group`, `employment_status`, `education_level`) VALUES
 	('110100', '2014-07-28 19:37:34', 42, 'female', 'Ireland', 'Married (First marriage)', 'Living with family members (i.e. spouse/partner and/or children/grandchildren)', 'Professional;', 'Paid employment', 'Honour Bachelor degree/professional qualification or both'),
@@ -1173,6 +1186,10 @@ INSERT INTO `patient_info` (`patient_id`, `timestamp`, `age`, `gender`, `country
 	('1129101', '2014-07-28 10:02:08', 44, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Paid employment', 'Honour Bachelor degree/professional qualification or both'),
 	('1129101', '2014-07-30 10:38:32', 44, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Paid employment', 'Honour Bachelor degree/professional qualification or both'),
 	('1129101', '2014-07-30 10:57:03', 44, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Paid employment', 'Honour Bachelor degree/professional qualification or both'),
+	('1129101', '2014-07-30 14:07:12', 47, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Student', 'Postgraduate diploma or degree'),
+	('1129101', '2014-07-30 14:07:25', 47, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Student', 'Postgraduate diploma or degree'),
+	('1129101', '2014-07-30 14:07:38', 47, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Student', 'Postgraduate diploma or degree'),
+	('1129101', '2014-07-30 14:07:57', 47, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Professional;', 'Student', 'Postgraduate diploma or degree'),
 	('1175432', '2014-07-11 16:31:45', 40, 'female', 'Ireland', 'Single (Never married)', 'Living alone', 'Clerical', 'Paid employment', 'Postgraduate diploma or degree'),
 	('119', '2014-07-25 13:38:51', 40, 'male', 'Ireland', 'Married (First marriage)', 'Living with family members (i.e. spouse/partner and/or children/grandchildren)', 'Technician', 'Paid employment', 'Postgraduate diploma or degree'),
 	('1234', '2014-06-25 09:14:54', 55, 'female', 'Ireland', '"Married (First marriage)', 'Living with family members(i.e. spouse/partner and/or children/grandchildren)', 'Elementary', 'Paid employment', 'Lower Secondary'),
@@ -1210,6 +1227,7 @@ INSERT INTO `patient_info` (`patient_id`, `timestamp`, `age`, `gender`, `country
 
 
 -- Dumping structure for table inmindd.physical_activities_info
+DROP TABLE IF EXISTS `physical_activities_info`;
 CREATE TABLE IF NOT EXISTS `physical_activities_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1231,7 +1249,7 @@ CREATE TABLE IF NOT EXISTS `physical_activities_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.physical_activities_info: ~116 rows (approximately)
+-- Dumping data for table inmindd.physical_activities_info: ~118 rows (approximately)
 /*!40000 ALTER TABLE `physical_activities_info` DISABLE KEYS */;
 INSERT INTO `physical_activities_info` (`patient_id`, `timestamp`, `diy_hours`, `summer_walking_hours`, `winter_walking_hours`, `summer_cycling_hours`, `winter_cycling_hours`, `summer_garden_hours`, `winter_garden_hours`, `summer_physical_hours`, `winter_physical_hours`, `summer_housework_hours`, `winter_housework_hours`, `flight_stairs`, `vigorous_hours`, `physical_activity_work`, `vigorous`) VALUES
 	('101', '2014-07-08 11:28:30', 0, 5, 2, 0, 0, 0, 0, 4, 4, 2, 2, 20, NULL, 'sedentary', 'yes'),
@@ -1317,6 +1335,8 @@ INSERT INTO `physical_activities_info` (`patient_id`, `timestamp`, `diy_hours`, 
 	('1129101', '2014-07-30 10:39:22', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 5, 0, 'sedentary', 'yes'),
 	('1129101', '2014-07-30 10:58:34', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sedentary', 'yes'),
 	('1129101', '2014-07-30 10:58:44', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sedentary', 'yes'),
+	('1129101', '2014-07-30 14:19:31', 2, 4, 4, 3, 5, 2, 0, 0, 2, 2, 2, 4, 6, 'sedentary', 'yes'),
+	('1129101', '2014-07-30 14:19:43', 2, 4, 4, 3, 5, 2, 0, 0, 2, 2, 2, 4, 6, 'sedentary', 'yes'),
 	('1175432', '2014-07-11 16:38:49', 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1, 0, 'sedentary', 'no'),
 	('119', '2014-07-25 14:03:25', 10, 10, 10, 10, 0, 10, 10, 10, 10, 101, 999, 2, 3, 'sedentary', 'yes'),
 	('119', '2014-07-25 14:07:30', 10, 10, 10, 10, 2, 10, 10, 10, 10, 101, 999, 2, 3, 'sedentary', 'yes'),
@@ -1354,6 +1374,7 @@ INSERT INTO `physical_activities_info` (`patient_id`, `timestamp`, `diy_hours`, 
 
 
 -- Dumping structure for table inmindd.smoking_alcohol_info
+DROP TABLE IF EXISTS `smoking_alcohol_info`;
 CREATE TABLE IF NOT EXISTS `smoking_alcohol_info` (
   `patient_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1368,7 +1389,7 @@ CREATE TABLE IF NOT EXISTS `smoking_alcohol_info` (
   PRIMARY KEY (`patient_id`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.smoking_alcohol_info: ~132 rows (approximately)
+-- Dumping data for table inmindd.smoking_alcohol_info: ~134 rows (approximately)
 /*!40000 ALTER TABLE `smoking_alcohol_info` DISABLE KEYS */;
 INSERT INTO `smoking_alcohol_info` (`patient_id`, `timestamp`, `smoker_type`, `current_year_start`, `current_num_smoke`, `former_year_start`, `former_year_stop`, `former_num_smoke`, `drinks_freq`, `num_drinks`) VALUES
 	('110100', '2014-07-28 21:13:52', 'never', 0, 0, 0, 0, 0, '2-3 times per week', '7 or less'),
@@ -1469,6 +1490,8 @@ INSERT INTO `smoking_alcohol_info` (`patient_id`, `timestamp`, `smoker_type`, `c
 	('1129101', '2014-07-30 10:40:17', 'never', 0, 0, 0, 0, 0, '4 or more times per week', '8 - 11'),
 	('1129101', '2014-07-30 10:59:48', 'never', 0, 0, 0, 0, 0, '4 or more times per week', '8 - 11'),
 	('1129101', '2014-07-30 10:59:53', 'never', 0, 0, 0, 0, 0, '4 or more times per week', '8 - 11'),
+	('1129101', '2014-07-30 14:30:56', 'former', 0, 0, 1981, 2003, 10, '2-3 times per week', '12 - 17'),
+	('1129101', '2014-07-30 14:31:05', 'former', 0, 0, 1981, 2003, 10, '2-3 times per week', '12 - 17'),
 	('1175432', '2014-07-11 16:49:13', 'former', 0, 0, 1985, 2000, 5, 'Monthly or less', '7 or less'),
 	('119', '2014-07-25 14:26:55', 'never', 0, 0, 0, 0, 0, '2-4 times per month', '7 or less'),
 	('1234', '2014-06-24 14:59:21', 'current', 1996, 5, 0, 0, 0, '2-4 times per month', '7 or less'),
@@ -1507,6 +1530,7 @@ INSERT INTO `smoking_alcohol_info` (`patient_id`, `timestamp`, `smoker_type`, `c
 
 
 -- Dumping structure for table inmindd.support_apps
+DROP TABLE IF EXISTS `support_apps`;
 CREATE TABLE IF NOT EXISTS `support_apps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
@@ -1518,7 +1542,7 @@ CREATE TABLE IF NOT EXISTS `support_apps` (
   KEY `category` (`category`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.support_apps: ~8 rows (approximately)
+-- Dumping data for table inmindd.support_apps: ~16 rows (approximately)
 /*!40000 ALTER TABLE `support_apps` DISABLE KEYS */;
 INSERT INTO `support_apps` (`id`, `lang`, `name`, `logo_url`, `category`, `description`) VALUES
 	(1, 'en', 'NHS Couch to 5K', 'http://a4.mzstatic.com/us/r30/Features/d6/30/93/dj.flwjxavg.170x170-75.jpg', 'Diet and Fitness Apps', '<p>Couch to 5K podcast to download to your mobile</p>\r\n\r\n<p>This is a podcast that can be downloaded to your computer, phone or I-Pod, it is designed to get someone off the couch and running up to 5K within 9 weeks.</p>\r\n\r\n<p><a href="https://itunes.apple.com/gb/podcast/nhs-couch-to-5k/id394384987?mt=2"><img alt="" src="https://devimages.apple.com.edgekey.net/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" style="height:40px; width:135px" /></a></p>'),
@@ -1541,6 +1565,7 @@ INSERT INTO `support_apps` (`id`, `lang`, `name`, `logo_url`, `category`, `descr
 
 
 -- Dumping structure for table inmindd.support_experts
+DROP TABLE IF EXISTS `support_experts`;
 CREATE TABLE IF NOT EXISTS `support_experts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
@@ -1551,7 +1576,7 @@ CREATE TABLE IF NOT EXISTS `support_experts` (
   KEY `country` (`country`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.support_experts: ~31 rows (approximately)
+-- Dumping data for table inmindd.support_experts: ~32 rows (approximately)
 /*!40000 ALTER TABLE `support_experts` DISABLE KEYS */;
 INSERT INTO `support_experts` (`id`, `lang`, `country`, `image_url`, `description`) VALUES
 	(1, 'en', 'Ireland', 'images/staff/kate.png', '<strong>Dr Kate Irving</strong> is a senior lecturer in the School of Nursing and Human Sciences, Dublin City University. Kate has been involved in clinical practice, teaching and research in the field of dementia for over 15 years. Kate is the Principal Investigator on the In-MINDD (innovative midlife intervention for dementia deterrence) project. She is a partner on a further two European consortia, Dem@care and Actif-Care (Joint Programme on Neuro Degeneration). Kate is the developer and co-ordinator of the joint HSE/DCU Dementia Champion Programme, the Dublin Northside Alzheimer Café and the Memory Works screening/remediation Clinic in DCU.'),
@@ -1590,6 +1615,7 @@ INSERT INTO `support_experts` (`id`, `lang`, `country`, `image_url`, `descriptio
 
 
 -- Dumping structure for table inmindd.support_faq
+DROP TABLE IF EXISTS `support_faq`;
 CREATE TABLE IF NOT EXISTS `support_faq` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
@@ -1599,7 +1625,7 @@ CREATE TABLE IF NOT EXISTS `support_faq` (
   KEY `lang` (`lang`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.support_faq: ~13 rows (approximately)
+-- Dumping data for table inmindd.support_faq: ~18 rows (approximately)
 /*!40000 ALTER TABLE `support_faq` DISABLE KEYS */;
 INSERT INTO `support_faq` (`id`, `lang`, `question`, `answer`) VALUES
 	(1, 'en', 'What is dementia?', '<p>Dementia is an umbrella term that is used to refer to a group of diseases that have broadly similar symptoms but different causes. The most common symptoms include memory loss, difficulty performing everyday tasks, problems with language and communication, disorientation in time and place, poor or decreased judgement, changes in mood, behaviour or personality. Of the diseases that cause dementia, the most common are Alzheimer&rsquo;s disease, Vascular Dementia, Lewy Bodies Dementia and Fronto-temporal dementia.</p>'),
@@ -1624,6 +1650,7 @@ INSERT INTO `support_faq` (`id`, `lang`, `question`, `answer`) VALUES
 
 
 -- Dumping structure for table inmindd.support_goals
+DROP TABLE IF EXISTS `support_goals`;
 CREATE TABLE IF NOT EXISTS `support_goals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
@@ -1637,7 +1664,7 @@ CREATE TABLE IF NOT EXISTS `support_goals` (
   CONSTRAINT `riskfactor_FK` FOREIGN KEY (`id_riskfactor`, `lang`) REFERENCES `support_riskfactors` (`id`, `lang`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
--- Dumping data for table inmindd.support_goals: ~77 rows (approximately)
+-- Dumping data for table inmindd.support_goals: ~111 rows (approximately)
 /*!40000 ALTER TABLE `support_goals` DISABLE KEYS */;
 INSERT INTO `support_goals` (`id`, `lang`, `id_riskfactor`, `goal_name`, `goal_nb`, `description`, `image_url`) VALUES
 	(1, 'en', 4, 'Get walking', 1, '<ul>\r\n	<li>Aim to go for a 30-minute walk each day or a 60-minute walk four times a week.</li>\r\n	<li>Use a pedometer and aim to take 10,000 steps a day. Start slowly and build up to the 10,000. Week one:&nbsp; Aim for 5,000 steps per day. Week two: Aim for 7,000 steps. Week three: Aim to hit 10,000 steps per day. You can buy a pedometer in most chemists and sports supply shops at a reasonable price.</li>\r\n	<li>(A pedometer is a device, usually portable, that counts each step a person takes by detecting the movement of the person&rsquo;s hips.)</li>\r\n	<li>Only use the car when absolutely necessary. Walk to the shops and to visit friends and family.</li>\r\n	<li>Take the stairs instead of the lift.</li>\r\n</ul>', 'images/goal-walking.jpg'),
@@ -1755,6 +1782,7 @@ INSERT INTO `support_goals` (`id`, `lang`, `id_riskfactor`, `goal_name`, `goal_n
 
 
 -- Dumping structure for table inmindd.support_goals_users
+DROP TABLE IF EXISTS `support_goals_users`;
 CREATE TABLE IF NOT EXISTS `support_goals_users` (
   `id_goal` int(11) NOT NULL,
   `id_user` varchar(7) NOT NULL,
@@ -1813,6 +1841,7 @@ INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`)
 
 
 -- Dumping structure for table inmindd.support_riskfactors
+DROP TABLE IF EXISTS `support_riskfactors`;
 CREATE TABLE IF NOT EXISTS `support_riskfactors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
@@ -1868,6 +1897,7 @@ INSERT INTO `support_riskfactors` (`id`, `lang`, `name`, `image_url`, `desc_keep
 
 
 -- Dumping structure for table inmindd.user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `userId` varchar(7) NOT NULL,
   `passwordhash` varchar(45) DEFAULT NULL,
@@ -1931,7 +1961,7 @@ INSERT INTO `user` (`userId`, `passwordhash`, `timestamp`, `administrator`, `ran
 	('1102031', 'cb70df9914581044b41e7b952ffebccff19f23c7', '2014-07-30 11:55:40', 0, 2, 'Control', 1074, '4c7c3b42526b73e2d0e283a35bd5a4bbda355fc3', '4c9a82ce72ca2519f38d0af0abbb4cecb9fceca9'),
 	('1102032', 'cb70df9914581044b41e7b952ffebccff19f23c7', '2014-07-30 12:04:11', 0, 2, 'Intervention', 1075, '4c7c3b42526b73e2d0e283a35bd5a4bbda355fc3', '4c9a82ce72ca2519f38d0af0abbb4cecb9fceca9'),
 	('1102108', 'ee79875ce134b20548c2799c67c9b579f47b6cb0', '2014-07-30 10:46:27', 0, 0, NULL, NULL, 'b573f24e55d6b7547cb53bd67b8f50a5256006ff', '4c9a82ce72ca2519f38d0af0abbb4cecb9fceca9'),
-	('1102109', '974d1ea2e77560d9e172f04a682f9ac8e4625a7e', '2014-07-28 09:56:01', 0, NULL, NULL, NULL, 'ff0db992256ad5c44c979bf4be0234a919eccdc7', 'afaed75406bd414820cea4a5119f90c259c05755'),
+	('1102109', 'fc9c7a345a02517680efa8fd0550b2dd607bd0fd', '2014-07-30 14:39:46', 0, NULL, NULL, NULL, 'ff0db992256ad5c44c979bf4be0234a919eccdc7', 'afaed75406bd414820cea4a5119f90c259c05755'),
 	('110213', 'b32f9b4211557dbedb67a28d54c7767e2fb32e26', '2014-07-25 09:56:31', 0, NULL, NULL, NULL, 'b32f9b4211557dbedb67a28d54c7767e2fb32e26', 'b32f9b4211557dbedb67a28d54c7767e2fb32e26'),
 	('110314', 'b32f9b4211557dbedb67a28d54c7767e2fb32e26', '2014-07-30 09:30:24', 0, NULL, NULL, NULL, 'b32f9b4211557dbedb67a28d54c7767e2fb32e26', 'b32f9b4211557dbedb67a28d54c7767e2fb32e26'),
 	('1104008', '67b5fa48f92ce8525701f324d6dfed859c20b64f', '2014-07-11 14:54:27', 0, NULL, NULL, NULL, NULL, NULL),
@@ -1989,6 +2019,7 @@ INSERT INTO `user` (`userId`, `passwordhash`, `timestamp`, `administrator`, `ran
 
 
 -- Dumping structure for table inmindd.wp_commentmeta
+DROP TABLE IF EXISTS `wp_commentmeta`;
 CREATE TABLE IF NOT EXISTS `wp_commentmeta` (
   `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `comment_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2005,6 +2036,7 @@ CREATE TABLE IF NOT EXISTS `wp_commentmeta` (
 
 
 -- Dumping structure for table inmindd.wp_comments
+DROP TABLE IF EXISTS `wp_comments`;
 CREATE TABLE IF NOT EXISTS `wp_comments` (
   `comment_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `comment_post_ID` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2036,6 +2068,7 @@ INSERT INTO `wp_comments` (`comment_ID`, `comment_post_ID`, `comment_author`, `c
 
 
 -- Dumping structure for table inmindd.wp_links
+DROP TABLE IF EXISTS `wp_links`;
 CREATE TABLE IF NOT EXISTS `wp_links` (
   `link_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `link_url` varchar(255) NOT NULL DEFAULT '',
@@ -2060,6 +2093,7 @@ CREATE TABLE IF NOT EXISTS `wp_links` (
 
 
 -- Dumping structure for table inmindd.wp_options
+DROP TABLE IF EXISTS `wp_options`;
 CREATE TABLE IF NOT EXISTS `wp_options` (
   `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `option_name` varchar(64) NOT NULL DEFAULT '',
@@ -2189,6 +2223,7 @@ INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`
 
 
 -- Dumping structure for table inmindd.wp_postmeta
+DROP TABLE IF EXISTS `wp_postmeta`;
 CREATE TABLE IF NOT EXISTS `wp_postmeta` (
   `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2210,6 +2245,7 @@ INSERT INTO `wp_postmeta` (`meta_id`, `post_id`, `meta_key`, `meta_value`) VALUE
 
 
 -- Dumping structure for table inmindd.wp_posts
+DROP TABLE IF EXISTS `wp_posts`;
 CREATE TABLE IF NOT EXISTS `wp_posts` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `post_author` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2253,6 +2289,7 @@ INSERT INTO `wp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post
 
 
 -- Dumping structure for table inmindd.wp_terms
+DROP TABLE IF EXISTS `wp_terms`;
 CREATE TABLE IF NOT EXISTS `wp_terms` (
   `term_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL DEFAULT '',
@@ -2271,6 +2308,7 @@ INSERT INTO `wp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
 
 
 -- Dumping structure for table inmindd.wp_term_relationships
+DROP TABLE IF EXISTS `wp_term_relationships`;
 CREATE TABLE IF NOT EXISTS `wp_term_relationships` (
   `object_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `term_taxonomy_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2288,6 +2326,7 @@ INSERT INTO `wp_term_relationships` (`object_id`, `term_taxonomy_id`, `term_orde
 
 
 -- Dumping structure for table inmindd.wp_term_taxonomy
+DROP TABLE IF EXISTS `wp_term_taxonomy`;
 CREATE TABLE IF NOT EXISTS `wp_term_taxonomy` (
   `term_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `term_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2308,6 +2347,7 @@ INSERT INTO `wp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 
 
 -- Dumping structure for table inmindd.wp_usermeta
+DROP TABLE IF EXISTS `wp_usermeta`;
 CREATE TABLE IF NOT EXISTS `wp_usermeta` (
   `umeta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -2341,6 +2381,7 @@ INSERT INTO `wp_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALU
 
 
 -- Dumping structure for table inmindd.wp_users
+DROP TABLE IF EXISTS `wp_users`;
 CREATE TABLE IF NOT EXISTS `wp_users` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_login` varchar(60) NOT NULL DEFAULT '',
