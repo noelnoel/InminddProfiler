@@ -54,6 +54,18 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	text.rmw = $("#rmw").html();
 	text.rfi = $("#rfi").html();
 	text.keepthisup = $("#keepthisup").html();
+	text.rfCognitive = $("#rf-cognitive").html();
+	text.rfMood = $("#rf-mood").html();
+	text.rfDiet = $("#rf-diet").html();
+	text.rfPressure = $("#rf-pressure").html();
+	text.rfObesity = $("#rf-obesity").html();
+	text.rfSmoking = $("#rf-smoking").html();
+	text.rfCholesterol = $("#rf-cholesterol").html();
+	text.rfDiabetes = $("#rf-diabetes").html();
+	text.rfKidney = $("#rf-kidney").html();
+	text.rfHeart = $("#rf-heart").html();
+	text.rfActivity = $("#rf-activity").html();
+	text.rfAlchool = $("#rf-alchool").html();
 	graph(dataGraph);
 	
 	$("#score-ktu-Num").html("" + dataGraph.pie["keep"].toFixed(2) + "%");

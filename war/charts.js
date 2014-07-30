@@ -11,31 +11,31 @@ require(["dojox/charting/Chart", "dojox/charting/axis2d/Default",  "dojox/charti
 
 
       if(graphdata.bars.hasOwnProperty("drinking")){
-        chart1.addSeries("alcool", [graphdata.bars.drinking], {plot: "default", fill: "blue", stroke: {color: "blue"}});
+        chart1.addSeries(text.rfAlchool, [graphdata.bars.drinking], {plot: "default", fill: "blue", stroke: {color: "blue"}});
       }
       if(graphdata.bars.hasOwnProperty("obesity")){
-        chart1.addSeries("midlife obesity", [graphdata.bars.obesity], {plot: "default", fill: "green", stroke: {color: "green"}});
+        chart1.addSeries(text.rfObesity, [graphdata.bars.obesity], {plot: "default", fill: "green", stroke: {color: "green"}});
       }
       if(graphdata.bars.hasOwnProperty("diet")){
-        chart1.addSeries("healthy diet", [graphdata.bars.diet], {plot: "default", fill: "orange", stroke: {color: "orange"}});
+        chart1.addSeries(text.rfDiet, [graphdata.bars.diet], {plot: "default", fill: "orange", stroke: {color: "orange"}});
       }
       if(graphdata.bars.hasOwnProperty("mood")){
-        chart1.addSeries("depressed mood", [graphdata.bars.mood], {plot: "default", fill: "purple", stroke: {color: "purple"}});
+        chart1.addSeries(text.rfMood, [graphdata.bars.mood], {plot: "default", fill: "purple", stroke: {color: "purple"}});
       }
       if(graphdata.bars.hasOwnProperty("blood_pressure")){
-        chart1.addSeries("blood pressure", [graphdata.bars.blood_pressure], {plot: "default", fill: "yellow", stroke: {color: "yellow"}});
+        chart1.addSeries(text.rfPressure, [graphdata.bars.blood_pressure], {plot: "default", fill: "yellow", stroke: {color: "yellow"}});
       }
       /*if(graphdata.bars.hasOwnProperty("diabetes")){
         chart1.addSeries("diabetes", [graphdata.bars.diabetes], {plot: "default", fill: "red", stroke: {color: "red"}});
       }*/
       if(graphdata.bars.hasOwnProperty("smoking")){
-        chart1.addSeries("smoking", [graphdata.bars.smoking], {plot: "default", fill: "blue", stroke: {color: "blue"}});
+        chart1.addSeries(text.rfSmoking, [graphdata.bars.smoking], {plot: "default", fill: "blue", stroke: {color: "blue"}});
       }
       if(graphdata.bars.hasOwnProperty("cholesteral")){
-        chart1.addSeries("cholesterol", [graphdata.bars.cholesteral], {plot: "default", fill: "green", stroke: {color: "green"}});
+        chart1.addSeries(text.rfCholesterol, [graphdata.bars.cholesteral], {plot: "default", fill: "green", stroke: {color: "green"}});
       }
       if(graphdata.bars.hasOwnProperty("coginitive_activity")){        
-        chart1.addSeries("coginitive activity", [graphdata.bars.coginitive_activity], {plot: "default", fill: "orange", stroke: {color: "orange"}});
+        chart1.addSeries(text.rfCognitive, [graphdata.bars.coginitive_activity], {plot: "default", fill: "orange", stroke: {color: "orange"}});
       }
       /*if(graphdata.bars.hasOwnProperty("heart_disease")){
         chart1.addSeries("heart disease", [graphdata.bars.heart_disease], {plot: "default", fill: "purple", stroke: {color: "purple"}});
@@ -44,7 +44,7 @@ require(["dojox/charting/Chart", "dojox/charting/axis2d/Default",  "dojox/charti
         chart1.addSeries("kidney disease", [graphdata.bars.kidney_disease], {plot: "default", fill: "yellow", stroke: {color: "yellow"}});
       }*/
       if(graphdata.bars.hasOwnProperty("physical_exercise")){
-        chart1.addSeries("physical exercise", [graphdata.bars.physical_exercise], {plot: "default", fill: "red", stroke: {color: "red"}});
+        chart1.addSeries(text.rfActivity, [graphdata.bars.physical_exercise], {plot: "default", fill: "red", stroke: {color: "red"}});
       }
       //chart1.addPlot("linesPlot",{type:"Lines", markers: true});
       //chart1.addSeries("B",[2,4,6,8,3,5,7], {plot: "linesPlot", stroke: {color: "red", width: 4}});
