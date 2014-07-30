@@ -63,13 +63,13 @@ public class LandingPage implements EntryPoint {
 						}
 						@Override
 						public void onFailure(Throwable caught) {
-							Window.alert("Invalid User Id or Password  - please reenter. Check Caps lock");
+							Window.alert(caught.getMessage());
 							DOM.getElementById("loginPanel").setAttribute("style", "");
 							DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 						}
 					};
 
-					InminddServiceSvc.authenticateUser(username, hashedPassword, callback);
+					InminddServiceSvc.authenticateUserSupportEnvironement(username, hashedPassword, callback);
 					DOM.getElementById("loadingPanel").setAttribute("style", "text-align:center;margin-top:150px;");
 					DOM.getElementById("loginPanel").setAttribute("style", "display:none");
 				}

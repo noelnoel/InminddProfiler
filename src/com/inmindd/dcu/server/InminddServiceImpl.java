@@ -54,6 +54,7 @@ import javax.mail.internet.MimeMessage;
 
 
 
+
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
 import org.tempuri.ServiceStub;
@@ -167,7 +168,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	    
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ? AND randomised_group = 'Intervention';");
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ?;");
 			pstmt.setString(1, idUser);
 			pstmt.setString(2, password);
 			result = pstmt.executeQuery();
@@ -175,8 +176,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while (result.next()) {
 					user = new User();
 					user.setUserId(result.getString(1));
+					if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+					} else {
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("You are not in the intervention group. You have to wait up to 6 months for entering the support environment.");
+					}
 					conn.close();
-					getThreadLocalRequest().getSession().setAttribute("current_user", user);
 					return user;
 			}
 			user = null;
