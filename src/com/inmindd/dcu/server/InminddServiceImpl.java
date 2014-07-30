@@ -5,15 +5,10 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.rmi.RemoteException;
-
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
-
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
-import com.inmindd.dcu.client.PhysicalActivity;
-import com.inmindd.dcu.client.SmokeAlcohol;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -32,15 +27,12 @@ import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DateFormat;
 import java.util.ArrayList;
-
 /*mail purpose*/
 import java.util.Properties;
-
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -49,17 +41,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 /*end of mail*/
-
-
-
-
-
-
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.ServiceClient;
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
-
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -2392,7 +2377,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 		try {
 		    Message msg = new MimeMessage(session);
-		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
+		    msg.setFrom(new InternetAddress("okellynoel@gmail.com", "Inmindd Support Environment"));
 		    if(lang.equals("en")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
@@ -2411,12 +2396,25 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		   		     new InternetAddress("susan.browne@glasgow.ac.uk", "Susan Browne"));
 		    }
 		    msg.setSubject("[ask-the-experts] new question");
-		    msg.setText("Reply to: " + email + "\n\n" + body);
+
+		    RegExp regExp = RegExp.compile("[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "i");
+			MatchResult matcher = regExp.exec(email);
+			boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr); 
+
+			if (!matchFound) {
+				throw new AddressException("Invalid email address");
+			}
+
+		    Address[] addresses = new InternetAddress[1];
+		    addresses[0] = new InternetAddress(email, "Patient");
+			msg.setReplyTo(addresses);
+		    msg.setText("Message from: " + email + "\n\n" + body);
 		    Transport.send(msg);
 		    return true;
 		} catch (AddressException e) {
-			System.out.println("qddress exception"+ e.getMessage());
+			System.out.println("address exception"+ e.getMessage());
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid email address");
 		} catch (MessagingException e) {
 			System.out.println("messaging exception"+ e.getMessage());
 			e.printStackTrace();
