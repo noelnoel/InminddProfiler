@@ -2386,20 +2386,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		try {
 		    Message msg = new MimeMessage(session);
 		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
-		    if(lang == "en"){
+		    if(lang.equals("en")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
 		    	msg.addRecipient(Message.RecipientType.TO,
 			   		     new InternetAddress("Muriel.redmond@dcu.ie", "Muriel Redmond"));
 		    	msg.addRecipient(Message.RecipientType.TO,
 			   		     new InternetAddress("inmindd@romainbeuque.fr", "Admin"));
-		    } else if(lang == "fr"){
+		    } else if(lang.equals("fr")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("valeria.manera@unice.fr", "Valeria Manera"));
-		    } else if (lang == "nl"){
+		    } else if (lang.equals("nl")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("kay.deckers@maastrichtuniversity.nl", "Kay Deckers"));
-		    } else if(lang == "sc"){
+		    } else if(lang.equals("sc")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("susan.browne@glasgow.ac.uk", "Susan Browne"));
 		    }
