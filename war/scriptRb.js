@@ -68,9 +68,22 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	text.rfAlchool = $("#rf-alchool").html();
 	graph(dataGraph);
 	
-	$("#score-ktu-Num").html("" + dataGraph.pie["keep"].toFixed(2) + "%");
-	$("#score-rfi-Num").html("" + dataGraph.pie["improvement"].toFixed(2) + "%");
-	$("#score-rmw-Num").html("" + dataGraph.pie["manage"].toFixed(2) + "%");
+	var scoreEchoKeep = dataGraph.pie["keep"].toFixed(2);
+	var scoreEchoImpr = dataGraph.pie["improvement"].toFixed(2);
+	var scoreEchoMana = dataGraph.pie["manage"].toFixed(2);
+	if(scoreEchoKeep.split(".")[1] == "00"){
+		scoreEchoKeep = scoreEchoKeep.split(".")[0];
+	}
+	if(scoreEchoImpr.split(".")[1] == "00"){
+		scoreEchoImpr = scoreEchoImpr.split(".")[0];
+	}
+	if(scoreEchoMana.split(".")[1] == "00"){
+		scoreEchoMana = scoreEchoMana.split(".")[0];
+	}
+	
+	$("#score-ktu-Num").html("" + scoreEchoKeep + "%");
+	$("#score-rfi-Num").html("" + scoreEchoImpr + "%");
+	$("#score-rmw-Num").html("" + scoreEchoMana + "%");
 
 	$("#loadingPanel").css("display","none");
 	$("#scorePanel").attr("style", "");
