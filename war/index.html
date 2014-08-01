@@ -55,7 +55,8 @@
                     <div class="full">
                         <div class="row">
                             <div class="col-md-2 col-md-offset-2 text-center">
-                                <img src="images/inmindd_logo.png" alt="logo">
+                                <img src="images/inmindd_logo.png" alt="logo"><br />
+                                <img src="images/flags/fr.png" alt="FR" class="flag">&nbsp;&nbsp;<img src="images/flags/ie.png" alt="IE" class="flag">&nbsp;&nbsp;<img src="images/flags/nl.png" alt="NL" class="flag">
                             </div>
                             <div class="col-md-8">
                                 <nav id="nav" class="nav-holder">
@@ -82,7 +83,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <hr />
+                        <hr style="margin-top:0" />
                         <div class="row" style="text-align:center;margin-top:150px;" id="loadingPanel">
                             <h1 id="landing-loading">Loading...</h1><br />
                             <img src="images/loading.GIF" alt="loading" width="64" height="64" />
@@ -212,8 +213,17 @@
         <!-- script references -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script src="scriptRb.js"></script>
         <script src="https://yandex.st/dojo/1.9.1/dojo/dojo.js"></script>
-        <script src="charts.js"></script>
+        <script type="text/javascript">
+            function changeFlag(sender){
+                console.info(sender.target.alt);
+                document.cookie="gwtLocale="+sender.target.alt.toLowerCase();
+                location.reload();
+            }
+
+            $(document).ready(function(){
+                $(document).on("click","img.flag", changeFlag);
+            });
+        </script>
     </body>
 </html>
