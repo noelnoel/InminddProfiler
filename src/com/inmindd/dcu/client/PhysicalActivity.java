@@ -305,7 +305,7 @@ public class PhysicalActivity {
 		walkingWinter.setWidth("2em");
 		walkingWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
-		winter.getElement().getStyle().setProperty("marginLeft", "70px");
+		winter.getElement().getStyle().setProperty("marginLeft", "75px");
 		walkingWinter.getElement().getStyle().setProperty("marginLeft", "7px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
@@ -340,7 +340,7 @@ public class PhysicalActivity {
 		cyclingWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("marginLeft", "80px");
-		cyclingWinter.getElement().getStyle().setProperty("marginLeft", "7px");
+		cyclingWinter.getElement().getStyle().setProperty("marginLeft", "12px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		cyclingPanel2.add(winter);
@@ -375,7 +375,7 @@ public class PhysicalActivity {
 		gardeningWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("marginLeft", "75px");
-		gardeningWinter.getElement().getStyle().setProperty("marginLeft", "7px");
+		gardeningWinter.getElement().getStyle().setProperty("marginLeft", "12px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		gardenPanel2.add(winter);
@@ -427,7 +427,7 @@ public class PhysicalActivity {
 		exerciseWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("marginLeft", "70px");
-		exerciseWinter.getElement().getStyle().setProperty("marginLeft", "7px");
+		exerciseWinter.getElement().getStyle().setProperty("marginLeft", "12px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		exercisePanel2.add(winter);
@@ -463,7 +463,7 @@ public class PhysicalActivity {
 		houseworkWinter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("fontWeight", "bold");
 		winter.getElement().getStyle().setProperty("marginLeft", "60px");
-		houseworkWinter.getElement().getStyle().setProperty("marginLeft", "7px");
+		houseworkWinter.getElement().getStyle().setProperty("marginLeft", "12px");
 		suffix.getElement().getStyle().setProperty("marginLeft", "5px");
 		
 		houseworkPanel2.add(winter);
@@ -707,7 +707,7 @@ private int getValueAsInt(TextBox hours) {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,700);
+		popup.setPopupPosition(390,500);
 		popup.setWidth("550px");
 		popup.show();
 

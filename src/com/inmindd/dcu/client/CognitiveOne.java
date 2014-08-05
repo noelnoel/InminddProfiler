@@ -154,7 +154,7 @@ public class CognitiveOne {
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveOnePanel.add(addManagers());
-		
+		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveOnePanel.add(addProfessionals());
 		
@@ -705,7 +705,7 @@ public class CognitiveOne {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,700);
+		popup.setPopupPosition(190,500);
 		popup.setWidth("550px");
 		popup.show();
 

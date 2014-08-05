@@ -34,7 +34,10 @@ public interface InminddService extends RemoteService {
 	public Boolean registerUser(User user)throws IllegalArgumentException;
 	public Boolean duplicateUser(String id) throws IllegalArgumentException;
 	public Boolean resetPassword(User user) throws IllegalArgumentException;
-	public Boolean randomiseUser(User user)throws IllegalArgumentException;
+	public Boolean randomiseUser(User user)throws IllegalArgumentException;  // not currently used becase of GAE
+    public Boolean setRandomiseUserStatus(User user) throws IllegalArgumentException;
+
+	public String getRandomisedGroup(User user)throws IllegalArgumentException;
 
 	
 	public Boolean updatePatientInfo(Patient patient)	throws IllegalArgumentException;

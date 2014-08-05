@@ -123,7 +123,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	/**
 	 * panel for user validation
 	 */
-	
+	ScrollPanel scroll = new ScrollPanel();
 	//FlowPanel val = new FlowPanel();
 	/**
 	 * Login Panel
@@ -245,10 +245,10 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 			}
 		
 		};
-		logo.setWidth("250px");
+		logo.setWidth("100px");
 		logo.setHeight("45px");	
 		euFlag =  new Image(GWT.getModuleBaseURL() + "../" + "EU_flag.jpg");
-		euFlag.setWidth("100px");
+		euFlag.setWidth("75px");
 		euFlag.setHeight("60px");	
 		euFlag.setStyleName("pos10");
 			
@@ -314,6 +314,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	DockLayoutPanel cesdPanel;
 	DockLayoutPanel cesdPanel2;
 	FlowPanel historyPanel; 
+	//ScrollPanel historyPanel;
 	FlowPanel activityPanel;
 	FlowPanel cognitiveOnePanel;
 	FlowPanel cognitiveTwoPanel;
@@ -353,6 +354,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 				
 		// Create the Family medical history panel
 		FamilyMedicalHistory history = new FamilyMedicalHistory();
+		
 		historyPanel =history.setupFamilyMedicalHistoryPanel(login);
 		
 		// Create the physical activity panel
@@ -520,7 +522,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		 User user = login.getUser();
 				 if (user.getUserId() == null ) {
 
-					 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+					 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
 					 showErrorPopupPanel(error);
 					 showLogin();
 					 return;

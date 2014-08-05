@@ -57,9 +57,11 @@ public class Diet {
 	
 	private ScrollPanel scroll = new ScrollPanel();
 	private User user;
+	private User outerUser;
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
 	public static Diet lastinstance;
+	private  String randomisedGroup;
 	
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -109,6 +111,7 @@ public class Diet {
 	
 	public FlowPanel setupDietPanel(Login login) {
 		this.login = login;
+		outerUser = this.login.getUser();
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 				constants.diet() + "</h1>");
 		Button prev = new Button(constants.review());
@@ -174,8 +177,18 @@ public class Diet {
 	    			if (validateInput()) {
 	    			updateDietDB();
 	    			if (Window.confirm("Please confirm that you have completed all Input screens for the Profiler"))
-	    				callRandomiserService();
+	    				setRandomiserStatus();
+	    			
+	    			else {
+	    				return;
+	    			}
+	    			if (Window.confirm("please wait for 1 minute and then Press OK  to get Randomisation Group.")) {	    					
+	    						
+	    						getRandomGroup(); // this gets randomisedGroup 						
+	    			
+	    				
 	    				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	    			}
 	    			}
 	    		}
 	    	}
@@ -190,9 +203,12 @@ public class Diet {
 		return diet;  
 
 }
+	/*
+	 * Sets the randomiser status to 1, ready fro randomisation.
+	 * The randomiser function will use this to send randomisation request to service in RCB glasgow
+	 */
 	
-	
-	private void callRandomiserService() {
+	private void setRandomiserStatus() {
 		
 		 callServiceSetup();
 		 User user = login.getUser();
@@ -202,12 +218,48 @@ public class Diet {
 			 @Override	 
 	       public void onSuccess(Boolean result) {
 	       		if ((result == false)){	            		
-	       			InlineLabel error = new InlineLabel("Randomiser service Failed");
+	       			InlineLabel error = new InlineLabel("Randomiser status service Failed");
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel("Randomiser service successful completion");
-	       			showErrorPopupPanel(error, "green");            			            			
+	       			InlineLabel error = new InlineLabel("Randomiser status service successful completion");
+	       			showErrorPopupPanel(error, "green"); 	       			
+	       			
+	       		}
+	            
+	         }
+			@Override
+			public void onFailure(Throwable caught) {
+				//InlineLabel error = new InlineLabel("Database update error");
+				//showErrorPopupPanel(error, "red");			
+				
+			}
+		  };
+		  
+		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
+}
+	
+	
+	private void  getRandomGroup() {
+		
+		 callServiceSetup();
+		final  User user = login.getUser();
+		
+		
+		 AsyncCallback<String> callback =  new AsyncCallback<String>(){
+			 @Override	 
+	       public void onSuccess(String group) {
+	       		if ((group == null)){	            		
+	       			InlineLabel error = new InlineLabel("Please wait for randomiser function to complete");
+	       			//showErrorPopupPanel(error, "red");            			
+	       		}            		
+	       		else {
+	       			InlineLabel error = new InlineLabel("The User with Id " + user.getUserId() + " has been randomised into the " + group + " group");
+	       			showErrorPopupPanel(error, "red");   
+	       			
+	       			outerUser.setRandomGroup(group);
+	       			//System.out.println(outerUser.getRandomGroup());
+	       			return;
 	       		}
 	            
 	         }
@@ -219,7 +271,7 @@ public class Diet {
 			}
 		  };
 		  
-		  InminddServiceSvc.randomiseUser(user, callback);
+		  InminddServiceSvc.getRandomisedGroup(user, callback);
 }
 	
 
@@ -711,7 +763,7 @@ public class Diet {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		
-		popup.setPopupPosition(190,720);
+		popup.setPopupPosition(190,520);
 		popup.setWidth("550px");
 		popup.show();
 
@@ -844,7 +896,7 @@ public class Diet {
 			cakeZero.setValue(true);
 		}
 
-		if (diet.getFish() == 3) {
+		if (diet.getSweets() == 3) {
 			cakeThree.setValue(true);
 		}
 		

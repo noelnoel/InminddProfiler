@@ -54,6 +54,7 @@ import javax.mail.internet.MimeMessage;
 
 
 
+
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
 import org.tempuri.ServiceStub;
@@ -84,7 +85,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	private CognitiveTwoInfo cognitiveTwo;
 	private CognitiveOneInfo cognitiveOne;
 	private DietInfo diet;
-
+	public String randGroup;
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
 		//open database connection
@@ -384,7 +385,101 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 		
+	public Boolean setRandomiseUserStatus(User user) {
 
+		//open database connection
+		initDBConnection();
+		// Verify that the input is valid. 
+		String idUser = user.getUserId();
+		int randomiserStatus = 1;  //ready for randomisation status
+		ResultSet result = null;
+		try {	  
+			
+		
+			// dummy test user. Don't send to Glasgow for randomisation.
+			if (idUser.endsWith("00000"))  { 
+				randomiserStatus = 2;
+				String query = "update ignore user set randomised =  ? where userId =" + idUser;;
+				PreparedStatement preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, randomiserStatus);
+				preparedStmt.executeUpdate();
+				
+				query = "update ignore user set randomised_group =  ? where userId =" + idUser;;
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setString(1, "Intervention");
+				preparedStmt.executeUpdate();
+				
+				query = "update ignore user set randomised_number =  ? where userId =" + idUser;;
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, 0);
+				preparedStmt.executeUpdate();
+				return true;
+				
+			}	
+			// check not already randomised		        
+				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+				pstmt.setString(1, idUser);
+				result = pstmt.executeQuery();			
+				while (result.next()) {
+					if (result.getInt(5) == 2) {					
+						conn.close();
+						return true;
+					}
+				}
+				
+			// create the java mysql update preparedstatement
+			String query = "update ignore user set randomised =  ? where userId =" + idUser;;
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, randomiserStatus);
+			preparedStmt.executeUpdate();
+			try {
+				Thread.sleep(35000);  // give the randomiser a chance to do its thing
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+			
+		return true;
+	}
+	
+	
+	public String getRandomisedGroup(User user) {
+
+		//open database connection
+		initDBConnection();
+		
+		String idUser = user.getUserId();		
+		
+		ResultSet result = null;
+		try {	   			
+			// check randomiser status		        
+				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+				pstmt.setString(1, idUser);
+				result = pstmt.executeQuery();			
+				while (result.next()) {
+					if (result.getInt(5) == 2) {					
+						randGroup = result.getString(6);
+						return randGroup;
+					}
+				}
+				
+			
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return randGroup;
+		}
+			
+		return randGroup;
+	}
 	
 	
 	@Override

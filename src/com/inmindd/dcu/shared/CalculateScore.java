@@ -705,9 +705,9 @@ public class CalculateScore {
 				physical.setSummerHouseworkHours(result.getInt(12));
 				physical.setWinterHouseworkHours(result.getInt(13));
 				physical.setFlightStairs(result.getInt(14));
-				
-				physical.setPhysicalWork(result.getString(15));
-				physical.setVigorous(result.getString(16));
+				physical.setVigorousHours(result.getInt(15));
+				physical.setPhysicalWork(result.getString(16));
+				physical.setVigorous(result.getString(17));
 				return;
 			}
 		} catch (SQLException e) {

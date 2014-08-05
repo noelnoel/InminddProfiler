@@ -15,12 +15,15 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FamilyHistoryInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class FamilyMedicalHistory {
+	
+	private ScrollPanel scroll;
 	private FlowPanel familyMedicalHistory;
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
@@ -106,6 +109,8 @@ public class FamilyMedicalHistory {
 	}
 	
 	public FlowPanel setupFamilyMedicalHistoryPanel(Login login) {
+		
+		ScrollPanel scroll = new ScrollPanel();
 		this.login = login;
 		HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 				constants.familymed()+ "</h1>");
@@ -172,7 +177,19 @@ public class FamilyMedicalHistory {
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
 		Button btn = new Button("submit");
 		familyMedicalHistory.add(btn);
+		
+		
+		
+		scroll.setSize("100%", "65%");
+		scroll.add(familyMedicalHistory);
+		scroll.setAlwaysShowScrollBars(true);
+		scroll.scrollToTop();
+		FlowPanel family = new FlowPanel();
+		family.add(scroll);			
+		
 
+		
+		
 		// Listen for mouse events on the submit button.
 		btn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -188,8 +205,11 @@ public class FamilyMedicalHistory {
 
 		});
 
-
-		return familyMedicalHistory;
+		
+		////return familyMedicalHistory;
+		
+		return family;
+		
 	}
 
 
@@ -285,7 +305,7 @@ public class FamilyMedicalHistory {
             			showErrorPopupPanel(error, "red");            			            			
             		}
             		else {
-            			InlineLabel error = new InlineLabel("family History Data  updated. proceed to next panel");
+            			InlineLabel error = new InlineLabel("Family history Data  updated. proceed to next panel");
             			showErrorPopupPanel(error, "green");  
             			
             		}
@@ -729,7 +749,7 @@ public class FamilyMedicalHistory {
 		HorizontalPanel horPanel = new HorizontalPanel();
 		siblingDementiaYes = new RadioButton("siblingDementia", constants.yes());
 		siblingDementiaNo = new RadioButton("siblingDementia", constants.no());
-		siblingDementiaDontKnow = new RadioButton("dementiaButton", constants.dontknow());
+		siblingDementiaDontKnow = new RadioButton("siblingDementia", constants.dontknow());
 		
 		
 		//siblingDementiaYes.getElement().getStyle().setProperty("marginLeft", "238px");
@@ -754,7 +774,7 @@ public class FamilyMedicalHistory {
 		
 		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
+		lbl2.getElement().getStyle().setProperty("marginLeft", "164px");
 		
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
@@ -832,7 +852,7 @@ public class FamilyMedicalHistory {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,680);
+		popup.setPopupPosition(290,280);
 		popup.setWidth("700px");
 		popup.show();
 

@@ -550,7 +550,7 @@ public class SmokeAlcohol {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		//popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,700);
+		popup.setPopupPosition(190,500);
 		popup.setWidth("700px");
 		popup.show();
 
@@ -835,7 +835,7 @@ public class SmokeAlcohol {
 				}
 			
 			};
-			logo.setWidth("420px");
+			logo.setWidth("550px");
 			logo.setHeight("450px");	
 			logo.setVisible(false);
 			return logo;

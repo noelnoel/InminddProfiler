@@ -69,21 +69,18 @@ public class Feelings {
 			}
 		}
 		
-		
-	
-
 
 		public DockLayoutPanel setupCesdPanel (Login login) {
 			this.login= login;
 	
 			cesdPanel = new DockLayoutPanel(Unit.EM);
 			cesdPanel.setHeight("90%");
-			cesdPanel.setWidth("95%");
+			cesdPanel.setWidth("98%");
 			questions.getElement().getStyle().setProperty("width", "48%");
 			
 			answers.getElement().getStyle().setProperty("width", "40%");
-		
-			scroll.setSize("700", "500");
+			//scroll.setSize("4em", "4em");
+			scroll.setSize("40px", "40px");
 			HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 					constants.feeling() + "</h1>");
 			HTMLPanel header = new HTMLPanel("<h3>" +
@@ -92,22 +89,25 @@ public class Feelings {
 				
 			HTMLPanel week = new HTMLPanel("<span style='margin-left:65%;'>" +
 					"<b><u>" + constants.pastweek() + "</u></b></span>");
-			HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px' >" +
+			HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px'  >" +
 					"                         " + constants.some() + " <br>" +            
 					constants.rarely() +  "        " +        constants.little() + constants.occasionally() + constants.most() + "<br>" +
 					constants.time()   +    constants.time_1() +  constants.moderate() + constants.fivedays() + "<br>" +
-					constants.oneday() + constants.days() + constants.threedays()  + constants.days() + " <br> </pre><hr>");
+					constants.oneday() + constants.days() + constants.threedays()  + constants.day() + " <br> </pre><hr>");
 		
 			HTMLPanel line = new HTMLPanel("<hr>");
-		
+			
 			
 			csdPanel.getElement().getStyle().setProperty("marginLeft", "48%");
 			csdPanel.getElement().getStyle().setProperty("fontWeight", "bold");
+			csdPanel.getElement().getStyle().setProperty("fontType", "italic");
 			cesdPanel.addNorth(mainHeader, 5);
 			cesdPanel.addNorth(header,6);
 			
 			cesdPanel.addNorth(week,3);
+			 
 		    cesdPanel.addNorth(csdPanel,6);
+		   
 		  //  cesdPanel.addNorth(prev,3);
 		    cesdPanel.addNorth(line,1);
 		
@@ -232,9 +232,9 @@ public class Feelings {
 		radioButtonsArray.add(occasional);
 		radioButtonsArray.add(most);
 
-		some.getElement().getStyle().setProperty("marginLeft", "148px");
-		occasional.getElement().getStyle().setProperty("marginLeft", "185px");
-		most.getElement().getStyle().setProperty("marginLeft", "190px");
+		some.getElement().getStyle().setProperty("marginLeft", "138px");
+		occasional.getElement().getStyle().setProperty("marginLeft", "175px");
+		most.getElement().getStyle().setProperty("marginLeft", "177px");
 		horPanel.setCellHeight(rare, "10px");
 		horPanel.add(rare);
 		horPanel.add(some);

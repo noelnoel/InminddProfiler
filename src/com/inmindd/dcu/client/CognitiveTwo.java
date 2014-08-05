@@ -474,6 +474,7 @@ public class CognitiveTwo {
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(readingOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
+		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		oftenRead = new DataField(IF_OFTEN, constants.year());
 		oftenRead.setVisible(false);
 		oftenRead.getElement().getStyle().setProperty("fontWeight", "bold");	
@@ -715,6 +716,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(socialNever);
 		
 		cognitiveTwoPanel.add(socialOften);
+		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		oftenSocial = new DataField(IF_OFTEN_MONTH, constants.year());
 		oftenSocial.setVisible(false);
@@ -1002,6 +1004,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(exhibNever);
 		
 		cognitiveTwoPanel.add(exhibOften);
+		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		oftenExhib = new DataField(IF_OFTEN_YEAR, constants.year());
 		oftenExhib.setVisible(false);
@@ -1363,7 +1366,7 @@ public class CognitiveTwo {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		///popup.setGlassEnabled(true);
-		popup.setPopupPosition(190,700);
+		popup.setPopupPosition(190,500);
 		popup.setWidth("550px");
 		popup.show();
 

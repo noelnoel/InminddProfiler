@@ -291,7 +291,7 @@ public class Login  {
 	    						Diet.clearInputs();
 	    					//userId.setText("");
 	    					password.setText("");
-	    					//getScore();   
+	    					//getScore();   uncomment this to calc score at login
 	    				}
 
 	    			}
@@ -656,7 +656,7 @@ public class Login  {
 		}
 		
 		String practice = id.substring(2, 4);
-		if (Integer.parseInt(practice) < 1 || Integer.parseInt(practice) > 20) {
+		if (Integer.parseInt(practice) < 0 || Integer.parseInt(practice) > 20) {
 			
 			InlineLabel error  = new InlineLabel("Invalid practice code in User Id - Please re-enter. Check your caps lock");	
 			showErrorPopupPanel(error,"red");
@@ -730,7 +730,7 @@ public class Login  {
 		  String userId =  user.getUserId();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
 			 showErrorPopupPanel(error, "red");
 			 return;
 

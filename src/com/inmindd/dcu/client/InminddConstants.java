@@ -88,6 +88,7 @@ public interface InminddConstants extends Constants{
 	 	String time();
 	 	String time_1();
 	 	String days();
+	 	String day();
 	 	String moderate();
 	 	String threedays();
 	 	String fivedays();

@@ -645,7 +645,7 @@ public class MedicalHealth {
 		heartDiseaseYes.getElement().getStyle().setProperty("marginLeft", "10px");
 		heartDiseaseNo = new RadioButton("heart", constants.no());
 		heartDiseaseNo.getElement().getStyle().setProperty("marginLeft", "10px");
-		heartDiseaseDontKnow = new RadioButton("lifestyle", constants.dontknow());
+		heartDiseaseDontKnow = new RadioButton("heart", constants.dontknow());
 		heartDiseaseDontKnow.getElement().getStyle().setProperty("marginLeft", "10px");
 		dock.add(vPanel,DockPanel.WEST); 
 		dock.add(heartDiseaseDontKnow,DockPanel.EAST);

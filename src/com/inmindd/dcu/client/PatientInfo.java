@@ -273,7 +273,7 @@ public class PatientInfo {
 	private FlowPanel getCountryEducated() {
 
 		FlowPanel country = new FlowPanel();
-		InlineLabel theSelection = new InlineLabel("Please select country in which you were educated");
+		InlineLabel theSelection = new InlineLabel("Please select country in which you are based");
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 
 		countryEducated.addItem("Please select one");
@@ -1028,7 +1028,7 @@ private FlowPanel getEducationFR() {
 			vertPanel.add(error);
 			popup.setWidget(vertPanel);
 			//popup.setGlassEnabled(true);
-			popup.setPopupPosition(190,645);
+			popup.setPopupPosition(600,545);
 			popup.setWidth("550px");
 			popup.show();
 
@@ -1047,7 +1047,7 @@ private FlowPanel getEducationFR() {
 			vertPanel.add(error);
 			popup.setWidget(vertPanel);
 			//popup.setGlassEnabled(true);
-			popup.setPopupPosition(190,700);
+			popup.setPopupPosition(600,550);
 			popup.setWidth("550px");
 			popup.show();
 

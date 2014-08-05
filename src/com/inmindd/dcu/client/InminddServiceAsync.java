@@ -44,6 +44,13 @@ public interface InminddServiceAsync {
 	void randomiseUser(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
+	
+	void setRandomiseUserStatus(User user, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
+	
+	void getRandomisedGroup(User user,  AsyncCallback<String> callback)
+			throws IllegalArgumentException;
+	
 	void updatePatientInfo(Patient patient, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;	
 	

@@ -10,6 +10,14 @@ public class User implements Serializable {
 	private String password;	
 	private String maidenName;
 	private String favoriteColour;
+	private String randomGroup;
+	
+	public String getRandomGroup() {
+		return randomGroup;
+	}
+	public void setRandomGroup(String randomGroup) {
+		this.randomGroup = randomGroup;
+	}
 	public String getMaidenName() {
 		return maidenName;
 	}

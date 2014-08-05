@@ -109,12 +109,7 @@
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <security-constraint>
-       
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-
+  </welcome-file-list>  
 </web-app>
+
+
