@@ -4,6 +4,8 @@
  */
 package com.inmindd.dcu.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -11,12 +13,14 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 
 public class Score implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
+	private ArrayList<SupportRiskFactorInfos> infosRiskFactors;
 	private User user;
 
 	@Override
@@ -34,7 +38,7 @@ public class Score implements EntryPoint {
 				} else {
 					//DOM.getElementById("scoreInputRPC").setInnerText(user.toString());
 					setUser(user);
-					getScore();
+					getInfos();
 				}
 			}
 
@@ -67,6 +71,40 @@ public class Score implements EntryPoint {
 		return true;
 
 	}
+	
+	private void getInfos(){
+		if (user == null) {
+			// TODO print error
+			System.out.println("[RB_Score::getScore] \\ user null");
+			Window.alert("please connect before check your score");
+			return;
+		}
+
+
+		AsyncCallback<ArrayList<SupportRiskFactorInfos>> callback = new AsyncCallback<ArrayList<SupportRiskFactorInfos>>() {
+
+			@Override
+			public void onSuccess(ArrayList<SupportRiskFactorInfos> riskFactorsInfos) {
+				if (riskFactorsInfos == null || riskFactorsInfos.size() == 0) {
+					System.out.println("[RB_Score::getInfos] \\ infos null");
+					// TODO print error
+				} else {
+					infosRiskFactors = riskFactorsInfos;
+					getScore();
+				}
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("[RB_Score::getInfos] \\ exception null");
+				// TODO print error
+			}
+		};
+
+		InminddServiceSvc.queryAllSupportRiskFactorInfos(user, callback);
+		return;
+	}
 
 	private void getScore() {
 		if (user == null) {
@@ -74,7 +112,6 @@ public class Score implements EntryPoint {
 			System.out.println("[RB_Score::getScore] \\ user null");
 			Window.alert("please connect before check your score");
 			return;
-
 		}
 
 
@@ -101,18 +138,18 @@ public class Score implements EntryPoint {
 						"physical_exercise":0, //5.9
 						"smoking":0 //8.0
 					}*/
-					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() +
-							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() +
-							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
-							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() +
-							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() +
-							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() +
-							"},\"heart_disease\": { \"id\":11, \"score\":" + score.getCoronaryHeartDisease() +
-							"},\"kidney_disease\": { \"id\":12, \"score\":" + score.getChronicKidneyDisease() +
-							"},\"mood\": { \"id\":2, \"score\":" + score.getDepression() +
-							"}, \"obesity\": { \"id\":7, \"score\":" + score.getMidlifeObesity() +
-							"}, \"physical_exercise\": { \"id\":4, \"score\":" + score.getPhysicalInactivity() +
-							"},\"smoking\": { \"id\":5, \"score\":" + score.getSmoking() +
+					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() + ", \"imageUrl\": \"" + infosRiskFactors.get(0).getImage_url() +"\"" +
+							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + infosRiskFactors.get(9).getImage_url() +"\"" +
+							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() + ", \"imageUrl\": \"" + infosRiskFactors.get(7).getImage_url() +"\"" +
+							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() + ", \"imageUrl\": \"" + infosRiskFactors.get(2).getImage_url() +"\"" +
+							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() + ", \"imageUrl\": \"" + infosRiskFactors.get(8).getImage_url() +"\"" +
+							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() + ", \"imageUrl\": \"" + infosRiskFactors.get(5).getImage_url() +"\"" +
+							"},\"heart_disease\": { \"id\":11, \"score\":" + score.getCoronaryHeartDisease() + ", \"imageUrl\": \"" + infosRiskFactors.get(10).getImage_url() +"\"" +
+							"},\"kidney_disease\": { \"id\":12, \"score\":" + score.getChronicKidneyDisease() + ", \"imageUrl\": \"" + infosRiskFactors.get(11).getImage_url() +"\"" +
+							"},\"mood\": { \"id\":2, \"score\":" + score.getDepression() + ", \"imageUrl\": \"" + infosRiskFactors.get(1).getImage_url() +"\"" +
+							"}, \"obesity\": { \"id\":7, \"score\":" + score.getMidlifeObesity() + ", \"imageUrl\": \"" + infosRiskFactors.get(6).getImage_url() +"\"" +
+							"}, \"physical_exercise\": { \"id\":4, \"score\":" + score.getPhysicalInactivity() + ", \"imageUrl\": \"" + infosRiskFactors.get(3).getImage_url() +"\"" +
+							"},\"smoking\": { \"id\":5, \"score\":" + score.getSmoking() + ", \"imageUrl\": \"" + infosRiskFactors.get(4).getImage_url() +"\"" +
 							"}}";
 
 					DOM.getElementById("scoreInputRPC").setAttribute("value",output);

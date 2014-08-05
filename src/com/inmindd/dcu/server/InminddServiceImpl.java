@@ -1966,6 +1966,61 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 
 	}
+	
+	@Override
+	public ArrayList<SupportRiskFactorInfos> queryAllSupportRiskFactorInfos(User user) {
+		ArrayList<SupportRiskFactorInfos> infos = new ArrayList<SupportRiskFactorInfos>();
+		//open database connection
+		initDBConnection();
+
+		if (getAllSupportRiskFactorInfos(user, infos)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return infos;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	private boolean getAllSupportRiskFactorInfos(User user, ArrayList<SupportRiskFactorInfos> infos) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT  * FROM `inmindd`.`support_riskfactors` WHERE lang = ? ORDER BY id ASC;");
+			pstmt.setString(1, user.getLang());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportRiskFactorInfos info = new SupportRiskFactorInfos();
+				info.setId(result.getInt("id"));
+				info.setLang(result.getString("lang"));
+				info.setName(result.getString("name"));
+				info.setImage_url(result.getString("image_url"));
+				info.setDesc_keep(result.getString("desc_keep"));
+				info.setDesc_improv(result.getString("desc_improv"));
+				info.setSources(result.getString("sources"));
+				infos.add(info);
+			}
+			conn.close();
+			return infos.size() == 0 ? false : true;
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+
+	}
 
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {

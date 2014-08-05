@@ -122,63 +122,54 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_pressure());
 						if(score.getMidlifeHypertension() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_amber.png");
 						}
 						break;
 					case 2:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_mood());
 						if(score.getDepression() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_amber.png");
 						}
 						break;
 					case 4:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_activity());
 						if(score.getPhysicalInactivity() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_amber.png");
 						}
 						break;
 					case 5:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_smoking());
 						if(score.getSmoking() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_amber.png");
 						}
 						break;
 					case 6:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_alchool());
 						if(score.getAlcohol() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_amber.png");
 						}
 						break;
 					case 7:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_obesity());
 						if(score.getMidlifeObesity() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_amber.png");
 						}
 						break;
 					case 8:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cognitive());
 						if(score.getHighCognitiveActivity() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_amber.png");
 						}
 						break;
 					case 9:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diet());
 						if(score.getHealthyDiet() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_amber.png");
 						}
 						break;
 					case 10:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cholesterol());
 						if(score.getCholesterol() != 0){
 							keepThisUp = false;
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
 						}
 						break;
 
@@ -186,7 +177,6 @@ public class RiskFactorInfos implements EntryPoint {
 						//special icon
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diabetes());
 						if(score.getDiabetes() != 0){
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
 							keepThisUp = false;
 							manageWell = true;
 						}
@@ -195,7 +185,6 @@ public class RiskFactorInfos implements EntryPoint {
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_heart());
 						//special icon
 						if(score.getCoronaryHeartDisease() != 0){
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
 							keepThisUp = false;
 							manageWell = true;
 						}

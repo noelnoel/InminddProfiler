@@ -28,11 +28,13 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-manage .img-"+index+" img.img-picto").attr("src", value.imageUrl.replace("amber", "orange"));
 			dataGraph.pie["manage"] += value.score;
 		} else if(value.score == 0){
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-keep .img-"+index+" img.img-picto").attr("src", value.imageUrl.replace("amber", "blue"));
 			if(jQuery.inArray( index, specials_risk_factor) != -1){
 				sum += value.score;
 			}
@@ -40,6 +42,7 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
 			$(".libra-improvement .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-improvement .img-"+index+" img.img-picto").attr("src", value.imageUrl);
 			dataGraph.pie["improvement"] += value.score;
 			sum += value.score;
 		}
