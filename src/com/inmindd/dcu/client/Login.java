@@ -666,7 +666,7 @@ public class Login  {
 		}
 		
 		if(id.length() != 7){
-			InlineLabel error  = new InlineLabel("Invalid practice code in User Id - Please re-enter. Check your caps lock");	
+			InlineLabel error  = new InlineLabel("Invalid User Id - Please re-enter. Check your caps lock");	
 			showErrorPopupPanel(error,"red");
 				
 			return false;

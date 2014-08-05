@@ -232,10 +232,8 @@ public class Admin implements EntryPoint {
 		DOM.getElementById("score-19").setInnerHTML(constants.score_19());
 		DOM.getElementById("score-20").setInnerHTML(constants.score_20());
 		DOM.getElementById("score-21").setInnerHTML(constants.score_21());
-		DOM.getElementById("score-22").setInnerHTML(constants.score_22());
 		DOM.getElementById("score-23").setInnerHTML(constants.score_23());
 		DOM.getElementById("score-24").setInnerHTML(constants.score_24());
-		DOM.getElementById("score-27").setInnerHTML(constants.score_27());
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());
 		DOM.getElementById("score-30").setInnerHTML(constants.score_30());

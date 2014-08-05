@@ -124,8 +124,11 @@ public interface InminddServiceAsync {
 
 	void querySupportGoals(int riskFactor, String lang, AsyncCallback<ArrayList<SupportGoal>> callback)
 			throws IllegalArgumentException;
-	
+
 	void querySupportRiskFactorInfos(User user, int riskfactorId, AsyncCallback<SupportRiskFactorInfos> callback)
+			throws IllegalArgumentException;
+	
+	void queryAllSupportRiskFactorInfos(User user, AsyncCallback<ArrayList<SupportRiskFactorInfos>> callback)
 			throws IllegalArgumentException;
 	
 	void querySupportFAQ(String lang, AsyncCallback<ArrayList<SupportFAQ>> callback)

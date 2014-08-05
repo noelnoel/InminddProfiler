@@ -115,154 +115,111 @@ public class RiskFactorInfos implements EntryPoint {
 					DOM.getElementById("linkGoalButton").setAttribute("href","goals.html?riskFactor="+riskFactor);
 					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 					DOM.getElementById("infosPanel").setAttribute("style", "");
+					boolean keepThisUp = true;
+					boolean manageWell = false;
 					switch(riskFactor){
 					case 1:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_pressure());
 						if(score.getMidlifeHypertension() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/blood_pressure_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 2:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_mood());
 						if(score.getDepression() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/mood_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 4:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_activity());
 						if(score.getPhysicalInactivity() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/physical_exercise_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 5:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_smoking());
 						if(score.getSmoking() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/smoking_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 6:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_alchool());
 						if(score.getAlcohol() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/drinking_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 7:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_obesity());
 						if(score.getMidlifeObesity() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/obesity_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 8:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cognitive());
 						if(score.getHighCognitiveActivity() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cognitive_activity_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 9:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diet());
 						if(score.getHealthyDiet() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diet_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 10:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_cholesterol());
 						if(score.getCholesterol() != 0){
-							DOM.getElementById("goalButton").setAttribute("style","");
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_amber.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/cholesteral_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 
 					case 3:
 						//special icon
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_diabetes());
 						if(score.getDiabetes() != 0){
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-orange.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/diabetes-blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
+							manageWell = true;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 11:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_heart());
 						//special icon
 						if(score.getCoronaryHeartDisease() != 0){
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_orange.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/heart_disease_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
+							manageWell = true;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					case 12:
 						DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4() + " " + constants.rf_kidney());
 						//special icon
 						if(score.getChronicKidneyDisease() != 0){
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_orange.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
-						} else {
-							DOM.getElementById("image-amber").setAttribute("src","images/libra/kidney_disease_blue.png");
-							DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+							keepThisUp = false;
+							manageWell = true;
 						}
-						DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 						break;
 					}
+					
+					if(!keepThisUp){
+						String url = riskFactorInfos.getImage_url();
+						if(!manageWell){
+							// room for improvement
+							DOM.getElementById("goalButton").setAttribute("style","");
+						} else {
+							//manage well
+							url = riskFactorInfos.getImage_url().replaceAll("amber", "orange");
+						}
+						//amber
+						DOM.getElementById("image-amber").setAttribute("src",url);
+						DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_improv());
+					} else {
+						//keep this up
+						DOM.getElementById("image-amber").setAttribute("src", riskFactorInfos.getImage_url().replaceAll("amber", "blue"));
+						DOM.getElementById("riskFactorMainInfos").setInnerHTML(riskFactorInfos.getDesc_keep());
+					}
+					
+					DOM.getElementById("image-amber").setAttribute("style","height:200px;width:200px;");
 					DOM.getElementById("sources").setInnerHTML(riskFactorInfos.getSources());
+					
 					trigerJavascript();
 				}
 

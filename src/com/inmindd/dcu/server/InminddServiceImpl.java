@@ -5,15 +5,10 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.rmi.RemoteException;
-
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
-
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
-import com.inmindd.dcu.client.PhysicalActivity;
-import com.inmindd.dcu.client.SmokeAlcohol;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -32,15 +27,12 @@ import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DateFormat;
 import java.util.ArrayList;
-
 /*mail purpose*/
 import java.util.Properties;
-
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -49,17 +41,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 /*end of mail*/
-
-
-
-
-
-
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.ServiceClient;
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
-
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -168,7 +153,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	    
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ? AND randomised_group = 'Control';");
+			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ? AND passwordhash = ?;");
 			pstmt.setString(1, idUser);
 			pstmt.setString(2, password);
 			result = pstmt.executeQuery();
@@ -176,8 +161,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while (result.next()) {
 					user = new User();
 					user.setUserId(result.getString(1));
+					if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+						//we authorize login for Intervention group
+						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+					} else if(result.getInt("controlGroupAuthorized") == 1) {
+						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+					} else {
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("You are not in the intervention group. You have to wait up to 6 months for entering the support environment.");
+					}
 					conn.close();
-					getThreadLocalRequest().getSession().setAttribute("current_user", user);
 					return user;
 			}
 			user = null;
@@ -2065,6 +2060,61 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 
 	}
+	
+	@Override
+	public ArrayList<SupportRiskFactorInfos> queryAllSupportRiskFactorInfos(User user) {
+		ArrayList<SupportRiskFactorInfos> infos = new ArrayList<SupportRiskFactorInfos>();
+		//open database connection
+		initDBConnection();
+
+		if (getAllSupportRiskFactorInfos(user, infos)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return infos;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	private boolean getAllSupportRiskFactorInfos(User user, ArrayList<SupportRiskFactorInfos> infos) {
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT  * FROM `inmindd`.`support_riskfactors` WHERE lang = ? ORDER BY id ASC;");
+			pstmt.setString(1, user.getLang());
+			result = pstmt.executeQuery();
+
+			while (result.next()) {
+				SupportRiskFactorInfos info = new SupportRiskFactorInfos();
+				info.setId(result.getInt("id"));
+				info.setLang(result.getString("lang"));
+				info.setName(result.getString("name"));
+				info.setImage_url(result.getString("image_url"));
+				info.setDesc_keep(result.getString("desc_keep"));
+				info.setDesc_improv(result.getString("desc_improv"));
+				info.setSources(result.getString("sources"));
+				infos.add(info);
+			}
+			conn.close();
+			return infos.size() == 0 ? false : true;
+		}
+		catch (SQLException e) {
+			user = null;
+			//return user;
+			return false;
+		}
+
+	}
 
 	@Override
 	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
@@ -2480,31 +2530,44 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 		try {
 		    Message msg = new MimeMessage(session);
-		    msg.setFrom(new InternetAddress("admin@1-dot-inmindd-profiler.appspotmail.com", "Inmindd Support Environment"));
-		    if(lang == "en"){
+		    msg.setFrom(new InternetAddress("okellynoel@gmail.com", "Inmindd Support Environment"));
+		    if(lang.equals("en")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
 		    	msg.addRecipient(Message.RecipientType.TO,
 			   		     new InternetAddress("Muriel.redmond@dcu.ie", "Muriel Redmond"));
 		    	msg.addRecipient(Message.RecipientType.TO,
 			   		     new InternetAddress("inmindd@romainbeuque.fr", "Admin"));
-		    } else if(lang == "fr"){
+		    } else if(lang.equals("fr")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("valeria.manera@unice.fr", "Valeria Manera"));
-		    } else if (lang == "nl"){
+		    } else if (lang.equals("nl")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("kay.deckers@maastrichtuniversity.nl", "Kay Deckers"));
-		    } else if(lang == "sc"){
+		    } else if(lang.equals("sc")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("susan.browne@glasgow.ac.uk", "Susan Browne"));
 		    }
 		    msg.setSubject("[ask-the-experts] new question");
-		    msg.setText("Reply to: " + email + "\n\n" + body);
+
+		    RegExp regExp = RegExp.compile("[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "i");
+			MatchResult matcher = regExp.exec(email);
+			boolean matchFound = (matcher != null); // equivalent to regExp.test(inputStr); 
+
+			if (!matchFound) {
+				throw new AddressException("Invalid email address");
+			}
+
+		    Address[] addresses = new InternetAddress[1];
+		    addresses[0] = new InternetAddress(email, "Patient");
+			msg.setReplyTo(addresses);
+		    msg.setText("Message from: " + email + "\n\n" + body);
 		    Transport.send(msg);
 		    return true;
 		} catch (AddressException e) {
-			System.out.println("qddress exception"+ e.getMessage());
+			System.out.println("address exception"+ e.getMessage());
 			e.printStackTrace();
+			throw new IllegalArgumentException("Invalid email address");
 		} catch (MessagingException e) {
 			System.out.println("messaging exception"+ e.getMessage());
 			e.printStackTrace();

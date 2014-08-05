@@ -28,11 +28,13 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-manage .img-"+index+" img.img-picto").attr("src", value.imageUrl.replace("amber", "orange"));
 			dataGraph.pie["manage"] += value.score;
 		} else if(value.score == 0){
 			$(".libra-improvement .img-"+index).css("display","none");
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-keep .img-"+index+" img.img-picto").attr("src", value.imageUrl.replace("amber", "blue"));
 			if(jQuery.inArray( index, specials_risk_factor) != -1){
 				sum += value.score;
 			}
@@ -40,6 +42,7 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 			$(".libra-manage .img-"+index).css("display","none");
 			$(".libra-keep .img-"+index).css("display","none");
 			$(".libra-improvement .img-"+index).attr("href","infos-riskfactor.html?riskfactor="+value.id);
+			$(".libra-improvement .img-"+index+" img.img-picto").attr("src", value.imageUrl);
 			dataGraph.pie["improvement"] += value.score;
 			sum += value.score;
 		}
@@ -54,11 +57,36 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	text.rmw = $("#rmw").html();
 	text.rfi = $("#rfi").html();
 	text.keepthisup = $("#keepthisup").html();
+	text.rfCognitive = $("#rf-cognitive").html();
+	text.rfMood = $("#rf-mood").html();
+	text.rfDiet = $("#rf-diet").html();
+	text.rfPressure = $("#rf-pressure").html();
+	text.rfObesity = $("#rf-obesity").html();
+	text.rfSmoking = $("#rf-smoking").html();
+	text.rfCholesterol = $("#rf-cholesterol").html();
+	text.rfDiabetes = $("#rf-diabetes").html();
+	text.rfKidney = $("#rf-kidney").html();
+	text.rfHeart = $("#rf-heart").html();
+	text.rfActivity = $("#rf-activity").html();
+	text.rfAlchool = $("#rf-alchool").html();
 	graph(dataGraph);
 	
-	$("#score-ktu-Num").html("" + dataGraph.pie["keep"].toFixed(2) + "%");
-	$("#score-rfi-Num").html("" + dataGraph.pie["improvement"].toFixed(2) + "%");
-	$("#score-rmw-Num").html("" + dataGraph.pie["manage"].toFixed(2) + "%");
+	var scoreEchoKeep = dataGraph.pie["keep"].toFixed(2);
+	var scoreEchoImpr = dataGraph.pie["improvement"].toFixed(2);
+	var scoreEchoMana = dataGraph.pie["manage"].toFixed(2);
+	if(scoreEchoKeep.split(".")[1] == "00"){
+		scoreEchoKeep = scoreEchoKeep.split(".")[0];
+	}
+	if(scoreEchoImpr.split(".")[1] == "00"){
+		scoreEchoImpr = scoreEchoImpr.split(".")[0];
+	}
+	if(scoreEchoMana.split(".")[1] == "00"){
+		scoreEchoMana = scoreEchoMana.split(".")[0];
+	}
+	
+	$("#score-ktu-Num").html("" + scoreEchoKeep + "%");
+	$("#score-rfi-Num").html("" + scoreEchoImpr + "%");
+	$("#score-rmw-Num").html("" + scoreEchoMana + "%");
 
 	$("#loadingPanel").css("display","none");
 	$("#scorePanel").attr("style", "");

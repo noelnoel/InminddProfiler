@@ -54,15 +54,15 @@ public class Experts implements EntryPoint {
 			@Override
 			public void onSuccess(Boolean result) {
 				if(result){
-					Window.alert("OK - mail sent");
+					Window.alert("Your email has been sent");
 				} else {
-					Window.alert("ERROR of - mail not sent");
+					Window.alert("Error: your email has NOT been sent. Please try again later.");
 				}
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("ERROR EXCCEPTIOn - mail not sent"+ caught.getMessage());
+				Window.alert("Error: "+ caught.getMessage());
 			}
 		};
 		lastInstance.InminddServiceSvc.sendMail(email, lastInstance.user.getLang(), body, callbackMail);
