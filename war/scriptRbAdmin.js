@@ -18,6 +18,25 @@ function trigeredUserByGWT() {
 	loadUsers();
 }
 
+function trigeredMailingByGWT(){
+	console.info("trigered for mailing");
+	console.info($("#mailingInputRPC").val());
+	myMail = $("#mailingInputRPC").val();
+	myMail = myMail.split("|");
+	for (var i = myMail.length - 1; i >= 0; i--) {
+		$("#mailingPanel").append($("<p></p>").html(myMail[i]));
+		myMail[i] = myMail[i].split(";");
+		if(myMail[i].length > 1){
+			myMail[i][1] = myMail[i][1].split(",");
+		}
+	};
+	$("#hiddingMenu").css("display", "none");
+	$("#mailingPanel").css("display", "");
+	$(".bandeauUE").css("display", "none");
+	$("hr").css("display", "none");
+	console.info(myMail);
+}
+
 function goalClickJS(event){
 	window.userIdClick($("#usersSelect").val());
 	$("#choosePanel").css("display", "none");
