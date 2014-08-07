@@ -449,7 +449,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 		//open database connection
 		initDBConnection();
-		
+		randGroup = null;
 		String idUser = user.getUserId();		
 		
 		ResultSet result = null;
@@ -461,6 +461,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				while (result.next()) {
 					if (result.getInt(5) == 2) {					
 						randGroup = result.getString(6);
+						conn.close();
 						return randGroup;
 					}
 				}
@@ -469,10 +470,27 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 		catch (SQLException e) {
 			user = null;
-			//return user;
-			return randGroup;
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				
+			}
+			try {
+				throw e;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//return randGroup;
 		}
-			
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return randGroup;
 	}
 	
