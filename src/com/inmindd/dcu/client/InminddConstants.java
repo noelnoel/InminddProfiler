@@ -11,6 +11,14 @@ public interface InminddConstants extends Constants{
 	 	
 	 	String registration();
 	 	String reset();
+	 	String about_you();
+	 	String about_mood();
+	 	String family_medical();
+	 	String cog_active_1();
+	 	String cog_active_2();
+	 	String smoking_drink();
+	 	String diet_tab();
+	 
 	 	/*
 	 	 * 
 	 	 * Patient Info
@@ -80,11 +88,16 @@ public interface InminddConstants extends Constants{
 	 	
 	 	String statement();
 	 	String pastweek();
-	 	String some();
+	 	//String some();
+	 	String some_new();
 	 	String rarely();
+	 	String rarely_new();
 	 	String little();
-	 	String occasionally();
-	 	String most();
+	 	String little_new();
+	 	//String occasionally();
+	 	String occasionally_new();
+	 	//String most();
+	 	String most_new();
 	 	String time();
 	 	String time_1();
 	 	String days();
@@ -299,7 +312,8 @@ public interface InminddConstants extends Constants{
 	 	String stop_smoking();
 	 	String smoking_error();
 	 	String smoke_complete();
-	 // diet
+	 	String typical_drinks();
+	    String select_one();
 	 	String diet();
 	 	String diet_questions();
 	 	String culinary_fat();

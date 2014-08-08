@@ -89,24 +89,118 @@ public class Feelings {
 				
 			HTMLPanel week = new HTMLPanel("<span style='margin-left:65%;'>" +
 					"<b><u>" + constants.pastweek() + "</u></b></span>");
-			HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px'  >" +
+			/*HTMLPanel csdPanel = new HTMLPanel( "<pre style='margin:0px'  >" +
 					"                         " + constants.some() + " <br>" +            
 					constants.rarely() +  "        " +        constants.little() + constants.occasionally() + constants.most() + "<br>" +
 					constants.time()   +    constants.time_1() +  constants.moderate() + constants.fivedays() + "<br>" +
-					constants.oneday() + constants.days() + constants.threedays()  + constants.day() + " <br> </pre><hr>");
+					constants.oneday() + constants.days() + constants.threedays()  + constants.day() + " <br> </pre><hr>"); */
 		
 			HTMLPanel line = new HTMLPanel("<hr>");
 			
+			VerticalPanel times = new VerticalPanel();
+			InlineLabel so = new InlineLabel(constants.some_new());
 			
-			csdPanel.getElement().getStyle().setProperty("marginLeft", "48%");
-			csdPanel.getElement().getStyle().setProperty("fontWeight", "bold");
-			csdPanel.getElement().getStyle().setProperty("fontType", "italic");
+			so.getElement().getStyle().setProperty("marginLeft", "870px");
+			so.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			times.add(so);
+			
+			HorizontalPanel lineOne = new HorizontalPanel();
+			InlineLabel rare = new InlineLabel(constants.rarely_new());
+			
+			rare.getElement().getStyle().setProperty("marginLeft", "680px");
+			rare.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			lineOne.add(rare);
+			InlineLabel little = new InlineLabel(constants.little_new());
+			
+			little.getElement().getStyle().setProperty("marginLeft", "75px");
+			little.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			
+			lineOne.add(little);
+			InlineLabel occasion = new InlineLabel(constants.occasionally_new());
+			
+			occasion.getElement().getStyle().setProperty("marginLeft", "100px");
+			occasion.getElement().getStyle().setProperty("fontWeight", "bold");
+			lineOne.add(occasion);
+			InlineLabel most = new InlineLabel(constants.most_new());
+			
+			most.getElement().getStyle().setProperty("marginLeft", "65px");
+			most.getElement().getStyle().setProperty("fontWeight", "bold");			
+			
+			lineOne.add(most);			
+			times.add(lineOne);
+			
+			HorizontalPanel lineTwo = new HorizontalPanel();
+			InlineLabel time = new InlineLabel(constants.time());
+			
+			time.getElement().getStyle().setProperty("marginLeft", "680px");
+			time.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			lineTwo.add(time);
+			InlineLabel time_1 = new InlineLabel(constants.time_1());
+			
+			time_1.getElement().getStyle().setProperty("marginLeft", "65px");
+			time_1.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			
+			lineTwo.add(time_1);
+			InlineLabel moderate = new InlineLabel(constants.moderate());
+			
+			moderate.getElement().getStyle().setProperty("marginLeft", "60px");
+			moderate.getElement().getStyle().setProperty("fontWeight", "bold");
+			lineTwo.add(moderate);
+			
+			InlineLabel five = new InlineLabel(constants.fivedays());
+			
+			five.getElement().getStyle().setProperty("marginLeft", "32px");
+			five.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			
+			lineTwo.add(five);
+			times.add(lineTwo);
+			
+			HorizontalPanel lineThree = new HorizontalPanel();
+			InlineLabel oneday = new InlineLabel(constants.oneday());
+			
+			oneday.getElement().getStyle().setProperty("marginLeft", "680px");
+			oneday.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			lineThree.add(oneday);
+			InlineLabel day = new InlineLabel(constants.days());
+			
+			day.getElement().getStyle().setProperty("marginLeft", "160px");
+			day.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			
+			lineThree.add(day);
+			 
+			InlineLabel threedays  = new InlineLabel(constants.threedays());
+			
+			threedays.getElement().getStyle().setProperty("marginLeft", "140px");
+			threedays.getElement().getStyle().setProperty("fontWeight", "bold");
+			lineThree.add(threedays);
+			
+			InlineLabel days = new InlineLabel(constants.days());
+			
+			days.getElement().getStyle().setProperty("marginLeft", "90px");
+			days.getElement().getStyle().setProperty("fontWeight", "bold");
+			
+			
+			lineThree.add(days);
+			times.add(lineThree);
+			
+			//csdPanel.getElement().getStyle().setProperty("marginLeft", "48%");
+			//csdPanel.getElement().getStyle().setProperty("fontWeight", "bold");
+			//csdPanel.getElement().getStyle().setProperty("fontType", "italic");
 			cesdPanel.addNorth(mainHeader, 5);
 			cesdPanel.addNorth(header,6);
 			
 			cesdPanel.addNorth(week,3);
-			 
-		    cesdPanel.addNorth(csdPanel,6);
+			cesdPanel.addNorth(times,7); 
+			
+		   // cesdPanel.addNorth(csdPanel,6);
 		   
 		  //  cesdPanel.addNorth(prev,3);
 		    cesdPanel.addNorth(line,1);
@@ -233,8 +327,8 @@ public class Feelings {
 		radioButtonsArray.add(most);
 
 		some.getElement().getStyle().setProperty("marginLeft", "138px");
-		occasional.getElement().getStyle().setProperty("marginLeft", "175px");
-		most.getElement().getStyle().setProperty("marginLeft", "177px");
+		occasional.getElement().getStyle().setProperty("marginLeft", "160px");
+		most.getElement().getStyle().setProperty("marginLeft", "125px");
 		horPanel.setCellHeight(rare, "10px");
 		horPanel.add(rare);
 		horPanel.add(some);

@@ -230,7 +230,7 @@ public class CognitiveOne {
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
-       			InlineLabel error = new InlineLabel("Cognitive Activity Part One  updated  -  Proceed to next Panel");
+       			InlineLabel error = new InlineLabel("Cognitive Activity Part One  updated  -  Proceed to Cognitive Activity 2");
        			showErrorPopupPanel(error, "green");            			            			
        		}
             
