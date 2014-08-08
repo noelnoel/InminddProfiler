@@ -484,12 +484,12 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		// Handle any existing history token
 		History.fireCurrentHistoryState();
 		// Trap user hitting back button too many times.
-		Window.addWindowClosingHandler(new ClosingHandler(){
+		/*Window.addWindowClosingHandler(new ClosingHandler(){
 			@Override
 			public void onWindowClosing(ClosingEvent event) {
 				event.setMessage("Ran out of history.  Now leaving application, is that OK?");
 			}
-		});
+		});*/
 	}
 
 	
