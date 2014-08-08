@@ -315,7 +315,7 @@ public class CognitiveTwo {
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel("Cognitive Activity Part Two  updated  -  Proceed to next Panel");
+	       			InlineLabel error = new InlineLabel("Cognitive Activity Part Two  updated  -  Proceed to Smoking & Alcohol intake panel");
 	       			showErrorPopupPanel(error, "green");            			            			
 	       		}
 	            

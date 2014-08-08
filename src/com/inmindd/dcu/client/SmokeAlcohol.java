@@ -336,7 +336,7 @@ public class SmokeAlcohol {
 		drinksFrequency =  new ListBox();
 		InlineLabel theSelection = new InlineLabel(constants.how_often_drink());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		drinksFrequency.addItem("Please select one");
+		drinksFrequency.addItem(constants.select_one());
         drinksFrequency.addItem("Never");
         drinksFrequency.addItem("Monthly or less");
         drinksFrequency.addItem("2-4 times per month");
@@ -357,8 +357,7 @@ public class SmokeAlcohol {
 
 		drinks.getElement().getStyle().setProperty("marginLeft", "25px");	
 		drinks.getElement().getStyle().setProperty("marginLeft", "25px");	
-		InlineLabel theSelection = new InlineLabel("Using the above table, how many standard drinks do you have" +
-				"  in A TYPICAL WEEK when you are drinking ?");
+		InlineLabel theSelection = new InlineLabel(constants.typical_drinks());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		
 
@@ -372,7 +371,7 @@ public class SmokeAlcohol {
 
 
 
-		drinks.addItem("Please select one - If not in Ireland");
+		drinks.addItem(constants.select_one());
 		drinks.addItem("7 or less");
 		drinks.addItem("8 - 14");
 		drinks.addItem("14 - 20");
@@ -457,14 +456,14 @@ public class SmokeAlcohol {
 		
 		// check if all buttons selected
 		if (!(currentSmoker.getValue() || formerSmoker.getValue() || neverSmoked.getValue())) {
-			InlineLabel error = new InlineLabel("Please select a button to indicate your Smoker status");
+			InlineLabel error = new InlineLabel("Please indicate your Smoker status");
 			showErrorPopupPanel(error, "red");
 			return false;
 		}		
 		
 		if (drinksFrequency.getSelectedIndex() <= 0) {
 			
-			InlineLabel error = new InlineLabel("Please indicate the frequncy of drinks per week");
+			InlineLabel error = new InlineLabel("Please indicate how often you take a drink");
 			showErrorPopupPanel(error, "red");
 			drinksFrequency.getElement().getStyle().setProperty("color", "red");
 			return false;			   
@@ -503,7 +502,7 @@ public class SmokeAlcohol {
 		
 		if (formerSmoker.getValue()) {
 			if (formerYearStart.getValue() == "" || formerYearStop.getValue() == "" || formerSmokePerDay.getDoubleValue() == 0) {
-				InlineLabel error = new InlineLabel("Please input former smoking data");
+				InlineLabel error = new InlineLabel("Please enter year you started smoking");
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerYearStop.getElement().getStyle().setProperty("color", "red");
@@ -519,14 +518,14 @@ public class SmokeAlcohol {
 			}
 			
 			if ((getValueAsInt(formerSmokePerDay) <= 0)) {
-				InlineLabel error = new InlineLabel("Please input smokes per day");
+				InlineLabel error = new InlineLabel("Please indicate number of cigarettes etc. per day");
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
 				return false;
 			}
 			if ((getValueAsInt(formerYearStop) < 1964) ||  getValueAsInt(formerYearStop) > 2015) {
-				InlineLabel error = new InlineLabel("Please input a valid stop year");
+				InlineLabel error = new InlineLabel("Please enter year you stopped smoking");
 				showErrorPopupPanel(error, "red");
 				formerYearStop.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
@@ -695,7 +694,7 @@ public class SmokeAlcohol {
 			InlineLabel theSelection = new InlineLabel("Please select country in which you are resident");
 			theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 			
-			countryResident.addItem("Please select one");
+			countryResident.addItem(constants.select_one());
 			countryResident.addItem("Ireland");
 			countryResident.addItem("Scotland");
 			countryResident.addItem("Netherlands");
@@ -771,8 +770,7 @@ public class SmokeAlcohol {
 			
 			FlowPanel bands = new FlowPanel();
 			
-			weeklyDrink.setText("Using the above table, how many standard drinks do you have" +
-					"  in A TYPICAL WEEK when you are drinking ?");
+			weeklyDrink.setText(constants.typical_drinks());
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
 			drinksBandIE.addItem("Please select one");
@@ -796,11 +794,10 @@ public class SmokeAlcohol {
 			
 			FlowPanel bands = new FlowPanel();
 			
-			weeklyDrink.setText("Using the above table, how many standard drinks do you have" +
-					"  in A TYPICAL WEEK when you are drinking ?");
+			weeklyDrink.setText(constants.typical_drinks());
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
-			drinksBandOther.addItem("Please select one");
+			drinksBandOther.addItem(constants.select_one());
 			drinksBandOther.addItem("7 or less");
 			drinksBandOther.addItem("8 - 14");
 			drinksBandOther.addItem("14 - 20");

@@ -100,15 +100,15 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	 * Strings representing the history tokens we will use to indicate which tab content
 	 * the user is viewing.
 	 */
-	static final String TOKEN_PATIENT = "About You";
-	static final String TOKEN_CESD = "About Your mood";	
-	static final String TOKEN_MEDICAL= "Medical health";
-	static final String TOKEN_HISTORY = "Family medical history";
+	static final String TOKEN_PATIENT = constants.about_you();
+	static final String TOKEN_CESD = constants.about_mood();	
+	static final String TOKEN_MEDICAL= constants.medical();
+	static final String TOKEN_HISTORY = constants.family_medical();
 	static final String TOKEN_PHYSICAL = constants.physical();
-	static final String TOKEN_COGNITIVE1 = "Cognitive Activity 1";
-	static final String TOKEN_COGNITIVE2 = "Cognitive Activity 2";
-	static final String TOKEN_SMOKE_ALCOHOL = "Smoking & Alcohol intake";
-	static final String TOKEN_DIET = "Diet";
+	static final String TOKEN_COGNITIVE1 = constants.cog_active_1();
+	static final String TOKEN_COGNITIVE2 = constants.cog_active_2();
+	static final String TOKEN_SMOKE_ALCOHOL = constants.smoking_drink();
+	static final String TOKEN_DIET = constants.diet_tab();
 	static final String TOKEN_LOGIN = "Login";
 	
 	
@@ -400,7 +400,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		content.add(patientPanel, Pages.PATIENT.getText());
 	
 		content.add(cesdPanel, Pages.CESD.getText());
-
 		content.add(medPanel, Pages.MEDICAL.getText());		
 		content.add(historyPanel, Pages.FAMILY_HISTORY.getText());
 		content.add(activityPanel, Pages.PHYSICAL.getText());
@@ -408,7 +407,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		content.add(cognitiveTwoPanel, Pages.COGNITIVE_2.getText());
 		content.add(smokeAlcoholPanel, Pages.SMOKE_ALCOHOL.getText());
 		content.add(dietPanel, Pages.DIET.getText());
-		
+		content.getElement().getStyle().setProperty("fontWeight", "normal");
 		
 		// Indicate that we should show the HOME tab initially.
 		content.selectTab(DECK_LOGIN);
@@ -446,7 +445,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		styleTabPanelUsingUIObject();	
 
 		content.setSize("100%",  "130%");
-		
+		content.getElement().getStyle().setProperty("fontWeight", "normal");
 		Label welLabel = new Label(constants.welcome());
 		Label euLabel = new Label(constants.eufunding_banner());
 		// Add the logo to the DOM element with id of "logo"
@@ -522,8 +521,8 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		 User user = login.getUser();
 				 if (user.getUserId() == null ) {
 
-					 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
-					 showErrorPopupPanel(error);
+					// InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
+					// showErrorPopupPanel(error);
 					 showLogin();
 					 return;
 
@@ -532,8 +531,10 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		// Get the token from the event
 		String page = event.getValue().trim();
 		// Check if the token is null or empty
+		
 		if ((page == null) || (page.equals("")))
 			showLogin();
+		
 		else if (page.equals(Pages.PATIENT.getText()))
 			showPatientInfo();	
 		else if (page.equals(Pages.CESD.getText()))

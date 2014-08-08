@@ -57,7 +57,7 @@ public class Login  {
 	
 	
 	
-	private HTML secondHeadline = new HTML("<h1>Please Logon or Register with the Inminnd Application</h1>");
+	private HTML secondHeadline = new HTML("<h1>Please Logon or Register with the InMINDD Application</h1>");
 	
 	/**Decorator panel for the login form*/
     private DecoratorPanel decPanel = new DecoratorPanel();
@@ -76,7 +76,7 @@ public class Login  {
   
 
   
-	private String userIdLabel = "User Id: ";
+	private String userIdLabel = "User ID: ";
     private String passwordLabel = "Password: ";
     private String passwordRepeat  = "Repeat password:";
     private String mothersMaiden  = "Please enter mother's maiden name";
@@ -267,7 +267,7 @@ public class Login  {
 	    				}
 
 	    				else {
-	    					InlineLabel error = new InlineLabel("You are now logged on to Inmindd. Please proceed to input panels");
+	    					InlineLabel error = new InlineLabel("You are now logged on to InMINDD. Please proceed to the About You panel");
 	    					showErrorPopupPanel(error, "green");	            			
 	    					setUser(user);	
 	    					// Clear screens of previous input
@@ -730,7 +730,7 @@ public class Login  {
 		  String userId =  user.getUserId();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
+			 InlineLabel error  = new InlineLabel("Please Logon or Register  with the InMINDD Application");
 			 showErrorPopupPanel(error, "red");
 			 return;
 

@@ -190,7 +190,7 @@ public class PatientInfo {
 		InlineLabel theSelection = new InlineLabel(constants.cob());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
-		country.addItem("Please select one");
+		country.addItem(constants.select_one());
          for (int i=0; i<loc.getSortedRegionCodes().length; i++) { 
                  String code = loc.getSortedRegionCodes()[i]; 
                  country.addItem(loc.getRegionName(code), code); 
@@ -207,7 +207,7 @@ public class PatientInfo {
 		FlowPanel maritalStatus = new FlowPanel();		
 		InlineLabel theSelection = new InlineLabel(constants.marital());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		marital.addItem("Please select one");
+		marital.addItem(constants.select_one());
         marital.addItem(constants.single());
         marital.addItem(constants.married());
         marital.addItem(constants.civil());
@@ -237,7 +237,7 @@ public class PatientInfo {
 	    please.getElement().getStyle().setProperty("fontWeight", "bold");
 	    please.setVisible(false);
 	    otherLivingArrangements.setVisible(false);
-		livingArrangements.addItem("Please select one");
+		livingArrangements.addItem(constants.select_one());
 		livingArrangements.addItem(constants.livingarrangement1());
 		livingArrangements.addItem(constants.livingarrangement2());
 		livingArrangements.addItem(constants.livingarrangement3());
@@ -276,7 +276,7 @@ public class PatientInfo {
 		InlineLabel theSelection = new InlineLabel("Please select country in which you are based");
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 
-		countryEducated.addItem("Please select one");
+		countryEducated.addItem(constants.select_one());
 		countryEducated.addItem("Ireland");
 		countryEducated.addItem("Scotland");
 		countryEducated.addItem("Netherlands");
@@ -326,7 +326,7 @@ public class PatientInfo {
 		//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
 		//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		
-		educationLevelIE.addItem("Please select one");
+		educationLevelIE.addItem(constants.select_one());
 		educationLevelIE.addItem("No formal education or training");
 		educationLevelIE.addItem("Primary Education");
 		educationLevelIE.addItem("Lower Secondary");
@@ -394,7 +394,7 @@ private FlowPanel getEducationSC() {
 		InlineLabel theSelection = new InlineLabel(constants.educationlevel());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		
-		educationLevelSC.addItem("Please select one");
+		educationLevelSC.addItem(constants.select_one());
 		educationLevelSC.addItem("No formal education or training");
 		educationLevelSC.addItem("Primary Education");
 		educationLevelSC.addItem("O Grade, Standard Grade [Includes School Leaving Certificate, GCSE, GCE o Level, CSE, NQ Access 3 Cluster. Intermediate 1, Intermediate 2, Senior Certiciate or equivalent]");
@@ -424,7 +424,7 @@ private FlowPanel getEducationNL() {
 	//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
 	//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 	
-	educationLevelNL.addItem("Please select one");
+	educationLevelNL.addItem(constants.select_one());
 	educationLevelNL.addItem("Geen formel onderwijs of opleiding");
 	educationLevelNL.addItem("Basisschool");
 	educationLevelNL.addItem("VMBO");
@@ -460,7 +460,7 @@ private FlowPanel getEducationFR() {
 	//InlineLabel theSelection = new InlineLabel(constants.educationlevel());
 	//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 	
-	educationLevelFR.addItem("Please select one");
+	educationLevelFR.addItem(constants.select_one());
 	educationLevelFR.addItem("Aucun éducation formelle ou  formation");
 	educationLevelFR.addItem("Enseignement primaire ");
 	educationLevelFR.addItem("BEPC, BEP,  CAP");
@@ -485,7 +485,7 @@ private FlowPanel getEducationFR() {
 		
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 	
-		occupation.addItem("Please select one");
+		occupation.addItem(constants.select_one());
 		occupation.addItem(constants.manager());        
 		occupation.addItem(constants.professional());
 		occupation.addItem(constants.technician());		
@@ -529,7 +529,7 @@ private FlowPanel getEducationFR() {
 		please.setVisible(false);
 		otherEmploymentStatus.setVisible(false);
 	
-		employmentStatus.addItem("Please select one");
+		employmentStatus.addItem(constants.select_one());
 		employmentStatus.addItem(constants.paid());
 		employmentStatus.addItem(constants.looking());
 		employmentStatus.addItem(constants.unemployed());

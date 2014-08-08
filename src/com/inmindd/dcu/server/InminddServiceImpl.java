@@ -449,7 +449,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 		//open database connection
 		initDBConnection();
-		
+		randGroup = null;
 		String idUser = user.getUserId();		
 		
 		ResultSet result = null;
@@ -461,15 +461,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				while (result.next()) {
 					if (result.getInt(5) == 2) {					
 						randGroup = result.getString(6);
+						conn.close();
 						return randGroup;
 					}
-				}
-				
+				}			
 			
 		}
 		catch (SQLException e) {
-			user = null;
-			//return user;
+			user = null;	
 			return randGroup;
 		}
 			
@@ -483,8 +482,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		initDBConnection();
 		
 		if (createPatientInfo(patient)) {
+			try {
+				conn.close();
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-				return  true;
+		return  true;
 			
 		
 		}
@@ -507,8 +513,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		String gender = patient.getGender();
 		String country_of_birth = patient.getCountryOfBirth();
 		String marital_status = patient.getMaritalStatus();
-		String living_arrangements = patient.getLivingArrangements();
-		
+		String living_arrangements = patient.getLivingArrangements();		
 		String occupational_group = patient.getOccupationalGroup();
 		String employment_status = patient.getEmploymentStatus();
 		String education_level = patient.getEducationLevel();
@@ -529,15 +534,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			updatePatientInfo.setString(4, gender);
 			updatePatientInfo.setString(5, country_of_birth);
 			updatePatientInfo.setString(6, marital_status);
-			updatePatientInfo.setString(7, living_arrangements);
-			
+			updatePatientInfo.setString(7, living_arrangements);			
 			updatePatientInfo.setString(8,occupational_group);
 			updatePatientInfo.setString(9, employment_status);
 			updatePatientInfo.setString(10, education_level);
 			updatePatientInfo.executeUpdate();
 			return true;
-		} catch (SQLException e) {
 			
+		} catch (SQLException e) {			
 			e.printStackTrace();
 			return false;
 		}
