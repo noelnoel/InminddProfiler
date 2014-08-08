@@ -93,6 +93,9 @@ High cognitive activity	0.38	-0.97	-3.2	3.2	17.1
 	if(typeof(adminReady) == "function"){
 		adminReady();
 	}
+	ga('create', 'UA-53537839-1', 'auto');
+  ga('send', 'pageview');
+
 }
 
 function clickFactors(event){
