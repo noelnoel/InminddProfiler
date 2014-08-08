@@ -47,6 +47,7 @@ public class Goals implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					loadGoalsRiskFactors();
 				}
 			}
@@ -60,6 +61,10 @@ public class Goals implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void loadGoalsRiskFactors(){
 		AsyncCallback<ArrayList<SupportGoal>> callback = new AsyncCallback<ArrayList<SupportGoal>>() {

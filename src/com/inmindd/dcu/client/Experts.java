@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -34,6 +35,7 @@ public class Experts implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getExperts();
 				}
 			}
@@ -47,6 +49,10 @@ public class Experts implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	public static void clickEmail(String email, String body) {
 		AsyncCallback<Boolean> callbackMail = new AsyncCallback<Boolean>() {

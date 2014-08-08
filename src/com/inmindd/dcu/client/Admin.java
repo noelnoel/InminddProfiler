@@ -102,6 +102,7 @@ public class Admin implements EntryPoint {
 				} else {
 					//DOM.getElementById("scoreInputRPC").setInnerText(user.toString());
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					InminddServiceSvc.isAdministrator(callbackAdmin);
 				}
 			}
@@ -295,6 +296,10 @@ public class Admin implements EntryPoint {
 		target.setServiceEntryPoint(moduleRelativeURL);
 		return true;
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void globalize(){
 		constants = 

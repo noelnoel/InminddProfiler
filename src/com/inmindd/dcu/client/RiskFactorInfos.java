@@ -43,6 +43,7 @@ public class RiskFactorInfos implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getRiskFactorsInfos();
 				}
 			}
@@ -56,6 +57,10 @@ public class RiskFactorInfos implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void getRiskFactorsInfos()
 	{

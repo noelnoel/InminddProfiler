@@ -32,6 +32,7 @@ public class FAQ implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getFAQ();
 				}
 			}
@@ -45,6 +46,10 @@ public class FAQ implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void getFAQ(){
 		String lang = user.getLang();

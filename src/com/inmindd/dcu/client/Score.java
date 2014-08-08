@@ -38,6 +38,7 @@ public class Score implements EntryPoint {
 				} else {
 					//DOM.getElementById("scoreInputRPC").setInnerText(user.toString());
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getInfos();
 				}
 			}
@@ -169,6 +170,10 @@ public class Score implements EntryPoint {
 		InminddServiceSvc.getLibraScore(user, callback);
 		return;
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void globalize(){
 		InminddConstants constants = 

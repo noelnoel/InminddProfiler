@@ -104,6 +104,13 @@ function clickFactors(event){
 
 }
 
+function trigeredUserIDByGWT(userID){
+	console.info("trigered userID: "+userID);
+	ga('create', 'UA-53537839-1', 'auto');
+	ga('set', '&uid', userID); // Définir l'ID utilisateur à partir du paramètre user_id de l'utilisateur connecté.
+	ga('send', 'pageview');
+}
+
 var data = {};
 var text = {};
 $(document).ready(function(){

@@ -27,7 +27,7 @@ public class Contact implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
-					
+					trigerUserIDJavascript(user.getUserId());
 					DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 					DOM.getElementById("contactDiv").setAttribute("style", "");
 				}
@@ -42,6 +42,10 @@ public class Contact implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	public void setUser(User user) {
 		this.user = user;

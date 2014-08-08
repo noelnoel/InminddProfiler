@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -30,6 +31,7 @@ public class Apps implements EntryPoint {
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getApps();
 				}
 			}
@@ -43,6 +45,10 @@ public class Apps implements EntryPoint {
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void getApps(){
 		String lang = user.getLang();
