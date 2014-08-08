@@ -1146,6 +1146,7 @@ public class MedicalHealth {
 		  */
 		 private void populatePanel(MedicalInfo medical) {
 			 int input  = (int) medical.getCent();
+			 double doubleInput = 0;
 			 heightCent.setText(Integer.toString(input));
 			 heightInputCents = input;
 			 input  = (int) medical.getFeet();
@@ -1164,8 +1165,8 @@ public class MedicalHealth {
 			 input  = (int) medical.getLbs();
 			 weightInputLbs = input;
 			 weightLbs.setText(Integer.toString(input));
-			 input = (int)medical.getMmol();
-			 mmol.setText(Integer.toString(input));
+			 doubleInput = (double)medical.getMmol();
+			 mmol.setText(Double.toString(doubleInput));
 			 String button = medical.getChol();
 			 if (button.equals("yes")) {
 				 cholYes.setValue(true);
@@ -1443,7 +1444,7 @@ public class MedicalHealth {
 			vertPanel.add(error);
 			popup.setWidget(vertPanel);
 			//popup.setGlassEnabled(true);
-			popup.setPopupPosition(190,700);
+			popup.setPopupPosition(190,550);
 			popup.setWidth("750px");
 			popup.show();
 

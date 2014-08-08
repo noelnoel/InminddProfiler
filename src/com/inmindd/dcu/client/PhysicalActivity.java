@@ -210,7 +210,7 @@ public class PhysicalActivity {
 		InlineLabel lbl10 = new InlineLabel(constants.vigorous());
 		lbl10.getElement().getStyle().setProperty("fontWeight", "bold");
 		horiz.add(lbl10);
-		sweatYes = new RadioButton("sweatGroup", "Yes");
+		sweatYes = new RadioButton("sweatGroup", constants.yes());
 		// Listen for mouse events on the sweat yes button.
 				sweatYes.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
@@ -219,7 +219,7 @@ public class PhysicalActivity {
 					
 		});
 				
-		sweatNo = new RadioButton("sweatGroup", "No");
+		sweatNo = new RadioButton("sweatGroup", constants.no());
 		
 		// Listen for mouse events on the sweat no button.
 		sweatNo.addClickHandler(new ClickHandler() {
