@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -17,6 +20,9 @@ public class Admin implements EntryPoint {
 	private AsyncCallback<Boolean> callbackAdmin;
 	private AsyncCallback<ArrayList<String>> callbackUsersList;
 	private static Admin lastInstance;
+	private ArrayList<String> userList;
+	private ArrayList<RiskFactorScore> scores;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -24,6 +30,16 @@ public class Admin implements EntryPoint {
 		exportClickUser();
 		globalize();
 		callServiceSetup();
+
+		Element elem3 = DOM.getElementById("emailButton");
+		DOM.sinkEvents(elem3, Event.ONCLICK);
+		EventListener eventRegister = new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				getScores();
+			}
+		};
+		DOM.setEventListener(elem3, eventRegister);
 		
 		callbackAdmin = new AsyncCallback<Boolean>() {
 			@Override
@@ -60,6 +76,8 @@ public class Admin implements EntryPoint {
 						output += "\"" + u + "\"";
 					}
 					output += "]";
+					
+					userList = users; 
 
 					DOM.getElementById("userInputRPC").setAttribute("value",output);
 					trigerJavascript();
@@ -104,6 +122,10 @@ public class Admin implements EntryPoint {
 
 	public static native void trigerJavascriptScore() /*-{
 		$wnd.trigeredByGWT();
+     }-*/;
+
+	public static native void trigerJavascriptMailing() /*-{
+		$wnd.trigeredMailingByGWT();
      }-*/;
 	
 	public static void clickUser(String userId) {
@@ -156,6 +178,113 @@ public class Admin implements EntryPoint {
 	private void setUser(User user) {
 		this.user = user;
 	}
+	
+	private void getScores(){
+		AsyncCallback<RiskFactorScore> callback = new AsyncCallback<RiskFactorScore>() {
+			@Override
+			public void onSuccess(RiskFactorScore score) {
+				if (score == null || score.getUserId().equals(null)) {
+					System.out.println("[RB_Admin::getScores] \\ score null");
+				} else {
+					scores.add(score);
+					
+					if(scores.size() == userList.size()){
+						// DO THE JS CaLL
+						String output = "";
+						for (RiskFactorScore scoreOver : scores){
+							boolean first = true;
+							
+							output += scoreOver.getUserId() + ";";
+							
+							if(scoreOver.getMidlifeHypertension() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_pressure();
+							}
+							if(scoreOver.getDepression() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_mood();
+							}
+							if(scoreOver.getPhysicalInactivity() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_activity();
+							}
+							if(scoreOver.getSmoking() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_smoking();
+							}
+							if(scoreOver.getAlcohol() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_alchool();
+							}
+							if(scoreOver.getMidlifeObesity() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_obesity();
+							}
+							if(scoreOver.getHighCognitiveActivity() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_cognitive();
+							}
+							if(scoreOver.getHealthyDiet() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_diet();
+							}
+							if(scoreOver.getCholesterol() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_cholesterol();
+							}
+							if(scoreOver.getDiabetes() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_diabetes();
+							}
+							if(scoreOver.getCoronaryHeartDisease() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_heart();
+							}
+							if(scoreOver.getChronicKidneyDisease() != 0){
+								if(!first){ output += ","; }
+								first = false;
+								output += lastInstance.constants.rf_kidney();
+							}
+							
+							output += "|";
+						}
+						DOM.getElementById("mailingInputRPC").setAttribute("value",output);
+						DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+						trigerJavascriptMailing();
+					}
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("[RB_Admin::getScores] \\ exception null");
+			}
+		};
+		
+		boolean start = true;
+		scores = new ArrayList<RiskFactorScore>();
+		for (String userId : userList) {
+			User userFake = new User();
+			userFake.setUserId(userId);
+			InminddServiceSvc.getLibraScore(userFake, callback);
+			if(start){
+				DOM.getElementById("loadingPanel").setAttribute("style", "text-align:center;margin-top:150px;");
+				DOM.getElementById("choosePanel").setAttribute("style", "display:none");
+				start = false;
+			}
+		}
+	}
 
 	private boolean callServiceSetup() {
 		// set up rpc call
@@ -168,7 +297,7 @@ public class Admin implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

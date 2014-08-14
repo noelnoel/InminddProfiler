@@ -121,7 +121,7 @@ public class Score implements EntryPoint {
 			public void onSuccess(RiskFactorScore score) {
 				if (score == null || score.getUserId().equals(null)) {
 					System.out.println("[RB_Score::getScore] \\ score null");
-					// TODO print error
+					Window.alert("Error: unable to retrieve your score");
 				} else {
 					// TODO retrieve result   scoreInputRPC
 
@@ -162,7 +162,7 @@ public class Score implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("[RB_Score::getScore] \\ exception null");
-				// TODO print error
+				Window.alert("Error: unable to retrieve your score");
 			}
 		};
 

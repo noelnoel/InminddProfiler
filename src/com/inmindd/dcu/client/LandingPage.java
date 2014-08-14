@@ -69,7 +69,7 @@ public class LandingPage implements EntryPoint {
 						}
 					};
 
-					InminddServiceSvc.authenticateUser(username, hashedPassword, callback);
+					InminddServiceSvc.authenticateUserSupportEnvironement(username, hashedPassword, callback);
 					DOM.getElementById("loadingPanel").setAttribute("style", "text-align:center;margin-top:150px;");
 					DOM.getElementById("loginPanel").setAttribute("style", "display:none");
 				}

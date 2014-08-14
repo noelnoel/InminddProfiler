@@ -70,6 +70,10 @@
                                     
                                 </select>
                                 <a href="#" class="btn btn-success btn-lg btn-block" id="userIdButton">Select this user</a>
+                                <a href="#" class="btn btn-success btn-lg btn-block" id="emailButton">Extract database for marketing email (it can take up to 60 seconds)</a>
+                            </div>
+                            <div class="row" id="mailingPanel" style="display:none">
+                                
                             </div>
                             <div id="scorePanel" style="display:none">
                                 <h1 style="text-align:center" id="score-1">Your LIBRA Profile/Score</h1>
@@ -202,7 +206,7 @@
                             </div>
                             
                             <hr style="margin-top:50px" />
-                            <div class="row">
+                            <div class="row bandeauUE">
                                 <div class="col-md-7 col-md-offset-2">
                                     <p id="eu-advert-message">Funded by EU FP7: This project has received funding from the European Union&rsquo;s Seventh Framework Programme for research, technological development and demonstration under grant agreement no 304979.</p>
                                 </div>
@@ -221,6 +225,7 @@
     </div>
 </div>
 <input text="text" id="userInputRPC" style="display:none;" value="" />
+<input text="text" id="mailingInputRPC" style="display:none;" value="" />
 <input text="text" id="scoreInputRPC" style="display:none;" value="" />
 <!-- script references -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
