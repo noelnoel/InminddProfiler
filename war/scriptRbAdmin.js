@@ -23,18 +23,54 @@ function trigeredMailingByGWT(){
 	console.info($("#mailingInputRPC").val());
 	myMail = $("#mailingInputRPC").val();
 	myMail = myMail.split("|");
+	var stringOutputGlobal = "";
 	for (var i = myMail.length - 1; i >= 0; i--) {
-		$("#mailingPanel").append($("<p></p>").html(myMail[i]));
+		
 		myMail[i] = myMail[i].split(";");
-		if(myMail[i].length > 1){
-			myMail[i][1] = myMail[i][1].split(",");
-		}
+		var stringOutput = "";
+		for (var j = 0; j < myMail[i].length; j++) {
+			if(j == 1){
+				myMail[i][1] = myMail[i][1].split(",");
+				stringOutput += "\"";
+				for (var k = myMail[i][j].length - 1; k >= 0; k--) {
+					stringOutput += myMail[i][j][k];
+					if(1 == k){
+						stringOutput += " and ";
+					} else if(0 != k) {
+						stringOutput += ", ";
+					}
+				};
+				stringOutput += "\"";
+			} else {
+				stringOutput += "\"" + myMail[i][j] + "\",";
+			}
+		};
+		stringOutputGlobal += stringOutput + "\n";
+		$("#mailingPanel").append($("<span></span>").html(stringOutput)).append($("<br />"));
 	};
 	$("#hiddingMenu").css("display", "none");
 	$("#mailingPanel").css("display", "");
 	$(".bandeauUE").css("display", "none");
 	$("hr").css("display", "none");
 	console.info(myMail);
+	newFile(stringOutputGlobal);
+}
+
+function newFile(data) {
+    var blob = new Blob([data], {type: 'text/csv'});
+    var url  = window.URL.createObjectURL(blob);
+    window.location.assign(url);
+
+    window.URL = window.webkitURL || window.URL;
+	var a = document.createElement('a');
+	a.download = 'mailing.csv';
+	a.href = url;
+	a.textContent = 'Download CSV';
+
+	a.dataset.downloadurl = ['text/csv', a.download, a.href].join(':');
+
+	document.body.appendChild(a);
+
 }
 
 function goalClickJS(event){
