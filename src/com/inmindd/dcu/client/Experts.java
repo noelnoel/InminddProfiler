@@ -16,6 +16,7 @@ public class Experts implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
+	private InminddConstants constants;
 	private static Experts lastInstance;
 
 	@Override
@@ -30,7 +31,7 @@ public class Experts implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Experts::getUser] \\ user null");
-					Window.alert("please connect before check Experts");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -60,9 +61,9 @@ public class Experts implements EntryPoint {
 			@Override
 			public void onSuccess(Boolean result) {
 				if(result){
-					Window.alert("Your email has been sent");
+					Window.alert(lastInstance.constants.supportMessageMailSent());
 				} else {
-					Window.alert("Error: your email has NOT been sent. Please try again later.");
+					Window.alert(lastInstance.constants.supportMessageMailNotSent());
 				}
 			}
 			
@@ -88,7 +89,7 @@ public class Experts implements EntryPoint {
 			@Override
 			public void onSuccess(ArrayList<SupportExperts> result) {
 				if(result == null || result.size() < 1){
-					Window.alert("Error: No Experts");
+					Window.alert(constants.supportMessageNoExperts());
 				} else {
 					String output = "[";
 					boolean firstTime = true;
@@ -108,7 +109,7 @@ public class Experts implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error: NO FAQ");
+				Window.alert(constants.supportMessageNoExperts());
 			}
 		};
 		InminddServiceSvc.querySupportExperts(lang, callback);
@@ -136,7 +137,7 @@ public class Experts implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

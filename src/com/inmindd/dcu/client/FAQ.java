@@ -16,6 +16,7 @@ public class FAQ implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -27,7 +28,7 @@ public class FAQ implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
-					Window.alert("please connect before check FAQ");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -60,7 +61,7 @@ public class FAQ implements EntryPoint {
 			@Override
 			public void onSuccess(ArrayList<SupportFAQ> result) {
 				if(result == null || result.size() < 1){
-					Window.alert("Error: No FAQ");
+					Window.alert(constants.supportMessageNoFaq());
 				} else {
 					String output = "[";
 					boolean firstTime = true;
@@ -80,7 +81,7 @@ public class FAQ implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error: NO FAQ");
+				Window.alert(constants.supportMessageNoFaq());
 			}
 		};
 		InminddServiceSvc.querySupportFAQ(lang, callback);
@@ -108,7 +109,7 @@ public class FAQ implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

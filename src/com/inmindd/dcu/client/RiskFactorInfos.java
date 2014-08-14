@@ -28,7 +28,7 @@ public class RiskFactorInfos implements EntryPoint {
 		callServiceSetup();
 		String riskFactor = com.google.gwt.user.client.Window.Location.getParameter("riskfactor");
 		if(riskFactor == null){
-			Window.alert("Error");
+			Window.alert(constants.supportMessageErrorLink());
 			return;
 		}
 		this.riskFactor = Integer.parseInt(riskFactor);
@@ -79,7 +79,7 @@ public class RiskFactorInfos implements EntryPoint {
 			public void onSuccess(SupportRiskFactorInfos infos) {
 				if (infos == null) {
 					System.out.println("[RB_RiskFactors::getRiskFactorsInfos] \\ score null");
-					Window.alert("No available content available in this language");
+					Window.alert(constants.supportMessageNoContentLanguage());
 				} else {
 					riskFactorInfos = infos;
 					getScore();

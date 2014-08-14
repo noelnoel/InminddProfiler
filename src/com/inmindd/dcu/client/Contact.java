@@ -12,6 +12,7 @@ public class Contact implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -22,7 +23,7 @@ public class Contact implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Contact::getUser] \\ user null");
-					Window.alert("please connect before check Contact");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -64,7 +65,7 @@ public class Contact implements EntryPoint {
 
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

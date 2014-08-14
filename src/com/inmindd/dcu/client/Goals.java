@@ -42,7 +42,7 @@ public class Goals implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Goals::getUser] \\ user null");
-					Window.alert("please connect before check your goals");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -72,7 +72,7 @@ public class Goals implements EntryPoint {
 			public void onSuccess(ArrayList<SupportGoal> goals) {
 				if (goals == null || goals.size() < 1) {
 					System.out.println("[RB_Goals::getRisksFactors] \\ risksFactors null");
-					Window.alert("Error: you have no goals");
+					Window.alert(constants.supportMessageNoGoals());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
@@ -105,7 +105,7 @@ public class Goals implements EntryPoint {
 			public void onSuccess(ArrayList<SupportGoalUser> goals) {
 				if (goals == null || goals.size() < 1) {
 					System.out.println("[RB_Goals::getRisksFactors] \\ risksFactors null");
-					Window.alert("please connect before check your goals");
+					Window.alert(constants.supportMessageNoUsersGoals());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
