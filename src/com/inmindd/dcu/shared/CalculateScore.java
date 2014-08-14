@@ -103,6 +103,7 @@ public class CalculateScore {
 			/*
 			 *  calculate the score for each risk factor
 			 */
+		
 			alcohol(rf);
 			heartDisease(rf);
 			kidneyDisease(rf);
@@ -280,6 +281,14 @@ public class CalculateScore {
 		double weightKilos = medical.getKilo();
 		double weightStone = medical.getStone();
 		double weightLbs = medical.getLbs();
+		if (heightMeters > 0 && weightKilos == 0 && weightStone > 0) { // someone using metric & imperial. convert weight to metric
+			weightKilos = ((weightStone * 14) + weightLbs) * 0.453;
+		}
+		
+		if (weightKilos > 0 && heightMeters == 0 && heightFeet > 0) { //again. Convert feet / inches to metric
+			heightMeters = ((heightFeet * 12 + heightInches) * 2.54) / 100;
+		}
+		
 		if (heightMeters > 0 && weightKilos > 0){
 			bmi = (weightKilos / heightMeters) / heightMeters; 
 		//	double roundOffBmi = Math.round(bmi * 100.0) / 100.0;
@@ -300,8 +309,7 @@ public class CalculateScore {
 			} else {
 				rf.setMidlifeObesity(0);
 			}
-			return;	
-			
+			return;				
 		}
 	}
 	

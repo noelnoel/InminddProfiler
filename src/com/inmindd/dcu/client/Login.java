@@ -291,7 +291,7 @@ public class Login  {
 	    						Diet.clearInputs();
 	    					//userId.setText("");
 	    					password.setText("");
-	    					//getScore();   uncomment this to calc score at login
+	    					//getScore();   //uncomment this to calc score at login
 	    				}
 
 	    			}

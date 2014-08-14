@@ -17,29 +17,30 @@ public class PhysicalActivityInfo  implements Serializable{
 
 
 	private String physicalWork;
-	private int summerWalkingHours;
-	private int winterWalkingHours;
-	private int summerCyclingHours;
-	private int winterCyclingHours;
-	private int summerGardenHours;
-	private int winterGardenHours;
-	private int diyHours;
-	private int summerPhysicalHours;
-	private int winterPhysicalHours;
-	private int summerHouseworkHours;
-	private int winterHouseworkHours;
+	private double summerWalkingHours;
+	private double winterWalkingHours;
+	private double summerCyclingHours;
+	private double winterCyclingHours;
+	private double summerGardenHours;
+	private double winterGardenHours;
+	private double diyHours;
+	private double summerPhysicalHours;
+	private double winterPhysicalHours;
+	private double summerHouseworkHours;
+	private double winterHouseworkHours;
 	private String vigorous;
-	private int vigorousHours;
-	public int getVigorousHours() {
+	private double vigorousHours;
+	
+	public double getVigorousHours() {
 		return vigorousHours;
 	}
 
-	public void setVigorousHours(int vigorousHours) {
+	public void setVigorousHours(double vigorousHours) {
 		this.vigorousHours = vigorousHours;
 	}
 
 
-	private int flightStairs;
+	private double flightStairs;
 	
 
 	
@@ -47,12 +48,12 @@ public class PhysicalActivityInfo  implements Serializable{
 		
 	}
 
-	public int getSummerHouseworkHours() {
+	public double getSummerHouseworkHours() {
 		return summerHouseworkHours;
 	}
 
 
-	public void setSummerHouseworkHours(int summerHouseworkHours) {
+	public void setSummerHouseworkHours(double summerHouseworkHours) {
 		this.summerHouseworkHours = summerHouseworkHours;
 	}
 
@@ -66,102 +67,102 @@ public class PhysicalActivityInfo  implements Serializable{
 	}
 
 
-	public int getSummerWalkingHours() {
+	public double getSummerWalkingHours() {
 		return summerWalkingHours;
 	}
 
 
-	public void setSummerWalkingHours(int summerWalkingHours) {
+	public void setSummerWalkingHours(double summerWalkingHours) {
 		this.summerWalkingHours = summerWalkingHours;
 	}
 
 
-	public int getWinterWalkingHours() {
+	public double getWinterWalkingHours() {
 		return winterWalkingHours;
 	}
 
 
-	public void setWinterWalkingHours(int winterWalkingHours) {
-		this.winterWalkingHours = winterWalkingHours;
+	public void setWinterWalkingHours(double d) {
+		this.winterWalkingHours = d;
 	}
 
 
-	public int getSummerCyclingHours() {
+	public double getSummerCyclingHours() {
 		return summerCyclingHours;
 	}
 
 
-	public void setSummerCyclingHours(int summerCyclingHours) {
+	public void setSummerCyclingHours(double summerCyclingHours) {
 		this.summerCyclingHours = summerCyclingHours;
 	}
 
 
-	public int getWinterCyclingHours() {
+	public double getWinterCyclingHours() {
 		return winterCyclingHours;
 	}
 
 
-	public void setWinterCyclingHours(int winterCyclingHours) {
+	public void setWinterCyclingHours(double winterCyclingHours) {
 		this.winterCyclingHours = winterCyclingHours;
 	}
 
 
-	public int getSummerGardenHours() {
+	public double getSummerGardenHours() {
 		return summerGardenHours;
 	}
 
 
-	public void setSummerGardenHours(int summerGardenHours) {
+	public void setSummerGardenHours(double summerGardenHours) {
 		this.summerGardenHours = summerGardenHours;
 	}
 
 
-	public int getWinterGardenHours() {
+	public double getWinterGardenHours() {
 		return winterGardenHours;
 	}
 
 
-	public void setWinterGardenHours(int winterGardenHours) {
+	public void setWinterGardenHours(double winterGardenHours) {
 		this.winterGardenHours = winterGardenHours;
 	}
 
 
-	public int getDiyHours() {
+	public double getDiyHours() {
 		return diyHours;
 	}
 
 
-	public void setDiyHours(int diyHours) {
+	public void setDiyHours(double diyHours) {
 		this.diyHours = diyHours;
 	}
 
 
-	public int getSummerPhysicalHours() {
+	public double getSummerPhysicalHours() {
 		return summerPhysicalHours;
 	}
 
 
-	public void setSummerPhysicalHours(int summerPhysicalHours) {
+	public void setSummerPhysicalHours(double summerPhysicalHours) {
 		this.summerPhysicalHours = summerPhysicalHours;
 	}
 
 
-	public int getWinterPhysicalHours() {
+	public double getWinterPhysicalHours() {
 		return winterPhysicalHours;
 	}
 
 
-	public void setWinterPhysicalHours(int winterPhysicalHours) {
+	public void setWinterPhysicalHours(double winterPhysicalHours) {
 		this.winterPhysicalHours = winterPhysicalHours;
 	}
 
 
-	public int getWinterHouseworkHours() {
+	public double getWinterHouseworkHours() {
 		return winterHouseworkHours;
 	}
 
 
-	public void setWinterHouseworkHours(int winterHouseworkHours) {
+	public void setWinterHouseworkHours(double winterHouseworkHours) {
 		this.winterHouseworkHours = winterHouseworkHours;
 	}
 
@@ -178,13 +179,13 @@ public class PhysicalActivityInfo  implements Serializable{
 
 	
 
-	public int getFlightStairs() {
+	public double getFlightStairs() {
 		return flightStairs;
 	}
 
 
-	public void setFlightStairs(int flightStairs) {
-		this.flightStairs = flightStairs;
+	public void setFlightStairs(double d) {
+		this.flightStairs = d;
 	}
 
 }

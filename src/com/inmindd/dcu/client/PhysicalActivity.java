@@ -210,7 +210,7 @@ public class PhysicalActivity {
 		InlineLabel lbl10 = new InlineLabel(constants.vigorous());
 		lbl10.getElement().getStyle().setProperty("fontWeight", "bold");
 		horiz.add(lbl10);
-		sweatYes = new RadioButton("sweatGroup", "Yes");
+		sweatYes = new RadioButton("sweatGroup", constants.yes());
 		// Listen for mouse events on the sweat yes button.
 				sweatYes.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
@@ -219,7 +219,7 @@ public class PhysicalActivity {
 					
 		});
 				
-		sweatNo = new RadioButton("sweatGroup", "No");
+		sweatNo = new RadioButton("sweatGroup", constants.no());
 		
 		// Listen for mouse events on the sweat no button.
 		sweatNo.addClickHandler(new ClickHandler() {
@@ -624,19 +624,19 @@ private boolean checkHours(TextBox hours) {
 	
 		activity = new PhysicalActivityInfo();
 		activity.setUserId(login.getUserId());
-		activity.setSummerWalkingHours(getValueAsInt(walkingSummer));
-		activity.setWinterWalkingHours(getValueAsInt(walkingWinter));
-		activity.setSummerCyclingHours(getValueAsInt(cyclingSummer));
-		activity.setWinterCyclingHours(getValueAsInt(cyclingWinter));
-		activity.setSummerGardenHours(getValueAsInt(gardeningSummer));
-		activity.setWinterGardenHours(getValueAsInt(gardeningWinter));
-		activity.setSummerPhysicalHours(getValueAsInt(exerciseSummer));
-		activity.setWinterPhysicalHours(getValueAsInt(exerciseWinter));
-		activity.setSummerHouseworkHours(getValueAsInt(houseworkSummer));
-		activity.setWinterHouseworkHours(getValueAsInt(houseworkWinter));
-		activity.setDiyHours(getValueAsInt(diy));
-		activity.setFlightStairs(getValueAsInt(stairs));
-		activity.setVigorousHours(getValueAsInt(vig));
+		activity.setSummerWalkingHours(getValueAsDouble(walkingSummer));
+		activity.setWinterWalkingHours(getValueAsDouble(walkingWinter));
+		activity.setSummerCyclingHours(getValueAsDouble(cyclingSummer));
+		activity.setWinterCyclingHours(getValueAsDouble(cyclingWinter));
+		activity.setSummerGardenHours(getValueAsDouble(gardeningSummer));
+		activity.setWinterGardenHours(getValueAsDouble(gardeningWinter));
+		activity.setSummerPhysicalHours(getValueAsDouble(exerciseSummer));
+		activity.setWinterPhysicalHours(getValueAsDouble(exerciseWinter));
+		activity.setSummerHouseworkHours(getValueAsDouble(houseworkSummer));
+		activity.setWinterHouseworkHours(getValueAsDouble(houseworkWinter));
+		activity.setDiyHours(getValueAsDouble(diy));
+		activity.setFlightStairs(getValueAsDouble(stairs));
+		activity.setVigorousHours(getValueAsDouble(vig));
 		if (standingBtn.getValue()) {
 			activity.setPhysicalWork("standing");
 		}
@@ -663,12 +663,12 @@ private boolean checkHours(TextBox hours) {
 		return activity;
 	}
 	
-	private int getValueAsInt(DataField hours) {	
+	private double getValueAsDouble(DataField hours) {	
 		
 		// get the hours entered
-		int hoursActivity = 0;
+		double hoursActivity = 0;
 		try {
-			hoursActivity = Integer.parseInt(hours.getText());	
+			hoursActivity = Double.parseDouble(hours.getText());	
 		}
 
 		catch (Exception e)	{					
@@ -679,14 +679,14 @@ private boolean checkHours(TextBox hours) {
 		return hoursActivity;
 	}
 	
-private int getValueAsInt(TextBox hours) {
+	private double getValueAsDouble(TextBox hours) {
 		
 		
 		
 		// get the hours entered
-		int hoursActivity = 0;
+		double hoursActivity = 0;
 		try {
-			hoursActivity = Integer.parseInt(hours.getText());	
+			hoursActivity = Double.parseDouble(hours.getText());	
 		}
 
 		catch (Exception e)	{					
@@ -696,6 +696,7 @@ private int getValueAsInt(TextBox hours) {
 		}
 		return hoursActivity;
 	}
+
 	private void showErrorPopupPanel(InlineLabel error, String colour) {
 		PopupPanel popup = new PopupPanel(true, true);			
 

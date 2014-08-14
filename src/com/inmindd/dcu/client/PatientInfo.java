@@ -1007,14 +1007,7 @@ private FlowPanel getEducationFR() {
 		 }
 			 
  }
-	 
- 
-		
-		 
-		 
-	
-
-	 
+	 	 
 	 private void showErrorPopupPanel(InlineLabel error) {
 			PopupPanel popup = new PopupPanel(true, true);			
 

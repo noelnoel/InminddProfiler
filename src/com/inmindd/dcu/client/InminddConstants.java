@@ -185,6 +185,7 @@ public interface InminddConstants extends Constants{
 	 	 */
 	 	String family_med_error();
 	 	String familymed();
+	 	String diabetes();
 	 	String familyquestions();
 	 	String history_1();
 	 	String history_2();
