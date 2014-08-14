@@ -2,6 +2,7 @@
    width: 100%;
    height: 90%;
    margin: 15px;
+ 
 }
 
 H1 {
@@ -38,19 +39,18 @@ H1 {
 }
 
 
-.gwt-TabLayoutPanel .inmindd{
-	display:block;
-	width:100%;
-	padding:.3em 0;
-	margin-bottom:.3em;
-	font-size:125%;
-	color:#333;
-	border-bottom:1px solid #e5e5e5
-}
+
 #search{
    margin-left: 15px;
 }
 
+@external gwt-TabLayoutPanelTab;
+.gwt-TabLayoutPanelTab {
+    font-weight:normal !important;
+    margin-top: 2px;
+    padding: 8px 6px !important; 
+   
+}
 
 .feedback{
    color: white;

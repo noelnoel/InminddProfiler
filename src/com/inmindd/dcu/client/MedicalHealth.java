@@ -936,7 +936,7 @@ public class MedicalHealth {
 				return false;
 			if (! checkButtonSelected(heartDiseaseLabel, heartDiseaseYes, heartDiseaseNo, heartDiseaseDontKnow))
 				return false;
-			if (! checkButtonSelected(hyperLabel, hyperYes, hyperNo))
+			if (! checkButtonSelected(hyperLabel, hyperYes, hyperNo, hyperDontKnow))
 				return false;
 			if (! checkButtonSelected(bloodPressureLabel, bloodPressureYes, bloodPressureNo))
 				return false;

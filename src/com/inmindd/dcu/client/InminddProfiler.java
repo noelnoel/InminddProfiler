@@ -420,6 +420,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	private void styleTabPanelUsingUIObject(){
 	
 		content.setHeight("900px");  // don;t change this
+	
 	}
 	
 	
@@ -445,7 +446,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		styleTabPanelUsingUIObject();	
 
 		content.setSize("100%",  "130%");
-		content.getElement().getStyle().setProperty("fontWeight", "normal");
+	
 		Label welLabel = new Label(constants.welcome());
 		Label euLabel = new Label(constants.eufunding_banner());
 		// Add the logo to the DOM element with id of "logo"

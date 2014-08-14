@@ -1131,19 +1131,19 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		long time = System.currentTimeMillis();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 		
-		int diyHours = activity.getDiyHours();
-		int summerWalkingHours = activity.getSummerWalkingHours();
-		int winterWalkingHours = activity.getWinterWalkingHours();
-		int summerCyclingHours = activity.getSummerCyclingHours();
-		int winterCyclingHours = activity.getWinterCyclingHours();
-		int summerGardenHours = activity.getSummerGardenHours();
-		int winterGardenHours = activity.getWinterGardenHours();
-		int summerPhysicalHours = activity.getSummerPhysicalHours();
-		int winterPhysicalHours = activity.getWinterPhysicalHours();
-		int summerHouseworkHours = activity.getSummerHouseworkHours();
-		int winterHouseworkHours = activity.getWinterHouseworkHours();
-		int vigorousHours = activity.getVigorousHours();
-		int flightStairs = activity.getFlightStairs();
+		double diyHours = activity.getDiyHours();
+		double summerWalkingHours = activity.getSummerWalkingHours();
+		double winterWalkingHours = activity.getWinterWalkingHours();
+		double summerCyclingHours = activity.getSummerCyclingHours();
+		double winterCyclingHours = activity.getWinterCyclingHours();
+		double summerGardenHours = activity.getSummerGardenHours();
+		double winterGardenHours = activity.getWinterGardenHours();
+		double summerPhysicalHours = activity.getSummerPhysicalHours();
+		double winterPhysicalHours = activity.getWinterPhysicalHours();
+		double summerHouseworkHours = activity.getSummerHouseworkHours();
+		double winterHouseworkHours = activity.getWinterHouseworkHours();
+		double vigorousHours = activity.getVigorousHours();
+		double flightStairs = activity.getFlightStairs();
 		String workActivity = activity.getPhysicalWork();
 		String vigorous = activity.getVigorous();
 		String insert = "insert  into physical_activities_info(patient_id,timestamp,diy_hours,  summer_walking_hours, winter_walking_hours, summer_cycling_hours, winter_cycling_hours, summer_garden_hours, winter_garden_hours,"
@@ -1154,19 +1154,19 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			PreparedStatement updateActivitiesInfo = (PreparedStatement) conn.prepareStatement(insert);
 			updateActivitiesInfo.setString(1, patient_id);
 			updateActivitiesInfo.setTimestamp(2,timestamp);
-			updateActivitiesInfo.setInt(3, diyHours);
-			updateActivitiesInfo.setInt(4, summerWalkingHours);
-			updateActivitiesInfo.setInt(5, winterWalkingHours);
-			updateActivitiesInfo.setInt(6, summerCyclingHours);
-			updateActivitiesInfo.setInt(7, winterCyclingHours);
-			updateActivitiesInfo.setInt(8, summerGardenHours);
-			updateActivitiesInfo.setInt(9, winterGardenHours);
-			updateActivitiesInfo.setInt(10, summerPhysicalHours);			
-			updateActivitiesInfo.setInt(11, winterPhysicalHours);
-			updateActivitiesInfo.setInt(12, summerHouseworkHours);			
-			updateActivitiesInfo.setInt(13, winterHouseworkHours);
-			updateActivitiesInfo.setInt(14, flightStairs);	
-			updateActivitiesInfo.setInt(15, vigorousHours);
+			updateActivitiesInfo.setDouble(3, diyHours);
+			updateActivitiesInfo.setDouble(4, summerWalkingHours);
+			updateActivitiesInfo.setDouble(5, winterWalkingHours);
+			updateActivitiesInfo.setDouble(6, summerCyclingHours);
+			updateActivitiesInfo.setDouble(7, winterCyclingHours);
+			updateActivitiesInfo.setDouble(8, summerGardenHours);
+			updateActivitiesInfo.setDouble(9, winterGardenHours);
+			updateActivitiesInfo.setDouble(10, summerPhysicalHours);			
+			updateActivitiesInfo.setDouble(11, winterPhysicalHours);
+			updateActivitiesInfo.setDouble(12, summerHouseworkHours);			
+			updateActivitiesInfo.setDouble(13, winterHouseworkHours);
+			updateActivitiesInfo.setDouble(14, flightStairs);	
+			updateActivitiesInfo.setDouble(15, vigorousHours);
 			
 			
 			updateActivitiesInfo.setString(16, workActivity);
@@ -1515,7 +1515,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while (result.last()) {
 				cognitiveTwo.setUserId(result.getString(1));
 				cognitiveTwo.setReading_years(result.getInt(2));				
-				cognitiveTwo.setHolidays_years(result.getInt(3));
+				cognitiveTwo.setHousehold_years(result.getInt(3));
 				cognitiveTwo.setDriving_years(result.getInt(4));
 				cognitiveTwo.setLeisure_years(result.getInt(5));
 				cognitiveTwo.setTechnology_years(result.getInt(6));
@@ -1966,19 +1966,19 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			while (result.last()) {
 				physical.setUserId(result.getString(1));
-				physical.setDiyHours(result.getInt(3));
-				physical.setSummerWalkingHours(result.getInt(4));
-				physical.setWinterWalkingHours(result.getInt(5));
-				physical.setSummerCyclingHours(result.getInt(6));
-				physical.setWinterCyclingHours(result.getInt(7));
-				physical.setSummerGardenHours(result.getInt(8));
-				physical.setWinterGardenHours(result.getInt(9));
-				physical.setSummerPhysicalHours(result.getInt(10));
-				physical.setWinterPhysicalHours(result.getInt(11));
-				physical.setSummerHouseworkHours(result.getInt(12));
-				physical.setWinterHouseworkHours(result.getInt(13));
-				physical.setFlightStairs(result.getInt(14));
-				physical.setVigorousHours(result.getInt(15));
+				physical.setDiyHours(result.getDouble(3));
+				physical.setSummerWalkingHours(result.getDouble(4));
+				physical.setWinterWalkingHours(result.getDouble(5));
+				physical.setSummerCyclingHours(result.getDouble(6));
+				physical.setWinterCyclingHours(result.getDouble(7));
+				physical.setSummerGardenHours(result.getDouble(8));
+				physical.setWinterGardenHours(result.getDouble(9));
+				physical.setSummerPhysicalHours(result.getDouble(10));
+				physical.setWinterPhysicalHours(result.getDouble(11));
+				physical.setSummerHouseworkHours(result.getDouble(12));
+				physical.setWinterHouseworkHours(result.getDouble(13));
+				physical.setFlightStairs(result.getDouble(14));
+				physical.setVigorousHours(result.getDouble(15));
 				physical.setPhysicalWork(result.getString(16));
 				physical.setVigorous(result.getString(17));
 				conn.close();

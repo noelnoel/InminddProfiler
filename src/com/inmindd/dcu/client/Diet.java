@@ -253,7 +253,8 @@ public class Diet {
 	       		}            		
 	       		else {
 	       			InlineLabel error = new InlineLabel("The User with Id " + user.getUserId() + " has been randomised into the " + group + " group");
-	       			showErrorPopupPanel(error, "red");   
+	       			//showErrorPopupPanel(error, "red");   
+	       			Window.alert("The User with Id " + user.getUserId() + " has been randomised into the " + group + " group");
 	       			
 	       			outerUser.setRandomGroup(group);
 	       			
@@ -762,8 +763,8 @@ public class Diet {
 		vertPanel.add(error);
 		popup.setWidget(vertPanel);
 		
-		popup.setPopupPosition(190,520);
-		popup.setWidth("550px");popup.setHeight("200px");
+		popup.setPopupPosition(190,220);
+		popup.setWidth("550px");
 		popup.show();
 
 	}

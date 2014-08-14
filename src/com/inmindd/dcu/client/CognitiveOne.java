@@ -145,6 +145,26 @@ public class CognitiveOne {
 			@Override
 			public void onClick(ClickEvent event) {	
 				checkResponses();
+				
+				// clear out any previously entered responses 
+				lastinstance.agriculturalSimulYears.setText("");
+				lastinstance.agriculturalYears.setText("");
+				lastinstance.clericalSimulYears.setText("");
+				lastinstance.clericalYears.setText("");
+				lastinstance.craftSimulYears.setText("");
+				lastinstance.craftYears.setText("");
+				lastinstance.elementarySimulYears.setText("");
+				lastinstance.elementaryYears.setText("");
+				lastinstance.managerSimulYears.setText("");
+				lastinstance.managerYears.setText("");
+				lastinstance.plantSimulYears.setText("");
+				lastinstance.plantYears.setText("");
+				lastinstance.professionalSimulYears.setText("");
+				lastinstance.professionalYears.setText("");
+				lastinstance.serviceSimulYears.setText("");
+				lastinstance.serviceYears.setText("");
+				lastinstance.technicianSimulYears.setText("");
+				lastinstance.technicianYears.setText("");		
 				updateCognitiveOneDB();
 			}   		
 

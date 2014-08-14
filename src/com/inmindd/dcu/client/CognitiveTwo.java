@@ -1166,7 +1166,7 @@ public class CognitiveTwo {
 		childYes.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				numberChildren.setVisible(true);
-				numberChildren.setFocus();
+				numberChildren.setFocus();				
 			}  
 		});
 		
@@ -1294,48 +1294,138 @@ public class CognitiveTwo {
 			return false;
 			
 		}
-		// check if all buttons selected
+		// check if all buttons selected and number of years is valid
 		if (!checkButtonSelected(readingLabel, readingNever, readingOften))
-			return false;
+			return false;	
+		if (readingOften.getValue()) {
+			if(!checkYears(oftenRead, "reading activity"))
+				return false;
+		}
+			
 		if (!checkButtonSelected(householdLabel, householdNever, householdOften))
 			return false;
+		
+		if (householdOften.getValue()) {
+			if(!checkYears(oftenHousehold, "household activity"))
+				return false;
+		}
 		if (!checkButtonSelected(drivingLabel, drivingNever, drivingOften))
 			return false;
+	
+		
+		if (drivingOften.getValue()) {
+			if(!checkYears(oftenDrive, "driving activity"))
+				return false;
+		}
 		if (!checkButtonSelected(leisureLabel, leisureNever, leisureOften))
 			return false;
+		if (leisureOften.getValue()) {
+			if(!checkYears(oftenLeisure, "lesiure activity"))
+				return false;
+		}
 		if (!checkButtonSelected(techLabel, techNever, techOften))
 			return false;
+		
+		if (techOften.getValue()) {
+			if(!checkYears(oftenTech, "technology activity"))
+				return false;
+		}
 		if (!checkButtonSelected(socialLabel, socialNever, socialOften))
 			return false;
+		if (socialOften.getValue()) {
+			if(!checkYears(oftenSocial, "social activity"))
+				return false;
+		}
 		if (!checkButtonSelected(cinemaLabel, cinemaNever, cinemaOften))
 			return false;
+		if (cinemaOften.getValue()) {
+			if(!checkYears(oftenCinema, "cinema activity"))
+				return false;
+		}
 		if (!checkButtonSelected(gardeningLabel, gardeningNever, gardeningOften))
 			return false;
+		if (gardeningOften.getValue()) {
+			if(!checkYears(oftenGardening, "gardening activity"))
+				return false;
+		}
 		if (!checkButtonSelected(careLabel, careNever, careOften))
 			return false;
+		
+		if (careOften.getValue()) {
+			if(!checkYears(oftenCare, "caring activity"))
+				return false;
+		}
 		if (!checkButtonSelected(volunteerLabel, volunteerNever, volunteerOften))
 			return false;
+		
+		if (volunteerOften.getValue()) {
+			if(!checkYears(oftenVolunteer, "volunteering activity"))
+				return false;
+		}
 		if (!checkButtonSelected(artisticLabel, artisticNever, artisticOften))
 			return false;
+		if (artisticOften.getValue()) {
+			if(!checkYears(oftenArtistic, "artistic activity"))
+				return false;
+		}
 		if (!checkButtonSelected(exhibLabel, exhibNever, exhibOften))
 				return false;
+		if (exhibOften.getValue()) {
+			if(!checkYears(oftenExhib, "exhibition activity"))
+				return false;
+		}
 		if (!checkButtonSelected(holidayLabel, holidayNever, holidayOften))
 			return false;
+		if (holidayOften.getValue()) {
+			if(!checkYears(oftenHoliday, "holiday activity"))
+				return false;
+		}
 		if (!checkButtonSelected(booksLabel, booksNever, booksOften))
 			return false;
+		if (booksOften.getValue()) {
+			if(!checkYears(oftenBooks, "books activity"))
+				return false;
+		}
 		if (!checkButtonSelected(childrenLabel, childYes, childNo))
 			return false;
-		if (!checkButtonSelected(petsLabel, petsOften, petsNever))
+		if (!checkButtonSelected(petsLabel, petsNever, petsOften))
 			return false;
+		if (petsOften.getValue()) {
+			if(!checkYears(oftenPets, "pets activity"))
+				return false;
+		}
 		if (!checkButtonSelected(bankLabel, bankNever, bankOften))
 			return false;
+		if (bankOften.getValue()) {
+			if(!checkYears(oftenBank, "banking activity"))
+				return false;
+		}
+		// check user has entered number if children
+		if (childYes.getValue()) {
+			
+			int numberChild = getValueAsInt(numberChildren);
+			if (numberChild <= 0) {
+				error = new InlineLabel("Please enter number of children raised");
+				showErrorPopupPanel(error, "red");
+				return false;
+			}
+			//return true;
+		}		
 		
-		
-		
-		else 
+		 
 			return true;
 	}
 
+	private boolean checkYears(DataField field, String activity) {
+		
+			if (getValueAsInt(field) > 42) {
+				InlineLabel error  = new InlineLabel("Value entered for " + activity + " cannot be greater than 42");
+				showErrorPopupPanel(error, "red");
+				return false;				
+			}		
+		
+		return true;
+	}
 	private boolean checkButtonSelected(InlineLabel label, RadioButton ... buttons) {
 		label.getElement().getStyle().setProperty("color", "black");	
 		int numButtons = buttons.length;  // how many are there ?
@@ -1367,7 +1457,7 @@ public class CognitiveTwo {
 		popup.setWidget(vertPanel);
 		///popup.setGlassEnabled(true);
 		popup.setPopupPosition(190,500);
-		popup.setWidth("550px");
+		popup.setWidth("650px");
 		popup.show();
 
 	}
@@ -1432,78 +1522,140 @@ public class CognitiveTwo {
 		
 		if(cognitiveTwo.getArtistic().equals("never"))
 			artisticNever.setValue(true);
-		if(cognitiveTwo.getArtistic().equals("often"))
+		if(cognitiveTwo.getArtistic().equals("often")) {
 			artisticOften.setValue(true);
+			oftenArtistic.setText(Integer.toString(cognitiveTwo.getArtistic_years()));
+			oftenArtistic.setVisible(true);
+		}
 		if(cognitiveTwo.getBank_account().equals("never"))
 			bankNever.setValue(true);
-		if(cognitiveTwo.getBank_account().equals("often"))
-			bankOften.setValue(true);		
+		if(cognitiveTwo.getBank_account().equals("often")) {
+			bankOften.setValue(true);
+			oftenBank.setText(Integer.toString(cognitiveTwo.getBank_account_years()));
+			oftenBank.setVisible(true);
+			
+		}
 		if(cognitiveTwo.getBooks().equals("never"))
 			booksNever.setValue(true);
-		if(cognitiveTwo.getBooks().equals("often"))
-			booksOften.setValue(true);		
+		if(cognitiveTwo.getBooks().equals("often")) {
+			booksOften.setValue(true);	
+			oftenBooks.setText(Integer.toString(cognitiveTwo.getBooks_years()));
+			oftenBooks.setVisible(true);
+			
+		}
 		if(cognitiveTwo.getChildren().equals("never"))
 			careNever.setValue(true);
-		if(cognitiveTwo.getChildren().equals("often"))
+		if(cognitiveTwo.getChildren().equals("often")) {
 			careOften.setValue(true);		
+			oftenCare.setText(Integer.toString(cognitiveTwo.getChildren_years()));
+			oftenCare.setVisible(true);
+		}
 		if(cognitiveTwo.getCinema().equals("never"))
 			cinemaNever.setValue(true);
-		if(cognitiveTwo.getCinema().equals("often"))
-			cinemaOften.setValue(true);		
+		if(cognitiveTwo.getCinema().equals("often")) {
+			cinemaOften.setValue(true);	
+			oftenCinema.setText(Integer.toString(cognitiveTwo.getCinema_years()));
+			oftenCinema.setVisible(true);
+			
+		}
 		if(cognitiveTwo.getDriving().equals("never"))
 			drivingNever.setValue(true);
-		if(cognitiveTwo.getDriving().equals("often"))
-			drivingOften.setValue(true);		
+		if(cognitiveTwo.getDriving().equals("often")) {
+			drivingOften.setValue(true);
+			oftenDrive.setText(Integer.toString(cognitiveTwo.getDriving_years()));
+			oftenDrive.setVisible(true);
+			
+		}
 		if(cognitiveTwo.getExhibitions().equals("never"))
-			exhibNever.setValue(true);
-		if(cognitiveTwo.getExhibitions().equals("often"))
-			exhibOften.setValue(true);		
+			exhibNever.setValue(true);			
+		
+		if(cognitiveTwo.getExhibitions().equals("often")) {
+			exhibOften.setValue(true);	
+			oftenExhib.setText(Integer.toString(cognitiveTwo.getExhibitions_years()));
+			oftenExhib.setVisible(true);			
+		}
+		
 		if(cognitiveTwo.getGardening().equals("never"))
 			gardeningNever.setValue(true);
-		if(cognitiveTwo.getGardening().equals("often"))
-			gardeningOften.setValue(true);		
+		if(cognitiveTwo.getGardening().equals("often")) {
+			gardeningOften.setValue(true);	
+			oftenGardening.setText(Integer.toString(cognitiveTwo.getGardening_years()));
+			oftenGardening.setVisible(true);
+			
+		}
 		if(cognitiveTwo.getHolidays().equals("never"))
 			holidayNever.setValue(true);
-		if(cognitiveTwo.getGardening().equals("often"))
+		if(cognitiveTwo.getHolidays().equals("often")) {
 			holidayOften.setValue(true);
+			oftenHoliday.setText(Integer.toString(cognitiveTwo.getHolidays_years()));
+			oftenHoliday.setVisible(true);
+		}
 		
 		if(cognitiveTwo.getHousehold().equals("never"))
 			householdNever.setValue(true);
-		if(cognitiveTwo.getHousehold().equals("often"))
+		if(cognitiveTwo.getHousehold().equals("often")) {
 			householdOften.setValue(true);
-		
+			oftenHousehold.setText(Integer.toString(cognitiveTwo.getHousehold_years()));
+			oftenHousehold.setVisible(true);
+		}
 		if(cognitiveTwo.getLeisure().equals("never"))
 			leisureNever.setValue(true);
-		if(cognitiveTwo.getLeisure().equals("often"))
-			leisureOften.setValue(true);
+		if(cognitiveTwo.getLeisure().equals("often")) {
+			leisureOften.setValue(true);		
+			oftenLeisure.setText(Integer.toString(cognitiveTwo.getLeisure_years()));
+			oftenLeisure.setVisible(true);
+		}
 		
 		if(cognitiveTwo.getPets().equals("never"))
 			petsNever.setValue(true);
-		if(cognitiveTwo.getPets().equals("often"))
+		if(cognitiveTwo.getPets().equals("often")) {
 			petsOften.setValue(true);
+			oftenPets.setText(Integer.toString(cognitiveTwo.getPets_years()));
+			oftenPets.setVisible(true);
+			
+		}
 		
 		if(cognitiveTwo.getReading().equals("never"))
 			readingNever.setValue(true);
-		if(cognitiveTwo.getReading().equals("often"))
+		if(cognitiveTwo.getReading().equals("often")) {
 			readingOften.setValue(true);
+			oftenRead.setText(Integer.toString(cognitiveTwo.getReading_years()));
+			oftenRead.setVisible(true);
+		}
 		
 		if(cognitiveTwo.getSocial().equals("never"))
 			socialNever.setValue(true);
-		if(cognitiveTwo.getSocial().equals("often"))
+		if(cognitiveTwo.getSocial().equals("often")) {
 			socialOften.setValue(true);
+			oftenSocial.setText(Integer.toString(cognitiveTwo.getSocial_years()));
+			oftenSocial.setVisible(true);
+			
+		}
 		
 		if(cognitiveTwo.getTechnology().equals("never"))
 			techNever.setValue(true);
-		if(cognitiveTwo.getTechnology().equals("often"))
+		if(cognitiveTwo.getTechnology().equals("often")) {
 			techOften.setValue(true);
+			oftenTech.setText(Integer.toString(cognitiveTwo.getTechnology_years()));
+			oftenTech.setVisible(true);
+		}
 		
 		if(cognitiveTwo.getVolunteering().equals("never"))
 			volunteerNever.setValue(true);
-		if(cognitiveTwo.getVolunteering().equals("often"))
+		if(cognitiveTwo.getVolunteering().equals("often")) {
 			volunteerOften.setValue(true);
+			oftenVolunteer.setText(Integer.toString(cognitiveTwo.getVolunteering_years()));
+			oftenVolunteer.setVisible(true);
+			
+		}
 		
-		if(cognitiveTwo.getRaised_children().equals("yes"))
+		if(cognitiveTwo.getRaised_children().equals("yes")) {
 			childYes.setValue(true);
+			numberChildren.setText(Integer.toString(cognitiveTwo.getNumber_children()));
+			numberChildren.setVisible(true);
+			
+			
+		}
 		if(cognitiveTwo.getRaised_children().equals("no"))
 			childNo.setValue(true);
 		
@@ -1519,6 +1671,7 @@ public class CognitiveTwo {
 		oftenGardening.setText(Integer.toString(cognitiveTwo.getGardening_years()));
 		oftenHoliday.setText(Integer.toString(cognitiveTwo.getHolidays_years()));
 		oftenHousehold.setText(Integer.toString(cognitiveTwo.getHousehold_years()));
+		
 		oftenLeisure.setText(Integer.toString(cognitiveTwo.getLeisure_years()));
 		oftenPets.setText(Integer.toString(cognitiveTwo.getPets_years()));
 		oftenRead.setText(Integer.toString(cognitiveTwo.getReading_years()));
