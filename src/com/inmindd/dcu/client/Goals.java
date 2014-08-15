@@ -119,7 +119,8 @@ public class Goals implements EntryPoint {
 					output += "]";
 
 					DOM.getElementById("goalsInputRPC").setAttribute("value",output);
-
+					DOM.getElementById("goalsTranslationRPC").setAttribute("value",constants.goal_6());
+					
 					trigerGlobalJavascript();
 				}
 			}
