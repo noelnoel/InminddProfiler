@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
 
 public class Admin implements EntryPoint {
@@ -20,9 +21,11 @@ public class Admin implements EntryPoint {
 	private AsyncCallback<Boolean> callbackAdmin;
 	private AsyncCallback<ArrayList<String>> callbackUsersList;
 	private static Admin lastInstance;
+	private static User userQuery;
+	private static AsyncCallback<RiskFactorScore> callbackScore;
 	private ArrayList<String> userList;
-	private ArrayList<RiskFactorScore> scores;
 	private InminddConstants constants;
+	private ArrayList<SupportRiskFactorInfos> infosRiskFactors;
 
 	@Override
 	public void onModuleLoad() {
@@ -129,10 +132,10 @@ public class Admin implements EntryPoint {
      }-*/;
 	
 	public static void clickUser(String userId) {
-		User user = new User();
-		user.setUserId(userId);
-
-		AsyncCallback<RiskFactorScore> callback = new AsyncCallback<RiskFactorScore>() {
+		userQuery = new User();
+		userQuery.setUserId(userId);
+		
+		callbackScore = new AsyncCallback<RiskFactorScore>() {
 
 			@Override
 			public void onSuccess(RiskFactorScore score) {
@@ -140,18 +143,18 @@ public class Admin implements EntryPoint {
 					System.out.println("[RB_Admin::getScore] \\ score null");
 					// TODO print error
 				} else {
-					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() +
-							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() +
-							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() +
-							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() +
-							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() +
-							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() +
-							"},\"heart_disease\": { \"id\":11, \"score\":" + score.getCoronaryHeartDisease() +
-							"},\"kidney_disease\": { \"id\":12, \"score\":" + score.getChronicKidneyDisease() +
-							"},\"mood\": { \"id\":2, \"score\":" + score.getDepression() +
-							"}, \"obesity\": { \"id\":7, \"score\":" + score.getMidlifeObesity() +
-							"}, \"physical_exercise\": { \"id\":4, \"score\":" + score.getPhysicalInactivity() +
-							"},\"smoking\": { \"id\":5, \"score\":" + score.getSmoking() +
+					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(0).getImage_url() +"\"" +
+							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(9).getImage_url() +"\"" +
+							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(7).getImage_url() +"\"" +
+							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(2).getImage_url() +"\"" +
+							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(8).getImage_url() +"\"" +
+							"},\"drinking\": { \"id\":6, \"score\":" + score.getAlcohol() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(5).getImage_url() +"\"" +
+							"},\"heart_disease\": { \"id\":11, \"score\":" + score.getCoronaryHeartDisease() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(10).getImage_url() +"\"" +
+							"},\"kidney_disease\": { \"id\":12, \"score\":" + score.getChronicKidneyDisease() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(11).getImage_url() +"\"" +
+							"},\"mood\": { \"id\":2, \"score\":" + score.getDepression() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(1).getImage_url() +"\"" +
+							"}, \"obesity\": { \"id\":7, \"score\":" + score.getMidlifeObesity() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(6).getImage_url() +"\"" +
+							"}, \"physical_exercise\": { \"id\":4, \"score\":" + score.getPhysicalInactivity() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(3).getImage_url() +"\"" +
+							"},\"smoking\": { \"id\":5, \"score\":" + score.getSmoking() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(4).getImage_url() +"\"" +
 							"}}";
 
 					DOM.getElementById("scoreInputRPC").setAttribute("value",output);
@@ -165,8 +168,29 @@ public class Admin implements EntryPoint {
 				// TODO print error
 			}
 		};
+		
+		AsyncCallback<ArrayList<SupportRiskFactorInfos>> callback = new AsyncCallback<ArrayList<SupportRiskFactorInfos>>() {
+			@Override
+			public void onSuccess(ArrayList<SupportRiskFactorInfos> riskFactorsInfos) {
+				if (riskFactorsInfos == null || riskFactorsInfos.size() == 0) {
+					System.out.println("[RB_Score::getInfos] \\ infos null");
+					// TODO print error
+				} else {
+					lastInstance.infosRiskFactors = riskFactorsInfos;
+					lastInstance.InminddServiceSvc.getLibraScore(userQuery, callbackScore);
+				}
 
-		lastInstance.InminddServiceSvc.getLibraScore(user, callback);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("[RB_Score::getInfos] \\ exception null");
+				// TODO print error
+			}
+		};
+
+		lastInstance.InminddServiceSvc.queryAllSupportRiskFactorInfos(lastInstance.user, callback);
+
 		return;
 	}
 	
