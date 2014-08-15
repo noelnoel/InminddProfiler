@@ -21,8 +21,9 @@ function load(){
 
 	$("#imagesGoals").html("");
 	$("#textGoals").html("");
+	var goalTranslation = $("#goalsTranslationRPC").val();
 	for (var i = 0; i < data.length; i++) {
-		var h4 = $("<h4></h4>").html("Goal #"+data[i].goalNb);
+		var h4 = $("<h4></h4>").html(goalTranslation+data[i].goalNb);
 		var img = $("<img />").attr("src", data[i].image_url).addClass("img-circle").attr("x-image", data[i].goalNb);
 		var a = $("<a></a>").attr("href","#").attr("id", "image"+ data[i].goalNb).append(img);
 		var div = $("<div class=\"col-md-"+data.colSpan+" col-md-offset-"+data.marginColTop+" text-center\"></div>").append(h4).append(a);
