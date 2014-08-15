@@ -41,6 +41,13 @@ function mailClickJS(event){
 	window.mailClick($("#emailForm").val(), $("#questionForm").val());
 }
 
+function trigeredUserIDByGWT(userID){
+	console.info("trigered userID: "+userID);
+	ga('create', 'UA-53537839-1', 'auto');
+	ga('set', '&uid', userID); // Définir l'ID utilisateur à partir du paramètre user_id de l'utilisateur connecté.
+	ga('send', 'pageview');
+}
+
 $(document).ready(function(){
 	$(document).on("click","#askExperts8", mailClickJS);
 });

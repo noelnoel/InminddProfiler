@@ -6,6 +6,7 @@ package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
 
+import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -22,6 +23,7 @@ public class Score implements EntryPoint {
 	private InminddServiceAsync InminddServiceSvc;
 	private ArrayList<SupportRiskFactorInfos> infosRiskFactors;
 	private User user;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -32,12 +34,13 @@ public class Score implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Score::getScore] \\ user null");
-					Window.alert("please connect before check your score");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					//DOM.getElementById("scoreInputRPC").setInnerText(user.toString());
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getInfos();
 				}
 			}
@@ -76,7 +79,7 @@ public class Score implements EntryPoint {
 		if (user == null) {
 			// TODO print error
 			System.out.println("[RB_Score::getScore] \\ user null");
-			Window.alert("please connect before check your score");
+			Window.alert(constants.errorNotLoggedIn());
 			return;
 		}
 
@@ -110,7 +113,7 @@ public class Score implements EntryPoint {
 		if (user == null) {
 			// TODO print error
 			System.out.println("[RB_Score::getScore] \\ user null");
-			Window.alert("please connect before check your score");
+			Window.alert(constants.errorNotLoggedIn());
 			return;
 		}
 
@@ -121,7 +124,7 @@ public class Score implements EntryPoint {
 			public void onSuccess(RiskFactorScore score) {
 				if (score == null || score.getUserId().equals(null)) {
 					System.out.println("[RB_Score::getScore] \\ score null");
-					Window.alert("Error: unable to retrieve your score");
+					Window.alert(constants.supportMessageScoreFailed());
 				} else {
 					// TODO retrieve result   scoreInputRPC
 
@@ -162,16 +165,20 @@ public class Score implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("[RB_Score::getScore] \\ exception null");
-				Window.alert("Error: unable to retrieve your score");
+				Window.alert(constants.supportMessageScoreFailed());
 			}
 		};
 
 		InminddServiceSvc.getLibraScore(user, callback);
 		return;
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

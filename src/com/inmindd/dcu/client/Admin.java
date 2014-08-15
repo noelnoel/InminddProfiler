@@ -46,7 +46,7 @@ public class Admin implements EntryPoint {
 			public void onSuccess(Boolean admin) {
 				if(!admin){
 					System.out.println("[RB_Admin::getAdmin] \\ user not admin");
-					Window.alert("You have to be administrator to consult this page");
+					Window.alert(constants.supportMessageAdmin());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html");
 				} else {
 					InminddServiceSvc.queryAllUsers(callbackUsersList);
@@ -56,7 +56,7 @@ public class Admin implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("[RB_Admin::getAdmin] \\ exception null");
-				// TODO print error
+				Window.alert(constants.supportMessageInternalError());
 			}
 		};
 		
@@ -65,7 +65,7 @@ public class Admin implements EntryPoint {
 			public void onSuccess(ArrayList<String> users) {
 				if(users == null || users.size() <= 0){
 					System.out.println("[RB_Admin::getUsersList] \\ aucuns users");
-					Window.alert("No users to retrieve");
+					Window.alert(constants.supportMessageNoUsers());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html");
 				} else {
 					String output = "[";
@@ -87,7 +87,7 @@ public class Admin implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("[RB_Admin::getAdmin] \\ exception null");
-				// TODO print error
+				Window.alert(constants.supportMessageInternalError());
 			}
 		};
 		
@@ -96,12 +96,12 @@ public class Admin implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Admin::getUser] \\ user null");
-					Window.alert("please connect before check your score");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
-					// TODO print error
 				} else {
 					//DOM.getElementById("scoreInputRPC").setInnerText(user.toString());
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					InminddServiceSvc.isAdministrator(callbackAdmin);
 				}
 			}
@@ -295,6 +295,10 @@ public class Admin implements EntryPoint {
 		target.setServiceEntryPoint(moduleRelativeURL);
 		return true;
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void globalize(){
 		constants = 

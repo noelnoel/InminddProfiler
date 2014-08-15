@@ -2540,8 +2540,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		   		     new InternetAddress("maria.pierce@dcu.ie", "Maria Pierce"));
 		    	msg.addRecipient(Message.RecipientType.TO,
 			   		     new InternetAddress("Muriel.redmond@dcu.ie", "Muriel Redmond"));
-		    	msg.addRecipient(Message.RecipientType.TO,
-			   		     new InternetAddress("inmindd@romainbeuque.fr", "Admin"));
 		    } else if(lang.equals("fr")){
 		    	msg.addRecipient(Message.RecipientType.TO,
 		   		     new InternetAddress("valeria.manera@unice.fr", "Valeria Manera"));

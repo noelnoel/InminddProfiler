@@ -2,6 +2,7 @@ package com.inmindd.dcu.client;
 
 import java.util.Date;
 
+import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
@@ -19,6 +20,7 @@ import com.sun.java.swing.plaf.windows.resources.windows;
 public class LandingPage implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
+	private InminddConstants constants;
 
 
 	@Override
@@ -45,7 +47,7 @@ public class LandingPage implements EntryPoint {
 					AsyncCallback<User> callback = new AsyncCallback<User>() {
 						public void onSuccess(User user) {
 							if ((user == null)){	            		
-								Window.alert("Invalid User Id or Password  - please reenter. Check Caps lock");
+								Window.alert(constants.supportMessageInvalidLogin());
 								DOM.getElementById("loginPanel").setAttribute("style", "");
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 							}
@@ -135,12 +137,12 @@ public class LandingPage implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Unable to logout");
+				Window.alert(constants.supportMessageUnableLogout());
 			}
 
 			@Override
 			public void onSuccess(Boolean result) {
-				Window.alert("Successfully logged out!");
+				Window.alert(constants.supportMessageLogout());
 				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html");
 			}
 		};
@@ -171,7 +173,7 @@ public class LandingPage implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());

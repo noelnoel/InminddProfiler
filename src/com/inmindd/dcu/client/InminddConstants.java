@@ -474,6 +474,22 @@ public interface InminddConstants extends Constants{
 		
 		String euFunding();
 	 	String logout();
-		
+	 	
+	 	String supportMessageAdmin();
+	 	String supportMessageNoUsers();
+	 	String supportMessageNoApps();
+	 	String supportMessageMailSent();
+	 	String supportMessageMailNotSent();
+	 	String supportMessageNoExperts();
+	 	String supportMessageNoFaq();
+	 	String supportMessageNoGoals();
+	 	String supportMessageNoUsersGoals();
+	 	String supportMessageInvalidLogin();
+	 	String supportMessageLogout();
+		String supportMessageUnableLogout();
+		String supportMessageErrorLink();
+		String supportMessageNoContentLanguage();
+		String supportMessageScoreFailed();
+		String supportMessageInternalError();
 		
 }

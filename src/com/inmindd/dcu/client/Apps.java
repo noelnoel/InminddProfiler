@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -14,6 +15,7 @@ public class Apps implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
+	private InminddConstants constants;
 
 	@Override
 	public void onModuleLoad() {
@@ -25,11 +27,12 @@ public class Apps implements EntryPoint {
 			public void onSuccess(User user) {
 				if (user == null) {
 					System.out.println("[RB_Apps::getUser] \\ user null");
-					Window.alert("please connect before check Apps");
+					Window.alert(constants.errorNotLoggedIn());
 					Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 					// TODO print error
 				} else {
 					setUser(user);
+					trigerUserIDJavascript(user.getUserId());
 					getApps();
 				}
 			}
@@ -37,12 +40,16 @@ public class Apps implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("[RB_goals::getUser] \\ exception null");
-				// TODO print error
+				Window.alert(constants.supportMessageInternalError());
 			}
 		};
 
 		InminddServiceSvc.getUserConnected(callback);
 	}
+
+	public static native void trigerUserIDJavascript(String userID) /*-{
+		$wnd.trigeredUserIDByGWT(userID);
+     }-*/;
 	
 	private void getApps(){
 		String lang = user.getLang();
@@ -52,13 +59,13 @@ public class Apps implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error: NO APPS");
+				Window.alert(constants.supportMessageNoApps());
 			}
 
 			@Override
 			public void onSuccess(ArrayList<SupportApps> result) {
 				if(result == null || result.size() < 1){
-					Window.alert("Error: No APPS");
+					Window.alert(constants.supportMessageNoApps());
 				} else {
 					String output = "[";
 					boolean firstTime = true;
@@ -101,7 +108,7 @@ public class Apps implements EntryPoint {
 	}
 	
 	private void globalize(){
-		InminddConstants constants = 
+		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
