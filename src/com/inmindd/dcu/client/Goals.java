@@ -209,6 +209,7 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
+		DOM.getElementById("landing-loading").setInnerHTML(constants.landing_loading());
 		
 		DOM.getElementById("goalsh1").setInnerHTML(constants.goal_0());
 		DOM.getElementById("goal-7").setInnerHTML(constants.goal_7());
