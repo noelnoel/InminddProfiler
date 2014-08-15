@@ -26,6 +26,7 @@ public class Admin implements EntryPoint {
 	private ArrayList<String> userList;
 	private InminddConstants constants;
 	private ArrayList<SupportRiskFactorInfos> infosRiskFactors;
+	private ArrayList<RiskFactorScore> scores;
 
 	@Override
 	public void onModuleLoad() {
