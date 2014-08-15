@@ -266,6 +266,8 @@ public class Admin implements EntryPoint {
 								first = false;
 								output += lastInstance.constants.rf_cholesterol();
 							}
+							first = true;
+							output += ";";
 							if(scoreOver.getDiabetes() != 0){
 								if(!first){ output += ","; }
 								first = false;
@@ -285,6 +287,7 @@ public class Admin implements EntryPoint {
 							output += "|";
 						}
 						DOM.getElementById("mailingInputRPC").setAttribute("value",output);
+						DOM.getElementById("andtranslationRPC").setAttribute("value",constants.supportAnd());
 						DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 						trigerJavascriptMailing();
 					}

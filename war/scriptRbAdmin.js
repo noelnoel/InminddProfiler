@@ -29,18 +29,21 @@ function trigeredMailingByGWT(){
 		myMail[i] = myMail[i].split(";");
 		var stringOutput = "";
 		for (var j = 0; j < myMail[i].length; j++) {
-			if(j == 1){
-				myMail[i][1] = myMail[i][1].split(",");
+			if(j != 0){
+				myMail[i][j] = myMail[i][j].split(",");
 				stringOutput += "\"";
 				for (var k = myMail[i][j].length - 1; k >= 0; k--) {
 					stringOutput += myMail[i][j][k];
 					if(1 == k){
-						stringOutput += " and ";
+						stringOutput += " "+ $("#andtranslationRPC").val() +" ";
 					} else if(0 != k) {
 						stringOutput += ", ";
 					}
 				};
 				stringOutput += "\"";
+				if(j != myMail[i].length-1){
+					stringOutput += ",";
+				}
 			} else {
 				stringOutput += "\"" + myMail[i][j] + "\",";
 			}
@@ -59,7 +62,7 @@ function trigeredMailingByGWT(){
 function newFile(data) {
     var blob = new Blob([data], {type: 'text/csv'});
     var url  = window.URL.createObjectURL(blob);
-    window.location.assign(url);
+    //window.location.assign(url);
 
     window.URL = window.webkitURL || window.URL;
 	var a = document.createElement('a');

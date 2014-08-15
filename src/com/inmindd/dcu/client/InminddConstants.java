@@ -495,5 +495,6 @@ public interface InminddConstants extends Constants{
 		String supportMessageNoContentLanguage();
 		String supportMessageScoreFailed();
 		String supportMessageInternalError();
+		String supportAnd();
 		
 }
