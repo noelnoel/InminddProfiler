@@ -103,7 +103,7 @@ public class CalculateScore {
 			/*
 			 *  calculate the score for each risk factor
 			 */
-		
+			physical(rf);
 			alcohol(rf);
 			heartDisease(rf);
 			kidneyDisease(rf);
@@ -115,7 +115,7 @@ public class CalculateScore {
 			mmol(rf);
 			diet(rf);
 			cri(rf);  // calculate cognitive reserve index
-			physical(rf);
+			
 		}
 		catch (Exception e) {
 			rf = null;
@@ -129,16 +129,16 @@ public class CalculateScore {
 		String  workType = physical.getPhysicalWork();
 		double hrsWeekCycling = physical.getSummerCyclingHours() + physical.getWinterCyclingHours();
 		double hrsWeekPhysical = physical.getSummerPhysicalHours() + physical.getWinterPhysicalHours();
-		if ((hrsWeekCycling + hrsWeekPhysical) / 2  >= 3.5) {
+		if ((hrsWeekCycling + hrsWeekPhysical) / 2.0  >= 3.5) {
 			rf.setPhysicalInactivity(0);
 			
 		}
-		if ((hrsWeekCycling + hrsWeekPhysical) / 2  == 0 && !(workType.equals("manual") || workType.equals("heavy"))) {
+		if ((hrsWeekCycling + hrsWeekPhysical) / 2.0  == 0 && !(workType.equals("manual") || workType.equals("heavy"))) {
 			rf.setPhysicalInactivity(5.9);
 			return;
 		}
 		
-		if ((hrsWeekCycling  + hrsWeekPhysical) / 2  <= 3.50 && (workType.equals("sedentary"))) {
+		if ((hrsWeekCycling  + hrsWeekPhysical) / 2.0  <= 3.50 && (workType.equals("sedentary"))) {
 			rf.setPhysicalInactivity(5.9);
 			return;
 		}
@@ -702,18 +702,18 @@ public class CalculateScore {
 				
 				physical.setUserId(result.getString(1));
 				physical.setDiyHours(result.getInt(3));
-				physical.setSummerWalkingHours(result.getInt(4));
-				physical.setWinterWalkingHours(result.getInt(5));
-				physical.setSummerCyclingHours(result.getInt(6));
-				physical.setWinterCyclingHours(result.getInt(7));
-				physical.setSummerGardenHours(result.getInt(8));
-				physical.setWinterGardenHours(result.getInt(9));
-				physical.setSummerPhysicalHours(result.getInt(10));
-				physical.setWinterPhysicalHours(result.getInt(11));
-				physical.setSummerHouseworkHours(result.getInt(12));
-				physical.setWinterHouseworkHours(result.getInt(13));
-				physical.setFlightStairs(result.getInt(14));
-				physical.setVigorousHours(result.getInt(15));
+				physical.setSummerWalkingHours(result.getDouble(4));
+				physical.setWinterWalkingHours(result.getDouble(5));
+				physical.setSummerCyclingHours(result.getDouble(6));
+				physical.setWinterCyclingHours(result.getDouble(7));
+				physical.setSummerGardenHours(result.getDouble(8));
+				physical.setWinterGardenHours(result.getDouble(9));
+				physical.setSummerPhysicalHours(result.getDouble(10));
+				physical.setWinterPhysicalHours(result.getDouble(11));
+				physical.setSummerHouseworkHours(result.getDouble(12));
+				physical.setWinterHouseworkHours(result.getDouble(13));
+				physical.setFlightStairs(result.getDouble(14));
+				physical.setVigorousHours(result.getDouble(15));
 				physical.setPhysicalWork(result.getString(16));
 				physical.setVigorous(result.getString(17));
 				return;
