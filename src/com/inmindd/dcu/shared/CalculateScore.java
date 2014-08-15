@@ -86,10 +86,11 @@ public class CalculateScore {
 			result = pstmt.executeQuery(query);
 			populatePhysical(result);	
 			
-			
+			conn.close();
 		} catch (SQLException e) {			
 			e.printStackTrace();
-		}			
+		}
+		
 		rf = score(rf);  // does the actual calculations based on the inputs
 		
 		return rf;
