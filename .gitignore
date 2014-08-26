@@ -41,3 +41,11 @@ war/Experts/
 war/Apps/
 war/Contact/
 war/Admin/
+
+# Intellij Project Files
+*.iml
+.idea
+
+# Eclipse project Files
+*.classpath
+*.project
