@@ -58,5 +58,8 @@ html, body {
 
 .faqTitle:hover {
 	color: grey;
-	pointer: cursor;
+	text-decoration: underline;
+	z-index: 1;
+	cursor:pointer;
+	
 }

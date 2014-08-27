@@ -158,7 +158,7 @@ public class Goals implements EntryPoint {
 					System.out.println("[RB_goals::sendGoal] \\ echec");
 				}
 				else {
-					Window.alert(lastInstance.constants.goal_8());
+
 					Window.Location.assign(GWT.getHostPageBaseURL() + "goals.html");
 				}
 			}
