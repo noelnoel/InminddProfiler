@@ -47,5 +47,10 @@ war/Admin/
 .idea
 
 # Eclipse project Files
-*.classpath
-*.project
+.classpath
+.project
+.settings
+
+# GWT files
+.gwt
+
