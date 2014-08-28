@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,6 +30,10 @@ public class MedicalHealth {
 	
 	
 	public static MedicalHealth lastinstance;
+	
+	private static final int DECK_MEDICAL = 3;	
+	private static final int DECK_HISTORY = 4;
+	
 	
 	
 	public static void clearInputs() {
@@ -83,6 +88,7 @@ public class MedicalHealth {
 	
 	private User user;
 	private Login login;
+	private TabLayoutPanel content;
 	private FlowPanel medicalHealthPanel = new FlowPanel();
 	private ScrollPanel scroll = new ScrollPanel();
 	private FlowPanel medical;
@@ -193,6 +199,10 @@ public class MedicalHealth {
 	private  MedicalInfo medicalData;  
 	private static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
+	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
+	}
 	public MedicalHealth() {
 		lastinstance = this;
 	}
@@ -223,6 +233,7 @@ public class MedicalHealth {
 		heightCent.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
+				
 				double height = heightCent.getDoubleValue();
 				String heightText = heightCent.getText();
 				if (heightText == "") {
@@ -247,6 +258,8 @@ public class MedicalHealth {
 			}
 		});
 
+		
+		String user = login.getUserId();
 		heightFeet = new DataField(constants.feet());
 
 		heightFeet.getElement().getStyle().setProperty("marginLeft", "52px");
@@ -255,8 +268,7 @@ public class MedicalHealth {
 		heightInches = new DataField(constants.inches());
 		heightInches.getElement().getStyle().setProperty("marginLeft", "20px");
 		heightInches.getElement().getStyle().setProperty("fontWeight", "bold");
-
-
+	
 		heightFeet.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
@@ -1310,8 +1322,10 @@ public class MedicalHealth {
 	            			showErrorPopupPanel(error, "red");            			
 	            		}            		
 	            		else {
-	            			InlineLabel error = new InlineLabel(constants.med_complete());
-	            			showErrorPopupPanel(error, "green");            			            			
+	            			////InlineLabel error = new InlineLabel(constants.med_complete());
+	            			//showErrorPopupPanel(error, "green");  
+	            			content.selectTab(DECK_HISTORY);
+	            			content.getTabWidget(DECK_MEDICAL).getElement().getStyle().setProperty("backgroundColor", "red");
 	            		}
 	                 
 	              }

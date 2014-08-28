@@ -428,7 +428,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			preparedStmt.setInt(1, randomiserStatus);
 			preparedStmt.executeUpdate();
 			try {
-				Thread.sleep(35000);  // give the randomiser a chance to do its thing
+				Thread.sleep(5000);  // give the randomiser a chance to do its thing
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1186,7 +1186,74 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 	
+	public PhysicalActivityInfo queryPhysicalActivity(User user) {
+		//open database connection
+		physical = new PhysicalActivityInfo();
+		initDBConnection();
+
+		if (getPhysicalActivityInfo(user)) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return  physical;
+		}
+		else {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return physical;
+		}
+	}
 	
+	
+	private boolean getPhysicalActivityInfo(User user) {
+		String idUser = user.getUserId();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {	          
+			pstmt = conn.prepareStatement("SELECT * FROM physical_activities_info where patient_id = " + idUser);
+			result = pstmt.executeQuery("SELECT * FROM physical_activities_info where patient_id = " + idUser);
+			
+			while (result.last()) {
+				physical.setUserId(result.getString(1));
+				physical.setDiyHours(result.getDouble(3));
+				physical.setSummerWalkingHours(result.getDouble(4));
+				physical.setWinterWalkingHours(result.getDouble(5));
+				physical.setSummerCyclingHours(result.getDouble(6));
+				physical.setWinterCyclingHours(result.getDouble(7));
+				physical.setSummerGardenHours(result.getDouble(8));
+				physical.setWinterGardenHours(result.getDouble(9));
+				physical.setSummerPhysicalHours(result.getDouble(10));
+				physical.setWinterPhysicalHours(result.getDouble(11));
+				physical.setSummerHouseworkHours(result.getDouble(12));
+				physical.setWinterHouseworkHours(result.getDouble(13));
+				physical.setFlightStairs(result.getDouble(14));
+				physical.setVigorousHours(result.getDouble(15));
+				physical.setPhysicalWork(result.getString(16));
+				physical.setVigorous(result.getString(17));
+				conn.close();
+				return true;
+				
+			}
+			
+			conn.close();
+			return false;
+			}
+		catch (SQLException e) {
+			user = null;
+			
+			//return user;
+		return false;
+		}
+			
+	}
 	
 	@Override
 	public Boolean updateCognitiveOne(CognitiveOneInfo cognitiveOne) throws IllegalArgumentException {
@@ -1929,74 +1996,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	}
 
-	public PhysicalActivityInfo queryPhysicalActivity(User user) {
-		//open database connection
-		physical = new PhysicalActivityInfo();
-		initDBConnection();
-
-		if (getPhysicalActivityInfo(user)) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			return  physical;
-		}
-		else {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			return physical;
-		}
-	}
 	
-	
-	private boolean getPhysicalActivityInfo(User user) {
-		String idUser = user.getUserId();
-		PreparedStatement pstmt = null;
-		ResultSet result = null;
-
-		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM physical_activities_info where patient_id = " + idUser);
-			result = pstmt.executeQuery("SELECT * FROM physical_activities_info where patient_id = " + idUser);
-			
-			while (result.last()) {
-				physical.setUserId(result.getString(1));
-				physical.setDiyHours(result.getDouble(3));
-				physical.setSummerWalkingHours(result.getDouble(4));
-				physical.setWinterWalkingHours(result.getDouble(5));
-				physical.setSummerCyclingHours(result.getDouble(6));
-				physical.setWinterCyclingHours(result.getDouble(7));
-				physical.setSummerGardenHours(result.getDouble(8));
-				physical.setWinterGardenHours(result.getDouble(9));
-				physical.setSummerPhysicalHours(result.getDouble(10));
-				physical.setWinterPhysicalHours(result.getDouble(11));
-				physical.setSummerHouseworkHours(result.getDouble(12));
-				physical.setWinterHouseworkHours(result.getDouble(13));
-				physical.setFlightStairs(result.getDouble(14));
-				physical.setVigorousHours(result.getDouble(15));
-				physical.setPhysicalWork(result.getString(16));
-				physical.setVigorous(result.getString(17));
-				conn.close();
-				return true;
-				
-			}
-			
-			conn.close();
-			return false;
-			}
-		catch (SQLException e) {
-			user = null;
-			
-			//return user;
-		return false;
-		}
-			
-	}
 
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {

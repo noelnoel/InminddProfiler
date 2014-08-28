@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -23,10 +24,15 @@ import com.inmindd.dcu.shared.User;
 
 public class CognitiveTwo {
 	
+	
+	private static final int DECK_COGNITIVE2 = 7;
+	private static final int DECK_SMOKE_ALCOHOL = 8;
+	
 	private User user;
 	private Login login;
 	
 	private FlowPanel cognitiveTwoPanel;
+	private TabLayoutPanel content;
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
 	
@@ -135,6 +141,9 @@ public class CognitiveTwo {
 		lastinstance = this;
 	}
 	
+	public void setContent(TabLayoutPanel content){
+		this.content = content;
+	}
 	public static void clearInputs() {
 		lastinstance.artisticNever.setValue(false);
 		lastinstance.artisticOften.setValue(false);
@@ -315,8 +324,10 @@ public class CognitiveTwo {
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel("Cognitive Activity Part Two  updated  -  Proceed to Smoking & Alcohol intake panel");
-	       			showErrorPopupPanel(error, "green");            			            			
+	       			//InlineLabel error = new InlineLabel("Cognitive Activity Part Two  updated  -  Proceed to Smoking & Alcohol intake panel");
+	       			//showErrorPopupPanel(error, "green"); 
+	       			content.selectTab(DECK_SMOKE_ALCOHOL);
+	       			content.getTabWidget(DECK_COGNITIVE2).getElement().getStyle().setProperty("backgroundColor", "red");
 	       		}
 	            
 	         }

@@ -336,7 +336,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 		PatientInfo patient = new PatientInfo();		
 		patientPanel = patient.setupPatientPanel(login);
-
+		
 		patientPanel.addStyleName("paddedTextBox");
 
 
@@ -411,7 +411,17 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		
 		// Indicate that we should show the HOME tab initially.
 		content.selectTab(DECK_LOGIN);
-	
+		login.setContent(content);
+		patient.setContent(content);
+		cesd.setContent(content);
+		medical.setContent(content);
+		history.setContent(content);
+		physicalPanel.setContent(content);
+		cognitiveOne.setContent(content);
+		cognitiveTwo.setContent(content);
+		smokeAlcohol.setContent(content);
+		diet.setContent(content);
+		
 	}	
 	
 	/**

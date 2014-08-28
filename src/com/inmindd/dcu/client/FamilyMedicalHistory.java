@@ -16,12 +16,18 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FamilyHistoryInfo;
 import com.inmindd.dcu.shared.User;
 
 public class FamilyMedicalHistory {
 	
+	
+	private static final int DECK_HISTORY = 4;
+	private static final int DECK_PHYSICAL = 5;
+	
+	private TabLayoutPanel content;
 	private ScrollPanel scroll;
 	private FlowPanel familyMedicalHistory;
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
@@ -74,6 +80,9 @@ public class FamilyMedicalHistory {
 		lastinstance = this;
 	}
 
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
+	}
 	public static void clearInputs() {
 		lastinstance.fatherCardioDontKnow.setValue(false);
 		lastinstance.fatherCardioNo.setValue(false);
@@ -304,8 +313,10 @@ public class FamilyMedicalHistory {
             			showErrorPopupPanel(error, "red");            			            			
             		}
             		else {
-            			InlineLabel error = new InlineLabel("Family history Data  updated. proceed to next panel");
-            			showErrorPopupPanel(error, "green");  
+            			//InlineLabel error = new InlineLabel("Family history Data  updated. proceed to next panel");
+            			//showErrorPopupPanel(error, "green");  
+            			content.selectTab(DECK_PHYSICAL);
+            			content.getTabWidget(DECK_HISTORY).getElement().getStyle().setProperty("backgroundColor", "red");
             			
             		}
                  

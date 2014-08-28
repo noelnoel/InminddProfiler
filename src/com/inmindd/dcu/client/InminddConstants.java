@@ -8,8 +8,17 @@ public interface InminddConstants extends Constants{
 	// @DefaultStringValue("Welcome to the InMINDD Profiler")
 	 	String welcome();
 	 	String eufunding_banner();
-	 	
+	 	String register();
+	 	String user();
+	 	String password();
+	 	String repeat_password();
+	 	String forgot_password();
 	 	String registration();
+	 	String register_heading();
+	 	String maiden_name();
+	 	String fav_colour();
+	 	String invalid_id();
+	 	String passwords_differ();
 	 	String reset();
 	 	String about_you();
 	 	String about_mood();
@@ -26,6 +35,7 @@ public interface InminddConstants extends Constants{
 	 	String patient();
 	 	String yourself();
 	 	String age();
+	 	String forty_60();
 	 	String year();
 	 	String sex();
 	 	String male();
@@ -305,10 +315,13 @@ public interface InminddConstants extends Constants{
 	 	String start_smoking();
 	 	String current_smoke_per_day();
 	 	String former_smoke_per_day();
+	 	String yyyy();
 	 	String per_day();
 	 	String former_smoker();
 	 	String never_smoked();
 	 	String alcohol_consumption();
+	 	String alcohol_country();
+	 	String seven_less();	 	
 	 	String how_often_drink();	 	
 	 	String stop_smoking();
 	 	String smoking_error();
@@ -319,6 +332,7 @@ public interface InminddConstants extends Constants{
 	 	String diet_questions();
 	 	String culinary_fat();
 	 	String oil();
+	 	
 	 	String tablespoon_1();
 	 	String tablespoon_2();
 	 	String tablespoon_4();

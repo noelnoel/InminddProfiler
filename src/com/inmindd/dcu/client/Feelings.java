@@ -23,13 +23,14 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FeelingsInfo;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class Feelings {
-	
+		private TabLayoutPanel content;
 		private DockLayoutPanel cesdPanel;	
 		private FlowPanel answers = new FlowPanel();
 		private FlowPanel questions = new FlowPanel();
@@ -47,16 +48,24 @@ public class Feelings {
 		private Login login;
 		private static User user;
 		private InminddServiceAsync InminddServiceSvc;
-		static InminddConstants constants = 
+
+		
+		private static final int DECK_CESD = 2;	
+		private static final int DECK_MEDICAL = 3;	
+		
+		private static InminddConstants constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
 		
 		
 		public static Feelings lastinstance;
 		// save reference for clearing fields if user logs out.
 		
-		public Feelings() {
-			
+		public Feelings() {			
 			lastinstance = this;
+		}
+		
+		public void setContent(TabLayoutPanel content) {
+			this.content = content;
 		}
 		public static void clearInputs() {
 			lastinstance.treatNo.setValue(false);
@@ -268,6 +277,7 @@ public class Feelings {
 		    		
 		    		createFeelings();
 		    		updateFeelingsDB();  // write to server here
+		    		content.selectTab(DECK_MEDICAL);
 		    		return; 
 		    	}
 		     
@@ -485,8 +495,9 @@ public class Feelings {
             			showErrorPopupPanel(error, "red");            			
             		}            		
             		else {
-            			InlineLabel error = new InlineLabel(constants.mood_complete());
-            			showErrorPopupPanel(error, "green");            			            			
+            			//InlineLabel error = new InlineLabel(constants.mood_complete());
+            			//showErrorPopupPanel(error, "green");  
+            			content.getTabWidget(DECK_CESD).getElement().getStyle().setProperty("backgroundColor", "red");
             		}
                  
               }

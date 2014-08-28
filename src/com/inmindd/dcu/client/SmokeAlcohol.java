@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -30,7 +31,12 @@ import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.User;
 
 public class SmokeAlcohol {
+	
+	
+	private static final int DECK_SMOKE_ALCOHOL = 8;
+	private static final int DECK_DIET = 9;
 	FlowPanel smokeAlcoholPanel;
+	private TabLayoutPanel content;
 	private SmokeAlcoholInfo smokeAlco;
 	private ScrollPanel scroll = new ScrollPanel();
 	private RadioButton currentSmoker;
@@ -58,6 +64,10 @@ public class SmokeAlcohol {
 	private static Button btn;;
 	public SmokeAlcohol() {
 		lastinstance = this;
+	}
+	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
 	}
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -136,8 +146,9 @@ public class SmokeAlcohol {
 		currentYearStart = new PlaceholderTextBox();
 		currentYearStart.setMaxLength(4);
 		currentYearStart.setWidth("3em");
-		currentYearStart.setPlaceholder("yyyy");
+		currentYearStart.setPlaceholder(constants.yyyy());
 		smokeAlcoholPanel.add(currentYearStart);
+		smokeAlcoholPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		smokePerDay = new DataField(constants.current_smoke_per_day(), constants.per_day());
 
 		smokePerDay.getElement().getStyle().setProperty("fontWeight", "bold");
@@ -169,7 +180,7 @@ public class SmokeAlcohol {
 		formerYearStart = new PlaceholderTextBox();
 		formerYearStart.setMaxLength(4);
 		formerYearStart.setWidth("3em");
-		formerYearStart.setPlaceholder("yyyy");
+		formerYearStart.setPlaceholder(constants.yyyy());
 		smokeAlcoholPanel.add(formerYearStart);
 		
 		InlineLabel lbl5 = new InlineLabel(constants.stop_smoking());
@@ -181,9 +192,9 @@ public class SmokeAlcohol {
 		formerYearStop = new PlaceholderTextBox();
 		formerYearStop.setMaxLength(4);
 		formerYearStop.setWidth("3em");
-		formerYearStop.setPlaceholder("yyyy");
+		formerYearStop.setPlaceholder(constants.yyyy());
 		smokeAlcoholPanel.add(formerYearStop);
-		
+		smokeAlcoholPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		formerSmokePerDay = new DataField(constants.former_smoke_per_day(), constants.per_day());
 		formerSmokePerDay.getElement().getStyle().setProperty("fontWeight", "bold");
 		smokeAlcoholPanel.add(formerSmokePerDay);
@@ -273,8 +284,10 @@ public class SmokeAlcohol {
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel(constants.smoke_complete());
-	       			showErrorPopupPanel(error, "green");            			            			
+	       			//InlineLabel error = new InlineLabel(constants.smoke_complete());
+	       			//showErrorPopupPanel(error, "green");   
+	       			content.selectTab(DECK_DIET);
+	       			content.getTabWidget(DECK_SMOKE_ALCOHOL).getElement().getStyle().setProperty("backgroundColor", "red");
 	       		}
 	            
 	         }
@@ -691,14 +704,14 @@ public class SmokeAlcohol {
 	 private FlowPanel getCountryResidence() {
 
 			FlowPanel country = new FlowPanel();
-			InlineLabel theSelection = new InlineLabel("Please select country in which you are resident");
+			InlineLabel theSelection = new InlineLabel(constants.alcohol_country());
 			theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 			
-			countryResident.addItem(constants.select_one());
-			countryResident.addItem("Ireland");
-			countryResident.addItem("Scotland");
-			countryResident.addItem("Netherlands");
-			countryResident.addItem("France");
+			countryResident.addItem(constants.select_one());			
+			countryResident.addItem("Ireland:  Ierland, Irelande");
+			countryResident.addItem("Scotland: Schotland, Ecosse");
+			countryResident.addItem("The Netherlands: Nederland, Pays-Bas");
+			countryResident.addItem("France: Frankrijk, France");
 			country.add(theSelection);
 			country.add(countryResident);
 			
@@ -712,10 +725,9 @@ public class SmokeAlcohol {
 				if (selectedIndex == 2) { // 		scotland
 	
 					displayAlcohol("Scottish_drinks.PNG");
-					
-	
 	
 				}
+				
 				if (selectedIndex == 1)	{ 		//ireland is different, we have a different drop down list box
 				
 					logo = getLogo("Standard_drink_in_Ireland.png");
@@ -798,7 +810,7 @@ public class SmokeAlcohol {
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
 			drinksBandOther.addItem(constants.select_one());
-			drinksBandOther.addItem("7 or less");
+			drinksBandOther.addItem(constants.seven_less());
 			drinksBandOther.addItem("8 - 14");
 			drinksBandOther.addItem("14 - 20");
 			drinksBandOther.addItem("21+");

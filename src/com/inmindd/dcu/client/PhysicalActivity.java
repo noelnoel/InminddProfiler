@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FamilyHistoryInfo;
@@ -22,8 +23,13 @@ import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.User;
 
 public class PhysicalActivity {
-	private FlowPanel physicalActivityPanel = new FlowPanel();
 	
+	
+	private static final int DECK_PHYSICAL = 5;
+	private static final int DECK_COGNITIVE1 = 6;
+	
+	private FlowPanel physicalActivityPanel = new FlowPanel();
+	private TabLayoutPanel content;
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
 	private InminddServiceAsync InminddServiceSvc;
@@ -76,6 +82,11 @@ public class PhysicalActivity {
 	public PhysicalActivity() {
 		lastinstance = this;
 	}
+	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
+	}
+	
 	public static void clearInputs() {
 		lastinstance.cyclingSummer.setText("");
 		lastinstance.cyclingWinter.setText("");
@@ -405,11 +416,7 @@ public class PhysicalActivity {
 		InlineLabel label = new InlineLabel(constants.exercise());
 		label.getElement().getStyle().setProperty("fontWeight", "bold");
 		
-		exercisePanel1.add(label);
-		
-	
-	
-		
+		exercisePanel1.add(label);		
 		
 		
 		exerciseSummer = new DataField(constants.summer(), constants.hrs_week());
@@ -604,8 +611,10 @@ private boolean checkHours(TextBox hours) {
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
-       			InlineLabel error = new InlineLabel("Physical Activity updated  -  Proceed to next Panel");
-       			showErrorPopupPanel(error, "green");            			            			
+       			//InlineLabel error = new InlineLabel("Physical Activity updated  -  Proceed to next Panel");
+       			//showErrorPopupPanel(error, "green");   
+       			content.selectTab(DECK_COGNITIVE1);
+       			content.getTabWidget(DECK_PHYSICAL).getElement().getStyle().setProperty("backgroundColor", "red");
        		}
             
          }
