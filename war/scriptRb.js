@@ -23,6 +23,7 @@ function loadCharts(){
 
 	dataGraph = {"pie": {"manage":0, "improvement":0,"keep":0}, "bars":{}};
 	sum = 0;
+	
 	$.each(data, function(index, value) 
 	{
 		if(jQuery.inArray( index, specials_risk_factor) != -1 && value.score != 0){
@@ -60,8 +61,7 @@ function loadCharts(){
 	
 	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"] - dataGraph.pie["improvement"];
 
-	
- 
+
 	
 	text.rmw = $("#rmw").html();
 	text.rfi = $("#rfi").html();
@@ -78,6 +78,7 @@ function loadCharts(){
 	text.rfHeart = $("#rf-heart").html();
 	text.rfActivity = $("#rf-activity").html();
 	text.rfAlchool = $("#rf-alchool").html();
+	
 	graph(dataGraph);
 	
 	var scoreEchoKeep = dataGraph.pie["keep"].toFixed(2);
