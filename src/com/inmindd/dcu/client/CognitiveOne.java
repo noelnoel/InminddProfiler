@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.client.MyHandler;
@@ -28,7 +29,14 @@ import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.User;
 
 public class CognitiveOne {
-	FlowPanel cognitiveOnePanel;
+	
+	
+	private static final int DECK_COGNITIVE1 = 6;
+	private static final int DECK_COGNITIVE2 = 7;
+	
+	private FlowPanel cognitiveOnePanel;
+	private TabLayoutPanel content;
+	
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	private ScrollPanel scroll = new ScrollPanel();
 	private TextBox yearsFormalEducation;
@@ -67,6 +75,9 @@ public class CognitiveOne {
 		lastinstance = this;
 	}
 	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
+	}
 	
 	public static void clearInputs() {
 		lastinstance.agriculturalSimulYears.setText("");
@@ -250,8 +261,10 @@ public class CognitiveOne {
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
-       			InlineLabel error = new InlineLabel("Cognitive Activity Part One  updated  -  Proceed to Cognitive Activity 2");
-       			showErrorPopupPanel(error, "green");            			            			
+       			//InlineLabel error = new InlineLabel("Cognitive Activity Part One  updated  -  Proceed to Cognitive Activity 2");
+       			//showErrorPopupPanel(error, "green");  
+       			content.selectTab(DECK_COGNITIVE2);
+       			content.getTabWidget(DECK_COGNITIVE1).getElement().getStyle().setProperty("backgroundColor", "red");
        		}
             
          }
@@ -409,7 +422,7 @@ public class CognitiveOne {
 		//managerYears.getElement().getStyle().setProperty("marginLeft", "auto");
 		managerYears.setStyleName("pos5");
 		
-		InlineLabel label1 = new InlineLabel(constants.managers());
+		InlineLabel label1 = new InlineLabel(constants.manager());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("marginRight", "10px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");

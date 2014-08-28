@@ -14,13 +14,18 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
 import com.inmindd.dcu.shared.User;
 
 public class Diet {
+	
+	
+	private static final int DECK_DIET = 9;
 	private FlowPanel dietPanel;
+	private TabLayoutPanel content;
 	private DietInfo diet;
 	private RadioButton culFatYes;
 	private RadioButton culFatNo;
@@ -69,7 +74,9 @@ public class Diet {
 	public Diet() {	
 		lastinstance = this;
 	}
-	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
+	}
 	public static void clearInputs() {
 		
 		lastinstance.beverageOne.setValue(false);
@@ -309,8 +316,9 @@ public class Diet {
 		       			showErrorPopupPanel(error, "red");            			
 		       		}            		
 		       		else {
-		       			InlineLabel error = new InlineLabel("Diet  updated  -  Proceed to next Panel");
-		       			showErrorPopupPanel(error, "green");            			            			
+		       			//InlineLabel error = new InlineLabel("Diet  updated  -  Proceed to next Panel");
+		       			//showErrorPopupPanel(error, "green"); 
+		       			content.getTabWidget(DECK_DIET).getElement().getStyle().setProperty("backgroundColor", "red");
 		       		}
 		            
 		         }

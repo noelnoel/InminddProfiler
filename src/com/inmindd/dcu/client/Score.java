@@ -6,7 +6,7 @@ package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
 
-import com.google.appengine.api.datastore.ReadPolicy.Consistency;
+//import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;

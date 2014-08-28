@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.dom.client.Element;
@@ -26,6 +27,8 @@ import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class PatientInfo {
+	
+	TabLayoutPanel content;
 	private FlowPanel patient;
 	private FlowPanel patientPanel;
 	private ScrollPanel scroll = new ScrollPanel();
@@ -53,11 +56,27 @@ public class PatientInfo {
 	public static PatientInfo lastinstance;
 
 	private InminddServiceAsync InminddServiceSvc;
+	
+	static final int DECK_LOGIN = 0;
+	static final int DECK_PATIENT = 1;
+	static final int DECK_CESD = 2;	
+	static final int DECK_MEDICAL = 3;	
+	static final int DECK_HISTORY = 4;
+	static final int DECK_PHYSICAL = 5;
+	static final int DECK_COGNITIVE1 = 6;
+	static final int DECK_COGNITIVE2 = 7;
+	static final int DECK_SMOKE_ALCOHOL = 8;
+	static final int DECK_DIET = 9;
+	
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
 	
 	public  PatientInfo(){
 		lastinstance = this;
+	}
+	
+	public void setContent(TabLayoutPanel content) {
+		this.content = content;
 	}
 	
 	public static void clearInputs() {
@@ -150,6 +169,7 @@ public class PatientInfo {
 	      @Override
 		public void onClick(ClickEvent event) {
 	        checkInput();
+	       
 	      }
 	    });
 
@@ -191,11 +211,17 @@ public class PatientInfo {
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
 		country.addItem(constants.select_one());
-         for (int i=0; i<loc.getSortedRegionCodes().length; i++) { 
-                 String code = loc.getSortedRegionCodes()[i]; 
-                 country.addItem(loc.getRegionName(code), code); 
+        // for (int i=0; i<loc.getSortedRegionCodes().length; i++) { 
+       //          String code = loc.getSortedRegionCodes()[i]; 
+        //         country.addItem(loc.getRegionName(code), code); 
 
-         } 
+       //  } 
+		country.addItem("Scotland: Schotland, Ecosse");
+		country.addItem("Ireland:  Ierland, Irelande");
+		country.addItem("The Netherlands: Nederland, Pays-Bas");
+		country.addItem("France: Frankrijk, France");
+		country.addItem("Other: Anders, Autre");
+		
          countryBirth.add(theSelection);
          countryBirth.add(country);
          countryBirth.setWidth("100%");
@@ -425,12 +451,13 @@ private FlowPanel getEducationNL() {
 	//theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 	
 	educationLevelNL.addItem(constants.select_one());
-	educationLevelNL.addItem("Geen formel onderwijs of opleiding");
+	educationLevelNL.addItem("Geen formeel onderwijs of opleiding");
 	educationLevelNL.addItem("Basisschool");
-	educationLevelNL.addItem("VMBO");
+	educationLevelNL.addItem("MAVO of VMBO");
 	educationLevelNL.addItem("HAVO");
 	educationLevelNL.addItem("VWO");
-	educationLevelNL.addItem("Middelbaar beroepsonderwijs, Hoger onderwijs");
+	educationLevelNL.addItem("Lager beroepsonderwijs");
+	educationLevelNL.addItem("Middelbaar beroepsonderwijs");
 	educationLevelNL.addItem("HBO");
 	educationLevelNL.addItem("Universiteit");
 	
@@ -610,7 +637,7 @@ private FlowPanel getEducationFR() {
 			age.getElement().getStyle().setProperty("color", "red");	
 			return false;
 		}
-		error = new InlineLabel("Please re-enter your age which  should be between 40 & 60");	
+		error = new InlineLabel(constants.forty_60());	
 
 		age.getElement().getStyle().setProperty("color", "black");		 
 		if (patientAge < 40 || patientAge > 60) {			   
@@ -768,10 +795,11 @@ private FlowPanel getEducationFR() {
             			showErrorPopupPanel(error, "red");            			            			
             		}
             		else {
-            			InlineLabel error = new InlineLabel("Patient Data  updated. proceed to next panel");
-            			showErrorPopupPanel(error, "green");  
+            			//InlineLabel error = new InlineLabel("Patient Data  updated. proceed to next panel");
+            			//showErrorPopupPanel(error, "green");  
+            			content.selectTab(DECK_CESD);
+            			content.getTabWidget(DECK_PATIENT).getElement().getStyle().setProperty("backgroundColor", "red");
             			
-            			//Window.Location.reload();  // This is where the page relooad is triggered
             		}
                  
               }

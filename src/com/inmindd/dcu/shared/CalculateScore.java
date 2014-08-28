@@ -139,7 +139,7 @@ public class CalculateScore {
 			return;
 		}
 		
-		if ((hrsWeekCycling  + hrsWeekPhysical) / 2.0  <= 3.50 && (workType.equals("sedentary"))) {
+		if ((hrsWeekCycling  + hrsWeekPhysical) / 2.0  <= 3.50 && (workType.equals("sedentary")) || workType.equals("na")) {
 			rf.setPhysicalInactivity(5.9);
 			return;
 		}

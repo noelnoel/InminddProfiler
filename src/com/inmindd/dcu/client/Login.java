@@ -3,6 +3,7 @@ package com.inmindd.dcu.client;
 
 
 import java.rmi.RemoteException;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
@@ -54,10 +56,10 @@ public class Login  {
 	/**Main panel of the login view*/
     private VerticalPanel mainpanel = new VerticalPanel();
 	
+	private TabLayoutPanel content;
 	
 	
-	
-	private HTML secondHeadline = new HTML("<h1>Please Logon or Register with the InMINDD Application</h1>");
+	private HTML secondHeadline = new HTML("<h1>" + constants.register() +" </h1>");
 	
 	/**Decorator panel for the login form*/
     private DecoratorPanel decPanel = new DecoratorPanel();
@@ -71,16 +73,16 @@ public class Login  {
 	
     
     private InlineLabel loginHead = new InlineLabel("Login");
-    private InlineLabel loginRegister = new InlineLabel("Register");
+    private InlineLabel loginRegister = new InlineLabel(constants.register_heading());
     private InlineLabel loginReset = new InlineLabel("Reset Password");
   
 
   
-	private String userIdLabel = "User ID: ";
-    private String passwordLabel = "Password: ";
-    private String passwordRepeat  = "Repeat password:";
-    private String mothersMaiden  = "Please enter mother's maiden name";
-    private String favColour  = "Please enter your favorite colour";
+	private String userIdLabel = constants.user();
+    private String passwordLabel = constants.password();
+    private String passwordRepeat  = constants.repeat_password();
+    private String mothersMaiden  = constants.maiden_name();
+    private String favColour  = constants.fav_colour();
    
     private TextBox userId = new TextBox();
   
@@ -102,7 +104,7 @@ public class Login  {
   
     private Button loginbutton = new Button("Login");    
     private Button registerbutton = new Button("Register");  
-    private Button forgotPasswordButton = new Button("Forgot Password ?");    
+    private Button forgotPasswordButton = new Button(constants.forgot_password());    
     private Button resetPasswordButton = new Button("Reset Password!");    
   
     private String hashedPassword;
@@ -115,6 +117,9 @@ public class Login  {
     	
     }
     
+    public void setContent(TabLayoutPanel content) {
+    	this.content = content;
+    }
     
     public void setUser(User user) {
     	this.user = user;
@@ -261,14 +266,14 @@ public class Login  {
 
 	    			public void onSuccess(User user) {
 	    				if ((user == null)){	            		
-	    					InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check Caps lock");
+	    					InlineLabel error = new InlineLabel(constants.invalid_id());
 	    					showErrorPopupPanel(error, "red");
 	    					setUser(user);
 	    				}
 
 	    				else {
-	    					InlineLabel error = new InlineLabel("You are now logged on to InMINDD. Please proceed to the About You panel");
-	    					showErrorPopupPanel(error, "green");	            			
+	    				//	InlineLabel error = new InlineLabel("You are now logged on to InMINDD. Please proceed to the About You panel");
+	    				//	showErrorPopupPanel(error, "green");	            			
 	    					setUser(user);	
 	    					// Clear screens of previous input
 	    					if(PatientInfo.lastinstance != null)
@@ -292,12 +297,14 @@ public class Login  {
 	    					//userId.setText("");
 	    					password.setText("");
 	    					//getScore();   //uncomment this to calc score at login
+	    					content.selectTab(1);
+	    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
 	    				}
 
 	    			}
 	    			@Override
 	    			public void onFailure(Throwable caught) {
-	    				InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter. Check your Caps lock");
+	    				InlineLabel error = new InlineLabel(constants.invalid_id());
 	    				showErrorPopupPanel(error, "red");
 	    				setUser(user);
 
@@ -436,19 +443,19 @@ public class Login  {
 			
 		}
 		if (!(passwordReg.getText().equals(rep))) {
-			InlineLabel error = new InlineLabel("Passwords don't match, please re-enter");
+			InlineLabel error = new InlineLabel(constants.passwords_differ());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 		
 		if (motherBox.getText().equals("")) {
-			InlineLabel error = new InlineLabel("Please enter Mother's maiden name");
+			InlineLabel error = new InlineLabel(constants.maiden_name());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
 	
 		if (colourBox.getText().equals("")) {
-			InlineLabel error = new InlineLabel("Please enter your favorite colour");
+			InlineLabel error = new InlineLabel(constants.fav_colour());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
@@ -481,13 +488,13 @@ public class Login  {
 			}
 			
 			if (motherForgotBox.getText().equals("")) {
-				InlineLabel error = new InlineLabel("Please enter Mother's maiden name");
+				InlineLabel error = new InlineLabel(constants.maiden_name());
 				showErrorPopupPanel(error, "red");
 				return false;
 			}
 		
 			if (colourForgotBox.getText().equals("")) {
-				InlineLabel error = new InlineLabel("Please enter your favorite colour");
+				InlineLabel error = new InlineLabel(constants.fav_colour());
 				showErrorPopupPanel(error, "red");
 				return false;
 			}
@@ -545,8 +552,8 @@ public class Login  {
     		}
     		
     		else {
-    			InlineLabel error = new InlineLabel(constants.registration());
-    			showErrorPopupPanel(error, "green");
+    			//InlineLabel error = new InlineLabel(constants.registration());
+    			//showErrorPopupPanel(error, "green");
     			if(PatientInfo.lastinstance != null)
 					PatientInfo.clearInputs();	
 				if (Feelings.lastinstance != null)
@@ -570,7 +577,7 @@ public class Login  {
 				//userIdReg.setText("");
 				motherBox.setText("");
 				colourBox.setText("");
-				
+				content.selectTab(1);
     		}
     	}
   }
@@ -642,7 +649,7 @@ public class Login  {
 
 		catch (Exception e)
 		{
-			InlineLabel error  = new InlineLabel("Invalid User Id - Please re-enter. Check your caps lock");	
+			InlineLabel error  = new InlineLabel(constants.invalid_id());	
 			showErrorPopupPanel(error,"red");
 				
 			return false;
@@ -666,7 +673,7 @@ public class Login  {
 		}
 		
 		if(id.length() != 7){
-			InlineLabel error  = new InlineLabel("Invalid User Id - Please re-enter. Check your caps lock");	
+			InlineLabel error  = new InlineLabel(constants.invalid_id());	
 			showErrorPopupPanel(error,"red");
 				
 			return false;
