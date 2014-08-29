@@ -59,7 +59,7 @@ function loadCharts(){
 		} 
 	}); 
 	
-	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"] - dataGraph.pie["improvement"];
+	dataGraph.pie["keep"] = 100 - dataGraph.pie["manage"].toFixed() - dataGraph.pie["improvement"].toFixed();
 
 
 	
@@ -81,9 +81,9 @@ function loadCharts(){
 	
 	graph(dataGraph);
 	
-	var scoreEchoKeep = dataGraph.pie["keep"].toFixed(2);
-	var scoreEchoImpr = dataGraph.pie["improvement"].toFixed(2);
-	var scoreEchoMana = dataGraph.pie["manage"].toFixed(2);
+	var scoreEchoKeep = dataGraph.pie["keep"].toFixed();
+	var scoreEchoImpr = dataGraph.pie["improvement"].toFixed();
+	var scoreEchoMana = dataGraph.pie["manage"].toFixed();
 	if(scoreEchoKeep.split(".")[1] == "00"){
 		scoreEchoKeep = scoreEchoKeep.split(".")[0];
 	}
