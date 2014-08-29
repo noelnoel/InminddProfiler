@@ -469,7 +469,7 @@ public class CalculateScore {
 			if (gender.equals("male") &&    !(num_drinks.startsWith("21+"))){
 				rf.setAlcohol(0);
 			}
-			else if (gender.equals("male")  && (num_drinks.startsWith("21+)"))){
+			else if (gender.equals("male")  && (num_drinks.startsWith("21+"))){
 				rf.setAlcohol(5.3);			 
 			}
 
