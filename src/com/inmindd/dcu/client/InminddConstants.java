@@ -9,6 +9,7 @@ public interface InminddConstants extends Constants{
 	 	String welcome();
 	 	String eufunding_banner();
 	 	String register();
+	 	String submit();
 	 	String user();
 	 	String password();
 	 	String repeat_password();
@@ -18,6 +19,8 @@ public interface InminddConstants extends Constants{
 	 	String maiden_name();
 	 	String fav_colour();
 	 	String invalid_id();
+	 	String miss_match();
+	 	String caps_lock();
 	 	String passwords_differ();
 	 	String reset();
 	 	String about_you();
@@ -34,8 +37,14 @@ public interface InminddConstants extends Constants{
 	 	 */
 	 	String patient();
 	 	String yourself();
+	 	String country_based();
+	 	String non_existent();
 	 	String age();
 	 	String forty_60();
+	 	String select_country_birth();
+	 	String select_occupation();
+	 	String select_education();
+	 	String select_employment();
 	 	String year();
 	 	String sex();
 	 	String male();
@@ -145,6 +154,8 @@ public interface InminddConstants extends Constants{
 	 	/*
 	 	 * Medical health
 	 	 */
+	 	String invalid_height();
+	 	String invalid_weight();
 	 	String mmol_error();
 	 	String med_error_1();
 	 	String systolic_error();
@@ -309,6 +320,7 @@ public interface InminddConstants extends Constants{
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();
+	 	String smoking_status();
 	 	String habits();
 	 	String describes();
 	 	String current();
@@ -327,12 +339,28 @@ public interface InminddConstants extends Constants{
 	 	String smoking_error();
 	 	String smoke_complete();
 	 	String typical_drinks();
+	 	String units_per_week();
+	 	String monthly();
+	 	String two_to_four();
 	    String select_one();
 	 	String diet();
 	 	String diet_questions();
 	 	String culinary_fat();
+	 	String cul_fat();
 	 	String oil();
-	 	
+	 	String olive_oil();
+	 	String vegetables();
+	 	String fruit();
+	 	String meat_servings();
+	 	String butter_servings();
+	 	String beverages();
+	 	String wine_consumption();
+	 	String legume_consumption();
+	 	String fish_consumption();
+	 	String sweets_consumption();
+	 	String nuts_consumption();
+	 	String chicken_preference();
+	 	String tomato_sauce();
 	 	String tablespoon_1();
 	 	String tablespoon_2();
 	 	String tablespoon_4();

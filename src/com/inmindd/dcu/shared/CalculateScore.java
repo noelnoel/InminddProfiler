@@ -139,7 +139,7 @@ public class CalculateScore {
 			return;
 		}
 		
-		if ((hrsWeekCycling  + hrsWeekPhysical) / 2.0  <= 3.50 && (workType.equals("sedentary")) || workType.equals("na")) {
+		if (((hrsWeekCycling  + hrsWeekPhysical) / 2.0  <= 3.50) && (workType.equals("sedentary") || workType.equals("na"))) {
 			rf.setPhysicalInactivity(5.9);
 			return;
 		}
@@ -156,20 +156,65 @@ public class CalculateScore {
 		
 		double criWorking = 0;
 		double criLeisure = 0;
+		int[] maxWorkingYears = new int [10];
+		int numberWorkLevel = 0;
 		
 		criEducation = ((criEducation  - 10.496) / 4.75); // (years - model value) / s.d 
+		if (cognitiveOne.getManager() > 0) {
+			workingYears += cognitiveOne.getManager() * 5;
+			maxWorkingYears[0] = cognitiveOne.getManager() * 5;	
+			numberWorkLevel++;
+		}
+		if(cognitiveOne.getProfessional() > 0 ) {
+			workingYears += cognitiveOne.getProfessional() * 4;
+			maxWorkingYears[1] = cognitiveOne.getProfessional() * 4;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getTechnician() > 0) {
+			workingYears += cognitiveOne.getTechnician() * 3;
+			maxWorkingYears[2] = cognitiveOne.getTechnician() * 3;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getClerical() > 0) {
+			workingYears += cognitiveOne.getClerical() * 3;
+			maxWorkingYears[3] = cognitiveOne.getClerical() * 3;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getCraft() > 0) {
+			workingYears += cognitiveOne.getCraft() * 2;
+			maxWorkingYears[4] = cognitiveOne.getCraft() * 2;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getAgriculture() > 0) {
+			workingYears += cognitiveOne.getAgriculture() * 2;
+			maxWorkingYears[5] = cognitiveOne.getAgriculture() * 2;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getService() > 0) {
+			workingYears += cognitiveOne.getService() * 2;
+			maxWorkingYears[6] = cognitiveOne.getService() * 2;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getElementary() > 0) {
+			workingYears += cognitiveOne.getElementary() * 1;
+			maxWorkingYears[7] = cognitiveOne.getElementary() * 2;
+			numberWorkLevel++;
+		}
+		if ( cognitiveOne.getPlant() > 0) {
+			workingYears += cognitiveOne.getPlant() * 1;
+			maxWorkingYears[8] = cognitiveOne.getPlant() * 1;
+			numberWorkLevel++;
+		}
 		
-		workingYears += cognitiveOne.getManager() * 5;
-		workingYears += cognitiveOne.getProfessional() * 4;
-		workingYears += cognitiveOne.getTechnician() * 3;
-		workingYears += cognitiveOne.getClerical() * 3;
-		workingYears += cognitiveOne.getCraft() * 2;
-		workingYears += cognitiveOne.getAgriculture() * 2;
-		workingYears += cognitiveOne.getService() * 2;
-		workingYears += cognitiveOne.getElementary() * 1;
-		workingYears += cognitiveOne.getPlant() * 1;
+		int max = getMaxValue(maxWorkingYears);
+		if (numberWorkLevel > 1) {
+			numberWorkLevel--;
+		}
+		else numberWorkLevel = 1;
+		double working = (workingYears - max) / numberWorkLevel;
 		
-		criWorking = (workingYears - 70.978) / 40.21979;  
+		
+		criWorking = (working + max - 70.978) / 40.21979;  
 		
 		leisureYears += cognitiveTwo.getArtistic_years();
 		leisureYears += cognitiveTwo.getBank_account_years();
@@ -304,7 +349,8 @@ public class CalculateScore {
 		if (heightFeet > 0 && weightStone > 0) {
 			bmiWeightLbs = ((weightStone * 14) + weightLbs) * 703;
 			bmiHeightInches = ((heightFeet * 12) + heightInches) *((heightFeet * 12) + heightInches);
-			bmi = bmiWeightLbs / bmiHeightInches;
+			if (bmiHeightInches > 0)
+				bmi = bmiWeightLbs / bmiHeightInches;
 			if (bmi  > 30) {
 				rf.setMidlifeObesity(8.6);
 			} else {
@@ -469,7 +515,7 @@ public class CalculateScore {
 			if (gender.equals("male") &&    !(num_drinks.startsWith("21+"))){
 				rf.setAlcohol(0);
 			}
-			else if (gender.equals("male")  && (num_drinks.startsWith("21+)"))){
+			else if (gender.equals("male")  && (num_drinks.startsWith("21+"))){
 				rf.setAlcohol(5.3);			 
 			}
 
@@ -725,6 +771,18 @@ public class CalculateScore {
 		}
 		
 	}
+	
+	// getting the maximum value
+	public static int getMaxValue(int[] array){  
+	      int maxValue = array[0];  
+	      for(int i=1;i < array.length;i++){  
+	      if(array[i] > maxValue){  
+	      maxValue = array[i];  
+
+	         }  
+	     }  
+	     return maxValue;  
+	} 
 	
 	public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode

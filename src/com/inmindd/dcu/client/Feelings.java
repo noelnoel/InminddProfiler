@@ -80,15 +80,14 @@ public class Feelings {
 		
 
 		public DockLayoutPanel setupCesdPanel (Login login) {
-			this.login= login;
-	
+			this.login= login;	
 			cesdPanel = new DockLayoutPanel(Unit.EM);
 			cesdPanel.setHeight("90%");
 			cesdPanel.setWidth("98%");
 			questions.getElement().getStyle().setProperty("width", "48%");
 			
 			answers.getElement().getStyle().setProperty("width", "40%");
-			//scroll.setSize("4em", "4em");
+			
 			scroll.setSize("40px", "40px");
 			HTMLPanel mainHeader = new HTMLPanel("<h1>" +
 					constants.feeling() + "</h1>");
@@ -253,7 +252,7 @@ public class Feelings {
 		    pnl.add(getDepressionTreatment());
 		    pnl.add(new HTMLPanel("<span>  <br>  </span>"));
 
-		    Button btn = new Button("submit");
+		    Button btn = new Button(constants.submit());
 		    pnl.add(btn);
 		    
 		    // Listen for mouse events on the submit button.

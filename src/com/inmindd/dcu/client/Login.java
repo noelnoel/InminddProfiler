@@ -482,7 +482,7 @@ public class Login  {
 				
 			}
 			if (!(passwordForgotReg.getText().equals(rep))) {
-				InlineLabel error = new InlineLabel("Passwords don't match, please re-enter");
+				InlineLabel error = new InlineLabel(constants.miss_match());
 				showErrorPopupPanel(error, "red");
 				return false;
 			}
@@ -656,7 +656,7 @@ public class Login  {
 		}
 		if (!(id.startsWith("11") || id.startsWith("22") || id.startsWith("33") || id.startsWith("44"))) // valid country code ??
 		{
-			InlineLabel error  = new InlineLabel("Invalid Country code in User Id. Check your caps lock");	
+			InlineLabel error  = new InlineLabel(constants.caps_lock());	
 			showErrorPopupPanel(error,"red");
 				
 			return false;

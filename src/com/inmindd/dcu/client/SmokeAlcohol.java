@@ -71,8 +71,8 @@ public class SmokeAlcohol {
 	}
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
-	public static void clearInputs() {
-		
+	
+	public static void clearInputs() {		
 		lastinstance.currentSmoker.setValue(false);
 		lastinstance.currentYearStart.setText("");
 		lastinstance.drinks.setSelectedIndex(0);		
@@ -232,7 +232,7 @@ public class SmokeAlcohol {
 		smokeAlcoholPanel.add(getCountryResidence());
 		
 		
-	    btn = new Button("submit");
+	    btn = new Button(constants.submit());
 		smokeAlcoholPanel.add(btn);
 		
 	
@@ -350,9 +350,9 @@ public class SmokeAlcohol {
 		InlineLabel theSelection = new InlineLabel(constants.how_often_drink());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 		drinksFrequency.addItem(constants.select_one());
-        drinksFrequency.addItem("Never");
-        drinksFrequency.addItem("Monthly or less");
-        drinksFrequency.addItem("2-4 times per month");
+        drinksFrequency.addItem(constants.never());
+        drinksFrequency.addItem(constants.monthly());
+        drinksFrequency.addItem(constants.two_to_four());
         drinksFrequency.addItem("2-3 times per week");
         drinksFrequency.addItem("4 or more times per week");
        
@@ -469,25 +469,10 @@ public class SmokeAlcohol {
 		
 		// check if all buttons selected
 		if (!(currentSmoker.getValue() || formerSmoker.getValue() || neverSmoked.getValue())) {
-			InlineLabel error = new InlineLabel("Please indicate your Smoker status");
+			InlineLabel error = new InlineLabel(constants.smoking_status());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}		
-		
-		if (drinksFrequency.getSelectedIndex() <= 0) {
-			
-			InlineLabel error = new InlineLabel("Please indicate how often you take a drink");
-			showErrorPopupPanel(error, "red");
-			drinksFrequency.getElement().getStyle().setProperty("color", "red");
-			return false;			   
-		}
-	
-		if (drinks.getSelectedIndex() <= 0) {			
-			InlineLabel error = new InlineLabel("Please indicate the number of standard drinks per week");
-			showErrorPopupPanel(error, "red");
-			drinks.getElement().getStyle().setProperty("color", "red");
-			return false;			   
-		}
 
 		if (currentSmoker.getValue()) {
 			if (currentYearStart.getValue() == "") {
@@ -498,14 +483,14 @@ public class SmokeAlcohol {
 			}	
 			
 			if (smokePerDay.getDoubleValue() <= 0) {
-				InlineLabel error = new InlineLabel("Please input smokes per day");
+				InlineLabel error = new InlineLabel(constants.current_smoke_per_day());
 				showErrorPopupPanel(error, "red");
 			
 				smokePerDay.getElement().getStyle().setProperty("color", "red");
 				return false;
 			}
 			if ((getValueAsInt(currentYearStart) < 1964) ||  getValueAsInt(currentYearStart) > 2015) {
-				InlineLabel error = new InlineLabel("Please input a valid start year");
+				InlineLabel error = new InlineLabel(constants.smoking_error());
 				showErrorPopupPanel(error, "red");
 				currentYearStart.getElement().getStyle().setProperty("color", "red");
 				smokePerDay.getElement().getStyle().setProperty("color", "red");
@@ -514,16 +499,24 @@ public class SmokeAlcohol {
 		}
 		
 		if (formerSmoker.getValue()) {
-			if (formerYearStart.getValue() == "" || formerYearStop.getValue() == "" || formerSmokePerDay.getDoubleValue() == 0) {
-				InlineLabel error = new InlineLabel("Please enter year you started smoking");
+			if (formerYearStart.getValue() == "" ) {
+				InlineLabel error = new InlineLabel(constants.smoking_error());
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerYearStop.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
 				return false;
 			}			
-			if ((getValueAsInt(formerYearStart) < 1964) ||  getValueAsInt(formerYearStart) > 2015) {
-				InlineLabel error = new InlineLabel("Please input a valid start year");
+			if (formerYearStop.getValue() == "") {
+				InlineLabel error = new InlineLabel(constants.stop_smoking());
+				showErrorPopupPanel(error, "red");
+				formerYearStart.getElement().getStyle().setProperty("color", "red");
+				formerYearStop.getElement().getStyle().setProperty("color", "red");
+				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
+				return false;
+			}		
+			if ((getValueAsInt(formerYearStart) < 1964) ||  getValueAsInt(formerYearStart) > 2015  ) {
+				InlineLabel error = new InlineLabel(constants.stop_smoking());
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
@@ -531,20 +524,35 @@ public class SmokeAlcohol {
 			}
 			
 			if ((getValueAsInt(formerSmokePerDay) <= 0)) {
-				InlineLabel error = new InlineLabel("Please indicate number of cigarettes etc. per day");
+				InlineLabel error = new InlineLabel(constants.former_smoke_per_day());
 				showErrorPopupPanel(error, "red");
 				formerYearStart.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
 				return false;
 			}
-			if ((getValueAsInt(formerYearStop) < 1964) ||  getValueAsInt(formerYearStop) > 2015) {
-				InlineLabel error = new InlineLabel("Please enter year you stopped smoking");
+			if ((getValueAsInt(formerYearStop) < 1964) ||  getValueAsInt(formerYearStop) > 2015 || getValueAsInt(formerYearStop) == 0) {
+				InlineLabel error = new InlineLabel(constants.stop_smoking());
 				showErrorPopupPanel(error, "red");
 				formerYearStop.getElement().getStyle().setProperty("color", "red");
 				formerSmokePerDay.getElement().getStyle().setProperty("color", "red");
 				return false;
 			}
 		}
+		if (drinksFrequency.getSelectedIndex() <= 0) {
+			
+			InlineLabel error = new InlineLabel(constants.how_often_drink());
+			showErrorPopupPanel(error, "red");
+			drinksFrequency.getElement().getStyle().setProperty("color", "red");
+			return false;			   
+		}
+	
+		if (drinks.getSelectedIndex() <= 0) {			
+			InlineLabel error = new InlineLabel(constants.units_per_week());
+			showErrorPopupPanel(error, "red");
+			drinks.getElement().getStyle().setProperty("color", "red");
+			return false;			   
+		}
+
 		return true;
 
 	}

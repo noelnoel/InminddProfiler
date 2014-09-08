@@ -183,7 +183,7 @@ public class FamilyMedicalHistory {
 		HorizontalPanel sibling_diabetes = setupSiblingQuestionsThree();
 		familyMedicalHistory.add(sibling_diabetes);
 		familyMedicalHistory.add(new HTMLPanel("<span>  <br>  </span>"));
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		familyMedicalHistory.add(btn);
 		
 		
