@@ -272,7 +272,7 @@ public class CognitiveTwo {
 		addRaisedChildren();
 		addPets();
 		addBank();
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		cognitiveTwoPanel.add(btn);
 		
 	

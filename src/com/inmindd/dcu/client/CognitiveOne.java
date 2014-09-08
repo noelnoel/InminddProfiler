@@ -210,7 +210,7 @@ public class CognitiveOne {
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));		
 		cognitiveOnePanel.add(addElementary());
 		
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		cognitiveOnePanel.add(btn);	
 
 		// Listen for mouse events on the submit button.
@@ -439,8 +439,8 @@ public class CognitiveOne {
 		managerYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(managerSimulYears);
+				if (getValueAsInt(managerYears) > 0)		
+					showSimul(managerSimulYears);
 			
 				}
 		});
@@ -475,9 +475,8 @@ public class CognitiveOne {
 		professionalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(professionalSimulYears);
-			
+				if (getValueAsInt(professionalYears) > 0)	
+					showSimul(professionalSimulYears);			
 				}
 		});
 		return cogoLine;
@@ -508,8 +507,8 @@ public class CognitiveOne {
 		technicianYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(technicianSimulYears);
+				if (getValueAsInt(technicianYears) > 0)	
+					showSimul(technicianSimulYears);
 			
 				}
 		});
@@ -541,8 +540,8 @@ public class CognitiveOne {
 		clericalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(clericalSimulYears);
+				if (getValueAsInt(clericalYears) > 0)	
+					showSimul(clericalSimulYears);
 			
 				}
 		});
@@ -574,8 +573,8 @@ public class CognitiveOne {
 		serviceYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(serviceSimulYears);
+				if (getValueAsInt(serviceYears) > 0)	
+					showSimul(serviceSimulYears);
 			
 				}
 		});
@@ -608,8 +607,8 @@ public class CognitiveOne {
 		agriculturalYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(agriculturalSimulYears);
+				if (getValueAsInt(agriculturalYears) > 0)	
+						showSimul(agriculturalSimulYears);
 			
 				}
 		});
@@ -641,8 +640,8 @@ public class CognitiveOne {
 		craftYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(craftSimulYears);
+				if (getValueAsInt(craftYears) > 0)	
+					showSimul(craftSimulYears);
 			
 				}
 		});
@@ -674,8 +673,8 @@ public class CognitiveOne {
 		plantYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(plantSimulYears);
+				if (getValueAsInt(plantYears) > 0)	
+					showSimul(plantSimulYears);
 			
 				}
 		});
@@ -707,8 +706,8 @@ public class CognitiveOne {
 		elementaryYears.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				
-				showSimul(elementarySimulYears);
+				if (getValueAsInt(elementaryYears) > 0)	
+					showSimul(elementarySimulYears);
 			
 				}
 		});
@@ -745,7 +744,8 @@ public class CognitiveOne {
 	}
 	
 	private void showSimul(TextBox simulYears ) {
-		 
+		
+		
 		final PopupPanel popup = new PopupPanel(true, true);			
 		InlineLabel quest1 = new InlineLabel(constants.simul_job());
 		

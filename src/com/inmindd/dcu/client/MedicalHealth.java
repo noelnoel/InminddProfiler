@@ -250,7 +250,7 @@ public class MedicalHealth {
 				}
 
 				else {
-					error = new InlineLabel("Height entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_height());
 					showErrorPopupPanel(error,"red");
 					heightCent.setFocus();
 					heightCent.setText("");
@@ -278,7 +278,7 @@ public class MedicalHealth {
 					heightInputFeet = feet;
 				}		    	
 				else {
-					error = new InlineLabel("Height entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_height());
 					showErrorPopupPanel(error,"red");
 					heightFeet.setFocus();
 					heightFeet.setText("");
@@ -306,7 +306,7 @@ public class MedicalHealth {
 				}
 
 				else {
-					error = new InlineLabel("Height entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_height());
 					showErrorPopupPanel(error,"red");
 					heightFeet.setFocus();
 					heightFeet.setText("");
@@ -356,7 +356,7 @@ public class MedicalHealth {
 				}
 
 				else {
-					error = new InlineLabel("Weight entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_weight());
 					showErrorPopupPanel(error,"red");
 					weightKilos.setFocus();
 					weightKilos.setText("");
@@ -376,7 +376,7 @@ public class MedicalHealth {
 				}
 
 				else {
-					error = new InlineLabel("Weight entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_weight());
 					showErrorPopupPanel(error,"red");
 					weightStone.setFocus();
 					weightStone.setText("");
@@ -399,7 +399,7 @@ public class MedicalHealth {
 					weightStone.setFocus();
 				}		    	
 				else {
-					error = new InlineLabel("Height entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.invalid_height());
 					showErrorPopupPanel(error,"red");
 					weightLbs.setFocus();
 					weightStone.setText("");
@@ -475,7 +475,7 @@ public class MedicalHealth {
 			}
 		});
 
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		// Listen for mouse events on the submit button.
 		btn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -1022,7 +1022,7 @@ public class MedicalHealth {
 			else { heightFeetInches = heightInputFeet * 12 + heightInputInches;	
 			if (!(heightFeetInches >= MIN_HEIGHT_INCHES && heightFeetInches <= MAX_HEIGHT_INCHES)) {
 			
-					error = new InlineLabel("Invalid Height Input- please re-enter.");
+					error = new InlineLabel(constants.invalid_height());
 					showErrorPopupPanel(error,"red");
 					heightCent.setFocus();
 					return false;
@@ -1043,7 +1043,7 @@ public class MedicalHealth {
 			else { weightStoneLbs = weightInputStone * 14 + weightInputLbs;	
 			if (!(weightStoneLbs >= MIN_WEIGHT_LBS && weightStoneLbs <= MAX_WEIGHT_LBS)) {
 			
-					error = new InlineLabel("Invalid Weight Input- please re-enter.");
+					error = new InlineLabel(constants.invalid_weight());
 					showErrorPopupPanel(error,"red");
 					weightKilos.setFocus();
 					return false;

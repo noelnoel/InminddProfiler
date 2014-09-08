@@ -173,7 +173,7 @@ public class Diet {
 		dietPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		addPasta();
 		
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		dietPanel.add(btn);
 		
 
@@ -336,14 +336,14 @@ public class Diet {
 
 	private boolean validateInput() {
 		if (!(culFatYes.getValue() || culFatNo.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on culinary fat");
+			InlineLabel error = new InlineLabel(constants.cul_fat());
    			showErrorPopupPanel(error, "red"); 
    			culFatYes.getElement().getStyle().setProperty("color","red");
    			culFatNo.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(oilZero.getValue() || oilTwo.getValue() | oilFour.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on consumption of ");
+			InlineLabel error = new InlineLabel(constants.olive_oil());
    			showErrorPopupPanel(error, "red"); 
    			oilZero.getElement().getStyle().setProperty("color","red");
    			oilTwo.getElement().getStyle().setProperty("color","red");
@@ -351,7 +351,7 @@ public class Diet {
    			return false;
 		}
 		if (!(vegZero.getValue() || vegThree.getValue() || vegFive.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on  vegetable servings consumed");
+			InlineLabel error = new InlineLabel(constants.vegetables());
    			showErrorPopupPanel(error, "red"); 
    			vegZero.getElement().getStyle().setProperty("color","red");
    			vegThree.getElement().getStyle().setProperty("color","red");
@@ -359,7 +359,7 @@ public class Diet {
    			return false;
 		}
 		if (!(fruitZero.getValue() || fruitOne.getValue() || fruitTwo.getValue() || fruitThree.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on fruit units consumed");
+			InlineLabel error = new InlineLabel(constants.fruit());
    			showErrorPopupPanel(error, "red"); 
    			fruitZero.getElement().getStyle().setProperty("color","red");
    			fruitOne.getElement().getStyle().setProperty("color","red");
@@ -368,56 +368,56 @@ public class Diet {
    			return false;
 		}
 		if (!(meatZero.getValue() || meatOne.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer  question on servings of meat consumed");
+			InlineLabel error = new InlineLabel(constants.meat_servings());
    			showErrorPopupPanel(error, "red"); 
    			meatZero.getElement().getStyle().setProperty("color","red");
    			meatOne.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(butterZero.getValue() || butterOne.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer  question on servings of butter");
+			InlineLabel error = new InlineLabel(constants.butter_servings());
    			showErrorPopupPanel(error, "red"); 
    			butterZero.getElement().getStyle().setProperty("color","red");
    			butterOne.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(beverageZero.getValue() || beverageOne.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on sweet or carbonated beverages consumed");
+			InlineLabel error = new InlineLabel(constants.beverages());
    			showErrorPopupPanel(error, "red"); 
    			beverageZero.getElement().getStyle().setProperty("color","red");
    			beverageOne.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(wineZero.getValue() || wineSeven.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on wine consumption");
+			InlineLabel error = new InlineLabel(constants.wine_consumption());
    			showErrorPopupPanel(error, "red"); 
    			wineZero.getElement().getStyle().setProperty("color","red");
    			wineSeven.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(legumesZero.getValue() || legumesThree.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer questions on legumes consumption");
+			InlineLabel error = new InlineLabel(constants.legume_consumption());
    			showErrorPopupPanel(error, "red"); 
    			legumesZero.getElement().getStyle().setProperty("color","red");
    			legumesThree.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(fishZero.getValue() || fishThree.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on fish consumption");
+			InlineLabel error = new InlineLabel(constants.fish_consumption());
    			showErrorPopupPanel(error, "red"); 
    			fishZero.getElement().getStyle().setProperty("color","red");
    			fishThree.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(cakeZero.getValue() || cakeThree.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on sweets or pastries");
+			InlineLabel error = new InlineLabel(constants.sweets_consumption());
    			showErrorPopupPanel(error, "red"); 
    			cakeZero.getElement().getStyle().setProperty("color","red");
    			cakeThree.getElement().getStyle().setProperty("color","red");
    			return false;
 		}
 		if (!(nutsZero.getValue() || nutsThree.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on nuts");
+			InlineLabel error = new InlineLabel(constants.nuts_consumption());
    			showErrorPopupPanel(error, "red"); 
    			nutsZero.getElement().getStyle().setProperty("color","red");
    			nutsThree.getElement().getStyle().setProperty("color","red");
@@ -425,7 +425,7 @@ public class Diet {
 		}
 		
 		if (!(chickenYes.getValue() || chickenNo.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on preference for chicken");
+			InlineLabel error = new InlineLabel(constants.chicken_preference());
    			showErrorPopupPanel(error, "red"); 
    			chickenYes.getElement().getStyle().setProperty("color","red");
    			chickenNo.getElement().getStyle().setProperty("color","red");
@@ -433,7 +433,7 @@ public class Diet {
 		}		
 
 		if (!(pastaZero.getValue() || pastaTwo.getValue())) {
-			InlineLabel error = new InlineLabel("Please answer question on dishes with tomato sauce");
+			InlineLabel error = new InlineLabel(constants.tomato_sauce());
    			showErrorPopupPanel(error, "red"); 
    			pastaZero.getElement().getStyle().setProperty("color","red");
    			pastaTwo.getElement().getStyle().setProperty("color","red");

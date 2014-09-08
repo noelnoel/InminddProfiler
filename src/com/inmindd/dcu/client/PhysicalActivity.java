@@ -260,7 +260,7 @@ public class PhysicalActivity {
 		physicalActivityPanel.add(stairs);
 
 		physicalActivityPanel.add(new HTMLPanel("<span>  <br>  </span>")); 
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 
 		physicalActivityPanel.add(btn);
 

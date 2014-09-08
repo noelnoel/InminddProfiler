@@ -162,7 +162,7 @@ public class PatientInfo {
 		
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
-		Button btn = new Button("submit");
+		Button btn = new Button(constants.submit());
 		
 		 // Listen for mouse events on the submit button.
 	    btn.addClickHandler(new ClickHandler() {
@@ -216,8 +216,9 @@ public class PatientInfo {
         //         country.addItem(loc.getRegionName(code), code); 
 
        //  } 
-		country.addItem("Scotland: Schotland, Ecosse");
+		
 		country.addItem("Ireland:  Ierland, Irelande");
+		country.addItem("Scotland: Schotland, Ecosse");
 		country.addItem("The Netherlands: Nederland, Pays-Bas");
 		country.addItem("France: Frankrijk, France");
 		country.addItem("Other: Anders, Autre");
@@ -299,14 +300,15 @@ public class PatientInfo {
 	private FlowPanel getCountryEducated() {
 
 		FlowPanel country = new FlowPanel();
-		InlineLabel theSelection = new InlineLabel("Please select country in which you are based");
+		InlineLabel theSelection = new InlineLabel(constants.country_based());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
 
 		countryEducated.addItem(constants.select_one());
-		countryEducated.addItem("Ireland");
-		countryEducated.addItem("Scotland");
-		countryEducated.addItem("Netherlands");
-		countryEducated.addItem("France");
+		countryEducated.addItem("Ireland:  Ierland, Irelande");
+		countryEducated.addItem("Scotland: Schotland, Ecosse");
+		countryEducated.addItem("The Netherlands: Nederland, Pays-Bas");
+		countryEducated.addItem("France: Frankrijk, France");
+		
 		country.add(theSelection);
 		country.add(countryEducated);
 		countryEducated.addChangeHandler(new ChangeHandler() 
@@ -632,7 +634,7 @@ private FlowPanel getEducationFR() {
 
 		catch (Exception e)
 		{
-			error = new InlineLabel("Invalid or non existant  input - Please re-enter");	
+			error = new InlineLabel(constants.non_existent());	
 			showErrorPopupPanel(error);
 			age.getElement().getStyle().setProperty("color", "red");	
 			return false;
@@ -665,7 +667,7 @@ private FlowPanel getEducationFR() {
 
 	private boolean checkCountryOfBirth() {
 		country.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your country of birth");
+		error = new InlineLabel(constants.select_country_birth());
 		if (country.getSelectedIndex() <= 0) {
 			showErrorPopupPanel(error);
 			country.getElement().getStyle().setProperty("color", "red");
@@ -676,7 +678,7 @@ private FlowPanel getEducationFR() {
 
 	private boolean checkMaritalStatus() {
 		marital.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your marital status");
+		error = new InlineLabel(constants.marital());
 		if (marital.getSelectedIndex() <= 0) {
 			showErrorPopupPanel(error);
 			marital.getElement().getStyle().setProperty("color", "red");
@@ -687,7 +689,7 @@ private FlowPanel getEducationFR() {
 	
 	private boolean checkLivingArrangements() {
 		livingArrangements.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your living arrangements");
+		error = new InlineLabel(constants.living());
 		if (livingArrangements.getSelectedIndex() <= 0) {
 			showErrorPopupPanel(error);
 			livingArrangements.getElement().getStyle().setProperty("color", "red");
@@ -698,7 +700,7 @@ private FlowPanel getEducationFR() {
 	
 	private boolean checkOccupation() {
 		occupation.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your current occupation");
+		error = new InlineLabel(constants.select_occupation());
 		if (occupation.getSelectedIndex() <= 0) {
 			showErrorPopupPanel(error);
 			occupation.getElement().getStyle().setProperty("color", "red");
@@ -709,10 +711,14 @@ private FlowPanel getEducationFR() {
 
 	private boolean checkEducationLevel() {
 		int index = countryEducated.getSelectedIndex();
-		
+		if (index == 0) {
+			error = new InlineLabel(constants.select_education());
+			showErrorPopupPanel(error);
+			return false;
+		}
 		if (index == 2 )  { // scotland 
 			educationLevelSC.getElement().getStyle().setProperty("color", "black");	
-			error = new InlineLabel("Please select your education level");
+			error = new InlineLabel(constants.select_education());
 			if (educationLevelSC.getSelectedIndex() <= 0) {
 				showErrorPopupPanel(error);
 				educationLevelSC.getElement().getStyle().setProperty("color", "red");
@@ -722,7 +728,7 @@ private FlowPanel getEducationFR() {
 		}
 		if (index == 1 )  { // ireland 
 			educationLevelIE.getElement().getStyle().setProperty("color", "black");	
-			error = new InlineLabel("Please select your education level");
+			error = new InlineLabel(constants.select_education());
 			if (educationLevelIE.getSelectedIndex() <= 0) {
 				showErrorPopupPanel(error);
 				educationLevelIE.getElement().getStyle().setProperty("color", "red");
@@ -733,7 +739,7 @@ private FlowPanel getEducationFR() {
 		
 		if (index == 3 )  { // netherland 
 			educationLevelNL.getElement().getStyle().setProperty("color", "black");	
-			error = new InlineLabel("Please select your education level");
+			error = new InlineLabel(constants.select_education());
 			if (educationLevelNL.getSelectedIndex() <= 0) {
 				showErrorPopupPanel(error);
 				educationLevelNL.getElement().getStyle().setProperty("color", "red");
@@ -744,7 +750,7 @@ private FlowPanel getEducationFR() {
 		
 		if (index == 4 )  { // france 
 			educationLevelFR.getElement().getStyle().setProperty("color", "black");	
-			error = new InlineLabel("Please select your education level");
+			error = new InlineLabel(constants.select_education());
 			if (educationLevelFR.getSelectedIndex() <= 0) {
 				showErrorPopupPanel(error);
 				educationLevelFR.getElement().getStyle().setProperty("color", "red");
@@ -760,7 +766,7 @@ private FlowPanel getEducationFR() {
 	
 	private boolean checkEmploymentStatus() {
 		employmentStatus.getElement().getStyle().setProperty("color", "black");	
-		error = new InlineLabel("Please select your employment status");
+		error = new InlineLabel(constants.select_employment());
 		if (employmentStatus.getSelectedIndex() <= 0) {
 			showErrorPopupPanel(error);
 			employmentStatus.getElement().getStyle().setProperty("color", "red");

@@ -1304,35 +1304,36 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		int elementary_simul_years = cognitiveOne.getElementarySimulYears();
 		long time = System.currentTimeMillis();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time); 
-		String insert = "insert  into cognitive_one_info (patient_id, formal_education_years,non_formal_education_years, manager, manager_simul_years,"
+		String insert = "insert  into cognitive_one_info (patient_id, timestamp,formal_education_years,non_formal_education_years, manager, manager_simul_years,"
 				+ "professional, professional_simul_years, technician, technician_simul_years, clerical, clerical_simul_years,"
 				+ "service, service_simul_years, agriculture, agriculture_simul_years, "
 				+ "craft, craft_simul_years, plant, plant_simul_years, elementary, elementary_simul_years)"
-				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				
 		try {
 			PreparedStatement updateCognitiveOneInfo = (PreparedStatement) conn.prepareStatement(insert);
 			updateCognitiveOneInfo.setString(1, patient_id);
-			updateCognitiveOneInfo.setDouble(2,  formal_education_years);
-			updateCognitiveOneInfo.setDouble(3, non_formal_education_years);
-			updateCognitiveOneInfo.setInt(4, manager);
-			updateCognitiveOneInfo.setInt(5, manager_simul_years);
-			updateCognitiveOneInfo.setInt(6, professional);
-			updateCognitiveOneInfo.setInt(7, professional_simul_years);
-			updateCognitiveOneInfo.setInt(8, technician);
-			updateCognitiveOneInfo.setInt(9, technician_simul_years);
-			updateCognitiveOneInfo.setInt(10, clerical);
-			updateCognitiveOneInfo.setInt(11, clerical_simul_years);
-			updateCognitiveOneInfo.setInt(12, service);
-			updateCognitiveOneInfo.setInt(13, service_simul_years);			
-			updateCognitiveOneInfo.setInt(14, agriculture);
-			updateCognitiveOneInfo.setInt(15, agriculture_simul_years);
-			updateCognitiveOneInfo.setInt(16, craft);
-			updateCognitiveOneInfo.setInt(17, craft_simul_years);
-			updateCognitiveOneInfo.setInt(18, plant);
-			updateCognitiveOneInfo.setInt(19, plant_simul_years);
-			updateCognitiveOneInfo.setInt(20, elementary);
-			updateCognitiveOneInfo.setInt(21, elementary_simul_years);
+			updateCognitiveOneInfo.setTimestamp(2, timestamp);
+			updateCognitiveOneInfo.setDouble(3,  formal_education_years);
+			updateCognitiveOneInfo.setDouble(4, non_formal_education_years);
+			updateCognitiveOneInfo.setInt(5, manager);
+			updateCognitiveOneInfo.setInt(6, manager_simul_years);
+			updateCognitiveOneInfo.setInt(7, professional);
+			updateCognitiveOneInfo.setInt(8, professional_simul_years);
+			updateCognitiveOneInfo.setInt(9, technician);
+			updateCognitiveOneInfo.setInt(10, technician_simul_years);
+			updateCognitiveOneInfo.setInt(11, clerical);
+			updateCognitiveOneInfo.setInt(12, clerical_simul_years);
+			updateCognitiveOneInfo.setInt(13, service);
+			updateCognitiveOneInfo.setInt(14, service_simul_years);			
+			updateCognitiveOneInfo.setInt(15, agriculture);
+			updateCognitiveOneInfo.setInt(16, agriculture_simul_years);
+			updateCognitiveOneInfo.setInt(17, craft);
+			updateCognitiveOneInfo.setInt(18, craft_simul_years);
+			updateCognitiveOneInfo.setInt(19, plant);
+			updateCognitiveOneInfo.setInt(20, plant_simul_years);
+			updateCognitiveOneInfo.setInt(21, elementary);
+			updateCognitiveOneInfo.setInt(22, elementary_simul_years);
 			
 			updateCognitiveOneInfo.executeUpdate();
 			return true;
