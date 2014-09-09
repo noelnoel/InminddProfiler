@@ -455,8 +455,11 @@ public interface InminddConstants extends Constants{
 	 	String goal_0();
 	 	String goal_1();
 	 	String goal_2();
+
 	 	String back();
-	 	String goal_4();
+		String back_to_profile();
+	 	
+		String goal_4();
 	 	String goal_5();
 	 	String goal_6();
 	 	String goal_7();
@@ -510,5 +513,6 @@ public interface InminddConstants extends Constants{
 		String supportMessageScoreFailed();
 		String supportMessageInternalError();
 		String supportAnd();
+
 		
 }
