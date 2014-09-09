@@ -72,7 +72,7 @@ public class Login  {
   
 	
     
-    private InlineLabel loginHead = new InlineLabel("Login");
+    private InlineLabel loginHead = new InlineLabel(constants.login());
     private InlineLabel loginRegister = new InlineLabel(constants.register_heading());
     private InlineLabel loginReset = new InlineLabel("Reset Password");
   
@@ -102,8 +102,8 @@ public class Login  {
     private PasswordTextBox motherForgotBox = new PasswordTextBox();
     private PasswordTextBox colourForgotBox = new PasswordTextBox();
   
-    private Button loginbutton = new Button("Login");    
-    private Button registerbutton = new Button("Register");  
+    private Button loginbutton = new Button(constants.login());    
+    private Button registerbutton = new Button(constants.register_heading());  
     private Button forgotPasswordButton = new Button(constants.forgot_password());    
     private Button resetPasswordButton = new Button("Reset Password!");    
   
