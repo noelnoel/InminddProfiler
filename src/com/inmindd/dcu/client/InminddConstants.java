@@ -10,6 +10,7 @@ public interface InminddConstants extends Constants{
 	 	String eufunding_banner();
 	 	String register();
 	 	String submit();
+	 	String login();
 	 	String user();
 	 	String password();
 	 	String repeat_password();
