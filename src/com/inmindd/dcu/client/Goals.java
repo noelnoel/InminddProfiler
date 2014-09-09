@@ -215,6 +215,8 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("goal-7").setInnerHTML(constants.goal_7());
 		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
 		DOM.getElementById("score-26").setInnerHTML(constants.score_26());
+		
+		DOM.getElementById("back-to-profile").setInnerHTML(constants.back_to_profile());
 	}
 
 }
