@@ -5,9 +5,12 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
+
 import com.google.appengine.api.utils.SystemProperty;
+import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -27,11 +30,13 @@ import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 /*mail purpose*/
 import java.util.Properties;
+
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -40,9 +45,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 /*end of mail*/
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
+
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -54,7 +61,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
 	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
-	
+
 	
 	// autherisation key for Glasgow randomisation wev service
 	
@@ -170,7 +177,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					} else {
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-						throw new IllegalArgumentException("You are not in the intervention group. You have to wait up to 6 months for entering the support environment.");
+
+						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
 					}
 					conn.close();
 					return user;

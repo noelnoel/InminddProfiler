@@ -27,6 +27,8 @@ public interface InminddConstants extends Constants{
 	 	String cog_active_2();
 	 	String smoking_drink();
 	 	String diet_tab();
+	 	
+	 	String wait_six_months();
 	 
 	 	/*
 	 	 * 
