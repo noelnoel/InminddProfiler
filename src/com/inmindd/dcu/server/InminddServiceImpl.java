@@ -2163,7 +2163,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
-		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal());
+		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
 		if(!goalChosen)
 		{
 			try 
@@ -2187,27 +2187,43 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	/**
 	 * Check if a goal exists in the db before adding it for a user
+	 * Also checks if it is a custom goal and if the custom goal isn't present it will allow its addition
 	 * 
 	 * @param user Patient object
 	 * @param goalId Id of goal you are checking to see if they have already chosen
 	 * @return boolean whether goal exists in db or not
 	 */
-	private boolean goalChosenAlready(String currentUser, int goalId)
+	private boolean goalChosenAlready(String currentUser, int goalId, String goalComment)
 	{
 		String check = "SELECT * FROM `support_goals_users` WHERE id_goal = ? AND id_user = ?";
 		boolean alreadyChosen = false;
-		ResultSet goalStuff = null;
+		ResultSet goalInfo = null;
 		
 		try 
 		{
 			PreparedStatement goalPresentCheck = (PreparedStatement) conn.prepareStatement(check);
 			goalPresentCheck.setInt(1, goalId);
 			goalPresentCheck.setString(2, currentUser);
-			goalStuff = goalPresentCheck.executeQuery();
+			goalInfo = goalPresentCheck.executeQuery();
 			
-			if (goalStuff.isBeforeFirst())
-			{
-				alreadyChosen = true;
+			//if there is a result set
+			if (goalInfo.isBeforeFirst())
+			{	//iterate through it
+				while(goalInfo.next())
+				{	//if the comment is null then it has been chosen 
+					String customText = goalInfo.getString("comment");
+					if(customText == null)
+					{
+						alreadyChosen = true;
+					}//or if the comments equal it has been chosen and they are not null
+					else if(customText != null)
+					{
+						if(customText.equalsIgnoreCase(goalComment))
+						{
+							alreadyChosen = true;
+						}
+					}
+				}
 			}
 			else
 			{
