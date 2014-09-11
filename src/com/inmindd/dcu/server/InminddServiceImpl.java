@@ -5,9 +5,12 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
+
 import com.google.appengine.api.utils.SystemProperty;
+import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -27,11 +30,13 @@ import com.inmindd.dcu.shared.SupportGoal;
 import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 /*mail purpose*/
 import java.util.Properties;
+
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -40,9 +45,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 /*end of mail*/
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
+
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -50,11 +57,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 /**
  * The server side implementation of the RPC service.
  */
+
 @SuppressWarnings("serial")
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
 	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
-	
+
 	
 	// autherisation key for Glasgow randomisation wev service
 	
@@ -71,6 +79,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	private CognitiveOneInfo cognitiveOne;
 	private DietInfo diet;
 	public String randGroup;
+	
+	/***************************************
+	 *  General Methods
+	 ***************************************/
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
 		//open database connection
@@ -170,7 +182,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					} else {
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-						throw new IllegalArgumentException("You are not in the intervention group. You have to wait up to 6 months for entering the support environment.");
+
+						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
 					}
 					conn.close();
 					return user;
@@ -244,8 +257,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 			// execute the java preparedstatement
 			preparedStmt.executeUpdate();
-			
-
 		}
 		catch (SQLException e) {
 			user = null;
@@ -255,7 +266,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return true;
 	}
 
-		
+	/******************************
+	 * Profiler Related Methods
+	 ******************************/
 	@Override
 	public Boolean registerUser(User user) throws IllegalArgumentException {
 			String userId = user.getUserId();
@@ -465,44 +478,46 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						return randGroup;
 					}
 				}			
-			
 		}
 		catch (SQLException e) {
 			user = null;	
 			return randGroup;
-		}
-			
+		}	
 		return randGroup;
 	}
 	
 	
 	@Override
-	public Boolean updatePatientInfo(Patient patient) throws IllegalArgumentException {
+	public Boolean updatePatientInfo(Patient patient) throws IllegalArgumentException 
+	{
 		//open database connection
 		initDBConnection();
 		
-		if (createPatientInfo(patient)) {
-			try {
+		if (createPatientInfo(patient)) 
+		{
+			try 
+			{
 				conn.close();
 				return true;
-			} catch (SQLException e) {
+			} catch (SQLException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-		return  true;
-			
-		
+			return true;
 		}
-		else {
-			try {
+		else 
+		{
+			try 
+			{
 				conn.close();
 				return false;
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 		return false;
 	}
@@ -545,7 +560,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 	
 	public Patient queryPatientInfo(User user) {
@@ -706,7 +720,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-		
 			return false;
 		}
 			
@@ -775,9 +788,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				feelings.setTreated(result.getString(24));
 				conn.close();
 				return true;
-
 			}
-
 			conn.close();
 			return false;
 		}
@@ -918,7 +929,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			
 			pstmt = conn.prepareStatement("");
 			result = pstmt.executeQuery("SELECT * FROM medical_info where patient_id = " + idUser);
 
@@ -947,9 +957,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			    medical.setKidney(result.getString(23));
 				conn.close();
 				return true;
-
 			}
-
 			conn.close();
 			return false;
 		}
@@ -1026,7 +1034,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			pstmt = conn.prepareStatement("");
 			result = pstmt.executeQuery("SELECT * FROM family_history_info where patient_id = " + idUser);
 
-			while (result.last()) {
+			while (result.last())
+			{
 				history.setUserId(result.getString(1));
 				history.setMotherDementia(result.getString(3));
 				history.setMotherCvd(result.getString(4));
@@ -1039,9 +1048,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				history.setSiblingDiabetes(result.getString(11));
 				conn.close();
 				return true;
-
 			}
-
 			conn.close();
 			return false;
 		}
@@ -1049,9 +1056,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			user = null;		
 			return false;
 		}
-
-
 	}
+	
+	
 	private boolean createHistory(FamilyHistoryInfo history) {
 		String patient_id = history.getUserId();
 		long time = System.currentTimeMillis();
@@ -1087,16 +1094,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			updateHistoryInfo.setString(10,siblingCvd);
 			updateHistoryInfo.setString(11,siblingDiabetes);
 			
-
 			updateHistoryInfo.executeUpdate();
-
-		} catch (SQLException e) {
-			
+		} 
+		catch (SQLException e)
+		{
 			e.printStackTrace();
-			return false;		}
-
+			return false;		
+		}
 		return true;	
-		
 	}
 	
 	
@@ -1168,22 +1173,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			updateActivitiesInfo.setDouble(14, flightStairs);	
 			updateActivitiesInfo.setDouble(15, vigorousHours);
 			
-			
 			updateActivitiesInfo.setString(16, workActivity);
 			updateActivitiesInfo.setString(17, vigorous);
 			
-			
-			
-
 			updateActivitiesInfo.executeUpdate();
 
-		} catch (SQLException e) {
-			
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
-			return false;		}
-
+			return false;		
+		}
 		return true;	
-		
 	}
 	
 	public PhysicalActivityInfo queryPhysicalActivity(User user) {
@@ -1245,14 +1246,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			conn.close();
 			return false;
-			}
-		catch (SQLException e) {
-			user = null;
-			
-			//return user;
-		return false;
 		}
-			
+		catch (SQLException e) 
+		{
+			user = null;
+			return false;
+		}	
 	}
 	
 	@Override
@@ -1374,7 +1373,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	private boolean getCognitiveOneData(User user) {
 
-		
 		String idUser = user.getUserId();
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
@@ -1407,17 +1405,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				
 				conn.close();
 				return true;
-				
 			}
 			
 			conn.close();
 			return false;
-			}
-		catch (SQLException e) {
+		}
+		catch (SQLException e) 
+		{
 			user = null;
-			
-			
-		return false;
+			return false;
 		}
 			
 	}
@@ -1535,7 +1531,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			updateCognitiveTwoInfo.executeUpdate();
 			
-		
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1625,16 +1620,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			conn.close();
 			return false;
 			}
-		catch (SQLException e) {
+		catch (SQLException e) 
+		{
 			user = null;
-			
-			
-		return false;
-		}
-			
+			return false;
+		}	
 	}
-	
-
 	
 	@Override
 	public Boolean updateSmokeAlcohol(SmokeAlcoholInfo smokeAlco) throws IllegalArgumentException {
@@ -1680,8 +1671,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				+ "former_year_start, former_year_stop, former_num_smoke, drinks_freq, num_drinks)"
 
 				+ " values(?,?,?,?,?,?,?,?,?,?)";
-
-			
 
 		try {
 			PreparedStatement updateSmokeAl = (PreparedStatement) conn.prepareStatement(insert);
@@ -1752,20 +1741,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				smokeAlcohol.setNum_drinks(result.getString(10));
 				conn.close();
 				return true;
-				
 			}
-			
 			conn.close();
 			return false;
 			}
 		catch (SQLException e) {
 			user = null;
-			
 			//return user;
-		return false;
+			return false;
 		}
-			
 	}
+	
+	
 	@Override
 	public Boolean updateDiet(DietInfo diet) throws IllegalArgumentException {
 		//open database connection
@@ -1813,12 +1800,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		int sweets_week = diet.getSweets();
 		String insert = "insert  into diet_info (patient_id, timestamp,culinary_fat,oil_consume, vegetable_servings,fruit_units, red_meat, " +
 
-
 				 "butter, carbonated_beverages,wine_week, legumes_week,fish_week, sweets_week,nuts_week,prefer_chicken,sauce_week)"
 
 				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-			
 
 		try {
 			PreparedStatement updateDiet = (PreparedStatement) conn.prepareStatement(insert);
@@ -1913,17 +1897,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			user = null;
 			
 			
-		return false;
+			return false;
 		}
 			
 	}
-	public RiskFactorScore getLibraScore(User user) {
+	
+	public RiskFactorScore getLibraScore(User user) 
+	{
 		//open database connection
 		RiskFactorScore score = new RiskFactorScore();
 		CalculateScore calcScore = new CalculateScore();
 		calcScore.calcScore(score, user);
 		return  score;
-		
 	}
 	
 	
@@ -1968,36 +1953,41 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode
 		
-		  try {
-		      if (SystemProperty.environment.value() ==
-		          SystemProperty.Environment.Value.Production) {
-		        // Load the class that provides the new "jdbc:google:mysql://" prefix.
-		        Class.forName("com.mysql.jdbc.GoogleDriver");
-		        String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
-		        conn = DriverManager.getConnection(url);
-		      } else {  //running application locally in development mode 
-		    	String url = "jdbc:mysql://173.194.249.69:3306/";
-		  		String dbName = "inmindd";
-		  		String driver = "com.mysql.jdbc.Driver";
-		  		String userName = "root";
-		  		String password = "noknoknok";
-		  		try {
+		  try 
+		  {
+		      if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
+		      {
+		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
+			      Class.forName("com.mysql.jdbc.GoogleDriver");
+			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      conn = DriverManager.getConnection(url);
+		      } 
+		      else 
+		      {  
+		    	  //running application locally in development mode 
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String dbName = "inmindd";
+		    	  String driver = "com.mysql.jdbc.Driver";
+		    	  String userName = "root";
+		    	  String password = "noknoknok";
+		    	  
+		    	  try 
+		    	  {
 		  			Class.forName(driver).newInstance();
 		  			conn = DriverManager.getConnection(url+dbName,userName,password);
-
-		  		} catch (Exception e) {
+		    	  } 
+		    	  catch (Exception e) 
+		    	  {
 		  			e.printStackTrace();
-		  		} 
-		  		
+		    	  } 
 		      }
-		    } catch (Exception e) {
+		  } 
+		  catch (Exception e) 
+		  {
 		      e.printStackTrace();
 		      return;
-		    }
-
+		  }
 	}
-
-	
 
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
@@ -2034,6 +2024,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 
+	/****************************************
+	 * Support environment methods  
+	 * ************************************/
+	
+	/**************************
+	 * @param user
+	 * @param riskfactorId
+	 * @param infos
+	 * @return
+	 */
 	private boolean getSupportRiskFactorInfos(User user, int riskfactorId, SupportRiskFactorInfos infos) {
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
@@ -2122,22 +2122,31 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 	@Override
-	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException {
+	public Boolean updateSupportGoalUser(SupportGoalUser goal) throws IllegalArgumentException 
+	{
 		//open database connection
 		initDBConnection();
 
-		if (createSupportGoalUser(goal)) {
-			try {
+		if (createSupportGoalUser(goal)) 
+		{
+			try 
+			{
 				conn.close();
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 			return true;
 		}
-		else {
-			try {
+		else 
+		{
+			try 
+			{
 				conn.close();
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 			return false;
@@ -2145,29 +2154,90 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 
-	private boolean createSupportGoalUser(SupportGoalUser goal) {
+	private boolean createSupportGoalUser(SupportGoalUser goal) 
+	{
 		String patient_id = goal.getId_user();
 		long time = System.currentTimeMillis();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
-
-		try {
-			PreparedStatement statement = (PreparedStatement) conn.prepareStatement(insert);
-			statement.setInt(1, goal.getId_goal());
-			statement.setString(2, patient_id);
-			statement.setTimestamp(3,timestamp);
-			statement.setString(4, goal.getComment());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;		
+		
+		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
+		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
+		if(!goalChosen)
+		{
+			try 
+			{
+				PreparedStatement statement = (PreparedStatement) conn.prepareStatement(insert);
+				statement.setInt(1, goal.getId_goal());
+				statement.setString(2, patient_id);
+				statement.setTimestamp(3,timestamp);
+				statement.setString(4, goal.getComment());
+				statement.executeUpdate();
+			} 
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+				return false;	
+			}
 		}
-
-		return true;	
-
+		return true;
+	
+	}
+	
+	/**
+	 * Check if a goal exists in the db before adding it for a user
+	 * Also checks if it is a custom goal and if the custom goal isn't present it will allow its addition
+	 * 
+	 * @param user Patient object
+	 * @param goalId Id of goal you are checking to see if they have already chosen
+	 * @return boolean whether goal exists in db or not
+	 */
+	private boolean goalChosenAlready(String currentUser, int goalId, String goalComment)
+	{
+		String check = "SELECT * FROM `support_goals_users` WHERE id_goal = ? AND id_user = ?";
+		boolean alreadyChosen = false;
+		ResultSet goalInfo = null;
+		
+		try 
+		{
+			PreparedStatement goalPresentCheck = (PreparedStatement) conn.prepareStatement(check);
+			goalPresentCheck.setInt(1, goalId);
+			goalPresentCheck.setString(2, currentUser);
+			goalInfo = goalPresentCheck.executeQuery();
+			
+			//if there is a result set
+			if (goalInfo.isBeforeFirst())
+			{	//iterate through it
+				while(goalInfo.next())
+				{	//if the comment is null then it has been chosen 
+					String customText = goalInfo.getString("comment");
+					if(customText == null)
+					{
+						alreadyChosen = true;
+					}//or if the comments equal it has been chosen and they are not null
+					else if(customText != null)
+					{
+						if(customText.equalsIgnoreCase(goalComment))
+						{
+							alreadyChosen = true;
+						}
+					}
+				}
+			}
+			else
+			{
+				alreadyChosen = false;
+			}
+		}
+		catch(SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return alreadyChosen;
 	}
 
+	
 	@Override
 	public ArrayList<SupportGoalUser> querySupportGoalUser(User user) {
 		//open database connection
@@ -2439,10 +2509,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ArrayList<String> users = new ArrayList<String>();
 		initDBConnection();
 
-		if (getAllUsers(users)) {
-			try {
+		if (getAllUsers(users)) 
+		{
+			try
+			{
 				conn.close();
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 			return users;
@@ -2582,8 +2656,4 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return false;
 		
 	}
-
-
-
-
 }

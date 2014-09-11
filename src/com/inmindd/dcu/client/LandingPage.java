@@ -65,7 +65,12 @@ public class LandingPage implements EntryPoint {
 						}
 						@Override
 						public void onFailure(Throwable caught) {
-							Window.alert(caught.getMessage());
+							String onFailureError = caught.getMessage();
+							if (onFailureError.equalsIgnoreCase("You have to wait up to 6 months for entering the support environment."))
+							{
+								Window.alert(constants.wait_six_months());
+							}
+						
 							DOM.getElementById("loginPanel").setAttribute("style", "");
 							DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 						}
