@@ -184,14 +184,12 @@ public class Goals implements EntryPoint {
 
 	private boolean callServiceSetup() {
 		// set up rpc call
-
 		InminddServiceSvc = (InminddServiceAsync) GWT
 				.create(InminddService.class);
 		ServiceDefTarget target = (ServiceDefTarget) InminddServiceSvc;
 		String moduleRelativeURL = GWT.getModuleBaseURL() + "Inmindd";
 		target.setServiceEntryPoint(moduleRelativeURL);
 		return true;
-
 	}
 	
 	private void globalize(){
