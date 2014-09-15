@@ -145,7 +145,7 @@ public class Admin implements EntryPoint {
 					// TODO print error
 				} else {
 					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(0).getImage_url() +"\"" +
-							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(9).getImage_url() +"\"" +
+							"},\"cholesterol\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(9).getImage_url() +"\"" +
 							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(7).getImage_url() +"\"" +
 							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(2).getImage_url() +"\"" +
 							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() + ", \"imageUrl\": \"" + lastInstance.infosRiskFactors.get(8).getImage_url() +"\"" +

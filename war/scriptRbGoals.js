@@ -1,3 +1,4 @@
+window.onload = function(){
 function load(){
 	labelGoalButton = $("#goalsButtonTextRPC").val();
 	data = $("#goalsInputRPC").val();
@@ -109,3 +110,4 @@ $(document).ready(function(){
 	$(document).on("mouseenter",".img-circle", clickFactors);
 	$(document).on("click",".goalsButtons", goalClickJS);
 });
+};

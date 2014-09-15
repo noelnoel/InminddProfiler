@@ -142,7 +142,7 @@ public class Score implements EntryPoint {
 						"smoking":0 //8.0
 					}*/
 					String output = "{ \"blood_pressure\": { \"id\":1, \"score\":" + score.getMidlifeHypertension() + ", \"imageUrl\": \"" + infosRiskFactors.get(0).getImage_url() +"\"" +
-							"},\"cholesteral\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + infosRiskFactors.get(9).getImage_url() +"\"" +
+							"},\"cholesterol\": { \"id\":10, \"score\":" + score.getCholesterol() + ", \"imageUrl\": \"" + infosRiskFactors.get(9).getImage_url() +"\"" +
 							"}, \"cognitive_activity\": { \"id\":8, \"score\":" + score.getHighCognitiveActivity() + ", \"imageUrl\": \"" + infosRiskFactors.get(7).getImage_url() +"\"" +
 							"},\"diabetes\": { \"id\":3, \"score\":" + score.getDiabetes() + ", \"imageUrl\": \"" + infosRiskFactors.get(2).getImage_url() +"\"" +
 							"},\"diet\": { \"id\":9, \"score\":" + score.getHealthyDiet() + ", \"imageUrl\": \"" + infosRiskFactors.get(8).getImage_url() +"\"" +
