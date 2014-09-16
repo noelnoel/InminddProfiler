@@ -98,8 +98,10 @@ public class RiskFactorInfos implements EntryPoint {
 		return;
 	}
 	
-	private void getScore() {
-		if (user == null) {
+	private void getScore() 
+	{
+		if (user == null) 
+		{
 			// TODO print error
 			System.out.println("[RB_RiskFactors::getScore] \\ user null");
 			Window.alert(constants.errorNotLoggedIn());
@@ -108,9 +110,8 @@ public class RiskFactorInfos implements EntryPoint {
 
 		}
 
-
-		AsyncCallback<RiskFactorScore> callback = new AsyncCallback<RiskFactorScore>() {
-
+		AsyncCallback<RiskFactorScore> callback = new AsyncCallback<RiskFactorScore>() 
+		{
 			@Override
 			public void onSuccess(RiskFactorScore score) {
 				if (score == null || score.getUserId().equals(null)) {
@@ -204,7 +205,8 @@ public class RiskFactorInfos implements EntryPoint {
 						break;
 					}
 					
-					if(!keepThisUp){
+					if(!keepThisUp)
+					{
 						String url = riskFactorInfos.getImage_url();
 						if(!manageWell){
 							// room for improvement

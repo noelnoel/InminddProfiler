@@ -1,3 +1,4 @@
+
 function load(){
 	labelGoalButton = $("#goalsButtonTextRPC").val();
 	data = $("#goalsInputRPC").val();
