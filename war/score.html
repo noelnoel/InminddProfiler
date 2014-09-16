@@ -24,6 +24,28 @@
 
         </script>
         <!-- End Google Analytics -->
+        
+        <style type="text/css">
+        	@media print {
+        		a[href]:after{
+        			content: none !important;
+        		}
+        		#nav {
+        			display: none;
+        		}
+        		.col-md-4 {
+        			page-break-after: always;
+        			
+        		}
+        		.img-picto {
+        			height: 50px;
+        			width: 50px;
+        		}
+        		.dont_print{
+        			display: none;
+        		}
+        	}
+        </style>
     </head>
     <body class="tundra">
         <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
