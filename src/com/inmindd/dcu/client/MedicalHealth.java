@@ -1132,7 +1132,7 @@ public class MedicalHealth {
 						 showErrorPopupPanel(error, "red");            			
 					 }            		
 					 else {
-						 InlineLabel error = new InlineLabel("Medical data  retrieved- Edit as necessary");
+						 InlineLabel error = new InlineLabel(constants.retrieved());
 						 showErrorPopupPanel(error, "green");  
 						 populatePanel(medical);
 						

@@ -459,11 +459,14 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	
 		Label welLabel = new Label(constants.welcome());
 		Label euLabel = new Label(constants.eufunding_banner());
+		euLabel.getElement().getStyle().setProperty("fontWeight", "normal");
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");
 		if (logoSlot!=null)logoSlot.add(logo);
 		logoSlot.add(euFlag);
-		
+		RootPanel euSlot = RootPanel.get("euSlot");
+		if (euSlot!=null)euSlot.add(euLabel, 100,65);
+	
 		RootPanel welcomeSlot = RootPanel.get("welcome");
 		if (welcomeSlot != null) welcomeSlot.add(welLabel);
 		

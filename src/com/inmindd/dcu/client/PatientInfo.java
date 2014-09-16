@@ -282,12 +282,13 @@ public class PatientInfo {
 	    		int selectedIndex = livingArrangements.getSelectedIndex();
 	    		if (selectedIndex == 5){
 	    			please.setVisible(true);
+	    			otherLivingArrangements.setText("");
 	    			otherLivingArrangements.setVisible(true);
 	    			otherLivingArrangements.setVisibleLength(35);
 	    			otherLivingArrangements.setFocus(true);
 	    		}
 	    		else if (selectedIndex != 5){
-	    			
+	    			otherLivingArrangements.setText("");
 	    			please.setVisible(false);
 	    			otherLivingArrangements.setVisible(false);
 	    			
@@ -689,8 +690,10 @@ private FlowPanel getEducationFR() {
 	
 	private boolean checkLivingArrangements() {
 		livingArrangements.getElement().getStyle().setProperty("color", "black");	
+	//	if (otherLivingArrangements.getText().length() > 0)
+	//		return true;
 		error = new InlineLabel(constants.living());
-		if (livingArrangements.getSelectedIndex() <= 0) {
+		if (livingArrangements.getSelectedIndex() < 0) {
 			showErrorPopupPanel(error);
 			livingArrangements.getElement().getStyle().setProperty("color", "red");
 			return false;		   
@@ -767,7 +770,7 @@ private FlowPanel getEducationFR() {
 	private boolean checkEmploymentStatus() {
 		employmentStatus.getElement().getStyle().setProperty("color", "black");	
 		error = new InlineLabel(constants.select_employment());
-		if (employmentStatus.getSelectedIndex() <= 0) {
+		if (employmentStatus.getSelectedIndex() < 0) {
 			showErrorPopupPanel(error);
 			employmentStatus.getElement().getStyle().setProperty("color", "red");
 			return false;		   
@@ -835,12 +838,13 @@ private FlowPanel getEducationFR() {
 		 int index = marital.getSelectedIndex();
 		 patient.setMaritalStatus(marital.getItemText(index));
 		 index = livingArrangements.getSelectedIndex();
-		 if (index == 5) {
-			 patient.setLivingArrangements(otherLivingArrangements.getText());
-		 }
-		 else if(index != 5) {
+		 if(index != 5 && index > 0) {
 			 patient.setLivingArrangements(livingArrangements.getItemText(index));
 		 }
+		 else if (otherLivingArrangements.getText().length() > 0) {
+			 patient.setLivingArrangements(otherLivingArrangements.getText());
+		 }
+		
 		 index = occupation.getSelectedIndex();
 		 patient.setOccupationalGroup(occupation.getItemText(index));
 		 int indexCountryEducated  = countryEducated.getSelectedIndex();
@@ -891,7 +895,7 @@ private FlowPanel getEducationFR() {
 					 showErrorPopupPanel(error);            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("Patient data retrieved- Edit as necessary");
+					 InlineLabel error = new InlineLabel(constants.retrieved());
 					 showErrorPopupPanel(error, "green");  
 					 populatePanel(patient);
 					
@@ -951,9 +955,14 @@ private FlowPanel getEducationFR() {
 		 }
 		 
 		 patientValue = patient.getLivingArrangements();
-		 itemCount = livingArrangements.getItemCount();
+		 if (!(patientValue == null)) {
+			 livingArrangements.setItemText(0, patientValue);
+			 livingArrangements.setValue(0, patientValue);
+			 livingArrangements.setSelectedIndex(0);
+		 }
+	/*	 itemCount = livingArrangements.getItemCount();
 		 
-		 for (index = 0; index < itemCount; index++) {
+		 for (index = 1; index < itemCount; index++) {
 			 if ( livingArrangements.getItemText(index).equals(patientValue)) {
 				 livingArrangements.setSelectedIndex(index);
 				
@@ -968,10 +977,10 @@ private FlowPanel getEducationFR() {
 			 please.getElement().getStyle().setProperty("fontWeight", "bold");
 			 please.setVisible(false);
 			 otherLivingArrangements.setVisible(true);
-			 otherLivingArrangements.setText(patientValue);
+			 otherLivingArrangements.setText(patient.getLivingArrangements());
 			 otherLivingArrangements.setStyleName("pos12");
 			 //patientPanel.add(otherLivingArrangements);
-		 }
+		 } */
 		 User user = login.getUser();
 		 if (user.getUserId().startsWith("11")) { // ireland
 			 countryEducated.setSelectedIndex(1);
@@ -1033,12 +1042,14 @@ private FlowPanel getEducationFR() {
 		 
 		 patientValue = patient.getEmploymentStatus();
 		 itemCount = employmentStatus.getItemCount();
-		 for (index = 0; index < itemCount; index++) {
-			 if ( employmentStatus.getItemText(index).equals(patientValue)) {
-				 employmentStatus.setSelectedIndex(index);
-				 break;
-			 }
-		 }
+		 employmentStatus.setItemText(0, patientValue);
+		 employmentStatus.setSelectedIndex(0);
+		// for (index = 0; index < itemCount; index++) {
+		//	 if ( employmentStatus.getItemText(index).equals(patientValue)) {
+		//		 employmentStatus.setSelectedIndex(index);
+		//		 break;
+		//	 }
+		// }
 			 
  }
 	 	 

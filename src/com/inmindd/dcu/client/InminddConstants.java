@@ -31,7 +31,8 @@ public interface InminddConstants extends Constants{
 	 	String cog_active_2();
 	 	String smoking_drink();
 	 	String diet_tab();
-	 
+	    String retrieved();
+	    String enter_password();
 	 	/*
 	 	 * 
 	 	 * Patient Info
@@ -386,7 +387,10 @@ public interface InminddConstants extends Constants{
 	 	String two();
 	 	String review();
 	 	String please();
-	 	
+	 	String confirm();
+	 	String allocated_group();
+	 	String random_user_1();
+	 	String random_user_2();
 	 	String menu_home();
 	 	String menu_profiler();
 	 	String menu_support();

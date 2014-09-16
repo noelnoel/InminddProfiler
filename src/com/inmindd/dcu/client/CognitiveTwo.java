@@ -1510,7 +1510,7 @@ public class CognitiveTwo {
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
-					InlineLabel error = new InlineLabel("Cognitive Two data retrieved- Edit as necessary");
+					InlineLabel error = new InlineLabel(constants.retrieved());
 					showErrorPopupPanel(error, "green");  
 					populatePanel(cognitiveTwo);
 	
