@@ -1,4 +1,6 @@
-InminddProfiler
+Inmindd Profiler and Support Environment 
 ===============
 
-inmindd prfiler project
+Version (number) 
+
+===============
