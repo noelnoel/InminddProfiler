@@ -183,13 +183,13 @@ public class Diet {
 	    		if (checkUser()) {
 	    			if (validateInput()) {
 	    			updateDietDB();
-	    			if (Window.confirm("Please confirm that you have completed all Input screens for the Profiler"))
+	    			if (Window.confirm(constants.confirm()))
 	    				setRandomiserStatus();
 	    			
 	    			else {
 	    				return;
 	    			}
-	    			if (Window.confirm("After 1 minute, press OK to get allocated Group for this user")) {	    					
+	    			if (Window.confirm(constants.allocated_group())) {	    					
 	    						
 	    						getRandomGroup(); // this gets randomisedGroup 	  				
 	    				
@@ -226,11 +226,11 @@ public class Diet {
 	       			InlineLabel error = new InlineLabel("Randomiser status service Failed");
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
-	       		else {
-	       			InlineLabel error = new InlineLabel("Randomiser status service successful completion");
-	       			showErrorPopupPanel(error, "green"); 	       			
+	       	//	else {
+	       			//InlineLabel error = new InlineLabel("Randomiser status service successful completion");
+	       			//showErrorPopupPanel(error, "green"); 	       			
 	       			
-	       		}
+	       	//	}
 	            
 	         }
 			@Override
@@ -259,9 +259,12 @@ public class Diet {
 	       			//showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			InlineLabel error = new InlineLabel("The User with Id " + user.getUserId() + " has been randomised into the " + group + " group");
-	       			//showErrorPopupPanel(error, "red");   
-	       			Window.alert("The User with Id " + user.getUserId() + " has been randomised into the " + group + " group");
+	       			String whichGroup = null;
+	       			if (group.equals("Control"))
+	       				whichGroup = "Radio";
+	       			else whichGroup = "Taxi";
+	       			  
+	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			
 	       			outerUser.setRandomGroup(group);
 	       			
@@ -798,7 +801,7 @@ public class Diet {
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
-					InlineLabel error = new InlineLabel("Diet data retrieved- Edit as necessary");
+					InlineLabel error = new InlineLabel(constants.retrieved());
 					showErrorPopupPanel(error, "green");  
 					populatePanel(diet);
 	

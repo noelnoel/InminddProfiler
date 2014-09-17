@@ -635,7 +635,7 @@ public class SmokeAlcohol {
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("Smoke Alcohol data retrieved- Edit as necessary");
+					 InlineLabel error = new InlineLabel(constants.retrieved());
 					 showErrorPopupPanel(error, "green");  
 					 populatePanel(smokeAlcohol);
 					

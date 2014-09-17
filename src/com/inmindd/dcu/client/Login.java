@@ -304,6 +304,11 @@ public class Login  {
 	    			}
 	    			@Override
 	    			public void onFailure(Throwable caught) {
+	    				if (caught.getMessage().equals("Blocked")) {
+	    					InlineLabel error = new InlineLabel("Sorry,  access has been blocked to the Profiler");;
+		    				showErrorPopupPanel(error, "red");
+		    				return;
+	    				}
 	    				InlineLabel error = new InlineLabel(constants.invalid_id());
 	    				showErrorPopupPanel(error, "red");
 	    				setUser(user);
@@ -333,9 +338,7 @@ public class Login  {
 			loginReset.getElement().getStyle().setProperty("fontWeight", "bold");
 			
 	        FlexCellFormatter cellFormatter = forgotLayout.getFlexCellFormatter();
-	       // loginLayout.setWidget(0,0,loginHead);
-	      //  cellFormatter.setColSpan(0, 0, 3);
-	      //  cellFormatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+	     
 
 	        //Add the loginbutton to the form
 	        forgotLayout.setWidget(0, 0, loginReset);
@@ -437,7 +440,7 @@ public class Login  {
 		String rep = passwordRegRepeat.getText();
 		String psw = passwordReg.getText();
 		if (rep.equals("") && psw.equals("")) {			
-			InlineLabel error = new InlineLabel("Please enter a valid password");
+			InlineLabel error = new InlineLabel(constants.enter_password());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -476,7 +479,7 @@ public class Login  {
 			String rep = passwordForgotRegRepeat.getText();
 			String psw = passwordForgotReg.getText();
 			if (rep.equals("") && psw.equals("")) {			
-				InlineLabel error = new InlineLabel("Please enter a valid password");
+				InlineLabel error = new InlineLabel(constants.enter_password());
 				showErrorPopupPanel(error, "red");
 				return false;
 				
@@ -734,7 +737,7 @@ public class Login  {
 	}
     
     private void getScore() {				
-		  String userId =  user.getUserId();
+		 String userId =  user.getUserId();
 		 if (user== null) {
 
 			 InlineLabel error  = new InlineLabel("Please Logon or Register  with the InMINDD Application");

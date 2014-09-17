@@ -469,7 +469,7 @@ public class FamilyMedicalHistory {
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("Family history data retrieved- Edit as necessary");
+					 InlineLabel error = new InlineLabel(constants.retrieved());
 					 showErrorPopupPanel(error, "green");  
 					 populatePanel(history);
 					

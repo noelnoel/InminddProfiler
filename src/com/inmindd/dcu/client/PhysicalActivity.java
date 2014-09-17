@@ -754,7 +754,7 @@ private boolean checkHours(TextBox hours) {
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
-					 InlineLabel error = new InlineLabel("Physical Activity data retrieved- Edit as necessary");
+					 InlineLabel error = new InlineLabel(constants.retrieved());
 					 showErrorPopupPanel(error, "green");  
 					 populatePanel(physical);
 					
