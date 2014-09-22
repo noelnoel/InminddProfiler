@@ -38,13 +38,16 @@ public class LandingPage implements EntryPoint {
 		
 		EventListener eventLogin = new EventListener() {
 			@Override
-			public void onBrowserEvent(Event event) {
-				if (Event.ONCLICK == event.getTypeInt()) {
+			public void onBrowserEvent(Event event) 
+			{
+				if (Event.ONCLICK == event.getTypeInt()) 
+				{
 					//  generate digest of the password
 					String hashedPassword = Crypto.getSHA1for(DOM.getElementById("password").getPropertyString("value"));
 					String username = DOM.getElementById("username").getPropertyString("value");
 
-					AsyncCallback<User> callback = new AsyncCallback<User>() {
+					AsyncCallback<User> callback = new AsyncCallback<User>() 
+					{
 						public void onSuccess(User user) {
 							if ((user == null)){	            		
 								Window.alert(constants.supportMessageInvalidLogin());
@@ -61,7 +64,6 @@ public class LandingPage implements EntryPoint {
 								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}
-
 						}
 						@Override
 						public void onFailure(Throwable caught) {
