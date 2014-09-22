@@ -81,7 +81,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public String randGroup;
 	
 	/***************************************
-	 *  General Methods
+	 *  Login Methods
 	 ***************************************/
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
@@ -101,18 +101,25 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					//System.out.println(result.getString(4));
 					user = new User();
 					user.setUserId(result.getString(1));
-				
-					conn.close();
-					getThreadLocalRequest().getSession().setAttribute("current_user", user);
-					return user;
-				}
+					
+					if(result.getInt("profiler_blocked")==1)
+					{
+						throw new IllegalArgumentException("Blocked");
 
+					}
+					else
+					{
+						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						conn.close();
+						return user;
+					}
+				}
 			}
+			//Only executes if there is no user with that id 
 			user = null;
 			getThreadLocalRequest().getSession().setAttribute("current_user", null);
 			conn.close();
 			return user;
-
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -122,7 +129,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			//   pstmt.close();
 			//c//onn.close();
 		}
-
 		return user;
 	}
 	
@@ -179,7 +185,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					} else if(result.getInt("controlGroupAuthorized") == 1) {
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-					} else {
+					} else if(result.getInt("controlGroupAuthorized")== 0){
+						
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
 
@@ -1991,6 +1998,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
+		User userConnected = new User();
+		userConnected = (User)getThreadLocalRequest().getSession().getAttribute("current_user");
+		if (userConnected != null)
+		{
+			
+		}
 		return (User)getThreadLocalRequest().getSession().getAttribute("current_user");
 	}
 	
