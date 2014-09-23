@@ -7,7 +7,6 @@ public interface InminddConstants extends Constants{
 	   String physical();
 	// @DefaultStringValue("Welcome to the InMINDD Profiler")
 	 	String welcome();
-	 	String eufunding_banner();
 	 	String register();
 	 	String submit();
 	 	String login();

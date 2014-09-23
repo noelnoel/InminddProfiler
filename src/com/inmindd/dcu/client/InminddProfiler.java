@@ -458,7 +458,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		content.setSize("100%",  "130%");
 	
 		Label welLabel = new Label(constants.welcome());
-		Label euLabel = new Label(constants.eufunding_banner());
+		Label euLabel = new Label(constants.euFunding());
 		euLabel.getElement().getStyle().setProperty("fontWeight", "normal");
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");
