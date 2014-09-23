@@ -793,7 +793,7 @@ public class SmokeAlcohol {
 			weeklyDrink.setText(constants.typical_drinks());
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
-			drinksBandIE.addItem("Please select one");
+			drinksBandIE.addItem(constants.select_one());
 			drinksBandIE.addItem("7 or less");
 			drinksBandIE.addItem("8 - 11");
 			drinksBandIE.addItem("12 - 17");
