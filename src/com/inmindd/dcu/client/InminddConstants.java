@@ -14,9 +14,18 @@ public interface InminddConstants extends Constants{
 	 	String password();
 	 	String repeat_password();
 	 	String forgot_password();
-	 	String registration();
+	 	String access_blocked();
+	 	String reset_password();
+	 	String enter_id();
+	 	String reg_error();
+	 	String reset_password_fail();
+	 	String practice_code_error();
 	 	String register_heading();
 	 	String maiden_name();
+	 	String invalid_id_pass();
+	 	String data_not_updated();
+	 	String unable_to_retrieve();
+	 	String error();
 	 	String fav_colour();
 	 	String invalid_id();
 	 	String miss_match();
@@ -51,7 +60,7 @@ public interface InminddConstants extends Constants{
 	 	String select_occupation();
 	 	String select_education();
 	 	String select_employment();
-	 	String year();
+
 	 	String sex();
 	 	String male();
 	 	String female();
@@ -107,7 +116,6 @@ public interface InminddConstants extends Constants{
 	 	 */
 	 	String feelings_error_1();
 		String feelings_error_2();
-		String mood_complete();
 	 	String feeling();
 	 	String lastweek();
 	 	
@@ -163,7 +171,7 @@ public interface InminddConstants extends Constants{
 	 	String invalid_height();
 	 	String invalid_weight();
 	 	String mmol_error();
-	 	String med_error_1();
+
 	 	String systolic_error();
 	 	String systolic_range();
 	 	String diastolic_error();
@@ -205,7 +213,7 @@ public interface InminddConstants extends Constants{
 	 	String toldurine();
 	 	String toldurine_2();
 	 	String toldkidney();
-	 	String med_complete();
+
 	 	/*
 	 	 * family medical history
 	 	 * 
@@ -343,11 +351,13 @@ public interface InminddConstants extends Constants{
 	 	String how_often_drink();	 	
 	 	String stop_smoking();
 	 	String smoking_error();
-	 	String smoke_complete();
+
 	 	String typical_drinks();
 	 	String units_per_week();
 	 	String monthly();
 	 	String two_to_four();
+	 	String few_times_per_wk();
+	 	String plus_times_per_wk();
 	    String select_one();
 	 	String diet();
 	 	String diet_questions();

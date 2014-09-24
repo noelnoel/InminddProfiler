@@ -976,7 +976,7 @@ public class MedicalHealth {
 				}
 			}		
 
-			error = new InlineLabel(constants.med_error_1());			
+			error = new InlineLabel(constants.feelings_error_2());			
 			showErrorPopupPanel(error,"red");
 			label.getElement().getStyle().setProperty("color", "red");			  
 			return false;		

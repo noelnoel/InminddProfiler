@@ -319,7 +319,7 @@ public class CognitiveOne {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -422,7 +422,7 @@ public class CognitiveOne {
 		//managerYears.getElement().getStyle().setProperty("marginLeft", "auto");
 		managerYears.setStyleName("pos5");
 		
-		InlineLabel label1 = new InlineLabel(constants.manager());
+		InlineLabel label1 = new InlineLabel(constants.managers());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("marginRight", "10px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
@@ -820,7 +820,7 @@ public class CognitiveOne {
 		User user = login.getUser();
 		if (user== null) {
 	
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return;
 	

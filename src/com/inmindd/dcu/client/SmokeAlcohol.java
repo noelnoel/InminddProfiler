@@ -284,7 +284,7 @@ public class SmokeAlcohol {
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			//InlineLabel error = new InlineLabel(constants.smoke_complete());
+	       			//InlineLabel error = new InlineLabel(constants.smoke_complete()); Deleted smoke_complete
 	       			//showErrorPopupPanel(error, "green");   
 	       			content.selectTab(DECK_DIET);
 	       			content.getTabWidget(DECK_SMOKE_ALCOHOL).getElement().getStyle().setProperty("backgroundColor", "red");
@@ -353,8 +353,8 @@ public class SmokeAlcohol {
         drinksFrequency.addItem(constants.never());
         drinksFrequency.addItem(constants.monthly());
         drinksFrequency.addItem(constants.two_to_four());
-        drinksFrequency.addItem("2-3 times per week");
-        drinksFrequency.addItem("4 or more times per week");
+        drinksFrequency.addItem(constants.few_times_per_wk());
+        drinksFrequency.addItem(constants.plus_times_per_wk());
        
         drinkFreq.add(theSelection);
         drinkFreq.add(drinksFrequency);
@@ -794,7 +794,7 @@ public class SmokeAlcohol {
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
 			drinksBandIE.addItem(constants.select_one());
-			drinksBandIE.addItem("7 or less");
+			drinksBandIE.addItem(constants.seven_less());
 			drinksBandIE.addItem("8 - 11");
 			drinksBandIE.addItem("12 - 17");
 			drinksBandIE.addItem("18+");

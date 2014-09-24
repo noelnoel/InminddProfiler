@@ -486,7 +486,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(readingOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenRead = new DataField(IF_OFTEN, constants.year());
+		oftenRead = new DataField(IF_OFTEN, constants.years());
 		oftenRead.setVisible(false);
 		oftenRead.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenRead.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -534,7 +534,7 @@ public class CognitiveTwo {
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(householdOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenHousehold = new DataField(IF_OFTEN, constants.year());
+		oftenHousehold = new DataField(IF_OFTEN, constants.years());
 		oftenHousehold.setVisible(false);
 		oftenHousehold.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenHousehold.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -584,7 +584,7 @@ public class CognitiveTwo {
 		//cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(drivingOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenDrive = new DataField(IF_OFTEN, constants.year());
+		oftenDrive = new DataField(IF_OFTEN, constants.years());
 		oftenDrive.setVisible(false);
 		oftenDrive.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenDrive.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -632,7 +632,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(leisureOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenLeisure = new DataField(IF_OFTEN, constants.year());
+		oftenLeisure = new DataField(IF_OFTEN, constants.years());
 		oftenLeisure.setVisible(false);
 		oftenLeisure.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenLeisure.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -681,7 +681,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(techOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenTech = new DataField(IF_OFTEN, constants.year());
+		oftenTech = new DataField(IF_OFTEN, constants.years());
 		oftenTech.setVisible(false);
 		oftenTech.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenTech.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -729,7 +729,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(socialOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenSocial = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenSocial = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenSocial.setVisible(false);
 		oftenSocial.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenSocial.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -776,7 +776,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(cinemaOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenCinema = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenCinema = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenCinema.setVisible(false);
 		oftenCinema.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenCinema.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -825,7 +825,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(gardeningOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenGardening = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenGardening = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenGardening.setVisible(false);
 		oftenGardening.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenGardening.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -872,7 +872,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(careOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenCare = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenCare = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenCare.setVisible(false);
 		oftenCare.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenCare.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -921,7 +921,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(volunteerOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenVolunteer = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenVolunteer = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenVolunteer.setVisible(false);
 		oftenVolunteer.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenVolunteer.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -968,7 +968,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(artisticOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenArtistic = new DataField(IF_OFTEN_MONTH, constants.year());
+		oftenArtistic = new DataField(IF_OFTEN_MONTH, constants.years());
 		oftenArtistic.setVisible(false);
 		oftenArtistic.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenArtistic.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1017,7 +1017,7 @@ public class CognitiveTwo {
 		cognitiveTwoPanel.add(exhibOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenExhib = new DataField(IF_OFTEN_YEAR, constants.year());
+		oftenExhib = new DataField(IF_OFTEN_YEAR, constants.years());
 		oftenExhib.setVisible(false);
 		oftenExhib.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenExhib.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1067,7 +1067,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(holidayOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenHoliday = new DataField(IF_OFTEN_YEAR, constants.year());
+		oftenHoliday = new DataField(IF_OFTEN_YEAR, constants.years());
 		oftenHoliday.setVisible(false);
 		oftenHoliday.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenHoliday.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1114,7 +1114,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(booksOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenBooks = new DataField(IF_OFTEN_YEAR, constants.year());
+		oftenBooks = new DataField(IF_OFTEN_YEAR, constants.years());
 		oftenBooks.setVisible(false);
 		oftenBooks.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenBooks.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1216,7 +1216,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(petsOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenPets = new DataField(constants.activity_adult(), constants.year());
+		oftenPets = new DataField(constants.activity_adult(), constants.years());
 		oftenPets.setVisible(false);
 		oftenPets.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenPets.getElement().getStyle().setProperty("marginLeft", "255px");
@@ -1266,7 +1266,7 @@ public class CognitiveTwo {
 		
 		cognitiveTwoPanel.add(bankOften);
 		cognitiveTwoPanel.add(new HTMLPanel("<span>  <br>  </span>"));
-		oftenBank = new DataField(constants.activity_adult(), constants.year());
+		oftenBank = new DataField(constants.activity_adult(), constants.years());
 		oftenBank.setVisible(false);
 		oftenBank.getElement().getStyle().setProperty("fontWeight", "bold");	
 		oftenBank.getElement().getStyle().setProperty("marginLeft", "255px");
