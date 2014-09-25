@@ -74,7 +74,7 @@ public class Login  {
     
     private InlineLabel loginHead = new InlineLabel(constants.login());
     private InlineLabel loginRegister = new InlineLabel(constants.register_heading());
-    private InlineLabel loginReset = new InlineLabel("Reset Password");
+    private InlineLabel loginReset = new InlineLabel(constants.reset_password());
   
 
   
@@ -105,7 +105,7 @@ public class Login  {
     private Button loginbutton = new Button(constants.login());    
     private Button registerbutton = new Button(constants.register_heading());  
     private Button forgotPasswordButton = new Button(constants.forgot_password());    
-    private Button resetPasswordButton = new Button("Reset Password!");    
+    private Button resetPasswordButton = new Button(constants.reset_password());    
   
     private String hashedPassword;
     private String hashedMaidenName;
@@ -305,7 +305,7 @@ public class Login  {
 	    			@Override
 	    			public void onFailure(Throwable caught) {
 	    				if (caught.getMessage().equals("Blocked")) {
-	    					InlineLabel error = new InlineLabel("Sorry,  access has been blocked to the Profiler");;
+	    					InlineLabel error = new InlineLabel(constants.access_blocked());
 		    				showErrorPopupPanel(error, "red");
 		    				return;
 	    				}
@@ -432,7 +432,7 @@ public class Login  {
 		} 
 		
 		if (userIdReg.getText().equals("")) {
-			InlineLabel error = new InlineLabel("Please enter User Id");
+			InlineLabel error = new InlineLabel(constants.enter_id());
 			showErrorPopupPanel(error, "red");
 			return false;
 		}
@@ -471,7 +471,7 @@ public class Login  {
 			} 
 			
 			if (userForgotIdReg.getText().equals("")) {
-				InlineLabel error = new InlineLabel("Please enter User Id");
+				InlineLabel error = new InlineLabel(constants.enter_id());
 				showErrorPopupPanel(error, "red");
 				return false;
 			}
@@ -550,7 +550,7 @@ public class Login  {
 		public void onSuccess(Boolean result){
     		if (!result){
     		
-    			InlineLabel error = new InlineLabel("Registration error - duplicate user");
+    			InlineLabel error = new InlineLabel(constants.reg_error());
     			showErrorPopupPanel(error, "red");
     		}
     		
@@ -595,7 +595,7 @@ public class Login  {
 		public void onSuccess(Boolean result){
   		if (!result){
   		
-  			InlineLabel error = new InlineLabel("Reset Password failed - check Maiden name and Colour");
+  			InlineLabel error = new InlineLabel(constants.reset_password_fail());
   			showErrorPopupPanel(error, "red");
   		}
   		
@@ -668,7 +668,7 @@ public class Login  {
 		String practice = id.substring(2, 4);
 		if (Integer.parseInt(practice) < 0 || Integer.parseInt(practice) > 20) {
 			
-			InlineLabel error  = new InlineLabel("Invalid practice code in User Id - Please re-enter. Check your caps lock");	
+			InlineLabel error  = new InlineLabel(constants.practice_code_error());	
 			showErrorPopupPanel(error,"red");
 				
 			return false;
@@ -694,7 +694,7 @@ public class Login  {
 			 @Override	 
 			 public void onSuccess(Boolean duplicate) {
 				 if (duplicate){	            		
-					 InlineLabel error = new InlineLabel("Error - Duplicate user");
+					 InlineLabel error = new InlineLabel(constants.reg_error());
 					 showErrorPopupPanel(error, "red"); 
 					
 					
@@ -740,7 +740,7 @@ public class Login  {
 		 String userId =  user.getUserId();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("Please Logon or Register  with the InMINDD Application");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error, "red");
 			 return;
 

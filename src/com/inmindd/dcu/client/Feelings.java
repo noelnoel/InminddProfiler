@@ -396,7 +396,7 @@ public class Feelings {
 	;
 		if (user.getUserId()== null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -490,7 +490,7 @@ public class Feelings {
 			 @Override	 
             public void onSuccess(Boolean result) {
             		if ((result == false)){	            		
-            			InlineLabel error = new InlineLabel("Error Feelings Info not updated");
+            			InlineLabel error = new InlineLabel(constants.feel_update_fail());
             			showErrorPopupPanel(error, "red");            			
             		}            		
             		else {
@@ -502,7 +502,7 @@ public class Feelings {
               }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Feelings Info update failed");
+				InlineLabel error = new InlineLabel(constants.feel_update_fail());
     			showErrorPopupPanel(error, "red");			
 				
 			}
@@ -578,7 +578,7 @@ public class Feelings {
 		 User user = login.getUser();
 		 if (user.getUserId() == null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error, "red");
 			 return;
 
@@ -590,7 +590,7 @@ public class Feelings {
 			 @Override	 
 			 public void onSuccess(FeelingsInfo feelings) {
 				 if ((feelings == null)){	            		
-					 InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter  or check your caps lock ");
+					 InlineLabel error = new InlineLabel(constants.invalid_id_pass());
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
@@ -603,7 +603,7 @@ public class Feelings {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter or check your caps lock");
+				 InlineLabel error = new InlineLabel(constants.invalid_id_pass());
 				 showErrorPopupPanel(error, "red");			
 
 			 }

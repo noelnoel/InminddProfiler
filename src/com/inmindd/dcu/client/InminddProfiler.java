@@ -333,7 +333,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 	
 		// Create the Patient Info Panel
-
 		PatientInfo patient = new PatientInfo();		
 		patientPanel = patient.setupPatientPanel(login);
 		
@@ -341,7 +340,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 
 		// Create the Patient Feelings Panel
-
 		Feelings cesd = new Feelings();
 		csd = new HTMLPanel(getContent(Pages.CESD.getText()));	
 		cesdPanel = cesd.setupCesdPanel(login);		
@@ -458,7 +456,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		content.setSize("100%",  "130%");
 	
 		Label welLabel = new Label(constants.welcome());
-		Label euLabel = new Label(constants.eufunding_banner());
+		Label euLabel = new Label(constants.euFunding());
 		euLabel.getElement().getStyle().setProperty("fontWeight", "normal");
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");

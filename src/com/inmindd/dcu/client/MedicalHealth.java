@@ -922,7 +922,7 @@ public class MedicalHealth {
 			User user = login.getUser();
 			if (user.getUserId() == null) {
 				
-				InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+				InlineLabel error  = new InlineLabel(constants.register());
 				showErrorPopupPanel(error,"red");
 				return false;
 				
@@ -976,7 +976,7 @@ public class MedicalHealth {
 				}
 			}		
 
-			error = new InlineLabel(constants.med_error_1());			
+			error = new InlineLabel(constants.feelings_error_2());			
 			showErrorPopupPanel(error,"red");
 			label.getElement().getStyle().setProperty("color", "red");			  
 			return false;		
@@ -1000,7 +1000,7 @@ public class MedicalHealth {
 
 				}
 				if (!((mmolInput >=  MIN_MMOL) && (mmolInput <=  MAX_MMOL))) {
-					error = new InlineLabel("MMol reading entered is outside range. Please reenter if incorrect.");
+					error = new InlineLabel(constants.mmol_range_error());
 					showErrorPopupPanel(error,"red");
 					mmol.setFocus();
 					return false;
@@ -1116,7 +1116,7 @@ public class MedicalHealth {
 			 User user = login.getUser();
 			 if (user== null) {
 
-				 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+				 InlineLabel error  = new InlineLabel(constants.register());
 				 showErrorPopupPanel(error, "red");
 				 return;
 
@@ -1128,7 +1128,7 @@ public class MedicalHealth {
 				 @Override	 
 				 public void onSuccess(MedicalInfo medical) {
 					 if ((medical ==null)){	            		
-						 InlineLabel error = new InlineLabel("Medical Data not retrieved. No data available for this patient ");
+						 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 						 showErrorPopupPanel(error, "red");            			
 					 }            		
 					 else {
@@ -1141,7 +1141,7 @@ public class MedicalHealth {
 				 }
 				 @Override
 				 public void onFailure(Throwable caught) {
-					 InlineLabel error = new InlineLabel("Medical Info not retrieved");
+					 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					 showErrorPopupPanel(error, "red");			
 
 				 }
@@ -1318,7 +1318,7 @@ public class MedicalHealth {
 				 @Override	 
 	            public void onSuccess(Boolean result) {
 	            		if ((result == false)){	            		
-	            			InlineLabel error = new InlineLabel("Medical health info not updated");
+	            			InlineLabel error = new InlineLabel(constants.data_not_updated());
 	            			showErrorPopupPanel(error, "red");            			
 	            		}            		
 	            		else {
@@ -1331,7 +1331,7 @@ public class MedicalHealth {
 	              }
 				@Override
 				public void onFailure(Throwable caught) {
-					InlineLabel error = new InlineLabel("Database update error");
+					InlineLabel error = new InlineLabel(constants.data_not_updated());
 	    			showErrorPopupPanel(error, "red");			
 					
 				}

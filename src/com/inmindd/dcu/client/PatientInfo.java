@@ -125,7 +125,7 @@ public class PatientInfo {
 		    
 		patientPanel.add(prev);
 		text = constants.age();
-		String text_2 = constants.year();
+		String text_2 = constants.years();
 		patientPanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		age = new DataField(text, text_2);
 		
@@ -603,7 +603,7 @@ private FlowPanel getEducationFR() {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error);
 			return;			
 		}
@@ -800,7 +800,7 @@ private FlowPanel getEducationFR() {
 			 @Override	 
             public void onSuccess(Boolean result) {
             		if ((result == false)){	            		
-            			InlineLabel error = new InlineLabel("Patient Data not updated !!!!!");
+            			InlineLabel error = new InlineLabel(constants.data_not_updated());
             			showErrorPopupPanel(error, "red");            			            			
             		}
             		else {
@@ -814,7 +814,7 @@ private FlowPanel getEducationFR() {
               }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter");
+				InlineLabel error = new InlineLabel(constants.invalid_id_pass());
     			showErrorPopupPanel(error);			
 				
 			}
@@ -879,7 +879,7 @@ private FlowPanel getEducationFR() {
 		 User user = login.getUser();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error);
 			 return;
 
@@ -891,7 +891,7 @@ private FlowPanel getEducationFR() {
 			 @Override	 
 			 public void onSuccess(Patient patient) {
 				 if ((patient.getAge() == 0)){	            		
-					 InlineLabel error = new InlineLabel("Patient Data not retrieved. No data available for this patient ");
+					 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					 showErrorPopupPanel(error);            			
 				 }            		
 				 else {
@@ -904,7 +904,7 @@ private FlowPanel getEducationFR() {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter or check your caps lock");
+				 InlineLabel error = new InlineLabel(constants.invalid_id_pass());
 				 showErrorPopupPanel(error);			
 
 			 }
@@ -1056,7 +1056,7 @@ private FlowPanel getEducationFR() {
 	 private void showErrorPopupPanel(InlineLabel error) {
 			PopupPanel popup = new PopupPanel(true, true);			
 
-			popup.setTitle("Error");
+			popup.setTitle(constants.error());
 			VerticalPanel vertPanel = new VerticalPanel();
 			error.getElement().getStyle().setProperty("color", "red");
 			error.getElement().getStyle().setProperty("fontWeight", "bold");
@@ -1075,7 +1075,7 @@ private FlowPanel getEducationFR() {
 	 private void showErrorPopupPanel(InlineLabel error, String colour) {
 			PopupPanel popup = new PopupPanel(true, true);			
 
-			popup.setTitle("Error");
+			popup.setTitle(constants.error());
 			VerticalPanel vertPanel = new VerticalPanel();
 			error.getElement().getStyle().setProperty("color", colour);
 			error.getElement().getStyle().setProperty("fontWeight", "bold");
