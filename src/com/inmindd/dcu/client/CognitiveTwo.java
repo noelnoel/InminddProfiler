@@ -320,7 +320,7 @@ public class CognitiveTwo {
 			 @Override	 
 	       public void onSuccess(Boolean result) {
 	       		if ((result == false)){	            		
-	       			InlineLabel error = new InlineLabel("Cognitive Activity part Two  info not updated");
+	       			InlineLabel error = new InlineLabel(constants.data_not_updated());
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
@@ -333,7 +333,7 @@ public class CognitiveTwo {
 	         }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Database update error");
+				InlineLabel error = new InlineLabel(constants.data_not_updated());
 				showErrorPopupPanel(error, "red");			
 				
 			}
@@ -1300,7 +1300,7 @@ public class CognitiveTwo {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -1416,7 +1416,7 @@ public class CognitiveTwo {
 			
 			int numberChild = getValueAsInt(numberChildren);
 			if (numberChild <= 0) {
-				error = new InlineLabel("Please enter number of children raised");
+				error = new InlineLabel(constants.child_error());
 				showErrorPopupPanel(error, "red");
 				return false;
 			}
@@ -1430,7 +1430,7 @@ public class CognitiveTwo {
 	private boolean checkYears(DataField field, String activity) {
 		
 			if (getValueAsInt(field) > 42) {
-				InlineLabel error  = new InlineLabel("Value entered for " + activity + " cannot be greater than 42");
+				InlineLabel error  = new InlineLabel(activity +constants.cog_years_error());
 				showErrorPopupPanel(error, "red");
 				return false;				
 			}		
@@ -1494,7 +1494,7 @@ public class CognitiveTwo {
 		User user = login.getUser();
 		if (user== null) {
 	
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return;
 	
@@ -1506,7 +1506,7 @@ public class CognitiveTwo {
 			@Override	 
 			public void onSuccess(CognitiveTwoInfo cognitiveTwo) {
 				if ((cognitiveTwo == null || cognitiveTwo.getUserId() == null)){	            		
-					InlineLabel error = new InlineLabel("Cognitive Two Data not retrieved. No data available for this patient ");
+					InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
@@ -1519,7 +1519,7 @@ public class CognitiveTwo {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Cognitive Two data Database error");
+				InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				showErrorPopupPanel(error, "red");			
 	
 			}

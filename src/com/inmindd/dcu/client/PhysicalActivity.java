@@ -505,7 +505,7 @@ public class PhysicalActivity {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error);
 			return false;
 			
@@ -549,7 +549,7 @@ public class PhysicalActivity {
 
 		}
 		if ((hoursActivity < 0 || hoursActivity > 168)) {
-			error = new InlineLabel("Invalid Hours.  Please re-enter.");
+			error = new InlineLabel(constants.hr_range_err());
 			showErrorPopupPanel(error);
 			hours.getElement().getStyle().setProperty("color", "red");
 			hours.setFocus();
@@ -578,7 +578,7 @@ private boolean checkHours(TextBox hours) {
 
 		}
 		if ((hoursActivity < 0 || hoursActivity > 168)) {
-			error = new InlineLabel("Invalid Hours.  Please re-enter.");
+			error = new InlineLabel(constants.hr_range_err());
 			showErrorPopupPanel(error);
 			hours.getElement().getStyle().setProperty("color", "red");
 			hours.setFocus(true);
@@ -607,7 +607,7 @@ private boolean checkHours(TextBox hours) {
 		 @Override	 
        public void onSuccess(Boolean result) {
        		if ((result == false)){	            		
-       			InlineLabel error = new InlineLabel("Physical Activity info not updated");
+       			InlineLabel error = new InlineLabel(constants.data_not_updated());
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
@@ -620,7 +620,7 @@ private boolean checkHours(TextBox hours) {
          }
 		@Override
 		public void onFailure(Throwable caught) {
-			InlineLabel error = new InlineLabel("Database update error");
+			InlineLabel error = new InlineLabel(constants.data_not_updated());
 			showErrorPopupPanel(error, "red");			
 			
 		}
@@ -737,7 +737,7 @@ private boolean checkHours(TextBox hours) {
 		 User user = login.getUser();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error, "red");
 			 return;
 
@@ -750,7 +750,7 @@ private boolean checkHours(TextBox hours) {
 			 public void onSuccess(PhysicalActivityInfo physical) {
 				 if (physical == null || physical.getUserId() == null){
 					  
-					 InlineLabel error = new InlineLabel("Physical Activity  Data not retrieved. No data available for this patient ");
+					 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
@@ -763,7 +763,7 @@ private boolean checkHours(TextBox hours) {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("Physical Activity Database  error");
+				 InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				 showErrorPopupPanel(error, "red");			
 
 			 }

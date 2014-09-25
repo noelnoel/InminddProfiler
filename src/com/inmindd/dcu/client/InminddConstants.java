@@ -39,6 +39,7 @@ public interface InminddConstants extends Constants{
 	 	String cog_active_2();
 	 	String smoking_drink();
 	 	String diet_tab();
+	 	String unable_retrieve_db();
 
 	 	
 	 	String wait_six_months();
@@ -116,6 +117,7 @@ public interface InminddConstants extends Constants{
 	 	 */
 	 	String feelings_error_1();
 		String feelings_error_2();
+		String feel_update_fail();
 	 	String feeling();
 	 	String lastweek();
 	 	
@@ -171,6 +173,7 @@ public interface InminddConstants extends Constants{
 	 	String invalid_height();
 	 	String invalid_weight();
 	 	String mmol_error();
+	 	String mmol_range_error();
 
 	 	String systolic_error();
 	 	String systolic_range();
@@ -236,6 +239,7 @@ public interface InminddConstants extends Constants{
 	 	String cardio();
 	 	String dementia_popup();
 	 	String heart_popup();
+	 	String hr_range_err();
 	 	
 	 	
 	 	String physical_error();
@@ -269,6 +273,7 @@ public interface InminddConstants extends Constants{
 	 	String perform_vigorous();
 	 	
 	 	// cognitive activities pt1
+	 	String never_employed();
 	 	String cognitive_p1();
 	 	String education();
 	 	String formal_education();
@@ -331,6 +336,11 @@ public interface InminddConstants extends Constants{
 	 	String activity_yearly();
 	 	String number_children();
 	 	String activity_adult();
+	 	String child_error();
+	 	String cog_years_error();
+	 	String random_failed();
+	 	String random_wait();
+	 	String random_error();
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();

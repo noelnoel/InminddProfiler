@@ -225,7 +225,7 @@ public class FamilyMedicalHistory {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -309,7 +309,7 @@ public class FamilyMedicalHistory {
 			 @Override	 
             public void onSuccess(Boolean result) {
             		if ((result == false)){	            		
-            			InlineLabel error = new InlineLabel("Family History Data not updated !!!!!");
+            			InlineLabel error = new InlineLabel(constants.data_not_updated());
             			showErrorPopupPanel(error, "red");            			            			
             		}
             		else {
@@ -323,7 +323,7 @@ public class FamilyMedicalHistory {
               }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Invalid User Id or Password  - please reenter");
+				InlineLabel error = new InlineLabel(constants.invalid_id_pass());
     			showErrorPopupPanel(error, "red");			
 				
 			}
@@ -453,7 +453,7 @@ public class FamilyMedicalHistory {
 		 User user = login.getUser();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error, "red");
 			 return;
 
@@ -465,7 +465,7 @@ public class FamilyMedicalHistory {
 			 @Override	 
 			 public void onSuccess(FamilyHistoryInfo history) {
 				 if ((history == null || history.getUserId()== null)){	            		
-					 InlineLabel error = new InlineLabel("History Data not retrieved. No data available for this patient ");
+					 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
@@ -478,7 +478,7 @@ public class FamilyMedicalHistory {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("History data Database error");
+				 InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				 showErrorPopupPanel(error, "red");			
 
 			 }
@@ -598,7 +598,7 @@ public class FamilyMedicalHistory {
 		HorizontalPanel family = new HorizontalPanel();
 		InlineLabel lbl = new InlineLabel(constants.history_3());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Diabetes ");
+		InlineLabel lbl2 = new InlineLabel(constants.rf_diabetes());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 		//lbl2.getElement().getStyle().setProperty("marginLeft", "13pc");
 		lbl2.setStyleName("pos9");
@@ -709,7 +709,7 @@ public class FamilyMedicalHistory {
 		HorizontalPanel family = new HorizontalPanel();
 		InlineLabel lbl = new InlineLabel(constants.history_5());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Diabetes");
+		InlineLabel lbl2 = new InlineLabel(constants.rf_diabetes());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 		//lbl2.getElement().getStyle().setProperty("marginLeft", "215px");
 		lbl2.setStyleName("pos9");
@@ -822,7 +822,7 @@ public class FamilyMedicalHistory {
 		HorizontalPanel family = new HorizontalPanel();
 		InlineLabel lbl = new InlineLabel(constants.history_9());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		InlineLabel lbl2 = new InlineLabel("Diabetes");
+		InlineLabel lbl2 = new InlineLabel(constants.rf_diabetes());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
 		//lbl2.getElement().getStyle().setProperty("marginLeft", "203px");
 		lbl2.setStyleName("pos9");

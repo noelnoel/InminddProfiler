@@ -333,7 +333,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 	
 		// Create the Patient Info Panel
-
 		PatientInfo patient = new PatientInfo();		
 		patientPanel = patient.setupPatientPanel(login);
 		
@@ -341,7 +340,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 
 		// Create the Patient Feelings Panel
-
 		Feelings cesd = new Feelings();
 		csd = new HTMLPanel(getContent(Pages.CESD.getText()));	
 		cesdPanel = cesd.setupCesdPanel(login);		

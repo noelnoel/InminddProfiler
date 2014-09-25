@@ -148,7 +148,7 @@ public class CognitiveOne {
 		
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
-		Button neverBtn = new Button("Never employed - submit data");
+		Button neverBtn = new Button(constants.never_employed());
 		cognitiveOnePanel.add(neverBtn);	
 
 		// Listen for mouse events on the never employed button.
@@ -257,7 +257,7 @@ public class CognitiveOne {
 		 @Override	 
        public void onSuccess(Boolean result) {
        		if ((result == false)){	            		
-       			InlineLabel error = new InlineLabel("Cognitive Activity part One  info not updated");
+       			InlineLabel error = new InlineLabel(constants.data_not_updated());
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
@@ -270,7 +270,7 @@ public class CognitiveOne {
          }
 		@Override
 		public void onFailure(Throwable caught) {
-			InlineLabel error = new InlineLabel("Database update error");
+			InlineLabel error = new InlineLabel(constants.data_not_updated());
 			showErrorPopupPanel(error, "red");			
 			
 		}
@@ -832,7 +832,7 @@ public class CognitiveOne {
 			@Override	 
 			public void onSuccess(CognitiveOneInfo cognitiveOne) {
 				if ((cognitiveOne == null || cognitiveOne.getUserId() == null)){	            		
-					InlineLabel error = new InlineLabel("Cognitive One Data not retrieved. No data available for this patient ");
+					InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
@@ -845,7 +845,7 @@ public class CognitiveOne {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Cognitive One data Database error");
+				InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				showErrorPopupPanel(error, "red");			
 	
 			}
