@@ -150,16 +150,34 @@ public class CalculateScore {
 		}
 	}
 	private void cri(RiskFactorScore rf) {
-		double criEducation = cognitiveOne.getFormalEducationYears() + cognitiveOne.getNonFormalEducationYears();
-		double workingYears = 0;
-		double leisureYears = 0;
-		
-		double criWorking = 0;
+		double criEducation = 0; 
+		double criWork = 0;
 		double criLeisure = 0;
+
+		int participantAge = patient.getAge();
+
+		/****************************************
+		 * Calculate Education Cog Reserve Index
+		 ****************************************/
+		//Calculate education model value
+		double eduSlope = -0.164;
+		double eduIntercept = 21.169;
+		double eduModelValue = participantAge * (eduSlope + eduIntercept);
+		
+		// Calculate EduCRI 
+		double yearsEducation = cognitiveOne.getFormalEducationYears() + cognitiveOne.getNonFormalEducationYears();
+		double eduSampleSD = 4.75;
+		criEducation = ((yearsEducation  - eduModelValue) / eduSampleSD); // (years - model value) / s.d 
+		
+		/***********************************
+		 * Calculate Working Activity CRI 
+		 ***********************************/
+		//work vairables 
+		double workingYears = 0;
 		int[] maxWorkingYears = new int [10];
 		int numberWorkLevel = 0;
 		
-		criEducation = ((criEducation  - 10.496) / 4.75); // (years - model value) / s.d 
+		// Calculate Max Working Years
 		if (cognitiveOne.getManager() > 0) {
 			workingYears += cognitiveOne.getManager() * 5;
 			maxWorkingYears[0] = cognitiveOne.getManager() * 5;	
@@ -211,10 +229,22 @@ public class CalculateScore {
 			numberWorkLevel--;
 		}
 		else numberWorkLevel = 1;
-		double working = (workingYears - max) / numberWorkLevel;
+		double workingActivity = (workingYears - max) / numberWorkLevel;
 		
+		//Calculate Working Model Value 
+		double workSlope = 1.124;
+		double workIntercept = -2.082;
+		double workModelValue = participantAge * (workSlope + workIntercept);
 		
-		criWorking = (working + max - 70.978) / 40.21979;  
+		//Calculate Working Cognitive Reserve Index
+		double workActSampeSD = 40.21979;
+		criWork = (workingActivity + max - workModelValue) / workActSampeSD;  
+		
+		/**************************************
+		 * Calculate Leisure CRI
+		 ***************************************/
+		// Leisure variables 
+		double leisureYears = 0;
 		
 		leisureYears += cognitiveTwo.getArtistic_years();
 		leisureYears += cognitiveTwo.getBank_account_years();
@@ -232,20 +262,34 @@ public class CalculateScore {
 		leisureYears += cognitiveTwo.getSocial_years();
 		leisureYears += cognitiveTwo.getTechnology_years();
 		leisureYears += cognitiveTwo.getVolunteering_years();
-		// number of children 
+		
 		leisureYears += (cognitiveTwo.getNumber_children() * 5) +10;
-		criLeisure = (leisureYears - 246.690 ) / 80.24101; 
+
+		//Calculate Working Model Value 
+		double leisureSlope = 1.124;
+		double leisureIntercept = -2.082;
+		double leisureModelValue = participantAge * (leisureSlope + leisureIntercept);
+		
+		//Calculate Leisure CRI 
+		double leisureTimeSampleSD = 80.24101;
+		criLeisure = (leisureYears - leisureModelValue) / leisureTimeSampleSD;
+				
+		/*********************************
+		 * Calculate Final CRI
+		 ********************************/
 		criEducation = criEducation * 15 + 100;
-		criWorking = criWorking * 15 + 100;
+		criWork = criWork * 15 + 100;
 		criLeisure = criLeisure * 15 + 100;
+		
 		// the final cognitive reserve index score
-		double criFinal = ((((criEducation + criWorking + criLeisure) / 3) - 100) / 11.3277) * 15 + 100;
+		double criFinal = ((((criEducation + criWork + criLeisure) / 3) - 100) / 11.3277) * 15 + 100;
 		
 		if (criFinal >= 100) 
 			rf.setHighCognitiveActivity(0);
 		else if (criFinal < 100)
 			rf.setHighCognitiveActivity(17.1);
 	}
+
 	
 	
 	private void diet(RiskFactorScore rf ) {
