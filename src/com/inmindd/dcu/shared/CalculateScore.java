@@ -162,7 +162,7 @@ public class CalculateScore {
 		//Calculate education model value
 		double eduSlope = -0.164;
 		double eduIntercept = 21.169;
-		double eduModelValue = participantAge * (eduSlope + eduIntercept);
+		double eduModelValue = participantAge * eduSlope + eduIntercept;
 		
 		// Calculate EduCRI 
 		double yearsEducation = cognitiveOne.getFormalEducationYears() + cognitiveOne.getNonFormalEducationYears();
@@ -234,7 +234,7 @@ public class CalculateScore {
 		//Calculate Working Model Value 
 		double workSlope = 1.124;
 		double workIntercept = -2.082;
-		double workModelValue = participantAge * (workSlope + workIntercept);
+		double workModelValue = participantAge * workSlope + workIntercept;
 		
 		//Calculate Working Cognitive Reserve Index
 		double workActSampeSD = 40.21979;
@@ -266,9 +266,9 @@ public class CalculateScore {
 		leisureYears += (cognitiveTwo.getNumber_children() * 5) +10;
 
 		//Calculate Working Model Value 
-		double leisureSlope = 1.124;
-		double leisureIntercept = -2.082;
-		double leisureModelValue = participantAge * (leisureSlope + leisureIntercept);
+		double leisureSlope = 3.754;
+		double leisureIntercept = 2.680;
+		double leisureModelValue = participantAge * leisureSlope + leisureIntercept;
 		
 		//Calculate Leisure CRI 
 		double leisureTimeSampleSD = 80.24101;
