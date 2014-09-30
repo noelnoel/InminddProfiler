@@ -67,7 +67,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	// autherisation key for Glasgow randomisation wev service
 	
 	private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
-	private   String decryptedPassword;
+	private String decryptedPassword;
 	protected Connection conn; 
 	private Patient patient;
 	private FeelingsInfo feelings;
