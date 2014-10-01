@@ -148,7 +148,7 @@ public class CognitiveOne {
 		
 		cognitiveOnePanel.add(new HTMLPanel("<span>  <br>  </span>"));
 		
-		Button neverBtn = new Button("Never employed - submit data");
+		Button neverBtn = new Button(constants.never_employed());
 		cognitiveOnePanel.add(neverBtn);	
 
 		// Listen for mouse events on the never employed button.
@@ -257,7 +257,7 @@ public class CognitiveOne {
 		 @Override	 
        public void onSuccess(Boolean result) {
        		if ((result == false)){	            		
-       			InlineLabel error = new InlineLabel("Cognitive Activity part One  info not updated");
+       			InlineLabel error = new InlineLabel(constants.data_not_updated());
        			showErrorPopupPanel(error, "red");            			
        		}            		
        		else {
@@ -270,7 +270,7 @@ public class CognitiveOne {
          }
 		@Override
 		public void onFailure(Throwable caught) {
-			InlineLabel error = new InlineLabel("Database update error");
+			InlineLabel error = new InlineLabel(constants.data_not_updated());
 			showErrorPopupPanel(error, "red");			
 			
 		}
@@ -319,7 +319,7 @@ public class CognitiveOne {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -422,7 +422,7 @@ public class CognitiveOne {
 		//managerYears.getElement().getStyle().setProperty("marginLeft", "auto");
 		managerYears.setStyleName("pos5");
 		
-		InlineLabel label1 = new InlineLabel(constants.manager());
+		InlineLabel label1 = new InlineLabel(constants.managers());
 		label1.getElement().getStyle().setProperty("marginLeft", "20px");
 		label1.getElement().getStyle().setProperty("marginRight", "10px");
 		label1.getElement().getStyle().setProperty("fontWeight", "bold");
@@ -820,7 +820,7 @@ public class CognitiveOne {
 		User user = login.getUser();
 		if (user== null) {
 	
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return;
 	
@@ -832,7 +832,7 @@ public class CognitiveOne {
 			@Override	 
 			public void onSuccess(CognitiveOneInfo cognitiveOne) {
 				if ((cognitiveOne == null || cognitiveOne.getUserId() == null)){	            		
-					InlineLabel error = new InlineLabel("Cognitive One Data not retrieved. No data available for this patient ");
+					InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
@@ -845,7 +845,7 @@ public class CognitiveOne {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Cognitive One data Database error");
+				InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				showErrorPopupPanel(error, "red");			
 	
 			}

@@ -7,7 +7,6 @@ public interface InminddConstants extends Constants{
 	   String physical();
 	// @DefaultStringValue("Welcome to the InMINDD Profiler")
 	 	String welcome();
-	 	String eufunding_banner();
 	 	String register();
 	 	String submit();
 	 	String login();
@@ -15,9 +14,18 @@ public interface InminddConstants extends Constants{
 	 	String password();
 	 	String repeat_password();
 	 	String forgot_password();
-	 	String registration();
+	 	String access_blocked();
+	 	String reset_password();
+	 	String enter_id();
+	 	String reg_error();
+	 	String reset_password_fail();
+	 	String practice_code_error();
 	 	String register_heading();
 	 	String maiden_name();
+	 	String invalid_id_pass();
+	 	String data_not_updated();
+	 	String unable_to_retrieve();
+	 	String error();
 	 	String fav_colour();
 	 	String invalid_id();
 	 	String miss_match();
@@ -31,6 +39,7 @@ public interface InminddConstants extends Constants{
 	 	String cog_active_2();
 	 	String smoking_drink();
 	 	String diet_tab();
+	 	String unable_retrieve_db();
 
 	 	
 	 	String wait_six_months();
@@ -52,7 +61,7 @@ public interface InminddConstants extends Constants{
 	 	String select_occupation();
 	 	String select_education();
 	 	String select_employment();
-	 	String year();
+
 	 	String sex();
 	 	String male();
 	 	String female();
@@ -108,7 +117,7 @@ public interface InminddConstants extends Constants{
 	 	 */
 	 	String feelings_error_1();
 		String feelings_error_2();
-		String mood_complete();
+		String feel_update_fail();
 	 	String feeling();
 	 	String lastweek();
 	 	
@@ -164,7 +173,8 @@ public interface InminddConstants extends Constants{
 	 	String invalid_height();
 	 	String invalid_weight();
 	 	String mmol_error();
-	 	String med_error_1();
+	 	String mmol_range_error();
+
 	 	String systolic_error();
 	 	String systolic_range();
 	 	String diastolic_error();
@@ -206,7 +216,7 @@ public interface InminddConstants extends Constants{
 	 	String toldurine();
 	 	String toldurine_2();
 	 	String toldkidney();
-	 	String med_complete();
+
 	 	/*
 	 	 * family medical history
 	 	 * 
@@ -229,6 +239,7 @@ public interface InminddConstants extends Constants{
 	 	String cardio();
 	 	String dementia_popup();
 	 	String heart_popup();
+	 	String hr_range_err();
 	 	
 	 	
 	 	String physical_error();
@@ -262,6 +273,7 @@ public interface InminddConstants extends Constants{
 	 	String perform_vigorous();
 	 	
 	 	// cognitive activities pt1
+	 	String never_employed();
 	 	String cognitive_p1();
 	 	String education();
 	 	String formal_education();
@@ -324,6 +336,11 @@ public interface InminddConstants extends Constants{
 	 	String activity_yearly();
 	 	String number_children();
 	 	String activity_adult();
+	 	String child_error();
+	 	String cog_years_error();
+	 	String random_failed();
+	 	String random_wait();
+	 	String random_error();
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();
@@ -344,11 +361,13 @@ public interface InminddConstants extends Constants{
 	 	String how_often_drink();	 	
 	 	String stop_smoking();
 	 	String smoking_error();
-	 	String smoke_complete();
+
 	 	String typical_drinks();
 	 	String units_per_week();
 	 	String monthly();
 	 	String two_to_four();
+	 	String few_times_per_wk();
+	 	String plus_times_per_wk();
 	    String select_one();
 	 	String diet();
 	 	String diet_questions();
