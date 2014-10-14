@@ -562,8 +562,8 @@ public class FamilyMedicalHistory {
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		//lbl2.getElement().getStyle().setProperty("marginLeft", "10pc");
 		lbl2.setStyleName("pos9");
+		
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
 		logo.getElement().getStyle().setProperty("marginLeft", "325px");
@@ -673,9 +673,8 @@ public class FamilyMedicalHistory {
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
 		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		//lbl2.getElement().getStyle().setProperty("marginLeft", "160px");
-		
 		lbl2.setStyleName("pos9");
+
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
 		logo.getElement().getStyle().setProperty("marginLeft", "325px");
@@ -781,23 +780,21 @@ public class FamilyMedicalHistory {
 		HorizontalPanel family = new HorizontalPanel();
 		InlineLabel lbl = new InlineLabel(constants.history_7());
 		lbl.getElement().getStyle().setProperty("fontWeight", "bold");
-		
 		InlineLabel lbl2 = new InlineLabel(constants.cardio());
 		lbl2.getElement().getStyle().setProperty("fontWeight", "bold");
-		lbl2.getElement().getStyle().setProperty("marginLeft", "164px");
+		lbl2.setStyleName("pos9");
 		
 		Image logo = new Image(GWT.getModuleBaseURL() + "../" + LOGO_IMAGE_NAME);
 		logo.getElement().getStyle().setProperty("height", "25px");
-		logo.getElement().getStyle().setProperty("marginLeft", "10px");
+		logo.getElement().getStyle().setProperty("marginLeft", "263px");
 		logo.getElement().getStyle().setProperty("width", "25px");
 		logo.setTitle(constants.heart_popup());
 		
 		family.add(lbl);
-		
 		family.add(lbl2);
 		family.add(logo);
 		HorizontalPanel horPanel = new HorizontalPanel();
-		siblingCardioYes = new RadioButton("siblingCardio", constants.yes());
+		siblingCardioYes = new RadioButton("sibling", constants.yes());
 		siblingCardioNo = new RadioButton("siblingCardio", constants.no());
 		siblingCardioDontKnow = new RadioButton("siblingCardio", constants.dontknow());
 		
