@@ -861,7 +861,7 @@ private FlowPanel getEducationFR() {
 			 patient.setEducationLevel(educationLevelNL.getItemText(index));
 		 }
 		 if (indexCountryEducated == 4) {
-			 index = educationLevelSC.getSelectedIndex();
+			 index = educationLevelFR.getSelectedIndex();
 			 patient.setEducationLevel(educationLevelFR.getItemText(index));
 		 }
 		 index = employmentStatus.getSelectedIndex();
