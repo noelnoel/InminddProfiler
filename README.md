@@ -17,7 +17,7 @@ Version (0.9)
 3. French characters:
   1. Ã¨ = &egrave; 
   2. Ã© = &eacute;
-  3. Ãª = &ucirc;
+  3. Ãª = &ecirc;
   4. Ã = &agrave;
   5. Ã¡ = &aacute;
   6. Ã¢ = &acirc;
