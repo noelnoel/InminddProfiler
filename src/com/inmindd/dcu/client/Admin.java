@@ -135,7 +135,6 @@ public class Admin implements EntryPoint {
 	public static void clickUser(String userId) {
 		userQuery = new User();
 		userQuery.setUserId(userId);
-		
 		callbackScore = new AsyncCallback<RiskFactorScore>() {
 
 			@Override

@@ -230,6 +230,8 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("supportLogin").setInnerHTML(constants.supportLogin());
 		DOM.getElementById("supportPassword").setInnerHTML(constants.supportPassword());
 		DOM.getElementById("linkLogin").setInnerHTML(constants.supportSignin());
+		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
+		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		/*DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
 		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
 		DOM.getElementById("rmw").setInnerHTML(constants.rmw());

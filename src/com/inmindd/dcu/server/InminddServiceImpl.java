@@ -292,7 +292,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 			String insert = "insert  into user (userId,passwordhash,timestamp, maiden_name_hash, favorite_colour_hash)  values(?,?,?,?,?)";			
-	
+			//TODO: Add in add to mail table here
+			
 			try {
 				PreparedStatement updateUserInfo = conn.prepareStatement(insert);
 				updateUserInfo.setString(1, userId);				

@@ -570,6 +570,9 @@ public interface InminddConstants extends Constants{
 		String supportMessageScoreFailed();
 		String supportMessageInternalError();
 		String supportAnd();
+		
+		String cookieConsent();
+		String doNotShowMessage();
 
 		
 }
