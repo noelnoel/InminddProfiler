@@ -83,6 +83,7 @@ public class Login  {
     private String passwordRepeat  = constants.repeat_password();
     private String mothersMaiden  = constants.maiden_name();
     private String favColour  = constants.fav_colour();
+    private String emailAddress = constants.emailAddress();
    
     private TextBox userId = new TextBox();
   
@@ -91,6 +92,7 @@ public class Login  {
     
     private TextBox userIdReg = new TextBox();
     private TextBox userForgotIdReg = new TextBox();
+    private TextBox userEmailAddress = new TextBox();
     
     private PasswordTextBox passwordReg = new PasswordTextBox();
     private PasswordTextBox passwordRegRepeat = new PasswordTextBox();
@@ -110,6 +112,8 @@ public class Login  {
     private String hashedPassword;
     private String hashedMaidenName;
     private String hashedFavColour;
+    private String email;
+    
     private Boolean duplicate = false;
     private int idUser;
     
@@ -202,11 +206,14 @@ public class Login  {
         loginLayout.setHTML(11, 0, favColour);
         loginLayout.setWidget(11, 1, colourBox);
     
+        motherBox.setWidth("145px");
+        loginLayout.setHTML(12, 0, emailAddress);
+        loginLayout.setWidget(12, 1, userEmailAddress);
     
-        loginLayout.setWidget(12, 0, registerbutton);
+        loginLayout.setWidget(13, 0, registerbutton);
         
-        cellFormatter.setColSpan(12, 0, 3);
-        cellFormatter.setHorizontalAlignment(12, 0, HasHorizontalAlignment.ALIGN_CENTER);
+        cellFormatter.setColSpan(13, 0, 3);
+        cellFormatter.setHorizontalAlignment(13, 0, HasHorizontalAlignment.ALIGN_CENTER);
         loginLayout.setCellSpacing(6);
      
 

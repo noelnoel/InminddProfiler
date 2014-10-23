@@ -573,6 +573,9 @@ public interface InminddConstants extends Constants{
 		
 		String cookieConsent();
 		String doNotShowMessage();
+		
+		//Email 
+		String emailAddress();
 
 		
 }
