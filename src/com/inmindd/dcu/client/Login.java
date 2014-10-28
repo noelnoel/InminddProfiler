@@ -32,6 +32,7 @@ import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
+import com.inmindd.emailService.EmailEncryption;
 
 
 /*
@@ -247,7 +248,37 @@ public class Login  {
         			hashedMaidenName = Crypto.getSHA1for((motherBox.getText()));
         			// generate digest of favorite colour
         			hashedFavColour = Crypto.getSHA1for((colourBox.getText()));
-        			
+        			//Check is the email address field entered
+        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
+        			{
+        				String unVaildatedEmailAddress = userEmailAddress.getText();
+        				if(isEmailValid(unVaildatedEmailAddress))
+        				{
+        					//Encrypt the email address
+        					String encryptedEmailAddress = EmailEncryption.encrypt(unVaildatedEmailAddress);
+        					//get rid of the unencrypted version
+        					unVaildatedEmailAddress = "";
+        					String userId = userIdReg.getText();
+        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
+							{
+
+								@Override
+								public void onFailure(Throwable caught)
+								{
+									// TODO Do we log these somewhere?
+									
+								}
+
+								@Override
+								public void onSuccess(Boolean result)
+								{
+									// TODO Nothing much really, we just want confirmation, do we log these somewhere?
+									
+								}
+							};
+        					InminddServiceSvc.addUserEmail(userId, encryptedEmailAddress, cback);
+        				}
+        			}
         			callServiceSetup();
         			createUser(userIdReg.getText());
         			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
@@ -282,6 +313,24 @@ public class Login  {
 	    				//	InlineLabel error = new InlineLabel("You are now logged on to InMINDD. Please proceed to the About You panel");
 	    				//	showErrorPopupPanel(error, "green");	            			
 	    					setUser(user);	
+	    					InminddServiceSvc.updateUserLastLogin(user.getUserId(), new AsyncCallback<Boolean>()
+							{
+
+								@Override
+								public void onFailure(Throwable caught)
+								{
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(Boolean result)
+								{
+									// TODO Auto-generated method stub
+									
+								}
+							}); //Update the users last login time
+	    					
 	    					// Clear screens of previous input
 	    					if(PatientInfo.lastinstance != null)
 	    						PatientInfo.clearInputs();	
@@ -306,6 +355,8 @@ public class Login  {
 	    					//getScore();   //uncomment this to calc score at login
 	    					content.selectTab(1);
 	    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+	    					
+	    					//Update the users last login time on the database
 	    				}
 
 	    			}
@@ -338,6 +389,20 @@ public class Login  {
 	    return mainpanel;
 
 	}    
+	
+	/***
+	 * This method will examin what is entered in the email text box on the registration form
+	 * From here it will determine if what is entered is actually an email address (i.e. a String of the form <some text>@<domain>.<tld>
+	 * Vaildation is done by the regualr expression for email addresses given by RFC 2822
+	 * @param emailAddress The string to vaildate
+	 * @return a boolean indicating whether or not he email address is vaild
+	 */
+	private boolean isEmailValid(String emailAddress)
+	{
+
+		String regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+		return emailAddress.matches(regexp);
+	}
 	
 	private void forgotPassword() {
 		

@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.apache.axis2.AxisFault;
-
 import org.apache.axis2.client.ServiceClient;
 
 import com.google.appengine.api.utils.SystemProperty;
@@ -34,7 +33,9 @@ import com.inmindd.dcu.shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 /*mail purpose*/
 import java.util.Properties;
 
@@ -47,6 +48,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+
+
+
 /*end of mail*/
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
@@ -54,6 +58,7 @@ import org.tempuri.ServiceStub.RandResult;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.protos.cloud.sql.Client.SqlException;
 
 /**
  * The server side implementation of the RPC service.
@@ -2614,6 +2619,95 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 	
+	/***
+	 * This method will add a users email address to the USER_MAIL table
+	 * This method is called when a user registers and provides an email address
+	 * @param userId The Id of the user 
+	 * @param encryptedEmailAddr The encrypted email address
+	 * @return A boolean indicating success or failure
+	 * @throws IllegalArgumentException
+	 */
+	public boolean addUserEmail(String userId, String encryptedEmailAddr) throws IllegalArgumentException
+	{
+		initDBConnection();
+		String todayAsMySqlDatetime = this.getDateAsMySQLDateTime(new Date());
+		String insertStatement = "INSERT INTO USER_MAIL (userId, email, lastLogin) VALUES (?,?,?);";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(insertStatement);
+			prep.setString(1, userId);
+			prep.setString(2, encryptedEmailAddr);
+			prep.setString(3, todayAsMySqlDatetime);
+			boolean result =  prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	/***
+	 * This method will update a users last login in the email table. The value will be updated to the date and time of the server when the method is called
+	 * @param userId The id of the user to update
+	 * @return A boolean indicating success or failure
+	 */
+	public boolean updateUserLastLogin(String userId) throws IllegalArgumentException
+	{
+		initDBConnection();
+		String todaysDate = this.getDateAsMySQLDateTime(new Date());
+		String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(updateStatement);
+			prep.setString(1, todaysDate);
+			prep.setString(2, userId);
+			boolean result = prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return result;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
 	
 	@Override
 	public Boolean sendMail(String email, String lang, String body)
@@ -2669,6 +2763,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			e.printStackTrace();
 		}
 		return false;
-		
+	}
+	
+	
+	
+	/***
+	 * This method will convert a java dat object into a String representation of the mysql datetime object
+	 * @param date The date to be converted
+	 * @return a String representing the mysql datetimte version of the date
+	 */
+	private String getDateAsMySQLDateTime(Date date)
+	{
+		SimpleDateFormat mySqlFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return mySqlFormatter.format(date);
 	}
 }

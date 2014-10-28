@@ -80,4 +80,7 @@ public interface InminddService extends RemoteService {
 	public ArrayList<SupportApps> querySupportApps(String lang)			throws IllegalArgumentException;
 	public boolean isAdministrator() throws IllegalArgumentException;
 	public ArrayList<String> queryAllUsers() throws IllegalArgumentException;
+	
+	public boolean addUserEmail(String userId, String emailAddr) throws IllegalArgumentException;
+	public boolean updateUserLastLogin(String userId) throws IllegalArgumentException;
 }
