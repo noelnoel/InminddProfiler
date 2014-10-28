@@ -576,6 +576,10 @@ public interface InminddConstants extends Constants{
 		
 		//Email 
 		String emailAddress();
-
-		
+		String addEmailBtn();
+		String deleteEmailBtn();
+		String emailAddrAdmin();
+		String emailEnterError();
+		String cancelButton();
+		String addDialogTitle();
 }

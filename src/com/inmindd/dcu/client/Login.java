@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
+
 //import com.googlecode.gwt.crypto.bouncycastle.DataLengthException;
 //import com.googlecode.gwt.crypto.bouncycastle.InvalidCipherTextException;
 //import com.googlecode.gwt.crypto.bouncycastle.digests.SHA1Digest;
@@ -32,7 +33,6 @@ import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
-import com.inmindd.emailService.EmailEncryption;
 
 
 /*
@@ -255,7 +255,7 @@ public class Login  {
         				if(isEmailValid(unVaildatedEmailAddress))
         				{
         					//Encrypt the email address
-        					String encryptedEmailAddress = EmailEncryption.encrypt(unVaildatedEmailAddress);
+        					
         					//get rid of the unencrypted version
         					unVaildatedEmailAddress = "";
         					String userId = userIdReg.getText();
@@ -276,7 +276,7 @@ public class Login  {
 									
 								}
 							};
-        					InminddServiceSvc.addUserEmail(userId, encryptedEmailAddress, cback);
+        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
         				}
         			}
         			callServiceSetup();

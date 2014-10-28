@@ -32,6 +32,7 @@ public class Admin implements EntryPoint {
 	public void onModuleLoad() {
 		lastInstance = this;
 		exportClickUser();
+		updateEmail();
 		globalize();
 		callServiceSetup();
 
@@ -327,6 +328,20 @@ public class Admin implements EntryPoint {
 		$wnd.trigeredUserIDByGWT(userID);
      }-*/;
 	
+	public static void changeUserEmail(String email)
+	{
+		String userId = userQuery.getUserId();
+		String unEncrypted = email;
+	}
+	
+	public static native void updateEmail() /*-{
+		$wnd.changeEmail = 
+		$entry(@com.inmindd.dcu.client.Admin::changeUserEmail(Ljava/lang/String;));
+	
+	}-*/;
+	
+	
+	
 	private void globalize(){
 		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
@@ -398,6 +413,16 @@ public class Admin implements EntryPoint {
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());
 		DOM.getElementById("score-30").setInnerHTML(constants.score_30());
+		
+		/* Email CRUD operations*/
+		DOM.getElementById("add_email").setInnerHTML(constants.addEmailBtn());
+		DOM.getElementById("delete_email").setInnerHTML(constants.deleteEmailBtn());
+		DOM.getElementById("cancelButton").setAttribute("value", constants.cancelButton());
+		DOM.getElementById("dialog-form").setAttribute("title", constants.addDialogTitle());
+		DOM.getElementById("emailLabel").setInnerHTML(constants.emailAddrAdmin());
+		DOM.getElementById("addEmail").setAttribute("placeholder", constants.emailAddrAdmin());
+		DOM.getElementById("email_enter_error").setInnerHTML(constants.emailEnterError());
+		
 	}
 
 

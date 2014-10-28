@@ -12,6 +12,7 @@ import org.apache.axis2.client.ServiceClient;
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
+import com.inmindd.dcu.emailService.EmailEncryption;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -47,6 +48,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 
 
 
@@ -2630,6 +2632,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public boolean addUserEmail(String userId, String encryptedEmailAddr) throws IllegalArgumentException
 	{
 		initDBConnection();
+		String enc = EmailEncryption.encrypt(encryptedEmailAddr);
 		String todayAsMySqlDatetime = this.getDateAsMySQLDateTime(new Date());
 		String insertStatement = "INSERT INTO USER_MAIL (userId, email, lastLogin) VALUES (?,?,?);";
 		PreparedStatement prep;
@@ -2637,7 +2640,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		{
 			prep = conn.prepareStatement(insertStatement);
 			prep.setString(1, userId);
-			prep.setString(2, encryptedEmailAddr);
+			prep.setString(2, enc);
 			prep.setString(3, todayAsMySqlDatetime);
 			boolean result =  prep.execute();
 			try
@@ -2768,7 +2771,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 	/***
-	 * This method will convert a java dat object into a String representation of the mysql datetime object
+	 * This method will convert a java date object into a String representation of the mysql datetime object
 	 * @param date The date to be converted
 	 * @return a String representing the mysql datetimte version of the date
 	 */
