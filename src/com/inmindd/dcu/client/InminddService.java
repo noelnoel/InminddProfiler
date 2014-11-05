@@ -83,4 +83,6 @@ public interface InminddService extends RemoteService {
 	
 	public boolean addUserEmail(String userId, String emailAddr) throws IllegalArgumentException;
 	public boolean updateUserLastLogin(String userId) throws IllegalArgumentException;
+	public boolean updateUserMail(String userId, String emailAddress) throws IllegalArgumentException;
+	public boolean deleteUserMail(String userId) throws IllegalArgumentException;
 }

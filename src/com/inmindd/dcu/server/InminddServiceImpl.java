@@ -2670,6 +2670,93 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 	
 	/***
+	 * This will update a users email address, it wil be called from the admin panel in the event a user wants to change theiir email address
+	 * @param userId The id of the user to change
+	 * @param emailAddress The new email address of the user
+	 * @return a boolean indicating success or failure
+	 */
+	public boolean updateUserMail(String userId, String emailAddress)
+	{
+		initDBConnection();
+		String encrypted = EmailEncryption.encrypt(emailAddress);
+		String updateStat = "UPDATE USER_MAIL SET email=? WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep=conn.prepareStatement(updateStat);
+			prep.setString(1, encrypted);
+			prep.setString(2,userId);
+			boolean result=prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	/***
+	 * This method will remove a user from the User mail table, they will not be able to recieve emails when this is called
+	 * @param userId
+	 * @return a boolean indicating success or failure
+	 */
+	public boolean deleteUserMail(String userId)
+	{
+		initDBConnection();
+		String delStat = "DELETE FROM USER_MAIL WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep=conn.prepareStatement(delStat);
+			prep.setString(1, userId);
+			boolean result=prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	
+	
+	/***
 	 * This method will update a users last login in the email table. The value will be updated to the date and time of the server when the method is called
 	 * @param userId The id of the user to update
 	 * @return A boolean indicating success or failure

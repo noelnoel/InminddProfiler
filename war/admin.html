@@ -80,7 +80,7 @@
                                                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://inmindd-blog.appspot.com/" id="menu-support-blog">In-MINDD Blog</a></li>
                                                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="apps.html" id="menu-support-apps">Useful Apps</a></li>
 													<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="index.html?page=logout" id="menu-support-logout">Logout</a></li>
-
+													<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="privacyPolicy.html" id="privacy-policy">Privacy Policy</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/" id="menu-inmindd">In-MINDD Website</a></li>
@@ -111,6 +111,10 @@
                                 			<p id="email_enter_error" class='ui-state-error'>Please enter a valid email address.</p>
                                 		</fieldset>
                                 	</form>
+                                </div>
+                                <div id="del_dialog_form" title="Remove Email Address">
+                                 	<p id="del_email_conf">Remove this users email address?</p>	
+                                 	<input type="hidden" id="okButton" value="OK" />
                                 </div>
                             </div>
                             <div class="row" id="mailingPanel" style="display:none">
@@ -287,6 +291,15 @@
 		var dialog_buttons = {}
 		dialog_buttons[okTitle] = changeEmail
 		dialog_buttons[cancel] = function(){dialog.dialog('close');}
+		
+		
+		var delOk = $('#okButton').attr('value');
+		var deleteDialogButtons = {}
+		deleteDialogButtons[delOk]=delEmail
+		deleteDialogButtons[cancel] = function(){dialog.dialog('close');}
+		
+		
+		
 		$('#email_enter_error').hide();
 		
 		function isValidEmail(regex,emailToTest)
@@ -318,6 +331,15 @@
 			}
 			
 		}
+		
+		
+		function delEmail()
+		{
+			console.log("Deleting email for user"+$("#usersSelect option:selected").text());
+			window.deleteEmail($("#usersSelect option:selected").text());
+		}
+		
+		
 		console.log("Started dialog process");
 		dialog = $('#dialog-form').dialog({
 			autoOpen:false,
@@ -330,10 +352,30 @@
 				dialog.dialog('close');
 			}
 		});
+		
+		delDialog = $('#del_dialog_form').dialog(
+				{
+					height:200,
+					width:350,
+					modal:true,
+					buttons:deleteDialogButtons,
+					close:function()
+					{
+						dialog.dialog('close');
+					}
+				});
+		
 		$('#add_email').on('click', function()
 				{
 					dialog.dialog('open');
 				});
+		
+		$('#delete_email').on('click', function())
+		{
+			delDialog.dialog('open');
+		}
+		
+		
 		
 	});
 </script>

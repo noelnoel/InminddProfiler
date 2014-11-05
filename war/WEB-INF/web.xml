@@ -96,6 +96,8 @@
     <url-pattern>/Contact/Inmindd</url-pattern>
   </servlet-mapping>
     
+    
+    
   <servlet>
     <servlet-name>InminddAdmin</servlet-name>
     <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>

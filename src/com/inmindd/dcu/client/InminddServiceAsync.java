@@ -151,5 +151,7 @@ public interface InminddServiceAsync {
 	void addUserEmail(String userId, String emailAddr, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	void updateUserLastLogin(String userId, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 	
+	void updateUserMail(String userId, String emailAddress, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	void deleteUserMail(String userId, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 }
 
