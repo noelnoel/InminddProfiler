@@ -2629,7 +2629,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @return A boolean indicating success or failure
 	 * @throws IllegalArgumentException
 	 */
-	public boolean addUserEmail(String userId, String encryptedEmailAddr) throws IllegalArgumentException
+	public Boolean addUserEmail(String userId, String encryptedEmailAddr) throws IllegalArgumentException
 	{
 		initDBConnection();
 		String enc = EmailEncryption.encrypt(encryptedEmailAddr);
@@ -2675,7 +2675,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @param emailAddress The new email address of the user
 	 * @return a boolean indicating success or failure
 	 */
-	public boolean updateUserMail(String userId, String emailAddress)
+	public Boolean updateUserMail(String userId, String emailAddress)
 	{
 		initDBConnection();
 		String encrypted = EmailEncryption.encrypt(emailAddress);
@@ -2718,7 +2718,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @param userId
 	 * @return a boolean indicating success or failure
 	 */
-	public boolean deleteUserMail(String userId)
+	public Boolean deleteUserMail(String userId)
 	{
 		initDBConnection();
 		String delStat = "DELETE FROM USER_MAIL WHERE userId=?";
@@ -2761,7 +2761,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @param userId The id of the user to update
 	 * @return A boolean indicating success or failure
 	 */
-	public boolean updateUserLastLogin(String userId) throws IllegalArgumentException
+	public Boolean updateUserLastLogin(String userId) throws IllegalArgumentException
 	{
 		initDBConnection();
 		String todaysDate = this.getDateAsMySQLDateTime(new Date());
@@ -2867,4 +2867,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		SimpleDateFormat mySqlFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return mySqlFormatter.format(date);
 	}
+	
+	
 }
