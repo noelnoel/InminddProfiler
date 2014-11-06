@@ -606,4 +606,10 @@ public interface InminddConstants extends Constants{
 		String tech_stat_4();
 		String tech_stat_5();
 		String pricavy_signoff();
+		
+		
+		//Twitter
+		String twitter_id();
+		String twitterTitle();
+		String twitterLink();
 }

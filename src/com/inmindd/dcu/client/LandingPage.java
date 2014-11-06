@@ -233,6 +233,9 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
+		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
+		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
 		/*DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
 		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
 		DOM.getElementById("rmw").setInnerHTML(constants.rmw());
