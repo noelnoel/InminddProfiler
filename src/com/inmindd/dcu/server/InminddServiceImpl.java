@@ -12,7 +12,9 @@ import org.apache.axis2.client.ServiceClient;
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
+import com.inmindd.dcu.emailService.EmailDetails;
 import com.inmindd.dcu.emailService.EmailEncryption;
+import com.inmindd.dcu.emailService.UserMail;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -48,6 +50,9 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+
+
 
 
 
@@ -2867,6 +2872,184 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		SimpleDateFormat mySqlFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return mySqlFormatter.format(date);
 	}
+
+	/***
+	 * Will return the list of users and emial addresses from the email table
+	 * @return
+	 */
+	public ArrayList<UserMail> getUserMailList() 
+	{
+		initDBConnection();;
+		String selStatement = "SELECT * FROM USER_MAIL;";
+		ArrayList<UserMail> list = new ArrayList<UserMail>();
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				//TODO: Fill in user list here
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return list;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return list;
+		}
+	}
+	
+	
+	
+	public Date getDateREgisteredForUser(String userId)
+	{
+		initDBConnection();;
+		String selStatement = "SELECT DATE_RANDOMISED FROM USER WHERE userID=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				Date d = result.getDate(1);
+				return d;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	/***
+	 * Will return a given email from the email table
+	 * @param month the month the email should be sent
+	 * @param emailGroup the emailgroup of the user
+	 * @param lang the language of the email
+	 * @return
+	 */
+	public EmailDetails getEmail(int month, int emailGroup, String lang) {
+		initDBConnection();;
+		String selStatement = "SELECT * FROM EMAILS_TO_SEND WHERE month=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				Date d = result.getDate(1);
+				return null;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+
+	public void updateLastSentEmail(String userId, int i) 
+	{
+		initDBConnection();;
+		String selStatement = "UPDATE USER_MAIL SET lastEMail=? WHERE userId=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				Date d = result.getDate(1);
+			
+			}	
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
 	
 	
 }

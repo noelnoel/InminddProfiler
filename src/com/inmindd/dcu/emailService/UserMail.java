@@ -15,7 +15,7 @@ public class UserMail
 	private int emailGroup; //Which message the user should be sent, i.e are they engaging in the study or not
 	private int lastSendEmail; //The last email message the user was sent
 	private Date dateRegistered;
-	
+	private String lang;
 	
 	public UserMail(String id, String addr, Date login, int emailG, int lastEmail, Date reg)
 	{
@@ -25,8 +25,47 @@ public class UserMail
 		this.setEmailGroup(emailG);
 		this.setLastSendEmail(lastEmail);
 		this.setDateRegistered(reg);
+		this.determineLang();
 	}
 	
+	
+	private void determineLang()
+	{
+		if(this.getUserId().startsWith("11"))
+		{
+			this.setLang("en");
+		}
+		else if(this.getUserId().startsWith("22"))
+		{
+			this.setLang("en");//TODO: Get the language codes
+		}
+		else if(this.getUserId().startsWith("33"))
+		{
+			this.setLang("en");
+		}
+		else if(this.getUserId().startsWith("44"))
+		{
+			this.setLang("en");
+		}
+		else if(this.getUserId().startsWith("55"))
+		{
+			this.setLang("en");
+		}
+		else
+		{
+			this.setLang("en"); //If everythign breaks, default to english
+		}
+	}
+	
+	public String getLang()
+	{
+		return this.lang;
+	}
+	
+	public void setLang(String lng)
+	{
+		this.lang = lng;
+	}
 	
 	public Date getDateRegistered()
 	{
