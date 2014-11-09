@@ -12,9 +12,6 @@ import org.apache.axis2.client.ServiceClient;
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
-import com.inmindd.dcu.emailService.EmailDetails;
-import com.inmindd.dcu.emailService.EmailEncryption;
-import com.inmindd.dcu.emailService.UserMail;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
@@ -50,6 +47,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 
 
 
@@ -2188,6 +2186,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
+		changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2919,7 +2918,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 	
-	public Date getDateREgisteredForUser(String userId)
+	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();;
 		String selStatement = "SELECT DATE_RANDOMISED FROM USER WHERE userID=?;";
@@ -2967,14 +2966,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @param lang the language of the email
 	 * @return
 	 */
-	public EmailDetails getEmail(int month, int emailGroup, String lang) {
+	public ArrayList<EmailDetails> getEmail(int month, int emailGroup, String lang) {
 		initDBConnection();;
-		String selStatement = "SELECT * FROM EMAILS_TO_SEND WHERE month=?;";
+		String selStatement = "SELECT * FROM EMAILS_TO_SEND WHERE month=? and (emailGroup=? or emailGroup=0) and lang=?;";
 		PreparedStatement prep;
 		try
 		{
 			prep = conn.prepareStatement(selStatement);
-			
+			prep.setString(1, month+"");
+			prep.setString(2, emailGroup+"");
+			prep.setString(3, lang);
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
@@ -3049,6 +3050,52 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 		
 	}
+	
+	
+	/***
+	 * This method will take an inactive user of the inmindd system and change them to an active user
+	 * @param userId the user's id to change
+	 * @return
+	 */
+	public Boolean changeEmailGroup(String userId)
+	{
+		initDBConnection();;
+		String selStatement = "UPDATE USER_MAIL SET emailGroup=1 WHERE userId=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			boolean result = prep.execute();
+				
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return result;
+			
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+			
+		}
+	}
+	
 	
 	
 	

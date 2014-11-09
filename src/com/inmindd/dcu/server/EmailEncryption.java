@@ -1,4 +1,4 @@
-package com.inmindd.dcu.emailService;
+package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;

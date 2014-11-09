@@ -10,10 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ibm.icu.util.GregorianCalendar;
-import com.inmindd.dcu.emailService.EmailDetails;
-import com.inmindd.dcu.emailService.EmailEncryption;
-import com.inmindd.dcu.emailService.SendMail;
-import com.inmindd.dcu.emailService.UserMail;
 
 @SuppressWarnings("serial")
 public class EmailCron extends HttpServlet
@@ -27,18 +23,25 @@ public class EmailCron extends HttpServlet
 		ArrayList<UserMail> mailTable = impl.getUserMailList();
 		for(UserMail mailUser:mailTable)
 		{
-			int monthsSinceReg = getMonthsSinceRegisistration(mailUser.getDateRegistered());
-			if(monthsSinceReg>mailUser.getLastSendEmail())//
+			if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL)
 			{
-				EmailDetails email = impl.getEmail(mailUser.getLastSendEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
-				String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
-				SendMail.sendMail(unencryptEmail, email.getMessageBody(), email.getSubject());
-				impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSendEmail()+1);
+				int monthsSinceReg = getMonthsSinceRegisistration(mailUser.getDateRegistered());
+				if(monthsSinceReg>mailUser.getLastSendEmail())//
+				{
+					ArrayList<EmailDetails> emailList = impl.getEmail(mailUser.getLastSendEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
+					String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
+					for(EmailDetails email:emailList)
+					{
+						SendMail.sendMail(unencryptEmail, email.getMessageBody(), email.getSubject());
+					}
+					impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSendEmail()+1);
+				}
+				else
+				{
+					//Do nothing here
+				}
 			}
-			else
-			{
-				//Do nothing here
-			}
+			
 		}
 	}
 	

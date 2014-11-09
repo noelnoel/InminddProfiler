@@ -108,6 +108,16 @@
     <url-pattern>/Admin/Inmindd</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+  	<servlet-name>EmailCron</servlet-name>
+  	<servlet-class>com.inmindd.dcu.server.EmailCron</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmailCron</servlet-name>
+  	<url-pattern>/cron/email</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

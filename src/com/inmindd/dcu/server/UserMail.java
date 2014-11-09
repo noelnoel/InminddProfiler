@@ -1,4 +1,4 @@
-package com.inmindd.dcu.emailService;
+package com.inmindd.dcu.server;
 
 import java.util.Date;
 
@@ -16,8 +16,9 @@ public class UserMail
 	private int lastSendEmail; //The last email message the user was sent
 	private Date dateRegistered;
 	private String lang;
+	private int randomized; //The randomized group
 	
-	public UserMail(String id, String addr, Date login, int emailG, int lastEmail, Date reg)
+	public UserMail(String id, String addr, Date login, int emailG, int lastEmail, Date reg, int randomized)
 	{
 		this.setUserId(id);
 		this.setEncryptedEmail(addr);
@@ -25,9 +26,21 @@ public class UserMail
 		this.setEmailGroup(emailG);
 		this.setLastSendEmail(lastEmail);
 		this.setDateRegistered(reg);
+		this.setRandomized(randomized);
 		this.determineLang();
 	}
 	
+	
+	private void setRandomized(int rand)
+	{
+		this.randomized = rand;
+	}
+	
+	
+	public int getRandomized()
+	{
+		return this.randomized;
+	}
 	
 	private void determineLang()
 	{
