@@ -397,7 +397,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// execute the java preparedstatement
 			preparedStmt.executeUpdate();
 
-			query = "update ignore user set randomised_number =  ? where userId =" + idUser;;
+			query = "update ignore user set randomised_number =  ? where userId =" + idUser;
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randInt);
 			preparedStmt.executeUpdate();
@@ -2879,7 +2879,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public ArrayList<UserMail> getUserMailList() 
 	{
 		initDBConnection();;
-		String selStatement = "SELECT * FROM USER_MAIL;";
+		String selStatement = "SELECT (userId, email, lastLogin, emailGroup, lastSentEmail) FROM USER_MAIL;";
 		ArrayList<UserMail> list = new ArrayList<UserMail>();
 		PreparedStatement prep;
 		try
@@ -2888,7 +2888,14 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				//TODO: Fill in user list here
+				String id = result.getString(1);
+				Date randomized = getDateRegisteredForUser(id);
+				String email = result.getString(2);
+				Date lastLogin = result.getDate(3);
+				int emailGroup = result.getInt(4);
+				int lastEmail = result.getInt(5);
+				int randNumber = getRandomizedGroupForUser(id);
+				list.add(new UserMail(id, email, lastLogin, emailGroup, lastEmail, randomized, randNumber));
 			}
 			try
 			{
@@ -2916,12 +2923,58 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 	
-	
+	public int getRandomizedGroupForUser(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT randomised_group FROM USER WHERE userID=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				String group = result.getString(1);
+				if(group.equals("Control"))
+				{
+					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
+				}
+				else
+				{
+					return EmailGroupConstants.INTERVENTION_GROUP;
+				}
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return -1;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return -1;
+		}
+	}
 	
 	public Date getDateRegisteredForUser(String userId)
 	{
-		initDBConnection();;
-		String selStatement = "SELECT DATE_RANDOMISED FROM USER WHERE userID=?;";
+		initDBConnection();
+		String selStatement = "SELECT date_randomised FROM USER WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -2967,9 +3020,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 * @return
 	 */
 	public ArrayList<EmailDetails> getEmail(int month, int emailGroup, String lang) {
-		initDBConnection();;
-		String selStatement = "SELECT * FROM EMAILS_TO_SEND WHERE month=? and (emailGroup=? or emailGroup=0) and lang=?;";
+		initDBConnection();
+		String selStatement = "SELECT (subject, Text_content, lang, monthToSend, emailGroup) FROM EMAILS_TO_SEND WHERE month=? and (emailGroup=? or emailGroup=0) and lang=?;";
 		PreparedStatement prep;
+		ArrayList<EmailDetails> det = new ArrayList<EmailDetails>();
 		try
 		{
 			prep = conn.prepareStatement(selStatement);
@@ -2979,8 +3033,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				Date d = result.getDate(1);
-				return null;
+				String subject = result.getString(1);
+				String text = result.getString(2);
+				String lng = result.getString(3);
+				int mnth = result.getInt(4);
+				int emailG = result.getInt(5);
+				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
+				
 			}
 			try
 			{
@@ -2990,7 +3049,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				e.printStackTrace();
 			}
-			return null;
+			return det;
 
 		}
 		catch(SQLException e)
@@ -3004,26 +3063,22 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				ee.printStackTrace();
 			}
-			return null;
+			return det;
 		}
 	}
 
 
 	public void updateLastSentEmail(String userId, int i) 
 	{
-		initDBConnection();;
-		String selStatement = "UPDATE USER_MAIL SET lastEMail=? WHERE userId=?;";
+		initDBConnection();
+		String selStatement = "UPDATE USER_MAIL SET lastSentEmail=? WHERE userId=?;";
 		PreparedStatement prep;
 		try
 		{
 			prep = conn.prepareStatement(selStatement);
-			prep.setString(1, userId);
-			ResultSet result = prep.executeQuery();
-			while(result.next())
-			{
-				Date d = result.getDate(1);
-			
-			}	
+			prep.setString(1, i+"");
+			prep.setString(2, userId);
+			prep.execute();
 			try
 			{
 				conn.close();
@@ -3059,11 +3114,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 */
 	public Boolean changeEmailGroup(String userId)
 	{
-		initDBConnection();;
+		initDBConnection();
 		String selStatement = "UPDATE USER_MAIL SET emailGroup=1 WHERE userId=?;";
 		PreparedStatement prep;
 		try
 		{
+			int emailGroup = getUserEmailGroup(userId);
+			if(emailGroup == EmailGroupConstants.USER_NOT_ENGAGED)
+			{
+				
+			}
 			prep = conn.prepareStatement(selStatement);
 			prep.setString(1, userId);
 			boolean result = prep.execute();
@@ -3093,6 +3153,48 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			}
 			return false;
 			
+		}
+	}
+	
+	public int getUserEmailGroup(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT emailGroup from USER_MAIL WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				int group = result.getInt(1);
+				return group;
+				
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return -1;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return -1;
 		}
 	}
 	

@@ -8,4 +8,5 @@ public class EmailGroupConstants
 	
 	//Not part of the email groups, but needed to make sure people in control group are not sent emails
 	public static final int RANDOMIZED_DONT_EMAIL=2;
+	public static final int INTERVENTION_GROUP=1;
 }
