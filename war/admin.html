@@ -322,7 +322,7 @@
 			{
 				console.log("Email is valid");
 				//Send it to the appengine to be encrypted and processed
-				window.changeEmail($('#addEmail').val());
+				window.changeEmail($('#addEmail').val(),$("#usersSelect option:selected").text());
 				dialog.dialog('close');
 			}
 			else

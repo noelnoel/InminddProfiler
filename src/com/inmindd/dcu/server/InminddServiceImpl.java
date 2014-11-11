@@ -2681,16 +2681,99 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 */
 	public Boolean updateUserMail(String userId, String emailAddress)
 	{
-		initDBConnection();
+		
 		String encrypted = EmailEncryption.encrypt(emailAddress);
-		String updateStat = "UPDATE USER_MAIL SET email=? WHERE userId=?";
+		if(userHasEmail(userId))
+		{
+			initDBConnection();
+			String updateStat = "UPDATE USER_MAIL SET email=? WHERE userId=?";
+			PreparedStatement prep;
+			try
+			{
+				prep=conn.prepareStatement(updateStat);
+				prep.setString(1, encrypted);
+				prep.setString(2,userId);
+				boolean result=prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				
+				return result;
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
+			}
+		}
+		else
+		{
+			initDBConnection();
+			String updateStat = "INSERT INTO USER_MAIL (userId,email,emailGroup, lastSentEmail) VALUES(?,?,2,0); ";
+			PreparedStatement prep;
+			try
+			{
+				prep=conn.prepareStatement(updateStat);
+				prep.setString(1, userId);
+				prep.setString(2,encrypted);
+				boolean result=prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				
+				return result;
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
+			}
+		}
+		
+	}
+	
+	
+	public Boolean userHasEmail(String userId)
+	{
+		initDBConnection();
+		String updateStat = "SELECT * FROM USER_MAIl WHERE userId=?";
 		PreparedStatement prep;
 		try
 		{
 			prep=conn.prepareStatement(updateStat);
-			prep.setString(1, encrypted);
-			prep.setString(2,userId);
-			boolean result=prep.execute();
+			prep.setString(1,userId);
+			ResultSet result=prep.executeQuery();
+			boolean ret = false;
+			while(result.next())
+			{
+				ret = true;
+			}
 			try
 			{
 				conn.close();
@@ -2700,7 +2783,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				e.printStackTrace();
 			}
 			
-			return result;
+			return ret;
 		}
 		catch(SQLException e)
 		{

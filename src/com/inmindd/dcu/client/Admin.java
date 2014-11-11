@@ -328,9 +328,9 @@ public class Admin implements EntryPoint {
 		$wnd.trigeredUserIDByGWT(userID);
      }-*/;
 	
-	public static void changeUserEmail(String email)
+	public static void changeUserEmail(String email, String userId)
 	{
-		String userId = userQuery.getUserId();
+		//String userId = userQuery.getUserId();
 		lastInstance.InminddServiceSvc.updateUserMail(userId, email, new AsyncCallback<Boolean>(){
 
 			@Override
@@ -353,7 +353,7 @@ public class Admin implements EntryPoint {
 	
 	public static native void updateEmail() /*-{
 		$wnd.changeEmail = 
-		$entry(@com.inmindd.dcu.client.Admin::changeUserEmail(Ljava/lang/String;));
+		$entry(@com.inmindd.dcu.client.Admin::changeUserEmail(Ljava/lang/String;Ljava/lang/String;));
 	
 	}-*/;
 	
