@@ -571,6 +571,7 @@ public interface InminddConstants extends Constants{
 		String supportMessageInternalError();
 		String supportAnd();
 		
+		//Cookies
 		String cookieConsent();
 		String doNotShowMessage();
 		
@@ -605,7 +606,7 @@ public interface InminddConstants extends Constants{
 		String tech_stat_3();
 		String tech_stat_4();
 		String tech_stat_5();
-		String pricavy_signoff();
+		String privacy_signoff();
 		
 		
 		//Twitter

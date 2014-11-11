@@ -1974,7 +1974,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 		  try 
 		  {
-		      if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
+		     /* if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
@@ -1982,13 +1982,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      conn = DriverManager.getConnection(url);
 		      } 
 		      else 
-		      {  
+		      {  */
 		    	  //running application locally in development mode 
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String url = "jdbc:mysql://mscriney.ddns.net:3306/"; //"jdbc:mysql://173.194.249.69:3306/";
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
-		    	  String userName = "root";
-		    	  String password = "noknoknok";
+		    	  String userName = "javaPrograms"; //was root
+		    	  String password = "sql"; //was noknoknok
 		    	  
 		    	  try 
 		    	  {
@@ -1999,7 +1999,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		    	  {
 		  			e.printStackTrace();
 		    	  } 
-		      }
+		      //}
 		  } 
 		  catch (Exception e) 
 		  {
