@@ -718,7 +718,7 @@ public class CognitiveTwo {
 		socialNever = new RadioButton("socialButton", NEVER_MONTH);
 		socialNever.getElement().getStyle().setProperty("fontWeight", "bold");	
 		//socialNever.getElement().getStyle().setProperty("marginLeft", "32px");	
-		socialNever.setStyleName("pos4");
+		socialNever.setStyleName("pos1");
 		socialOften = new RadioButton("socialButton", OFTEN_MONTH);
 		socialOften.getElement().getStyle().setProperty("fontWeight", "bold");	
 		//socialOften.getElement().getStyle().setProperty("marginLeft", "47px");	
