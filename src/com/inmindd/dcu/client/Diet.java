@@ -223,7 +223,7 @@ public class Diet {
 			 @Override	 
 	       public void onSuccess(Boolean result) {
 	       		if ((result == false)){	            		
-	       			InlineLabel error = new InlineLabel("Randomiser status service Failed");
+	       			InlineLabel error = new InlineLabel(constants.random_failed());
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       	//	else {
@@ -255,7 +255,7 @@ public class Diet {
 			 @Override	 
 	       public void onSuccess(String group) {
 	       		if ((group == null)){	            		
-	       			InlineLabel error = new InlineLabel("Please wait for randomiser function to complete");
+	       			InlineLabel error = new InlineLabel(constants.random_wait());
 	       			//showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
@@ -275,7 +275,7 @@ public class Diet {
 	         }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Error retrieving User Randomised Group" + caught);
+				InlineLabel error = new InlineLabel(constants.random_error() + caught);
 				showErrorPopupPanel(error, "red");			
 				
 			}
@@ -289,7 +289,7 @@ public class Diet {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return  false;
 			
@@ -315,7 +315,7 @@ public class Diet {
 				 @Override	 
 		       public void onSuccess(Boolean result) {
 		       		if ((result == false)){	            		
-		       			InlineLabel error = new InlineLabel("Diet  info not updated");
+		       			InlineLabel error = new InlineLabel(constants.data_not_updated());
 		       			showErrorPopupPanel(error, "red");            			
 		       		}            		
 		       		else {
@@ -327,7 +327,7 @@ public class Diet {
 		         }
 				@Override
 				public void onFailure(Throwable caught) {
-					InlineLabel error = new InlineLabel("Database update error");
+					InlineLabel error = new InlineLabel(constants.data_not_updated());
 					showErrorPopupPanel(error, "red");			
 					
 				}
@@ -785,7 +785,7 @@ public class Diet {
 		User user = login.getUser();
 		if (user== null) {
 	
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return;
 	
@@ -797,7 +797,7 @@ public class Diet {
 			@Override	 
 			public void onSuccess(DietInfo diet) {
 				if ((diet == null || diet.getUserId() == null)){	            		
-					InlineLabel error = new InlineLabel("Diet Data not retrieved. No data available for this patient ");
+					InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					showErrorPopupPanel(error, "red");            			
 				}            		
 				else {
@@ -810,7 +810,7 @@ public class Diet {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Diet data Database error");
+				InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				showErrorPopupPanel(error, "red");			
 	
 			}

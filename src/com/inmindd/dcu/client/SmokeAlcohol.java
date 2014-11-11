@@ -280,11 +280,11 @@ public class SmokeAlcohol {
 			 @Override	 
 	       public void onSuccess(Boolean result) {
 	       		if ((result == false)){	            		
-	       			InlineLabel error = new InlineLabel("Smoking & Alcohol  info not updated");
+	       			InlineLabel error = new InlineLabel(constants.data_not_updated());
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
-	       			//InlineLabel error = new InlineLabel(constants.smoke_complete());
+	       			//InlineLabel error = new InlineLabel(constants.smoke_complete()); Deleted smoke_complete
 	       			//showErrorPopupPanel(error, "green");   
 	       			content.selectTab(DECK_DIET);
 	       			content.getTabWidget(DECK_SMOKE_ALCOHOL).getElement().getStyle().setProperty("backgroundColor", "red");
@@ -293,7 +293,7 @@ public class SmokeAlcohol {
 	         }
 			@Override
 			public void onFailure(Throwable caught) {
-				InlineLabel error = new InlineLabel("Database update error");
+				InlineLabel error = new InlineLabel(constants.data_not_updated());
 				showErrorPopupPanel(error, "red");			
 				
 			}
@@ -353,8 +353,8 @@ public class SmokeAlcohol {
         drinksFrequency.addItem(constants.never());
         drinksFrequency.addItem(constants.monthly());
         drinksFrequency.addItem(constants.two_to_four());
-        drinksFrequency.addItem("2-3 times per week");
-        drinksFrequency.addItem("4 or more times per week");
+        drinksFrequency.addItem(constants.few_times_per_wk());
+        drinksFrequency.addItem(constants.plus_times_per_wk());
        
         drinkFreq.add(theSelection);
         drinkFreq.add(drinksFrequency);
@@ -447,7 +447,7 @@ public class SmokeAlcohol {
 		User user = login.getUser();
 		if (user.getUserId() == null) {
 			
-			InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			InlineLabel error  = new InlineLabel(constants.register());
 			showErrorPopupPanel(error, "red");
 			return false;
 			
@@ -619,7 +619,7 @@ public class SmokeAlcohol {
 		 User user = login.getUser();
 		 if (user== null) {
 
-			 InlineLabel error  = new InlineLabel("You must first log in or register with InMindd - go to Login panel");
+			 InlineLabel error  = new InlineLabel(constants.register());
 			 showErrorPopupPanel(error, "red");
 			 return;
 
@@ -631,7 +631,7 @@ public class SmokeAlcohol {
 			 @Override	 
 			 public void onSuccess(SmokeAlcoholInfo smokeAlcohol) {
 				 if ((smokeAlcohol == null || smokeAlcohol.getUserId() == null)){	            		
-					 InlineLabel error = new InlineLabel("Smoke Alcohol Data not retrieved. No data available for this patient ");
+					 InlineLabel error = new InlineLabel(constants.unable_to_retrieve());
 					 showErrorPopupPanel(error, "red");            			
 				 }            		
 				 else {
@@ -644,7 +644,7 @@ public class SmokeAlcohol {
 			 }
 			 @Override
 			 public void onFailure(Throwable caught) {
-				 InlineLabel error = new InlineLabel("Smoke Alcohol data Database error");
+				 InlineLabel error = new InlineLabel(constants.unable_retrieve_db());
 				 showErrorPopupPanel(error, "red");			
 
 			 }
@@ -793,8 +793,8 @@ public class SmokeAlcohol {
 			weeklyDrink.setText(constants.typical_drinks());
 			weeklyDrink.getElement().getStyle().setProperty("fontWeight", "bold");
 			
-			drinksBandIE.addItem("Please select one");
-			drinksBandIE.addItem("7 or less");
+			drinksBandIE.addItem(constants.select_one());
+			drinksBandIE.addItem(constants.seven_less());
 			drinksBandIE.addItem("8 - 11");
 			drinksBandIE.addItem("12 - 17");
 			drinksBandIE.addItem("18+");

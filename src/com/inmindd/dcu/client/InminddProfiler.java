@@ -74,8 +74,6 @@ import org.gwtwidgets.client.ui.ProgressBar;
  *
  */
 public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
-
-	
 	
 	/**
 	 * Numerical values to reference the tabs the content pages are held in.
@@ -333,7 +331,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 	
 		// Create the Patient Info Panel
-
 		PatientInfo patient = new PatientInfo();		
 		patientPanel = patient.setupPatientPanel(login);
 		
@@ -341,7 +338,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 
 
 		// Create the Patient Feelings Panel
-
 		Feelings cesd = new Feelings();
 		csd = new HTMLPanel(getContent(Pages.CESD.getText()));	
 		cesdPanel = cesd.setupCesdPanel(login);		
@@ -390,10 +386,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		//content.add(progress);
 		content = new TabLayoutPanel(15, Unit.PCT);
 		
-		
-		
-
-
 		// Add the content we have just created to the tab panel widget
 		content.add(loginPanel, Pages.LOGIN.getText());
 	
@@ -458,7 +450,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 		content.setSize("100%",  "130%");
 	
 		Label welLabel = new Label(constants.welcome());
-		Label euLabel = new Label(constants.eufunding_banner());
+		Label euLabel = new Label(constants.euFunding());
 		euLabel.getElement().getStyle().setProperty("fontWeight", "normal");
 		// Add the logo to the DOM element with id of "logo"
 		RootPanel logoSlot = RootPanel.get("logo");
@@ -533,14 +525,13 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	public void onValueChange(ValueChangeEvent<String> event) {
 	// Put this back !!!!
 		 User user = login.getUser();
-				 if (user.getUserId() == null ) {
+		if (user.getUserId() == null ) {
+			InlineLabel error  = new InlineLabel(constants.register());
+			showErrorPopupPanel(error);
+			showLogin();
+			return;
 
-					// InlineLabel error  = new InlineLabel("You must first log in or register with InMindd");
-					// showErrorPopupPanel(error);
-					 showLogin();
-					 return;
-
-				 } 
+		} 
 	
 		// Get the token from the event
 		String page = event.getValue().trim();
@@ -588,8 +579,7 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	private void showPatientInfo() {
 		
 		content.selectTab(Pages.PATIENT.getVal());
-			
-		
+
 	}
 
 	/**
