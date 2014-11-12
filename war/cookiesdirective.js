@@ -204,7 +204,7 @@
 		} else {
 			// Implied consent disclosure
 			html += scriptsDisclosure + ' <a style="color:'+ settings.linkColor + ';';
-			html += 'font-weight:bold;font-family:' + settings.fontFamily + ';font-size:' + settings.fontSize + ';" href="'+ settings.privacyPolicyUri + '">privacy policy</a>.';
+			html += 'font-weight:bold;font-family:' + settings.fontFamily + ';font-size:' + settings.fontSize + ';" href="'+ settings.privacyPolicyUri + '">'+$('#privacy-policy').text()+'</a>.';
 			implConsMessage = $('#cookie_message_button').text();
 			console.log("consentmessage: "+implConsMessage);
 			html += '<div style="margin-top:5px;"><input type="submit" name="impliedsubmit" id="impliedsubmit" value="'+implConsMessage+'"/></div></div>';	
