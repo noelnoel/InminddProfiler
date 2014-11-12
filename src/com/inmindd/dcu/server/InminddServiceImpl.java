@@ -56,6 +56,7 @@ import javax.mail.internet.MimeMessage;
 
 
 
+
 /*end of mail*/
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
@@ -121,6 +122,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 						conn.close();
 						return user;
 					}
@@ -193,9 +195,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
 						//we authorize login for Intervention group
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized") == 1) {
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized")== 0){
 						
 						user = null;
@@ -1984,7 +1988,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      else 
 		      {  */
 		    	  //running application locally in development mode 
-		    	  String url = "jdbc:mysql://mscriney.ddns.net:3306/"; //"jdbc:mysql://173.194.249.69:3306/";
+		    	  String url = "jdbc:mysql://127.0.0.1:3306/"; //"jdbc:mysql://173.194.249.69:3306/";
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
 		    	  String userName = "javaPrograms"; //was root
@@ -2850,42 +2854,75 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 */
 	public Boolean updateUserLastLogin(String userId) throws IllegalArgumentException
 	{
-		initDBConnection();
-		String todaysDate = this.getDateAsMySQLDateTime(new Date());
-		String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
-		PreparedStatement prep;
-		try
+		if(userHasEmail(userId))
 		{
-			prep = conn.prepareStatement(updateStatement);
-			prep.setString(1, todaysDate);
-			prep.setString(2, userId);
-			boolean result = prep.execute();
+			//Before update, check the last login
+			UserMail user = this.getUserMail(userId);
+			//is the lastlogin null ?
+			/*if(user.getLastLogin()==null) //If so they are elgible to be sent a special email
+			{
+				EmailDetails det = null;
+				String addr = EmailEncryption.decrypt(user.getEncryptedEmail());
+				SendMail.sendMail(addr, det.getMessageBody(), det.getSubject());
+				//finally update their emailGroup
+				this.changeEmailGroup(userId);
+			}*/
+			initDBConnection();
+			String todaysDate = this.getDateAsMySQLDateTime(new Date());
+			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
+			PreparedStatement prep;
 			try
 			{
-				conn.close();
+				prep = conn.prepareStatement(updateStatement);
+				prep.setString(1, todaysDate);
+				prep.setString(2, userId);
+				boolean result = prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				return result;
+
 			}
 			catch(SQLException e)
 			{
 				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
 			}
-			return result;
-
 		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			try
-			{
-				conn.close();
-			}
-			catch(SQLException ee)
-			{
-				ee.printStackTrace();
-			}
-			return false;
-		}
+		return true;
+		
 	}
 	
+	private UserMail getUserMail(String userId)
+	{
+		ArrayList<UserMail> allUsers = this.getUserMailList();
+		//find the person 
+		UserMail ret = null;
+		for(UserMail user: allUsers)
+		{
+			if(user.getUserId().equals(userId))
+			{
+				ret = user;
+				break;
+			}
+		}
+		return ret;
+	}
+
+
 	@Override
 	public Boolean sendMail(String email, String lang, String body)
 			throws IllegalArgumentException {
@@ -2961,8 +2998,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 */
 	public ArrayList<UserMail> getUserMailList() 
 	{
-		initDBConnection();;
-		String selStatement = "SELECT (userId, email, lastLogin, emailGroup, lastSentEmail) FROM USER_MAIL;";
+		initDBConnection();
+		String selStatement = "SELECT * FROM USER_MAIL;";
 		ArrayList<UserMail> list = new ArrayList<UserMail>();
 		PreparedStatement prep;
 		try
@@ -2971,12 +3008,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				String id = result.getString(1);
+				String id = result.getString("userId");
 				Date randomized = getDateRegisteredForUser(id);
-				String email = result.getString(2);
-				Date lastLogin = result.getDate(3);
-				int emailGroup = result.getInt(4);
-				int lastEmail = result.getInt(5);
+				String email = result.getString("email");
+				Date lastLogin = result.getDate("lastLogin");
+				int emailGroup = result.getInt("emailGroup");
+				int lastEmail = result.getInt("lastSentEmail");
 				int randNumber = getRandomizedGroupForUser(id);
 				list.add(new UserMail(id, email, lastLogin, emailGroup, lastEmail, randomized, randNumber));
 			}
@@ -3057,7 +3094,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT date_randomised FROM USER WHERE userID=?;";
+		String selStatement = "SELECT timestamp FROM USER WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -3104,7 +3141,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	 */
 	public ArrayList<EmailDetails> getEmail(int month, int emailGroup, String lang) {
 		initDBConnection();
-		String selStatement = "SELECT (subject, Text_content, lang, monthToSend, emailGroup) FROM EMAILS_TO_SEND WHERE month=? and (emailGroup=? or emailGroup=0) and lang=?;";
+		String selStatement = "SELECT * FROM EMAILS_TO_SEND "
+							+ "WHERE monthToSend=? "
+							+ "and (emailGroup=? OR emailGroup=0) "
+							+ "and lang=?;";
 		PreparedStatement prep;
 		ArrayList<EmailDetails> det = new ArrayList<EmailDetails>();
 		try
@@ -3116,11 +3156,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				String subject = result.getString(1);
-				String text = result.getString(2);
-				String lng = result.getString(3);
-				int mnth = result.getInt(4);
-				int emailG = result.getInt(5);
+				String subject = result.getString("subject");
+				String text = result.getString("Text_content");
+				String lng = result.getString("lang");
+				int mnth = result.getInt("monthToSend");
+				int emailG = result.getInt("emailGroup");
 				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
 				
 			}

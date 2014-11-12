@@ -23,18 +23,18 @@ public class EmailCron extends HttpServlet
 		ArrayList<UserMail> mailTable = impl.getUserMailList();
 		for(UserMail mailUser:mailTable)
 		{
-			if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL)
+			if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL||mailUser.getDateRegistered()==null)
 			{
 				int monthsSinceReg = getMonthsSinceRegisistration(mailUser.getDateRegistered());
-				if(monthsSinceReg>mailUser.getLastSendEmail())//
+				if(monthsSinceReg>mailUser.getLastSentEmail())//
 				{
-					ArrayList<EmailDetails> emailList = impl.getEmail(mailUser.getLastSendEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
+					ArrayList<EmailDetails> emailList = impl.getEmail(mailUser.getLastSentEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
 					String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
 					for(EmailDetails email:emailList)
 					{
 						SendMail.sendMail(unencryptEmail, email.getMessageBody(), email.getSubject());
 					}
-					impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSendEmail()+1);
+					impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSentEmail()+1);
 				}
 				else
 				{

@@ -33,6 +33,7 @@ public class Admin implements EntryPoint {
 		lastInstance = this;
 		exportClickUser();
 		updateEmail();
+		deleteEmail();
 		globalize();
 		callServiceSetup();
 

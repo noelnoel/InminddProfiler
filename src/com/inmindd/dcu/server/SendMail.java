@@ -17,26 +17,14 @@ import javax.mail.internet.MimeMessage.RecipientType;
 public class SendMail
 {
 	private static String userName, password;
-	private static final String backUpEmail = "";
-	private static final String backupPassword = "";
+	private static final String backUpEmail = "inminddfeasabilitystudy@gmail.com";
+	private static final String backupPassword = "lifestyleintervention";
 	
 	private static void getUserNameAndPassword()
 	{
-		Properties prop = new Properties();
-		InputStream in = null;
-		try
-		{
-			in = new FileInputStream("email.properties");
-			prop.load(in);
-			userName = prop.getProperty("emailUsername");
-			password = prop.getProperty("emailPassword");
-		}
-		catch(IOException e)
-		{
+
 			userName = backUpEmail;
 			password = backupPassword;
-			e.printStackTrace();
-		}
 		
 	}
 	

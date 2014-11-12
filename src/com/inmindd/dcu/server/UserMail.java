@@ -13,7 +13,7 @@ public class UserMail
 	private String encryptedEmail;
 	private Date lastLogin;
 	private int emailGroup; //Which message the user should be sent, i.e are they engaging in the study or not
-	private int lastSendEmail; //The last email message the user was sent
+	private int lastSentEmail; //The last email message the user was sent
 	private Date dateRegistered;
 	private String lang;
 	private int randomized; //The randomized group
@@ -24,7 +24,7 @@ public class UserMail
 		this.setEncryptedEmail(addr);
 		this.setLastLogin(login);
 		this.setEmailGroup(emailG);
-		this.setLastSendEmail(lastEmail);
+		this.setLastSentEmail(lastEmail);
 		this.setDateRegistered(reg);
 		this.setRandomized(randomized);
 		this.determineLang();
@@ -130,14 +130,14 @@ public class UserMail
 		this.emailGroup = emailGroup;
 	}
 
-	public int getLastSendEmail()
+	public int getLastSentEmail()
 	{
-		return lastSendEmail;
+		return lastSentEmail;
 	}
 
-	public void setLastSendEmail(int lastSendEmail)
+	public void setLastSentEmail(int lastSendEmail)
 	{
-		this.lastSendEmail = lastSendEmail;
+		this.lastSentEmail = lastSendEmail;
 	}
 	
 	

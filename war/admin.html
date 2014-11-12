@@ -337,6 +337,7 @@
 		{
 			console.log("Deleting email for user"+$("#usersSelect option:selected").text());
 			window.deleteEmail($("#usersSelect option:selected").text());
+			delDialog.dialog('close');
 		}
 		
 		
