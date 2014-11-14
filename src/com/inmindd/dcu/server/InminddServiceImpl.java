@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
@@ -47,6 +48,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+
 
 
 
@@ -104,7 +107,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt = conn.prepareStatement("SELECT * FROM inmindd.user where userId = ?;");
 			pstmt.setString(1, idUser);
 			result = pstmt.executeQuery();
 			
@@ -1982,8 +1985,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
-			      String url = "jdbc:google:mysql://inmindd-v3:staging-db/inmindd?user=root";
+			     // String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			     String url = "jdbc:google:mysql://inmindd-v3:staging?user=root";
 			      conn = DriverManager.getConnection(url);
+			      Statement db = conn.createStatement();
+			      db.execute("use inmindd;");
 		      } 
 		      else 
 		      {  
