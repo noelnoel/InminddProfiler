@@ -6,11 +6,13 @@
         <title>In-MINDD</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/styles.css" rel="stylesheet">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic" rel="stylesheet" type="text/css">
         <link href="https://ajax.googleapis.com/ajax/libs/dojo/1.8.1/dijit/themes/tundra/tundra.css" rel="stylesheet" type="text/css">
+        
         <script type="text/javascript" language="javascript" src="Admin/Admin.nocache.js"></script>
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -78,11 +80,11 @@
                                                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://inmindd-blog.appspot.com/" id="menu-support-blog">In-MINDD Blog</a></li>
                                                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="apps.html" id="menu-support-apps">Useful Apps</a></li>
 													<li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="index.html?page=logout" id="menu-support-logout">Logout</a></li>
-
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/" id="menu-inmindd">In-MINDD Website</a></li>
                                             <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="contact.html" id="menu-contact">Contact</a></li>
+                                            <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="privacyPolicy.html" id="privacy-policy">Privacy Policy</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -97,8 +99,23 @@
                                 <select id="usersSelect">
                                     
                                 </select>
+                                <a href="#" class="btn btn-success" id="add_email">Add/update this users email address</a>
+                                <a href="#" class="btn btn-success" id="delete_email">Remove this users email address</a>
                                 <a href="#" class="btn btn-success btn-lg btn-block" id="userIdButton">Select this user</a>
                                 <a href="#" class="btn btn-success btn-lg btn-block" id="emailButton">Extract database for marketing email (it can take up to 60 seconds)</a>
+                                <input type="hidden" id="cancelButton" value="Cancel" /> 
+                                <div id="dialog-form" title="Add/update email address">
+                                	<form>
+                                		<fieldset>
+                                			<label id="emailLabel" for="emailAddr">Email Address</label> <input id="addEmail" type="text" name="emailAddr" placeholder="Email Address"/>
+                                			<p id="email_enter_error" class='ui-state-error'>Please enter a valid email address.</p>
+                                		</fieldset>
+                                	</form>
+                                </div>
+                                <div id="del_dialog_form" title="Remove Email Address">
+                                 	<p id="del_email_conf">Remove this users email address?</p>	
+                                 	<input type="hidden" id="okButton" value="OK" />
+                                </div>
                             </div>
                             <div class="row" id="mailingPanel" style="display:none">
                                 
@@ -258,10 +275,111 @@
 <input text="text" id="andtranslationRPC" style="display:none;" value="" />
 <!-- script references -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="scriptRb.js"></script>
 <script src="scriptRbAdmin.js"></script>
 <script src="https://yandex.st/dojo/1.9.1/dojo/dojo.js"></script>
 <script src="charts.js"></script>
+<script type="text/javascript">
+	//This is for the email CRUD operations
+	$(function(){
+		var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+		var email = $('#addEmail');
+		var okTitle =  $('#dialog-form').attr("title");
+		var cancel = $('#cancelButton').attr('value');
+		var dialog_buttons = {}
+		dialog_buttons[okTitle] = changeEmail
+		dialog_buttons[cancel] = function(){dialog.dialog('close');}
+		
+		
+		var delOk = $('#okButton').attr('value');
+		var deleteDialogButtons = {}
+		deleteDialogButtons[delOk]=delEmail
+		deleteDialogButtons[cancel] = function(){dialog.dialog('close');}
+		
+		
+		
+		$('#email_enter_error').hide();
+		
+		function isValidEmail(regex,emailToTest)
+		{
+			if(!regex.test($('#addEmail').val()))
+			{
+				$('#addEmail').addClass('ui-state-error');
+				$('#email_enter_error').show();
+			}
+			else
+			{
+				return true;
+			}
+		}
+		
+		function changeEmail()
+		{
+			console.log("Changing email for user: "+$("#usersSelect option:selected").text()+" to: "+$('#addEmail').val());
+			if(isValidEmail(emailRegex,$('#addEmail').val()))
+			{
+				console.log("Email is valid");
+				//Send it to the appengine to be encrypted and processed
+				window.changeEmail($('#addEmail').val(),$("#usersSelect option:selected").text());
+				dialog.dialog('close');
+			}
+			else
+			{
+				console.log("Email is invalid");
+			}
+			
+		}
+		
+		
+		function delEmail()
+		{
+			console.log("Deleting email for user"+$("#usersSelect option:selected").text());
+			window.deleteEmail($("#usersSelect option:selected").text());
+			delDialog.dialog('close');
+		}
+		
+		
+		console.log("Started dialog process");
+		dialog = $('#dialog-form').dialog({
+			autoOpen:false,
+			height:200,
+			width:350,
+			modal:true,
+			buttons:dialog_buttons,
+			close:function()
+			{
+				dialog.dialog('close');
+			}
+		});
+		
+		delDialog = $('#del_dialog_form').dialog(
+				{
+					autoOpen:false,
+					height:200,
+					width:350,
+					modal:true,
+					buttons:deleteDialogButtons,
+					close:function()
+					{
+						dialog.dialog('close');
+					}
+				});
+		
+		$('#add_email').on('click', function()
+				{
+					dialog.dialog('open');
+				});
+		
+		$('#delete_email').on('click', function()
+		{
+			delDialog.dialog('open');
+		});
+		
+		
+		
+	});
+</script>
 </body>
 </html>

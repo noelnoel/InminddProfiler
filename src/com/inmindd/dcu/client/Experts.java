@@ -163,6 +163,7 @@ public class Experts implements EntryPoint {
 		DOM.getElementById("askExperts7").setInnerHTML(constants.askExperts7());
 		DOM.getElementById("askExperts8").setInnerHTML(constants.askExperts8());
 		DOM.getElementById("askExperts9").setInnerHTML(constants.askExperts9());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 }

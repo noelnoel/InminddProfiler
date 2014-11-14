@@ -32,6 +32,8 @@ public class Admin implements EntryPoint {
 	public void onModuleLoad() {
 		lastInstance = this;
 		exportClickUser();
+		updateEmail();
+		deleteEmail();
 		globalize();
 		callServiceSetup();
 
@@ -135,7 +137,6 @@ public class Admin implements EntryPoint {
 	public static void clickUser(String userId) {
 		userQuery = new User();
 		userQuery.setUserId(userId);
-		
 		callbackScore = new AsyncCallback<RiskFactorScore>() {
 
 			@Override
@@ -328,9 +329,63 @@ public class Admin implements EntryPoint {
 		$wnd.trigeredUserIDByGWT(userID);
      }-*/;
 	
+	public static void changeUserEmail(String email, String userId)
+	{
+		//String userId = userQuery.getUserId();
+		lastInstance.InminddServiceSvc.updateUserMail(userId, email, new AsyncCallback<Boolean>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		});
+		
+		
+	}
+	
+	public static native void updateEmail() /*-{
+		$wnd.changeEmail = 
+		$entry(@com.inmindd.dcu.client.Admin::changeUserEmail(Ljava/lang/String;Ljava/lang/String;));
+	
+	}-*/;
+	
+	
+	public static void deleteUserEmail(String userId)
+	{
+		lastInstance.InminddServiceSvc.deleteUserMail(userId, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public static native void deleteEmail()
+	/*-{
+		$wnd.deleteEmail=$entry(@com.inmindd.dcu.client.Admin::deleteUserEmail(Ljava/lang/String;));
+	}-*/;
+	
+	
 	private void globalize(){
-		constants = 
-				   (InminddConstants)GWT.create(InminddConstants.class);
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
@@ -399,6 +454,20 @@ public class Admin implements EntryPoint {
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());
 		DOM.getElementById("score-30").setInnerHTML(constants.score_30());
+		
+		/* Email CRUD operations*/
+		DOM.getElementById("add_email").setInnerHTML(constants.addEmailBtn());
+		DOM.getElementById("delete_email").setInnerHTML(constants.deleteEmailBtn());
+		DOM.getElementById("cancelButton").setAttribute("value", constants.cancelButton());
+		DOM.getElementById("dialog-form").setAttribute("title", constants.addDialogTitle());
+		DOM.getElementById("emailLabel").setInnerHTML(constants.emailAddrAdmin());
+		DOM.getElementById("addEmail").setAttribute("placeholder", constants.emailAddrAdmin());
+		DOM.getElementById("email_enter_error").setInnerHTML(constants.emailEnterError());
+		
+		DOM.getElementById("del_dialog_form").setAttribute("title", constants.del_email_title());
+		DOM.getElementById("del_email_conf").setInnerHTML(constants.del_email_conf());
+		DOM.getElementById("okButton").setAttribute("value", constants.delOK());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 
