@@ -2,6 +2,7 @@ package com.inmindd.dcu.client;
 
 import java.util.Date;
 
+
 //import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -21,12 +22,13 @@ public class LandingPage implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private InminddConstants constants;
-
+	private String userId="";
 
 	@Override
 	public void onModuleLoad() {
-		globalize();
+
 		callServiceSetup();
+		globalize();
 		EventListener eventRegister= new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -61,6 +63,7 @@ public class LandingPage implements EntryPoint {
 								now.setTime(nowLong);
 								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+								userId = user.getUserId();
 								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}
@@ -98,7 +101,16 @@ public class LandingPage implements EntryPoint {
 							} else {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");
+								//Get the logged in user, elaborate hack to check for glaswegians
+								String userId = user.getUserId();
+								if(!(userId==null || userId.equals(""))&&userId.startsWith("22")) //Check for glaswegians 
+								{
+									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
+									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
+									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
+								}
 							}
+							
 						}
 
 						@Override
@@ -230,6 +242,20 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("supportLogin").setInnerHTML(constants.supportLogin());
 		DOM.getElementById("supportPassword").setInnerHTML(constants.supportPassword());
 		DOM.getElementById("linkLogin").setInnerHTML(constants.supportSignin());
+		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
+		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
+		
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		
+		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
+		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
+		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+		
+		
+		
+		
+		
+		
 		/*DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
 		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
 		DOM.getElementById("rmw").setInnerHTML(constants.rmw());

@@ -33,7 +33,9 @@ import com.inmindd.dcu.shared.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 /*mail purpose*/
 import java.util.Properties;
 
@@ -46,6 +48,15 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+
+
+
+
+
+
+
+
+
 /*end of mail*/
 import org.tempuri.ServiceStub;
 import org.tempuri.ServiceStub.RandResult;
@@ -53,6 +64,7 @@ import org.tempuri.ServiceStub.RandResult;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.protos.cloud.sql.Client.SqlException;
 
 /**
  * The server side implementation of the RPC service.
@@ -110,6 +122,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 						conn.close();
 						return user;
 					}
@@ -182,9 +195,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
 						//we authorize login for Intervention group
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized") == 1) {
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized")== 0){
 						
 						user = null;
@@ -291,7 +306,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 			String insert = "insert  into user (userId,passwordhash,timestamp, maiden_name_hash, favorite_colour_hash)  values(?,?,?,?,?)";			
-	
+			//TODO: Add in add to mail table here
+			
 			try {
 				PreparedStatement updateUserInfo = conn.prepareStatement(insert);
 				updateUserInfo.setString(1, userId);				
@@ -385,7 +401,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// execute the java preparedstatement
 			preparedStmt.executeUpdate();
 
-			query = "update ignore user set randomised_number =  ? where userId =" + idUser;;
+			query = "update ignore user set randomised_number =  ? where userId =" + idUser;
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randInt);
 			preparedStmt.executeUpdate();
@@ -1962,7 +1978,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 		  try 
 		  {
-		      if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
+		     if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
@@ -1975,8 +1991,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
-		    	  String userName = "root";
-		    	  String password = "noknoknok";
+		    	  String userName = "javaPrograms"; //was root
+		    	  String password = "sql"; //was noknoknok
 		    	  
 		    	  try 
 		    	  {
@@ -2174,6 +2190,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
+		changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2612,7 +2629,300 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 	
+	/***
+	 * This method will add a users email address to the USER_MAIL table
+	 * This method is called when a user registers and provides an email address
+	 * @param userId The Id of the user 
+	 * @param encryptedEmailAddr The encrypted email address
+	 * @return A boolean indicating success or failure
+	 * @throws IllegalArgumentException
+	 */
+	public Boolean addUserEmail(String userId, String encryptedEmailAddr) throws IllegalArgumentException
+	{
+		initDBConnection();
+		String enc = EmailEncryption.encrypt(encryptedEmailAddr);
+		String todayAsMySqlDatetime = this.getDateAsMySQLDateTime(new Date());
+		String insertStatement = "INSERT INTO USER_MAIL (userId, email, lastLogin) VALUES (?,?,?);";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(insertStatement);
+			prep.setString(1, userId);
+			prep.setString(2, enc);
+			prep.setString(3, todayAsMySqlDatetime);
+			boolean result =  prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
 	
+	/***
+	 * This will update a users email address, it wil be called from the admin panel in the event a user wants to change theiir email address
+	 * @param userId The id of the user to change
+	 * @param emailAddress The new email address of the user
+	 * @return a boolean indicating success or failure
+	 */
+	public Boolean updateUserMail(String userId, String emailAddress)
+	{
+		
+		String encrypted = EmailEncryption.encrypt(emailAddress);
+		if(userHasEmail(userId))
+		{
+			initDBConnection();
+			String updateStat = "UPDATE USER_MAIL SET email=? WHERE userId=?";
+			PreparedStatement prep;
+			try
+			{
+				prep=conn.prepareStatement(updateStat);
+				prep.setString(1, encrypted);
+				prep.setString(2,userId);
+				boolean result=prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				
+				return result;
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
+			}
+		}
+		else
+		{
+			initDBConnection();
+			String updateStat = "INSERT INTO USER_MAIL (userId,email,emailGroup, lastSentEmail) VALUES(?,?,2,0); ";
+			PreparedStatement prep;
+			try
+			{
+				prep=conn.prepareStatement(updateStat);
+				prep.setString(1, userId);
+				prep.setString(2,encrypted);
+				boolean result=prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				
+				return result;
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
+			}
+		}
+		
+	}
+	
+	
+	public Boolean userHasEmail(String userId)
+	{
+		initDBConnection();
+		String updateStat = "SELECT * FROM USER_MAIl WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep=conn.prepareStatement(updateStat);
+			prep.setString(1,userId);
+			ResultSet result=prep.executeQuery();
+			boolean ret = false;
+			while(result.next())
+			{
+				ret = true;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return ret;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	/***
+	 * This method will remove a user from the User mail table, they will not be able to recieve emails when this is called
+	 * @param userId
+	 * @return a boolean indicating success or failure
+	 */
+	public Boolean deleteUserMail(String userId)
+	{
+		initDBConnection();
+		String delStat = "DELETE FROM USER_MAIL WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep=conn.prepareStatement(delStat);
+			prep.setString(1, userId);
+			boolean result=prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+		}
+	}
+	
+	
+	
+	/***
+	 * This method will update a users last login in the email table. The value will be updated to the date and time of the server when the method is called
+	 * @param userId The id of the user to update
+	 * @return A boolean indicating success or failure
+	 */
+	public Boolean updateUserLastLogin(String userId) throws IllegalArgumentException
+	{
+		if(userHasEmail(userId))
+		{
+			//Before update, check the last login
+			UserMail user = this.getUserMail(userId);
+			//is the lastlogin null ?
+			/*if(user.getLastLogin()==null) //If so they are elgible to be sent a special email
+			{
+				EmailDetails det = null;
+				String addr = EmailEncryption.decrypt(user.getEncryptedEmail());
+				SendMail.sendMail(addr, det.getMessageBody(), det.getSubject());
+				//finally update their emailGroup
+				this.changeEmailGroup(userId);
+			}*/
+			initDBConnection();
+			String todaysDate = this.getDateAsMySQLDateTime(new Date());
+			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
+			PreparedStatement prep;
+			try
+			{
+				prep = conn.prepareStatement(updateStatement);
+				prep.setString(1, todaysDate);
+				prep.setString(2, userId);
+				boolean result = prep.execute();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+				return result;
+
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					conn.close();
+				}
+				catch(SQLException ee)
+				{
+					ee.printStackTrace();
+				}
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	
+	private UserMail getUserMail(String userId)
+	{
+		ArrayList<UserMail> allUsers = this.getUserMailList();
+		//find the person 
+		UserMail ret = null;
+		for(UserMail user: allUsers)
+		{
+			if(user.getUserId().equals(userId))
+			{
+				ret = user;
+				break;
+			}
+		}
+		return ret;
+	}
+
+
 	@Override
 	public Boolean sendMail(String email, String lang, String body)
 			throws IllegalArgumentException {
@@ -2667,6 +2977,351 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	
+	
+	/***
+	 * This method will convert a java date object into a String representation of the mysql datetime object
+	 * @param date The date to be converted
+	 * @return a String representing the mysql datetimte version of the date
+	 */
+	private String getDateAsMySQLDateTime(Date date)
+	{
+		SimpleDateFormat mySqlFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return mySqlFormatter.format(date);
+	}
+
+	/***
+	 * Will return the list of users and emial addresses from the email table
+	 * @return
+	 */
+	public ArrayList<UserMail> getUserMailList() 
+	{
+		initDBConnection();
+		String selStatement = "SELECT * FROM USER_MAIL;";
+		ArrayList<UserMail> list = new ArrayList<UserMail>();
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				String id = result.getString("userId");
+				Date randomized = getDateRegisteredForUser(id);
+				String email = result.getString("email");
+				Date lastLogin = result.getDate("lastLogin");
+				int emailGroup = result.getInt("emailGroup");
+				int lastEmail = result.getInt("lastSentEmail");
+				int randNumber = getRandomizedGroupForUser(id);
+				list.add(new UserMail(id, email, lastLogin, emailGroup, lastEmail, randomized, randNumber));
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return list;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return list;
+		}
+	}
+	
+	public int getRandomizedGroupForUser(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT randomised_group FROM USER WHERE userID=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				String group = result.getString(1);
+				if(group.equals("Control"))
+				{
+					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
+				}
+				else
+				{
+					return EmailGroupConstants.INTERVENTION_GROUP;
+				}
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return -1;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return -1;
+		}
+	}
+	
+	public Date getDateRegisteredForUser(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT timestamp FROM USER WHERE userID=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				Date d = result.getDate(1);
+				return d;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	/***
+	 * Will return a given email from the email table
+	 * @param month the month the email should be sent
+	 * @param emailGroup the emailgroup of the user
+	 * @param lang the language of the email
+	 * @return
+	 */
+	public ArrayList<EmailDetails> getEmail(int month, int emailGroup, String lang) {
+		initDBConnection();
+		String selStatement = "SELECT * FROM EMAILS_TO_SEND "
+							+ "WHERE monthToSend=? "
+							+ "and (emailGroup=? OR emailGroup=0) "
+							+ "and lang=?;";
+		PreparedStatement prep;
+		ArrayList<EmailDetails> det = new ArrayList<EmailDetails>();
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, month+"");
+			prep.setString(2, emailGroup+"");
+			prep.setString(3, lang);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				String subject = result.getString("subject");
+				String text = result.getString("Text_content");
+				String lng = result.getString("lang");
+				int mnth = result.getInt("monthToSend");
+				int emailG = result.getInt("emailGroup");
+				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
+				
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return det;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return det;
+		}
+	}
+
+
+	public void updateLastSentEmail(String userId, int i) 
+	{
+		initDBConnection();
+		String selStatement = "UPDATE USER_MAIL SET lastSentEmail=? WHERE userId=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, i+"");
+			prep.setString(2, userId);
+			prep.execute();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			
+		}
 		
 	}
+	
+	
+	/***
+	 * This method will take an inactive user of the inmindd system and change them to an active user
+	 * @param userId the user's id to change
+	 * @return
+	 */
+	public Boolean changeEmailGroup(String userId)
+	{
+		initDBConnection();
+		String selStatement = "UPDATE USER_MAIL SET emailGroup=1 WHERE userId=?;";
+		PreparedStatement prep;
+		try
+		{
+			int emailGroup = getUserEmailGroup(userId);
+			if(emailGroup == EmailGroupConstants.USER_NOT_ENGAGED)
+			{
+				
+			}
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			boolean result = prep.execute();
+				
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return result;
+			
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return false;
+			
+		}
+	}
+	
+	public int getUserEmailGroup(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT emailGroup from USER_MAIL WHERE userId=?";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				int group = result.getInt(1);
+				return group;
+				
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return -1;
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return -1;
+		}
+	}
+	
+	
+	
+	
 }
