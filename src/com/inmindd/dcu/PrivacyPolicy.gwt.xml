@@ -27,6 +27,7 @@
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
+  <source path='shared'/>
  <!-- Here we define the class that contains the entry point -->
 	<entry-point class="com.inmindd.dcu.client.PrivacyPolicy"/>
 </module>
