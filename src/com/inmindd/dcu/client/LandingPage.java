@@ -3,9 +3,11 @@ package com.inmindd.dcu.client;
 import java.util.Date;
 
 
+
 //import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
@@ -98,6 +100,7 @@ public class LandingPage implements EntryPoint {
 							if (user == null) {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("loginPanel").setAttribute("style", "");
+								
 							} else {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");
@@ -109,6 +112,14 @@ public class LandingPage implements EntryPoint {
 									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
 									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
 								}
+								else
+								{
+									constants = (InminddConstants)GWT.create(InminddConstants.class);
+									DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
+									DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
+									DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+								}
+	
 							}
 							
 						}
@@ -139,18 +150,26 @@ public class LandingPage implements EntryPoint {
 			}
 		};
 		
-		Element elem = DOM.getElementById("linkProfiler");
-		DOM.sinkEvents(elem, Event.ONCLICK);
-		DOM.setEventListener(elem, eventProfiler);
-		Element elem1 = DOM.getElementById("linkSupport");
-		DOM.sinkEvents(elem1, Event.ONCLICK);
-		DOM.setEventListener(elem1, eventSupport);
-		Element elem2 = DOM.getElementById("linkLogin");
-		DOM.sinkEvents(elem2, Event.ONCLICK);
-		DOM.setEventListener(elem2, eventLogin);
-		Element elem3 = DOM.getElementById("linkRegister");
-		DOM.sinkEvents(elem3, Event.ONCLICK);
-		DOM.setEventListener(elem3, eventRegister);
+		try
+		{
+			Element elem = DOM.getElementById("linkProfiler");
+			DOM.sinkEvents(elem, Event.ONCLICK);
+			DOM.setEventListener(elem, eventProfiler);
+			Element elem1 = DOM.getElementById("linkSupport");
+			DOM.sinkEvents(elem1, Event.ONCLICK);
+			DOM.setEventListener(elem1, eventSupport);
+			Element elem2 = DOM.getElementById("linkLogin");
+			DOM.sinkEvents(elem2, Event.ONCLICK);
+			DOM.setEventListener(elem2, eventLogin);
+			Element elem3 = DOM.getElementById("linkRegister");
+			DOM.sinkEvents(elem3, Event.ONCLICK);
+			DOM.setEventListener(elem3, eventRegister);
+		}
+		catch(JavaScriptException e)
+		{
+			
+		}
+		
 		
 		AsyncCallback<Boolean> callbackLogout = new AsyncCallback<Boolean>() {
 
@@ -174,8 +193,16 @@ public class LandingPage implements EntryPoint {
 		} else if(page != null && page.equals("logout")){
 			InminddServiceSvc.unsetUserConnected(callbackLogout);
 		} else {
-			DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-			DOM.getElementById("indexPanel").setAttribute("style", "");
+			try
+			{
+				DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+				DOM.getElementById("indexPanel").setAttribute("style", "");
+			}
+			catch(JavaScriptException e)
+			{
+				
+			}
+			
 		}
 	}
 
@@ -246,10 +273,27 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("landing-index-2").setInnerHTML(constants.trial_id());
+		DOM.getElementById("trial_website").setInnerHTML(constants.trial_website());
+		DOM.getElementById("gen_statement").setInnerHTML(constants.gen_statement());
+		DOM.getElementById("gen_statement_text").setInnerHTML(constants.gen_statement_text());
+		DOM.getElementById("collect_statement").setInnerHTML(constants.collect_info());
+		DOM.getElementById("collect_statement_text").setInnerHTML(constants.collect_info_text());;
+		DOM.getElementById("request_stat").setInnerHTML(constants.request_statement());
+		DOM.getElementById("request_statement_text").setInnerHTML(constants.request_statement_text());
+		DOM.getElementById("complaints").setInnerHTML(constants.complaints());
+		DOM.getElementById("complaints_text").setInnerHTML(constants.complaints_text());
+		DOM.getElementById("collection_tech").setInnerHTML(constants.collection_tech_statement());
+		DOM.getElementById("collection_tech_text").setInnerHTML(constants.collection_tech_statement_text());;
+		DOM.getElementById("tech_stat_1").setInnerHTML(constants.tech_stat_1());
+		DOM.getElementById("tech_stat_2").setInnerHTML(constants.tech_stat_2());
+		DOM.getElementById("tech_stat_3").setInnerHTML(constants.tech_stat_3());
+		DOM.getElementById("tech_stat_4").setInnerHTML(constants.tech_stat_4());
+		DOM.getElementById("tech_stat_5").setInnerHTML(constants.tech_stat_5());
 		
-		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
-		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
-		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+		DOM.getElementById("privacy_signoff").setInnerHTML(constants.privacy_signoff());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		
 		
 		
 		
