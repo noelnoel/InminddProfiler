@@ -66,8 +66,11 @@ public class LandingPage implements EntryPoint {
 								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 								userId = user.getUserId();
-								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
+								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+								DOM.getElementById("supportPanel").setAttribute("style", "");   
+								DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
+								DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
+								DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
 							}
 						}
 						@Override
@@ -112,13 +115,6 @@ public class LandingPage implements EntryPoint {
 									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
 									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
 								}
-								else
-								{
-									constants = (InminddConstants)GWT.create(InminddConstants.class);
-									DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
-									DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
-									DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
-								}
 	
 							}
 							
@@ -150,8 +146,7 @@ public class LandingPage implements EntryPoint {
 			}
 		};
 		
-		try
-		{
+
 			Element elem = DOM.getElementById("linkProfiler");
 			DOM.sinkEvents(elem, Event.ONCLICK);
 			DOM.setEventListener(elem, eventProfiler);
@@ -164,11 +159,6 @@ public class LandingPage implements EntryPoint {
 			Element elem3 = DOM.getElementById("linkRegister");
 			DOM.sinkEvents(elem3, Event.ONCLICK);
 			DOM.setEventListener(elem3, eventRegister);
-		}
-		catch(JavaScriptException e)
-		{
-			
-		}
 		
 		
 		AsyncCallback<Boolean> callbackLogout = new AsyncCallback<Boolean>() {
@@ -193,16 +183,10 @@ public class LandingPage implements EntryPoint {
 		} else if(page != null && page.equals("logout")){
 			InminddServiceSvc.unsetUserConnected(callbackLogout);
 		} else {
-			try
-			{
+
 				DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 				DOM.getElementById("indexPanel").setAttribute("style", "");
-			}
-			catch(JavaScriptException e)
-			{
-				
-			}
-			
+
 		}
 	}
 
@@ -272,7 +256,6 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
-		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		DOM.getElementById("landing-index-2").setInnerHTML(constants.trial_id());
 		DOM.getElementById("trial_website").setInnerHTML(constants.trial_website());
 		DOM.getElementById("gen_statement").setInnerHTML(constants.gen_statement());
@@ -294,6 +277,9 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("privacy_signoff").setInnerHTML(constants.privacy_signoff());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
+		
+		
+
 		
 		
 		
