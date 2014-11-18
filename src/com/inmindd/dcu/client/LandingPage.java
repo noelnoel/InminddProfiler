@@ -256,25 +256,7 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
-		DOM.getElementById("landing-index-2").setInnerHTML(constants.trial_id());
-		DOM.getElementById("trial_website").setInnerHTML(constants.trial_website());
-		DOM.getElementById("gen_statement").setInnerHTML(constants.gen_statement());
-		DOM.getElementById("gen_statement_text").setInnerHTML(constants.gen_statement_text());
-		DOM.getElementById("collect_statement").setInnerHTML(constants.collect_info());
-		DOM.getElementById("collect_statement_text").setInnerHTML(constants.collect_info_text());;
-		DOM.getElementById("request_stat").setInnerHTML(constants.request_statement());
-		DOM.getElementById("request_statement_text").setInnerHTML(constants.request_statement_text());
-		DOM.getElementById("complaints").setInnerHTML(constants.complaints());
-		DOM.getElementById("complaints_text").setInnerHTML(constants.complaints_text());
-		DOM.getElementById("collection_tech").setInnerHTML(constants.collection_tech_statement());
-		DOM.getElementById("collection_tech_text").setInnerHTML(constants.collection_tech_statement_text());;
-		DOM.getElementById("tech_stat_1").setInnerHTML(constants.tech_stat_1());
-		DOM.getElementById("tech_stat_2").setInnerHTML(constants.tech_stat_2());
-		DOM.getElementById("tech_stat_3").setInnerHTML(constants.tech_stat_3());
-		DOM.getElementById("tech_stat_4").setInnerHTML(constants.tech_stat_4());
-		DOM.getElementById("tech_stat_5").setInnerHTML(constants.tech_stat_5());
 		
-		DOM.getElementById("privacy_signoff").setInnerHTML(constants.privacy_signoff());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
 		

@@ -71,7 +71,7 @@ public class PrivacyPolicy implements EntryPoint
 	{
 		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		//General Stuff
-		/*DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
+		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
 		DOM.getElementById("menu-support-profile").setInnerHTML(constants.menu_support_profile());
@@ -81,7 +81,7 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
-		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());*/
+		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
 
 		
 		DOM.getElementById("landing-index-2").setInnerHTML(constants.trial_id());
