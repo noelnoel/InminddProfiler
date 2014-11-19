@@ -838,7 +838,11 @@ public class CalculateScore {
 		        Class.forName("com.mysql.jdbc.GoogleDriver");
 		        String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
 		        conn = DriverManager.getConnection(url);
-		      } else {  //running application locally in development mode 
+		        conn.prepareStatement("use inmindd;").execute();
+		        
+		      } 
+		      else 
+		      {  //running application locally in development mode 
 		    	String url = "jdbc:mysql://173.194.249.69:3306/";
 		  		String dbName = "inmindd";
 		  		String driver = "com.mysql.jdbc.Driver";

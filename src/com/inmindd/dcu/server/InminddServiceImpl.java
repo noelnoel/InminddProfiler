@@ -2772,7 +2772,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Boolean userHasEmail(String userId)
 	{
 		initDBConnection();
-		String updateStat = "SELECT * FROM USER_MAIl WHERE userId=?";
+		String updateStat = "SELECT * FROM USER_MAIL WHERE userId=?";
 		PreparedStatement prep;
 		try
 		{
@@ -3052,7 +3052,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public int getRandomizedGroupForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT randomised_group FROM USER WHERE userID=?;";
+		String selStatement = "SELECT randomised_group FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -3100,7 +3100,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT timestamp FROM USER WHERE userID=?;";
+		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{

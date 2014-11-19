@@ -105,6 +105,8 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("privacy_signoff").setInnerHTML(constants.privacy_signoff());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
+		DOM.getElementById("landing-index-1").setInnerHTML(constants.privacy_policy());
+		
 		
 	}
 

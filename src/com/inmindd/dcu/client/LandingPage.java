@@ -109,7 +109,7 @@ public class LandingPage implements EntryPoint {
 								DOM.getElementById("supportPanel").setAttribute("style", "");
 								//Get the logged in user, elaborate hack to check for glaswegians
 								String userId = user.getUserId();
-								if(!(userId==null || userId.equals(""))&&userId.startsWith("22")) //Check for glaswegians 
+								if(userId.startsWith("22")) //Check for glaswegians 
 								{
 									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
 									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
@@ -260,7 +260,9 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
 		
-		
+		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
+		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink() );
+		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
 
 		
 		
