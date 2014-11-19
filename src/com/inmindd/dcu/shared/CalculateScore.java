@@ -36,11 +36,13 @@ public class CalculateScore {
 		userId = user.getUserId();
 		try {
 			
-			String query = "select * from patient_info where patient_id = " + userId;
+			String query = "select * from patient_info where patient_id =?; ";
 			
-			pstmt = conn.prepareStatement("");
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId+"");
 			result = pstmt.executeQuery(query);
 			populatePatient(result);
+			
 			query = "select * from feelings_info where patient_id = " + userId;
 			
 			pstmt = conn.prepareStatement("");

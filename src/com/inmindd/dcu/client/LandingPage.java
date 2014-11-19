@@ -68,9 +68,27 @@ public class LandingPage implements EntryPoint {
 								userId = user.getUserId();
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");   
-								DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
-								DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
-								DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+								if(userId.startsWith("11")) //Dublin
+								{
+									//Element nice = DOM.getElementById("twit-widget-nice");
+									//nice.getParentNode().removeChild(nice);
+									
+								}
+								else if(userId.startsWith("22")) //Check for glaswegians 
+								{
+									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
+									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
+									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
+								}
+								else if(userId.startsWith("33")) //Dublin
+								{
+									
+								}
+								else if(userId.startsWith("44"))
+								{
+									
+								}
+								
 							}
 						}
 						@Override
@@ -109,11 +127,62 @@ public class LandingPage implements EntryPoint {
 								DOM.getElementById("supportPanel").setAttribute("style", "");
 								//Get the logged in user, elaborate hack to check for glaswegians
 								String userId = user.getUserId();
-								if(userId.startsWith("22")) //Check for glaswegians 
+								if(userId.startsWith("11")) //Dublin
 								{
-									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
-									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
-									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
+									
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
+								}
+								else if(userId.startsWith("22")) //Check for glaswegians 
+								{
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+								}
+								else if(userId.startsWith("33")) 
+								{
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
+								}
+								else if(userId.startsWith("44"))
+								{
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
 								}
 	
 							}
@@ -257,12 +326,10 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
 		
-		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
 		
-		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
-		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink() );
-		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+		
+		
 
 		
 		
