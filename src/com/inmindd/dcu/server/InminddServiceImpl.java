@@ -1931,9 +1931,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public RiskFactorScore getLibraScore(User user) 
 	{
 		//open database connection
+		initDBConnection();
 		RiskFactorScore score = new RiskFactorScore();
 		CalculateScore calcScore = new CalculateScore();
-		calcScore.calcScore(score, user);
+		calcScore.calcScore(score, user, conn);
 		return  score;
 	}
 	
