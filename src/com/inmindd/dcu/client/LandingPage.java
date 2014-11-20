@@ -3,9 +3,11 @@ package com.inmindd.dcu.client;
 import java.util.Date;
 
 
+
 //import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
@@ -64,8 +66,29 @@ public class LandingPage implements EntryPoint {
 								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
 								userId = user.getUserId();
-								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
+								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+								DOM.getElementById("supportPanel").setAttribute("style", "");   
+								if(userId.startsWith("11")) //Dublin
+								{
+									//Element nice = DOM.getElementById("twit-widget-nice");
+									//nice.getParentNode().removeChild(nice);
+									
+								}
+								else if(userId.startsWith("22")) //Check for glaswegians 
+								{
+									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
+									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
+									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
+								}
+								else if(userId.startsWith("33")) //Dublin
+								{
+									
+								}
+								else if(userId.startsWith("44"))
+								{
+									
+								}
+								
 							}
 						}
 						@Override
@@ -98,17 +121,70 @@ public class LandingPage implements EntryPoint {
 							if (user == null) {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("loginPanel").setAttribute("style", "");
+								
 							} else {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");
 								//Get the logged in user, elaborate hack to check for glaswegians
 								String userId = user.getUserId();
-								if(!(userId==null || userId.equals(""))&&userId.startsWith("22")) //Check for glaswegians 
+								if(userId.startsWith("11")) //Dublin
 								{
-									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
-									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
-									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
+									
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
 								}
+								else if(userId.startsWith("22")) //Check for glaswegians 
+								{
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+								}
+								else if(userId.startsWith("33")) 
+								{
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
+									//Remove nice Widget
+									Element nieceWidget = DOM.getElementById("twitter-widget-1");
+									nieceWidget.getParentNode().removeChild(nieceWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
+								}
+								else if(userId.startsWith("44"))
+								{
+									//maastricht
+									Element maasWidget = DOM.getElementById("twitter-widget-2");
+									maasWidget.getParentNode().removeChild(maasWidget);
+									
+									//glasgow
+									Element glasWidget = DOM.getElementById("twitter-widget-3");
+									glasWidget.getParentNode().removeChild(glasWidget);
+									
+									//Dublin
+									Element dubWidget = DOM.getElementById("twitter-widget-0");
+									dubWidget.getParentNode().removeChild(dubWidget);
+								}
+	
 							}
 							
 						}
@@ -139,18 +215,20 @@ public class LandingPage implements EntryPoint {
 			}
 		};
 		
-		Element elem = DOM.getElementById("linkProfiler");
-		DOM.sinkEvents(elem, Event.ONCLICK);
-		DOM.setEventListener(elem, eventProfiler);
-		Element elem1 = DOM.getElementById("linkSupport");
-		DOM.sinkEvents(elem1, Event.ONCLICK);
-		DOM.setEventListener(elem1, eventSupport);
-		Element elem2 = DOM.getElementById("linkLogin");
-		DOM.sinkEvents(elem2, Event.ONCLICK);
-		DOM.setEventListener(elem2, eventLogin);
-		Element elem3 = DOM.getElementById("linkRegister");
-		DOM.sinkEvents(elem3, Event.ONCLICK);
-		DOM.setEventListener(elem3, eventRegister);
+
+			Element elem = DOM.getElementById("linkProfiler");
+			DOM.sinkEvents(elem, Event.ONCLICK);
+			DOM.setEventListener(elem, eventProfiler);
+			Element elem1 = DOM.getElementById("linkSupport");
+			DOM.sinkEvents(elem1, Event.ONCLICK);
+			DOM.setEventListener(elem1, eventSupport);
+			Element elem2 = DOM.getElementById("linkLogin");
+			DOM.sinkEvents(elem2, Event.ONCLICK);
+			DOM.setEventListener(elem2, eventLogin);
+			Element elem3 = DOM.getElementById("linkRegister");
+			DOM.sinkEvents(elem3, Event.ONCLICK);
+			DOM.setEventListener(elem3, eventRegister);
+		
 		
 		AsyncCallback<Boolean> callbackLogout = new AsyncCallback<Boolean>() {
 
@@ -174,8 +252,10 @@ public class LandingPage implements EntryPoint {
 		} else if(page != null && page.equals("logout")){
 			InminddServiceSvc.unsetUserConnected(callbackLogout);
 		} else {
-			DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-			DOM.getElementById("indexPanel").setAttribute("style", "");
+
+				DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+				DOM.getElementById("indexPanel").setAttribute("style", "");
+
 		}
 	}
 
@@ -245,11 +325,12 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
-		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
-		DOM.getElementById("twit-widget").setAttribute("data-widget-id",constants.twitter_id());
-		DOM.getElementById("twit-widget").setAttribute("href", constants.twitterLink());
-		DOM.getElementById("twit-widget").setInnerHTML(constants.twitterTitle());
+		
+		
+		
+		
+
 		
 		
 		

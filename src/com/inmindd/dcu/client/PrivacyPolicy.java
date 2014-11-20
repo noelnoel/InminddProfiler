@@ -13,8 +13,8 @@ public class PrivacyPolicy implements EntryPoint
 
 	private InminddServiceAsync InminddServiceSvc;
 	private User user;
-	static InminddConstants constants = 
-			   (InminddConstants)GWT.create(InminddConstants.class);
+	private InminddConstants constants;
+			   
 	
 	@Override
 	public void onModuleLoad()
@@ -43,7 +43,7 @@ public class PrivacyPolicy implements EntryPoint
 				// TODO print error
 			}
 		};
-
+		
 		InminddServiceSvc.getUserConnected(callback);
 	}
 	
@@ -63,13 +63,13 @@ public class PrivacyPolicy implements EntryPoint
 		String moduleRelativeURL = GWT.getModuleBaseURL() + "Inmindd";
 		target.setServiceEntryPoint(moduleRelativeURL);
 		return true;
-
 	}
 
 	
 	
 	private void globalise()
 	{
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		//General Stuff
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
@@ -80,14 +80,9 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
-		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
-		DOM.getElementById("menu-contact").setInnerHTML(constants.menu_contact());
-		DOM.getElementById("landing-loading").setInnerHTML(constants.landing_loading());
-		DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
-		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
-		DOM.getElementById("rmw").setInnerHTML(constants.rmw());
+
 		
 		DOM.getElementById("landing-index-2").setInnerHTML(constants.trial_id());
 		DOM.getElementById("trial_website").setInnerHTML(constants.trial_website());
@@ -109,6 +104,8 @@ public class PrivacyPolicy implements EntryPoint
 		
 		DOM.getElementById("privacy_signoff").setInnerHTML(constants.privacy_signoff());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		
+		DOM.getElementById("landing-index-1").setInnerHTML(constants.privacy_policy());
 		
 		
 	}

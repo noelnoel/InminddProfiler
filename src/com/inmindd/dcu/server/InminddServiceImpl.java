@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
@@ -47,6 +48,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+
 
 
 
@@ -104,7 +107,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt = conn.prepareStatement("SELECT * FROM inmindd.user where userId = ?;");
 			pstmt.setString(1, idUser);
 			result = pstmt.executeQuery();
 			
@@ -1928,9 +1931,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public RiskFactorScore getLibraScore(User user) 
 	{
 		//open database connection
+		initDBConnection();
 		RiskFactorScore score = new RiskFactorScore();
 		CalculateScore calcScore = new CalculateScore();
-		calcScore.calcScore(score, user);
+		calcScore.calcScore(score, user, conn);
 		return  score;
 	}
 	
@@ -1982,17 +1986,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
-			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			     // String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			     String url = "jdbc:google:mysql://inmindd-v3:staging?user=root";
 			      conn = DriverManager.getConnection(url);
+			      Statement db = conn.createStatement();
+			      db.execute("use inmindd;");
 		      } 
 		      else 
 		      {  
 		    	  //running application locally in development mode 
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
-		    	  String userName = "javaPrograms"; //was root
-		    	  String password = "sql"; //was noknoknok
+		    	  String userName = "root"; //was root
+		    	  String password = "inminddtest"; //was noknoknok
 		    	  
 		    	  try 
 		    	  {
@@ -2766,7 +2773,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Boolean userHasEmail(String userId)
 	{
 		initDBConnection();
-		String updateStat = "SELECT * FROM USER_MAIl WHERE userId=?";
+		String updateStat = "SELECT * FROM USER_MAIL WHERE userId=?";
 		PreparedStatement prep;
 		try
 		{
@@ -3046,7 +3053,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public int getRandomizedGroupForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT randomised_group FROM USER WHERE userID=?;";
+		String selStatement = "SELECT randomised_group FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -3094,7 +3101,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT timestamp FROM USER WHERE userID=?;";
+		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{

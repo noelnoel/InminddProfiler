@@ -3,6 +3,7 @@ package com.inmindd.dcu.server;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,7 @@ public class EmailCron extends HttpServlet
 					String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
 					for(EmailDetails email:emailList)
 					{
+						_logger.log(Level.INFO, "Sent emial to: "+unencryptEmail);
 						SendMail.sendMail(unencryptEmail, email.getMessageBody(), email.getSubject());
 					}
 					impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSentEmail()+1);

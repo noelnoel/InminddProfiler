@@ -468,6 +468,12 @@ public class Admin implements EntryPoint {
 		DOM.getElementById("del_email_conf").setInnerHTML(constants.del_email_conf());
 		DOM.getElementById("okButton").setAttribute("value", constants.delOK());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		
+		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
+		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
+		
+		
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 
