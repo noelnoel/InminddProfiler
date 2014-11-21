@@ -127,6 +127,7 @@ public class FAQ implements EntryPoint {
 		DOM.getElementById("landing-loading").setInnerHTML(constants.landing_loading());
 		
 		DOM.getElementById("faqh1").setInnerHTML(constants.faq());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 }

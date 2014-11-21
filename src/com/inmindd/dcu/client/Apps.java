@@ -108,8 +108,7 @@ public class Apps implements EntryPoint {
 	}
 	
 	private void globalize(){
-		constants = 
-				   (InminddConstants)GWT.create(InminddConstants.class);
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
@@ -127,6 +126,7 @@ public class Apps implements EntryPoint {
 		
 		DOM.getElementById("apps1").setInnerHTML(constants.apps1());
 		DOM.getElementById("apps2").setInnerHTML(constants.apps2());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 }
