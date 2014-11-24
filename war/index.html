@@ -75,6 +75,28 @@
 
         </script>
         <!-- End Google Analytics -->
+        
+                <!-- script references -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+         <script src="cookiesdirective.js"></script>
+        <!--  This website uses cookies message -->
+        <script type="text/javascript">
+        	window.cookieCont = function(){
+        		console.log("Starting cookie script");
+        		console.log($('#cookie_message').text());
+        		$.cookiesDirective(
+        				{
+        					privacyPolicyUri:'privacyPolicy.html',
+        					scriptWrapper:cookieController,
+        					explicitConsent: false,
+        					backgroundColor: '#52B54A',
+        					linkColor: '#ffffff',
+        					position:'bottom',
+        					backgroundOpacity: '95',
+        					message: $('#cookie_message').text()
+        				});	
+        	}
+        </script>
     </head>
     <body class="tundra">
         <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -275,35 +297,8 @@
             
             
         </div>
-        <!-- script references -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="cookiesdirective.js"></script>
-        <!--  This website uses cookies message -->
-        <script type="text/javascript">
-        	$(document).ready(function(){
-        		console.log("Starting cookie script");
-        		function cookieController() {
-                    // Cookie setting scripts in here
-        			
-                }   
-        		$.cookiesDirective(
-        				{
-        					privacyPolicyUri:'privacyPolicy.html',
-        					scriptWrapper:cookieController,
-        					explicitConsent: false,
-        					backgroundColor: '#52B54A',
-        					linkColor: '#ffffff',
-        					position:'bottom',
-        					backgroundOpacity: '95',
-        					message: $('#cookie_message').text()
-        				});
-        		
-        		
-        		
-        	});
-        
-        	
-        </script>
+
+      
         
         
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -315,13 +310,25 @@
                 console.info(sender.target.alt);
                 document.cookie="gwtLocale="+sender.target.alt.toLowerCase();
                 location.reload();
+                $.cookiesDirective(
+        				{
+        					privacyPolicyUri:'privacyPolicy.html',
+        					scriptWrapper:cookieController,
+        					explicitConsent: false,
+        					backgroundColor: '#52B54A',
+        					linkColor: '#ffffff',
+        					position:'bottom',
+        					backgroundOpacity: '95',
+        					message: $('#cookie_message').text()
+        				});
+                
             }
 
             $(document).ready(function(){
                 $(document).on("click","img.flag", changeFlag);
             });
         </script>
-        
+         
         
     </body>
 </html>

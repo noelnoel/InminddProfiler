@@ -4,7 +4,7 @@ var $gwt_version = "2.6.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = '2441395EE813FB979CE2533B774CDA6A';
+var $strongName = '16A5EE2E2B57F5CBDDBCE5A63F50497E';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'PrivacyPolicy',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -1720,6 +1720,7 @@ function $globalise(){
   $setInnerHTML($doc.getElementById('menu-support-experts'), 'Ask the Experts');
   $setInnerHTML($doc.getElementById('menu-support-faq'), 'FAQs');
   $setInnerHTML($doc.getElementById('menu-support-blog'), 'In-MINDD Blog');
+  $doc.getElementById('menu-support-blog').setAttribute('href', 'https://inmindd-blog.appspot.com/wp-login.php?lang=nl');
   $setInnerHTML($doc.getElementById('menu-support-goals'), 'Your Goals');
   $setInnerHTML($doc.getElementById('menu-support-logout'), 'Logout');
   $setInnerHTML($doc.getElementById('menu-support-apps'), 'Useful Apps');
@@ -2475,6 +2476,8 @@ function setCes18(instance, value_0){
   instance.ces18 = value_0;
 }
 
+--></script>
+<script><!--
 function setCes19(instance, value_0){
   instance.ces19 = value_0;
 }
@@ -2483,8 +2486,6 @@ function setCes2(instance, value_0){
   instance.ces2 = value_0;
 }
 
---></script>
-<script><!--
 function setCes20(instance, value_0){
   instance.ces20 = value_0;
 }
@@ -3558,9 +3559,9 @@ function NullPointerException_1(message){
   RuntimeException_1.call(this, message);
 }
 
-defineSeed(151, 6, makeCastMap([Q$Serializable, Q$Throwable]), NullPointerException_0, NullPointerException_1);
 --></script>
 <script><!--
+defineSeed(151, 6, makeCastMap([Q$Serializable, Q$Throwable]), NullPointerException_0, NullPointerException_1);
 function $clinit_Number$__Digits(){
   $clinit_Number$__Digits = nullMethod;
   digits_0 = initValues(_3C_classLit, makeCastMap([Q$Serializable]), -1, [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]);

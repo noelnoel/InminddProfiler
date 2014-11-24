@@ -4,7 +4,7 @@ var $gwt_version = "2.6.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = 'AF04730932B80E176D3CFB7C4B80988A';
+var $strongName = '68A335791A6C6ADA29096BFF59095403';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'PrivacyPolicy',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -1845,6 +1845,7 @@ function $globalise(){
   $setInnerHTML($doc.getElementById('menu-support-experts'), 'Demandez aux experts');
   $setInnerHTML($doc.getElementById('menu-support-faq'), 'FAQ');
   $setInnerHTML($doc.getElementById('menu-support-blog'), 'Blog In-MINDD ');
+  $doc.getElementById('menu-support-blog').setAttribute('href', 'https://inmindd-blog.appspot.com/wp-login.php?lang=fr');
   $setInnerHTML($doc.getElementById('menu-support-goals'), 'Vos objectifs');
   $setInnerHTML($doc.getElementById('menu-support-logout'), 'Deconnexion');
   $setInnerHTML($doc.getElementById('menu-support-apps'), 'Applications utiles');

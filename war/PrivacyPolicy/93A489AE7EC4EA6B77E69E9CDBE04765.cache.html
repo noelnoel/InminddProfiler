@@ -4,7 +4,7 @@ var $gwt_version = "2.6.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = '88B8F93D34BF7F1350FE549ED22FB30A';
+var $strongName = '93A489AE7EC4EA6B77E69E9CDBE04765';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'PrivacyPolicy',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -147,7 +147,7 @@ function JavaScriptException_0(e){
   this.description = '';
   this.e = e;
   this.description = '';
-  $createStackTrace(this);
+  $createStackTrace();
 }
 
 function getExceptionDescription0(e){
@@ -353,14 +353,32 @@ function extractNameFromToString(fnToString){
   return toReturn.length > 0?toReturn:'anonymous';
 }
 
-function splice(arr, length_0){
-  arr.length >= length_0 && arr.splice(0, length_0);
-  return arr;
+function $collect(this$static){
+  var seen = {};
+  var toReturn = [];
+  var callee = arguments.callee.caller.caller;
+  while (callee) {
+    var name_0 = this$static.extractName(callee.toString());
+    toReturn.push(name_0);
+    var keyName = ':' + name_0;
+    var withThisName = seen[keyName];
+    if (withThisName) {
+      var i, j;
+      for (i = 0 , j = withThisName.length; i < j; i++) {
+        if (withThisName[i] === callee) {
+          return toReturn;
+        }
+      }
+    }
+    (withThisName || (seen[keyName] = [])).push(callee);
+    callee = callee.caller;
+  }
+  return toReturn;
 }
 
-function $createStackTrace(e){
+function $createStackTrace(){
   var i, j, stack_0, stackTrace;
-  stack_0 = $inferFrom(e.e === ($clinit_JavaScriptException() , NOT_SET)?null:e.e);
+  stack_0 = [];
   stackTrace = initDim(_3Ljava_lang_StackTraceElement_2_classLit, makeCastMap([Q$Serializable]), Q$StackTraceElement, stack_0.length, 0);
   for (i = 0 , j = stackTrace.length; i < j; i++) {
     stackTrace[i] = new StackTraceElement_0(stack_0[i]);
@@ -370,7 +388,7 @@ function $createStackTrace(e){
 
 function $fillInStackTrace(){
   var i, j, stack_0, stackTrace;
-  stack_0 = splice($inferFrom($makeException()), 2);
+  stack_0 = $collect(new StackTraceCreator$Collector_0);
   stackTrace = initDim(_3Ljava_lang_StackTraceElement_2_classLit, makeCastMap([Q$Serializable]), Q$StackTraceElement, stack_0.length, 0);
   for (i = 0 , j = stackTrace.length; i < j; i++) {
     stackTrace[i] = new StackTraceElement_0(stack_0[i]);
@@ -397,26 +415,15 @@ function $getProperties(e){
   return result;
 }
 
-function $makeException(){
-  try {
-    null.a();
-  }
-   catch (e) {
-    return e;
-  }
+function StackTraceCreator$Collector_0(){
 }
 
-function $inferFrom(e){
-  var i, j, jso, stack_0;
-  jso = instanceOfJso(e)?dynamicCastJso(e):null;
-  stack_0 = jso && jso.stack?jso.stack.split('\n'):[];
-  for (i = 0 , j = stack_0.length; i < j; i++) {
-    stack_0[i] = extractNameFromToString(stack_0[i]);
-  }
-  return stack_0;
+defineSeed(17, 1, {}, StackTraceCreator$Collector_0);
+_.extractName = function extractName(fnToString){
+  return extractNameFromToString(fnToString);
 }
-
-defineSeed(19, 1, {});
+;
+defineSeed(18, 1, {});
 function $append(this$static, x_0){
   this$static.string += x_0;
 }
@@ -424,7 +431,7 @@ function $append(this$static, x_0){
 function StringBufferImplAppend_0(){
 }
 
-defineSeed(20, 19, {}, StringBufferImplAppend_0);
+defineSeed(19, 18, {}, StringBufferImplAppend_0);
 _.string = '';
 function clearTimeout0(timerId){
   $wnd.clearTimeout(timerId);
@@ -785,7 +792,7 @@ function init(){
   var runtimeValue;
   isStatsAvailable() && onModuleStart('com.google.gwt.useragent.client.UserAgentAsserter');
   runtimeValue = $getRuntimeValue();
-  $equals('gecko1_8', runtimeValue) || ($wnd.alert('ERROR: Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (gecko1_8) does not match the runtime user.agent value (' + runtimeValue + '). Expect more errors.\n') , undefined);
+  $equals('ie10', runtimeValue) || ($wnd.alert('ERROR: Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (ie10) does not match the runtime user.agent value (' + runtimeValue + '). Expect more errors.\n') , undefined);
   isStatsAvailable() && onModuleStart('com.google.gwt.user.client.DocumentModeAsserter');
   $onModuleLoad();
   isStatsAvailable() && onModuleStart('com.inmindd.dcu.client.PrivacyPolicy');
@@ -833,7 +840,7 @@ function onModuleStart(mainClassName){
 
 function $clinit_DOM(){
   $clinit_DOM = nullMethod;
-  $clinit_DOMImplMozilla();
+  $clinit_DOMImplStandard();
 }
 
 var currentEvent = null, sCaptureElem;
@@ -855,24 +862,6 @@ function assign(newURL){
 
 function $clinit_DOMImplStandard(){
   $clinit_DOMImplStandard = nullMethod;
-  captureEventDispatchers = {click:dispatchCapturedMouseEvent, dblclick:dispatchCapturedMouseEvent, mousedown:dispatchCapturedMouseEvent, mouseup:dispatchCapturedMouseEvent, mousemove:dispatchCapturedMouseEvent, mouseover:dispatchCapturedMouseEvent, mouseout:dispatchCapturedMouseEvent, mousewheel:dispatchCapturedMouseEvent, keydown:dispatchCapturedEvent, keyup:dispatchCapturedEvent, keypress:dispatchCapturedEvent, touchstart:dispatchCapturedMouseEvent, touchend:dispatchCapturedMouseEvent, touchmove:dispatchCapturedMouseEvent, touchcancel:dispatchCapturedMouseEvent, gesturestart:dispatchCapturedMouseEvent, gestureend:dispatchCapturedMouseEvent, gesturechange:dispatchCapturedMouseEvent};
-}
-
-function dispatchCapturedEvent(evt){
-  $clinit_DOM();
-}
-
-function dispatchCapturedMouseEvent(evt){
-  $clinit_DOMImplStandard();
-  $clinit_DOM();
-  return;
-}
-
-var captureEventDispatchers;
-function $clinit_DOMImplMozilla(){
-  $clinit_DOMImplMozilla = nullMethod;
-  $clinit_DOMImplStandard();
-  captureEventDispatchers['DOMMouseScroll'] = dispatchCapturedMouseEvent;
 }
 
 function IncompatibleRemoteServiceException_0(){
@@ -887,7 +876,7 @@ function IncompatibleRemoteServiceException_2(cause){
   RuntimeException_2.call(this, 'The response could not be deserialized', cause);
 }
 
-defineSeed(58, 6, makeCastMap([Q$Serializable, Q$Throwable]), IncompatibleRemoteServiceException_0, IncompatibleRemoteServiceException_1, IncompatibleRemoteServiceException_2);
+defineSeed(57, 6, makeCastMap([Q$Serializable, Q$Throwable]), IncompatibleRemoteServiceException_0, IncompatibleRemoteServiceException_1, IncompatibleRemoteServiceException_2);
 function deserialize(streamReader, instance){
   setDetailMessage(instance, $getString(streamReader, $readInt(streamReader)));
 }
@@ -908,7 +897,7 @@ function InvocationException_1(s, cause){
   RuntimeException_2.call(this, s, cause);
 }
 
-defineSeed(60, 6, makeCastMap([Q$Serializable, Q$Throwable]), InvocationException_0, InvocationException_1);
+defineSeed(59, 6, makeCastMap([Q$Serializable, Q$Throwable]), InvocationException_0, InvocationException_1);
 function $create(this$static, serviceEntryPoint){
   this$static.builder = new RequestBuilder_0(($clinit_RequestBuilder() , POST), serviceEntryPoint);
   return this$static;
@@ -951,12 +940,12 @@ function $setRequestData(this$static, data_0){
 function RpcRequestBuilder_0(){
 }
 
-defineSeed(61, 1, {}, RpcRequestBuilder_0);
+defineSeed(60, 1, {}, RpcRequestBuilder_0);
 function RpcTokenException_0(){
   RuntimeException_1.call(this, 'Invalid RPC token');
 }
 
-defineSeed(62, 6, makeCastMap([Q$Serializable, Q$Throwable]), RpcTokenException_0);
+defineSeed(61, 6, makeCastMap([Q$Serializable, Q$Throwable]), RpcTokenException_0);
 function deserialize_0(streamReader, instance){
   setDetailMessage(instance, $getString(streamReader, $readInt(streamReader)));
 }
@@ -969,17 +958,17 @@ function SerializationException_0(msg){
   Exception_0.call(this, msg);
 }
 
-defineSeed(64, 7, makeCastMap([Q$SerializationException, Q$Serializable, Q$Throwable]), SerializationException_0);
+defineSeed(63, 7, makeCastMap([Q$SerializationException, Q$Serializable, Q$Throwable]), SerializationException_0);
 function ServiceDefTarget$NoServiceEntryPointSpecifiedException_0(){
   InvocationException_0.call(this, 'Service implementation URL not specified');
 }
 
-defineSeed(65, 60, makeCastMap([Q$Serializable, Q$Throwable]), ServiceDefTarget$NoServiceEntryPointSpecifiedException_0);
+defineSeed(64, 59, makeCastMap([Q$Serializable, Q$Throwable]), ServiceDefTarget$NoServiceEntryPointSpecifiedException_0);
 function StatusCodeException_0(statusCode, statusText, encodedResponse){
   InvocationException_0.call(this, statusCode + ' ' + statusText + ' ' + encodedResponse);
 }
 
-defineSeed(66, 60, makeCastMap([Q$Serializable, Q$Throwable]), StatusCodeException_0);
+defineSeed(65, 59, makeCastMap([Q$Serializable, Q$Throwable]), StatusCodeException_0);
 function serialize_0(streamWriter, instance){
   $writeString(streamWriter, instance.nullField);
 }
@@ -1022,8 +1011,6 @@ function setDetailMessage(instance, value_0){
   instance.detailMessage = value_0;
 }
 
---></script>
-<script><!--
 function deserialize_5(streamReader, instance){
   deserialize_6(streamReader, instance);
 }
@@ -1049,9 +1036,11 @@ function $setVersion(this$static, version){
   this$static.version = version;
 }
 
-defineSeed(76, 1, {});
+defineSeed(75, 1, {});
 _.flags = 0;
 _.version = 7;
+--></script>
+<script><!--
 function $readObject(this$static){
   var token, typeSignature, id_0, instance;
   token = $readInt(this$static);
@@ -1065,7 +1054,7 @@ function $readObject(this$static){
   return id_0 = ($add_0(this$static.seenArray, null) , this$static.seenArray.size_0) , instance = $instantiate(this$static.serializer, this$static, typeSignature) , $set(this$static.seenArray, id_0 - 1, instance) , $deserialize(this$static.serializer, this$static, instance, typeSignature) , instance;
 }
 
-defineSeed(77, 76, {});
+defineSeed(76, 75, {});
 function $addString(this$static, string){
   var index_0, o;
   if (string == null) {
@@ -1113,7 +1102,7 @@ function $writeString(this$static, value_0){
   $writeInt(this$static, $addString(this$static, value_0));
 }
 
-defineSeed(78, 76, {});
+defineSeed(77, 75, {});
 _.objectCount = 0;
 function $getString(this$static, index_0){
   return index_0 > 0?this$static.stringTable[index_0 - 1]:null;
@@ -1147,7 +1136,7 @@ function ClientSerializationStreamReader_0(serializer){
   this.serializer = serializer;
 }
 
-defineSeed(79, 77, {}, ClientSerializationStreamReader_0);
+defineSeed(78, 76, {}, ClientSerializationStreamReader_0);
 _.index_0 = 0;
 function $clinit_ClientSerializationStreamWriter(){
   $clinit_ClientSerializationStreamWriter = nullMethod;
@@ -1233,7 +1222,7 @@ function quoteString(str){
   return out + str.substring(idx);
 }
 
-defineSeed(80, 78, {}, ClientSerializationStreamWriter_0);
+defineSeed(79, 77, {}, ClientSerializationStreamWriter_0);
 _.toString$ = function toString_3(){
   return $toString(this);
 }
@@ -1295,7 +1284,7 @@ function getEncodedInstance(encodedResponse){
   return encodedResponse;
 }
 
-defineSeed(81, 1, {});
+defineSeed(80, 1, {});
 function $finish_0(this$static, callback){
   var payload;
   payload = $toString(this$static.streamWriter);
@@ -1310,7 +1299,7 @@ function RemoteServiceProxy$ServiceHelper_0(this$0){
   this.statsContext = new RpcStatsContext_0;
 }
 
-defineSeed(82, 1, {}, RemoteServiceProxy$ServiceHelper_0);
+defineSeed(81, 1, {}, RemoteServiceProxy$ServiceHelper_0);
 function $onResponseReceived(this$static, response){
   var caught, e, encodedResponse, result, statusCode;
   result = null;
@@ -1352,8 +1341,8 @@ function RequestCallbackAdapter_0(streamFactory, methodName, statsContext, callb
   this.statsContext = statsContext;
 }
 
-defineSeed(83, 1, {}, RequestCallbackAdapter_0);
-defineSeed(85, 1, makeCastMap([Q$Serializable, Q$Comparable, Q$Enum]));
+defineSeed(82, 1, {}, RequestCallbackAdapter_0);
+defineSeed(84, 1, makeCastMap([Q$Serializable, Q$Comparable, Q$Enum]));
 _.equals$ = function equals_0(other){
   return this === other;
 }
@@ -1391,63 +1380,63 @@ function values(){
   return $VALUES;
 }
 
-defineSeed(84, 85, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]));
+defineSeed(83, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]));
 var $VALUES, BOOLEAN, BYTE, CHAR, DOUBLE, FLOAT, INT, LONG, OBJECT, SHORT, STRING, VOID;
 function RequestCallbackAdapter$ResponseReader$1_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'BOOLEAN');
 }
 
-defineSeed(86, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$1_0);
+defineSeed(85, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$1_0);
 function RequestCallbackAdapter$ResponseReader$10_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'STRING');
 }
 
-defineSeed(87, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$10_0);
+defineSeed(86, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$10_0);
 function RequestCallbackAdapter$ResponseReader$11_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'VOID');
 }
 
-defineSeed(88, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$11_0);
+defineSeed(87, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$11_0);
 function RequestCallbackAdapter$ResponseReader$2_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'BYTE');
 }
 
-defineSeed(89, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$2_0);
+defineSeed(88, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$2_0);
 function RequestCallbackAdapter$ResponseReader$3_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'CHAR');
 }
 
-defineSeed(90, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$3_0);
+defineSeed(89, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$3_0);
 function RequestCallbackAdapter$ResponseReader$4_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'DOUBLE');
 }
 
-defineSeed(91, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$4_0);
+defineSeed(90, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$4_0);
 function RequestCallbackAdapter$ResponseReader$5_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'FLOAT');
 }
 
-defineSeed(92, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$5_0);
+defineSeed(91, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$5_0);
 function RequestCallbackAdapter$ResponseReader$6_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'INT');
 }
 
-defineSeed(93, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$6_0);
+defineSeed(92, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$6_0);
 function RequestCallbackAdapter$ResponseReader$7_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'LONG');
 }
 
-defineSeed(94, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$7_0);
+defineSeed(93, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$7_0);
 function RequestCallbackAdapter$ResponseReader$8_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'OBJECT');
 }
 
-defineSeed(95, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$8_0);
+defineSeed(94, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$8_0);
 function RequestCallbackAdapter$ResponseReader$9_0(){
   RequestCallbackAdapter$ResponseReader_0.call(this, 'SHORT');
 }
 
-defineSeed(96, 84, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$9_0);
+defineSeed(95, 83, makeCastMap([Q$RequestCallbackAdapter$ResponseReader, Q$Serializable, Q$Comparable, Q$Enum]), RequestCallbackAdapter$ResponseReader$9_0);
 function $bytesStat(this$static, method, bytes, eventType){
   var stat = this$static.timeStat(method, eventType);
   stat.bytes = bytes;
@@ -1474,7 +1463,7 @@ function RpcStatsContext_1(requestId){
   this.requestId = requestId;
 }
 
-defineSeed(97, 1, {}, RpcStatsContext_0);
+defineSeed(96, 1, {}, RpcStatsContext_0);
 _.timeStat = function timeStat(method, eventType){
   return $timeStat(this, method, eventType);
 }
@@ -1512,7 +1501,7 @@ function SerializerBase_0(methodMapNative, signatureMapNative){
   this.signatureMapNative = signatureMapNative;
 }
 
-defineSeed(98, 1, {});
+defineSeed(97, 1, {});
 function $deserialize_0(this$static, stream, instance, signature){
   this$static[signature][1](stream, instance);
 }
@@ -1635,7 +1624,7 @@ function InminddService_Proxy_0(){
   RemoteServiceProxy_0.call(this, getModuleBaseURL(), SERIALIZER);
 }
 
-defineSeed(103, 81, {}, InminddService_Proxy_0);
+defineSeed(102, 80, {}, InminddService_Proxy_0);
 var SERIALIZER;
 function $clinit_InminddService_TypeSerializer(){
   $clinit_InminddService_TypeSerializer = nullMethod;
@@ -1708,42 +1697,43 @@ function loadSignaturesNative(){
   return result;
 }
 
-defineSeed(104, 98, {}, InminddService_TypeSerializer_0);
+defineSeed(103, 97, {}, InminddService_TypeSerializer_0);
 var methodMapNative_0, signatureMapNative_0;
 --></script>
 <script><!--
 function $globalise(){
-  $setInnerHTML(($clinit_DOM() , $clinit_DOM() , $doc.getElementById('menu-home')), 'Accueil');
-  $setInnerHTML($doc.getElementById('menu-profiler'), 'Profileur In-MINDD');
-  $setInnerHTML($doc.getElementById('menu-support'), 'Environnement de soutien In-MINDD');
-  $setInnerHTML($doc.getElementById('menu-support-profile'), 'Votre profil de sant\xE9');
-  $setInnerHTML($doc.getElementById('menu-support-experts'), 'Demandez aux experts');
-  $setInnerHTML($doc.getElementById('menu-support-faq'), 'FAQ');
-  $setInnerHTML($doc.getElementById('menu-support-blog'), 'Blog In-MINDD ');
-  $setInnerHTML($doc.getElementById('menu-support-goals'), 'Vos objectifs');
-  $setInnerHTML($doc.getElementById('menu-support-logout'), 'Deconnexion');
-  $setInnerHTML($doc.getElementById('menu-support-apps'), 'Applications utiles');
-  $setInnerHTML($doc.getElementById('menu-inmindd'), 'Site Internet In-MINDD');
-  $setInnerHTML($doc.getElementById('landing-index-2'), "Site web de l'\xE9tude In-MINDD");
-  $setInnerHTML($doc.getElementById('trial_website'), "Le projet In-MINDD a \xE9t\xE9 financ\xE9 par le Septi\xE8me Programme-Cadre de l'Union Europ\xE9enne pour la recherche, le d\xE9veloppement technologique et la d\xE9monstration, sous la convention de subvention No. 304979. Cette d\xE9claration concerne les pratiques en mati\xE8re de confidentialit\xE9 du site web de l'\xE9tude In-MINDD \u2013 http://indmindd-profiler.appspot.com/ - d\xE9velopp\xE9 au sein de ce projet.<br/>Le site web de l'\xE9tude In-MINDD contient des liens vers des sites web externes. L'\xE9quipe In-MINDD n'est pas responsable du contenu ou des pratiques de confidentialit\xE9 des autres sites web. Tout lien vers un site web externe est clairement identifi\xE9 comme tel. ");
-  $setInnerHTML($doc.getElementById('gen_statement'), 'D\xE9claration g\xE9n\xE9rale');
-  $setInnerHTML($doc.getElementById('gen_statement_text'), "L'\xE9quipe In-MINDD respecte pleinement votre droit &agrave; la confidentialit\xE9, et ne collectera aucune information personnelle sur son site web sans votre autorisation \xE9clair\xE9e. Toute information personnelle que vous transmettrez volontairement &agrave; l'\xE9quipe de recherche In-MINDD sera trait\xE9e avec les plus hauts standards de s\xE9curit\xE9 et de confidentialit\xE9, en accord strict avec les lois informatique et libertes. Cette loi est en concordance avec la directive europ\xE9enne de protection des donn\xE9es 95/46/EC.");
-  $setInnerHTML($doc.getElementById('collect_statement'), 'Recueil et utilisation des informations personnelles');
-  $setInnerHTML($doc.getElementById('collect_statement_text'), "L'\xE9quipe de recherche In-MINDD ne collecte aucune donn\xE9e personnelle vous concernant sur son site web, en dehors des informations que vous nous transmettez volontairement (par exemple, en compl\xE9tant le profileur en ligne In-MINDD). Toute information que vous nous communiquez de cette fa&ccedil;on n'est rendue disponible &agrave; aucun des partenaires, et n'est utilis\xE9e par l'\xE9quipe de recherche In-MINDD qu'en accord avec la raison pour laquelle vous l'avez fourni. Toute donn\xE9e personnelle sera anonymis\xE9e et ne sera utilis\xE9e que dans un but statistique.<br/>Certaines pages de ce site vous offre l'option de poser des questions par e-mail, ou de soumettre un commentaire. Ces informations ne seront enregistr\xE9es que si vous choisissez de nous envoyer un message, et ne seront utilis\xE9es que dans le but pour lequel vous les avez envoy\xE9es.");
+  $setInnerHTML(($clinit_DOM() , $clinit_DOM() , $doc.getElementById('menu-home')), 'Home');
+  $setInnerHTML($doc.getElementById('menu-profiler'), 'In-MINDD profielafname');
+  $setInnerHTML($doc.getElementById('menu-support'), 'In-MINDD ondersteuningspagina');
+  $setInnerHTML($doc.getElementById('menu-support-profile'), 'Uw LIBRA-profiel');
+  $setInnerHTML($doc.getElementById('menu-support-experts'), 'Vraag het een deskundige');
+  $setInnerHTML($doc.getElementById('menu-support-faq'), 'Veelgestelde vragen');
+  $setInnerHTML($doc.getElementById('menu-support-blog'), 'In-MINDD Blog');
+  $doc.getElementById('menu-support-blog').setAttribute('href', 'https://inmindd-blog.appspot.com/wp-login.php?lang=nl');
+  $setInnerHTML($doc.getElementById('menu-support-goals'), 'Uw doelen');
+  $setInnerHTML($doc.getElementById('menu-support-logout'), 'Uitloggen');
+  $setInnerHTML($doc.getElementById('menu-support-apps'), 'Bruikbare Apps');
+  $setInnerHTML($doc.getElementById('menu-inmindd'), 'In-MINDD website');
+  $setInnerHTML($doc.getElementById('landing-index-2'), 'In-MINDD-website  ');
+  $setInnerHTML($doc.getElementById('trial_website'), 'Het In-MINDD-project wordt gefinancierd door het Zevende Kaderprogramma van de Europese Unie voor activiteiten op het gebied van onderzoek, technologische ontwikkeling en demonstratie onder subsidienummer 304979. Deze verklaring heeft betrekking op het privacybeleid voor de website van het In-MINDD-onderzoek, http://inmindd-profiler.appspot.com/, die is opgezet als onderdeel van het project. <br/>Op de website van het In-MIND-onderzoek staan diverse links naar andere, externe websites. Het In-MINDD-team is niet verantwoordelijk voor de inhoud en het privacybeleid van deze websites. Op de In-MIND-website wordt duidelijk aangegeven welke links naar externe websites verwijzen.  ');
+  $setInnerHTML($doc.getElementById('gen_statement'), 'Algemene verklaring');
+  $setInnerHTML($doc.getElementById('gen_statement_text'), 'Het In-MINDD-team respecteert uw recht op privacy en zal geen persoonlijke informatie over u verzamelen via de website zonder uw toestemming. Alle persoonlijke gegevens die u vrijwillig aan het onderzoekteam van In-MINDD verstrekt, zullen uiterst vertrouwelijk worden behandeld in overeenstemming met de Wet bescherming persoonsgegevens ((bp). Deze wet is in lijn met de Europese Dataprotectierichtlijn 95/46/EC.');
+  $setInnerHTML($doc.getElementById('collect_statement'), 'Verzamelen en gebruik van persoonlijke gegevens ');
+  $setInnerHTML($doc.getElementById('collect_statement_text'), "Het onderzoeksteamteam van In-MINDD verzamelt geen persoonlijke gegevens via de website, behalve informatie die u vrijwillig verstrekt (bijvoorbeeld de gegevens die u invult tijdens de online profielafname). Deze gegevens worden niet aan derden ter beschikking gesteld en worden door het onderzoeksteam uitsluitend gebruikt in het kader van het In-MINDD-project. Alle persoonlijke gegevens die u verstrekt worden geanonimiseerd en mogen alleen voor statistische doeleinden worden gebruikt.<br/>Op een aantal pagina's van de website kunt u per e-mail vragen stellen of een opmerking plaatsen. Deze informatie zal alleen worden opgeslagen als u ons mailt en zal alleen worden gebruikt voor het doel waarvoor u ons benadert.");
   $setInnerHTML($doc.getElementById('request_stat'), 'Requests regarding data supplied via this website');
-  $setInnerHTML($doc.getElementById('request_statement_text'), "Nous pouvons fournir sur demande des copies de vos donn\xE9es personnelles que vous avez fournies via ce site web. Si vous souhaitez obtenir une de ces copies, vous pouvez contacter l'\xE9quipe de recherche In-MINDD (voir les d\xE9tails de contact ci-dessous). Si vous d\xE9couvrez que l'\xE9quipe In-MINDD d\xE9tient des informations inexactes vous concernant, vous pouvez demander &agrave; l'\xE9quipe de corriger ces informations. Une telle requ\xEAte doit \xEAtre formul\xE9e par \xE9crit ou par e-mail.<br/>Dans certaines circonstances, vous pouvez demander &agrave; ce que des donn\xE9es que vous avez fournies via le site web soient supprim\xE9es. Si vous souhaitez faire une telle requ\xEAte, vous devez g\xE9n\xE9ralement identifier une infraction aux lois de protection des donn\xE9es par rapport &agrave; la fa&ccedil;on dont l'\xE9quipe de recherche In-MINDD conserve et traite les donn\xE9es concern\xE9es.");
-  $setInnerHTML($doc.getElementById('complaints'), 'Plaintes concernant le traitement des donn\xE9es via le site web');
-  $setInnerHTML($doc.getElementById('complaints_text'), "Si vous \xEAtes inquiet &agrave; propos de la fa&ccedil;on dont les donn\xE9es personnelles sont trait\xE9es par ce site web, n'h\xE9sitez pas &agrave; en faire part &agrave; l'\xE9quipe de recherche In-MINDD (voir les d\xE9tails de contact ci-dessous).");
-  $setInnerHTML($doc.getElementById('collection_tech'), 'Recueil et utilisation des informations techniques');
-  $setInnerHTML($doc.getElementById('collection_tech_text'), "Lorsqu'une personne visite le site web de l'\xE9tude In-MINDD, des donn\xE9es de connexion internet standard et les d\xE9tails des sch\xE9mas de comportement des visiteurs sont collect\xE9s. Le site web de l'\xE9tude In-MINDD utilise des cookies. Les cookies sont de petits fichiers texte stock\xE9s sur votre ordinateur. Les cookies ne contiendront jamais d'information personnelle identifiable.<br/>Nous utilisons ces cookies pour recueillir et g\xE9rer des statistiques, telles que par exemple :");
-  $setInnerHTML($doc.getElementById('tech_stat_1'), "Si vous cr\xE9ez un compte avec le site web In-MINDD, nous utiliserons des cookies pour la gestion de la proc\xE9dure d'enregistrement et l'administration g\xE9n\xE9rale. Ces cookies seront g\xE9n\xE9ralement supprim\xE9s lorsque vous vous d\xE9connecterez. Cependant, dans certains ils sont susceptibles d'\xEAtre conserv\xE9s pour une courte p\xE9riode afin de m\xE9moriser vos pr\xE9f\xE9rences concernant le site.");
-  $setInnerHTML($doc.getElementById('tech_stat_2'), "Nous utilisons des cookies lorsque vous vous connectez, de fa&ccedil;on &agrave; ce que nous puissions m\xE9moriser ces pr\xE9f\xE9rences. Cela vous \xE9vite d'avoir &agrave; vous identifier &agrave; chaque fois que vous acc\xE9dez &agrave; une nouvelle page. Ces cookies sont g\xE9n\xE9ralement supprim\xE9s ou effac\xE9s lorsque vous vous d\xE9connectez, pour assurer que vous puissiez uniquement acc\xE9der aux fonctionnalit\xE9s du site lorsque vous \xEAtes connect\xE9.");
-  $setInnerHTML($doc.getElementById('tech_stat_3'), "Afin d'am\xE9liorer votre exp\xE9rience lorsque vous visitez le site, nous fournissons la possibilit\xE9 de r\xE9gler vos pr\xE9f\xE9rences concernant la fa&ccedil;on dont le site fonctionne lorsque vous l'utilisez. Afin de m\xE9moriser vos pr\xE9f\xE9rences, nous avons besoin d'utiliser des cookies, de sorte que ces informations peuvent \xEAtre acc\xE9d\xE9es chaque fois que vous interagissez avec une page qui est affect\xE9e par vos pr\xE9f\xE9rences.<br/>ans certains cas sp\xE9ciaux, nous utilisons \xE9galement des cookies fournis par des tiers de confiance. La section suivante d\xE9taille quels cookies tiers vous pourriez rencontrer via ce site.");
-  $setInnerHTML($doc.getElementById('tech_stat_4'), "Ce site utilise Google Analytics, qui est l'une des solutions d'analyse les plus r\xE9pandues et les plus fiables sur le web. Nous utilisons Google Analytics afin de comprendre comme vous utilisez le site, et de quelles fa&ccedil;ons nous pourrions am\xE9liorer votre exp\xE9rience. Ces cookies peuvent pister certaines informations, telles que la dur\xE9e que vous passez sur le site et les pages que vous visitez, pour que nous puissions continuer &agrave; produire du contenu engageant. <br/>Pour plus d'informations concernant les cookies de Google Analytics, vous pouvez vous rendre sur la page officielle de Google Analytics : <a href=\"https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage\">https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage<\/a>");
-  $setInnerHTML($doc.getElementById('tech_stat_5'), "Nous utilisons \xE9galement des boutons et/ou des plugins de r\xE9seaux sociaux. Pour qu'ils puissent fonctionner, les sites de r\xE9seaux sociaux (y compris Twitter) d\xE9finissent des cookies via notre site, qui sont utilis\xE9s pour am\xE9liorer votre profil sur leur site et contribuer aux donn\xE9es qu'ils recueillent pour des utilisations d\xE9crites dans leurs politiques de confidentialit\xE9 respectives.");
-  $setInnerHTML($doc.getElementById('privacy_signoff'), "A terme, les cookies seront utilis\xE9s pour rendre site web de l'essai In-MINDD plus convivial.");
-  $setInnerHTML($doc.getElementById('privacy-policy'), 'D\xE9claration de Confidentialit\xE9');
-  $setInnerHTML($doc.getElementById('landing-index-1'), 'D\xE9claration de Confidentialit\xE9');
+  $setInnerHTML($doc.getElementById('request_statement_text'), 'Op verzoek kunnen wij u een kopie toesturen van de gegevens die u hebt ingevuld op deze website. Als u een dergelijk kopie van uw persoonlijke gegevens wilt ontvangen, dient u contact op te nemen met het onderzoeksteam van In-MINDD (zie contactgegevens onderaan deze pagina). Mochten er onjuistheden in uw gegevens staan, neemt u dan contact op met het onderzoeksteam om de gegevens te laten aanpassen. Dit kunt u per e-mail of brief doen.<br/>Het kan voorkomen dat u bepaalde persoonlijke gegevens wilt verwijderen. Een dergelijk verzoek kan alleen worden gedaan als aangetoond kan worden dat de manier waarop het onderzoeksteam van In-MINDD gegevens bewaart en verwerkt, in strijd is met de wettelijke regels omtrent dataprotectie.');
+  $setInnerHTML($doc.getElementById('complaints'), 'Vragen over verwerking gegevens via de website ');
+  $setInnerHTML($doc.getElementById('complaints_text'), 'Als u vragen hebt over de manier waarop persoonlijke gegevens via de website worden verwerkt, neemt u dan gerust contact op met het onderzoeksteam van In-MINDD (zie contactgegevens onderaan deze pagina).');
+  $setInnerHTML($doc.getElementById('collection_tech'), 'Opslag en gebruik van technische informatie');
+  $setInnerHTML($doc.getElementById('collection_tech_text'), "Als u de website van het In-MINDD-onderzoek bezoekt, worden uw algemene bezoekgegevens en bezochte pagina's opgeslagen. De website van het In-MINDD-onderzoek maakt gebruik van zogenaamde cookies. Cookies zijn tekstbestandjes die op uw computer worden opgeslagen en bevatten geen informatie die op een persoon is terug te voeren.<br/>Wij gebruiken cookies om statistische informatie bij te houden en te verzamelen, bijvoorbeeld:");
+  $setInnerHTML($doc.getElementById('tech_stat_1'), "Als u een account aanmaakt op de website van In-MINDD, gebruiken we cookies om de aanmeldingsprocedure en algemene administratie te beheren. Deze cookies worden meestal vanzelf verwijderd als u weer uitlogt. Het kan echter voorkomen dat de cookies nog even blijven staan en uw recent bezochte pagina's onthouden. ");
+  $setInnerHTML($doc.getElementById('tech_stat_2'), "Wij gebruiken de cookies als u ingelogd bent, zodat we uw instellingen en voorkeuren kunnen onthouden. Hierdoor hoeft u niet telkens opnieuw in te loggen als u naar een andere pagina gaat. De cookies worden altijd weer verwijderd of gewist als u uitgelogd om ervoor te zorgen dat u alleen toegang hebt tot bepaalde functionaliteiten en pagina's als u bent ingelogd.");
+  $setInnerHTML($doc.getElementById('tech_stat_3'), 'Om het gemakkelijker te maken als u de opnieuw website bezoekt, hebben we een functionaliteit ingebouwd waarmee uw voorkeuren worden onthouden. Hiervoor moeten we cookies gebruiken die deze gegevens oproepen als u een pagina opnieuw bezoekt.<br/>In sommige gevallen gebruiken we ook cookies van betrouwbare derden. Hieronder staat welke cookies van derden u via de website kunt tegenkomen.');
+  $setInnerHTML($doc.getElementById('tech_stat_4'), 'De website maakt gebruik van Google Analytics, dit is een van de meest gebruikte en betrouwbare analysesystemen van zoekmachines. Met Google Analytics kunnen we zien hoe u de website gebruikt en hoe we de website op u kunnen afstemmen. Deze cookies houden gegevens bij zoals hoe lang u op de website ingelogd bent en welke pagina\'s u bezoekt. Hierdoor weten we hoe we de inhoud van de website op u kunnen afstemmen.<br/>Meer informatie over Google Analytics cookies kunt u vinden op de offici&euml;le pagina over Google Analytics: <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage<\/a>');
+  $setInnerHTML($doc.getElementById('tech_stat_5'), 'Ook hebben we aan de website social-mediaknoppen en/of plug-ins toegevoegd. Deze knoppen werken alleen als de website van de social media (waaronder Twitter) cookies aan onze website verbinden, die er vervolgens voor zorgen dat uw profiel op hun website wordt aangepast of dat gegevens worden toegevoegd aan de diverse doeleinden die in hun privacybeleid zijn opgenomen.');
+  $setInnerHTML($doc.getElementById('privacy_signoff'), 'Tot slot zullen we cookies gebruiken om de website van het In-MINDD-onderzoek gebruikersvriendelijker te maken.');
+  $setInnerHTML($doc.getElementById('privacy-policy'), 'Privacyverklaring.');
+  $setInnerHTML($doc.getElementById('landing-index-1'), 'Privacyverklaring.');
 }
 
 function $onModuleLoad_0(this$static){
@@ -1764,11 +1754,11 @@ function trigerUserIDJavascript(userID){
   $wnd.trigeredUserIDByGWT(userID);
 }
 
-defineSeed(105, 1, {}, PrivacyPolicy_0);
+defineSeed(104, 1, {}, PrivacyPolicy_0);
 function $onSuccess(user){
   var s, i;
   if (!user) {
-    $wnd.alert("Veuillez vous connecter avant de pouvoir acc\xE9der \xE0 l'environnement de soutien");
+    $wnd.alert('Log in om toegang te krijgen tot de ondersteuningspagina');
     assign((s = $doc.location.href , i = s.indexOf('#') , i != -1 && (s = s.substring(0, i)) , i = s.indexOf('?') , i != -1 && (s = s.substring(0, i)) , i = s.lastIndexOf('/') , i != -1 && (s = s.substring(0, i)) , s.length > 0?s + '/':'') + 'index.html?page=support');
   }
    else {
@@ -1781,11 +1771,11 @@ function $onSuccess(user){
 function PrivacyPolicy$1_0(){
 }
 
-defineSeed(106, 1, {}, PrivacyPolicy$1_0);
+defineSeed(105, 1, {}, PrivacyPolicy$1_0);
 function CognitiveOneInfo_0(){
 }
 
-defineSeed(107, 1, makeCastMap([Q$Serializable]), CognitiveOneInfo_0);
+defineSeed(106, 1, makeCastMap([Q$Serializable]), CognitiveOneInfo_0);
 _.agriculture = 0;
 _.agricultureSimulYears = 0;
 _.clerical = 0;
@@ -1945,7 +1935,7 @@ function setUserId(instance, value_0){
 function CognitiveTwoInfo_0(){
 }
 
-defineSeed(109, 1, makeCastMap([Q$Serializable]), CognitiveTwoInfo_0);
+defineSeed(108, 1, makeCastMap([Q$Serializable]), CognitiveTwoInfo_0);
 _.artistic_years = 0;
 _.bank_account_years = 0;
 _.books_years = 0;
@@ -2186,7 +2176,7 @@ function setVolunteering_years(instance, value_0){
 function DietInfo_0(){
 }
 
-defineSeed(111, 1, makeCastMap([Q$Serializable]), DietInfo_0);
+defineSeed(110, 1, makeCastMap([Q$Serializable]), DietInfo_0);
 _.beverages = 0;
 _.butter = 0;
 _.chicken = 0;
@@ -2304,7 +2294,7 @@ function setWine(instance, value_0){
 function FamilyHistoryInfo_0(){
 }
 
-defineSeed(113, 1, makeCastMap([Q$Serializable]), FamilyHistoryInfo_0);
+defineSeed(112, 1, makeCastMap([Q$Serializable]), FamilyHistoryInfo_0);
 function deserialize_10(streamReader, instance){
   setFatherCvd(instance, $getString(streamReader, $readInt(streamReader)));
   setFatherDementia(instance, $getString(streamReader, $readInt(streamReader)));
@@ -2378,9 +2368,7 @@ function setUserId_2(instance, value_0){
 function FeelingsInfo_0(){
 }
 
-defineSeed(115, 1, makeCastMap([Q$Serializable]), FeelingsInfo_0);
---></script>
-<script><!--
+defineSeed(114, 1, makeCastMap([Q$Serializable]), FeelingsInfo_0);
 function deserialize_11(streamReader, instance){
   setCes1(instance, $getString(streamReader, $readInt(streamReader)));
   setCes10(instance, $getString(streamReader, $readInt(streamReader)));
@@ -2411,6 +2399,8 @@ function instantiate_10(streamReader){
   return new FeelingsInfo_0;
 }
 
+--></script>
+<script><!--
 function serialize_6(streamWriter, instance){
   $writeString(streamWriter, instance.ces1);
   $writeString(streamWriter, instance.ces10);
@@ -2532,7 +2522,7 @@ function setUserId_3(instance, value_0){
 function MedicalInfo_0(){
 }
 
-defineSeed(117, 1, makeCastMap([Q$Serializable]), MedicalInfo_0);
+defineSeed(116, 1, makeCastMap([Q$Serializable]), MedicalInfo_0);
 _.cent = 0;
 _.diastolic = 0;
 _.feet = 0;
@@ -2687,7 +2677,7 @@ function setUserId_4(instance, value_0){
 function Patient_0(){
 }
 
-defineSeed(119, 1, makeCastMap([Q$Serializable]), Patient_0);
+defineSeed(118, 1, makeCastMap([Q$Serializable]), Patient_0);
 _.age = 0;
 function deserialize_13(streamReader, instance){
   setAge(instance, $readInt(streamReader));
@@ -2756,7 +2746,7 @@ function setUserId_5(instance, value_0){
 function PhysicalActivityInfo_0(){
 }
 
-defineSeed(121, 1, makeCastMap([Q$Serializable]), PhysicalActivityInfo_0);
+defineSeed(120, 1, makeCastMap([Q$Serializable]), PhysicalActivityInfo_0);
 _.diyHours = 0;
 _.flightStairs = 0;
 _.summerCyclingHours = 0;
@@ -2879,7 +2869,7 @@ function setWinterWalkingHours(instance, value_0){
 function RiskFactorScore_0(){
 }
 
-defineSeed(123, 1, makeCastMap([Q$Serializable]), RiskFactorScore_0);
+defineSeed(122, 1, makeCastMap([Q$Serializable]), RiskFactorScore_0);
 _.age = 0;
 _.alcohol = 0;
 _.cholesterolNetherlands = 0;
@@ -2984,7 +2974,7 @@ function setUserId_7(instance, value_0){
 function SmokeAlcoholInfo_0(){
 }
 
-defineSeed(125, 1, makeCastMap([Q$Serializable]), SmokeAlcoholInfo_0);
+defineSeed(124, 1, makeCastMap([Q$Serializable]), SmokeAlcoholInfo_0);
 _.current_num_smoke = 0;
 _.current_year_start = 0;
 _.former_num_smoke = 0;
@@ -3057,7 +3047,7 @@ function setUserId_8(instance, value_0){
 function SupportApps_0(){
 }
 
-defineSeed(127, 1, makeCastMap([Q$Serializable]), SupportApps_0);
+defineSeed(126, 1, makeCastMap([Q$Serializable]), SupportApps_0);
 _.id_0 = 0;
 function deserialize_17(streamReader, instance){
   setCategory(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3099,7 +3089,7 @@ function setName(instance, value_0){
 function SupportExperts_0(){
 }
 
-defineSeed(129, 1, makeCastMap([Q$Serializable]), SupportExperts_0);
+defineSeed(128, 1, makeCastMap([Q$Serializable]), SupportExperts_0);
 _.id_0 = 0;
 function deserialize_18(streamReader, instance){
   setCountry(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3136,7 +3126,7 @@ function setLang_0(instance, value_0){
 function SupportFAQ_0(){
 }
 
-defineSeed(131, 1, makeCastMap([Q$Serializable]), SupportFAQ_0);
+defineSeed(130, 1, makeCastMap([Q$Serializable]), SupportFAQ_0);
 _.id_0 = 0;
 function deserialize_19(streamReader, instance){
   setAnswer(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3168,14 +3158,14 @@ function setQuestion(instance, value_0){
 function SupportGoal_0(){
 }
 
-defineSeed(133, 1, makeCastMap([Q$SupportGoal, Q$Serializable]), SupportGoal_0);
+defineSeed(132, 1, makeCastMap([Q$SupportGoal, Q$Serializable]), SupportGoal_0);
 _.goalNb = 0;
 _.id_0 = 0;
 function SupportGoalUser_0(){
   this.goal = null;
 }
 
-defineSeed(134, 1, makeCastMap([Q$Serializable]), SupportGoalUser_0);
+defineSeed(133, 1, makeCastMap([Q$Serializable]), SupportGoalUser_0);
 _.id_goal = 0;
 function deserialize_20(streamReader, instance){
   setComment(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3272,7 +3262,7 @@ function setText(instance, value_0){
 function SupportRiskFactorInfos_0(){
 }
 
-defineSeed(137, 1, makeCastMap([Q$Serializable]), SupportRiskFactorInfos_0);
+defineSeed(136, 1, makeCastMap([Q$Serializable]), SupportRiskFactorInfos_0);
 _.id_0 = 0;
 function deserialize_22(streamReader, instance){
   setDesc_improv(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3319,7 +3309,7 @@ function setSources(instance, value_0){
 function User_0(){
 }
 
-defineSeed(139, 1, makeCastMap([Q$User, Q$Serializable]), User_0);
+defineSeed(138, 1, makeCastMap([Q$User, Q$Serializable]), User_0);
 function deserialize_23(streamReader, instance){
   setFavoriteColour(instance, $getString(streamReader, $readInt(streamReader)));
   setLang_3(instance, $getString(streamReader, $readInt(streamReader)));
@@ -3370,7 +3360,7 @@ function ArrayStoreException_0(){
   RuntimeException_0.call(this);
 }
 
-defineSeed(141, 6, makeCastMap([Q$Serializable, Q$Throwable]), ArrayStoreException_0);
+defineSeed(140, 6, makeCastMap([Q$Serializable, Q$Throwable]), ArrayStoreException_0);
 function $clinit_Boolean(){
   $clinit_Boolean = nullMethod;
   FALSE = new Boolean_1(false);
@@ -3381,7 +3371,7 @@ function Boolean_1(value_0){
   this.value_0 = value_0;
 }
 
-defineSeed(142, 1, makeCastMap([Q$Serializable, Q$Boolean, Q$Comparable]), Boolean_1);
+defineSeed(141, 1, makeCastMap([Q$Serializable, Q$Boolean, Q$Comparable]), Boolean_1);
 _.equals$ = function equals_1(o){
   return instanceOf(o, Q$Boolean) && dynamicCast(o, Q$Boolean).value_0 == this.value_0;
 }
@@ -3416,8 +3406,6 @@ function createForClass(packageName, className, seedId){
   return clazz;
 }
 
---></script>
-<script><!--
 function createForEnum(packageName, className, seedId, enumConstantsFunc){
   var clazz;
   clazz = new Class_0;
@@ -3464,7 +3452,7 @@ function setClassLiteral(seedId, clazz){
   proto.___clazz$ = clazz;
 }
 
-defineSeed(143, 1, {}, Class_0);
+defineSeed(142, 1, {}, Class_0);
 _.toString$ = function toString_6(){
   return ((this.modifiers & 2) != 0?'interface ':(this.modifiers & 1) != 0?'':'class ') + this.typeName;
 }
@@ -3475,7 +3463,7 @@ function ClassCastException_0(){
   RuntimeException_0.call(this);
 }
 
-defineSeed(144, 6, makeCastMap([Q$Serializable, Q$Throwable]), ClassCastException_0);
+defineSeed(143, 6, makeCastMap([Q$Serializable, Q$Throwable]), ClassCastException_0);
 function IllegalArgumentException_0(){
   RuntimeException_0.call(this);
 }
@@ -3484,18 +3472,20 @@ function IllegalArgumentException_1(message){
   RuntimeException_1.call(this, message);
 }
 
-defineSeed(145, 6, makeCastMap([Q$Serializable, Q$Throwable]), IllegalArgumentException_0, IllegalArgumentException_1);
+defineSeed(144, 6, makeCastMap([Q$Serializable, Q$Throwable]), IllegalArgumentException_0, IllegalArgumentException_1);
 function IllegalStateException_0(){
   RuntimeException_1.call(this, "Can't overwrite cause");
 }
 
-defineSeed(146, 6, makeCastMap([Q$Serializable, Q$Throwable]), IllegalStateException_0);
+defineSeed(145, 6, makeCastMap([Q$Serializable, Q$Throwable]), IllegalStateException_0);
+--></script>
+<script><!--
 function IndexOutOfBoundsException_0(message){
   RuntimeException_1.call(this, message);
 }
 
-defineSeed(147, 6, makeCastMap([Q$Serializable, Q$Throwable]), IndexOutOfBoundsException_0);
-defineSeed(149, 1, makeCastMap([Q$Serializable, Q$Number]));
+defineSeed(146, 6, makeCastMap([Q$Serializable, Q$Throwable]), IndexOutOfBoundsException_0);
+defineSeed(148, 1, makeCastMap([Q$Serializable, Q$Number]));
 function Integer_0(value_0){
   this.value_0 = value_0;
 }
@@ -3532,7 +3522,7 @@ function valueOf(i){
   return new Integer_0(i);
 }
 
-defineSeed(148, 149, makeCastMap([Q$Serializable, Q$Comparable, Q$Integer, Q$Number]), Integer_0);
+defineSeed(147, 148, makeCastMap([Q$Serializable, Q$Comparable, Q$Integer, Q$Number]), Integer_0);
 _.equals$ = function equals_2(o){
   return instanceOf(o, Q$Integer) && dynamicCast(o, Q$Integer).value_0 == this.value_0;
 }
@@ -3560,7 +3550,7 @@ function NullPointerException_1(message){
   RuntimeException_1.call(this, message);
 }
 
-defineSeed(151, 6, makeCastMap([Q$Serializable, Q$Throwable]), NullPointerException_0, NullPointerException_1);
+defineSeed(150, 6, makeCastMap([Q$Serializable, Q$Throwable]), NullPointerException_0, NullPointerException_1);
 function $clinit_Number$__Digits(){
   $clinit_Number$__Digits = nullMethod;
   digits_0 = initValues(_3C_classLit, makeCastMap([Q$Serializable]), -1, [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]);
@@ -3571,14 +3561,14 @@ function NumberFormatException_0(){
   IllegalArgumentException_0.call(this);
 }
 
-defineSeed(153, 145, makeCastMap([Q$Serializable, Q$Throwable]), NumberFormatException_0);
+defineSeed(152, 144, makeCastMap([Q$Serializable, Q$Throwable]), NumberFormatException_0);
 function StackTraceElement_0(methodName){
   this.className = 'Unknown';
   this.methodName = methodName;
   this.lineNumber = -1;
 }
 
-defineSeed(154, 1, makeCastMap([Q$Serializable, Q$StackTraceElement]), StackTraceElement_0);
+defineSeed(153, 1, makeCastMap([Q$Serializable, Q$StackTraceElement]), StackTraceElement_0);
 _.toString$ = function toString_8(){
   return this.className + '.' + this.methodName + '(Unknown Source' + (this.lineNumber >= 0?':' + this.lineNumber:'') + ')';
 }
@@ -3678,7 +3668,7 @@ function StringBuffer_0(){
   this.impl = new StringBufferImplAppend_0;
 }
 
-defineSeed(156, 1, makeCastMap([Q$CharSequence]), StringBuffer_0);
+defineSeed(155, 1, makeCastMap([Q$CharSequence]), StringBuffer_0);
 _.toString$ = function toString_9(){
   return this.impl.string;
 }
@@ -3691,7 +3681,7 @@ function UnsupportedOperationException_0(){
   RuntimeException_1.call(this, 'Add not supported on this collection');
 }
 
-defineSeed(158, 6, makeCastMap([Q$Serializable, Q$Throwable]), UnsupportedOperationException_0);
+defineSeed(157, 6, makeCastMap([Q$Serializable, Q$Throwable]), UnsupportedOperationException_0);
 function $advanceToFind(iter, o){
   var t;
   while (iter.hasNext()) {
@@ -3703,7 +3693,7 @@ function $advanceToFind(iter, o){
   return null;
 }
 
-defineSeed(159, 1, {});
+defineSeed(158, 1, {});
 _.add_0 = function add_0(o){
   throw new UnsupportedOperationException_0;
 }
@@ -3741,7 +3731,7 @@ function $implFindEntry(this$static, key){
   return null;
 }
 
-defineSeed(161, 1, makeCastMap([Q$Map]));
+defineSeed(160, 1, makeCastMap([Q$Map]));
 _.containsKey = function containsKey(key){
   return !!$implFindEntry(this, key);
 }
@@ -3931,7 +3921,7 @@ function AbstractHashMap_0(){
   $clearImpl(this);
 }
 
-defineSeed(160, 161, makeCastMap([Q$Map]));
+defineSeed(159, 160, makeCastMap([Q$Map]));
 _.containsKey = function containsKey_0(key){
   return $containsKey(this, key);
 }
@@ -3954,7 +3944,7 @@ _.size_1 = function size_2(){
 ;
 _.nullSlotLive = false;
 _.size_0 = 0;
-defineSeed(163, 159, makeCastMap([Q$Set]));
+defineSeed(162, 158, makeCastMap([Q$Set]));
 _.equals$ = function equals_5(o){
   var iter, other, otherItem;
   if (o === this) {
@@ -3993,7 +3983,7 @@ function AbstractHashMap$EntrySet_0(this$0){
   this.this$0 = this$0;
 }
 
-defineSeed(162, 163, makeCastMap([Q$Set]), AbstractHashMap$EntrySet_0);
+defineSeed(161, 162, makeCastMap([Q$Set]), AbstractHashMap$EntrySet_0);
 _.contains = function contains_0(o){
   var entry, key, value_0;
   if (instanceOf(o, Q$Map$Entry)) {
@@ -4024,7 +4014,7 @@ function AbstractHashMap$EntrySetIterator_0(this$0){
   this.iter = new AbstractList$IteratorImpl_0(list);
 }
 
-defineSeed(164, 1, {}, AbstractHashMap$EntrySetIterator_0);
+defineSeed(163, 1, {}, AbstractHashMap$EntrySetIterator_0);
 _.hasNext = function hasNext(){
   return $hasNext(this.iter);
 }
@@ -4033,7 +4023,7 @@ _.next = function next_0(){
   return dynamicCast($next(this.iter), Q$Map$Entry);
 }
 ;
-defineSeed(166, 1, makeCastMap([Q$Map$Entry]));
+defineSeed(165, 1, makeCastMap([Q$Map$Entry]));
 _.equals$ = function equals_6(other){
   var entry;
   if (instanceOf(other, Q$Map$Entry)) {
@@ -4062,7 +4052,7 @@ function AbstractHashMap$MapEntryNull_0(this$0){
   this.this$0 = this$0;
 }
 
-defineSeed(165, 166, makeCastMap([Q$Map$Entry]), AbstractHashMap$MapEntryNull_0);
+defineSeed(164, 165, makeCastMap([Q$Map$Entry]), AbstractHashMap$MapEntryNull_0);
 _.getKey = function getKey(){
   return null;
 }
@@ -4080,7 +4070,7 @@ function AbstractHashMap$MapEntryString_0(this$0, key){
   this.key = key;
 }
 
-defineSeed(167, 166, makeCastMap([Q$Map$Entry]), AbstractHashMap$MapEntryString_0);
+defineSeed(166, 165, makeCastMap([Q$Map$Entry]), AbstractHashMap$MapEntryString_0);
 _.getKey = function getKey_0(){
   return this.key;
 }
@@ -4101,7 +4091,7 @@ function indexOutOfBounds(index_0, size_0){
   throw new IndexOutOfBoundsException_0('Index: ' + index_0 + ', Size: ' + size_0);
 }
 
-defineSeed(168, 159, makeCastMap([Q$List]));
+defineSeed(167, 158, makeCastMap([Q$List]));
 _.add_0 = function add_1(obj){
   $add(this, this.size_1(), obj);
   return true;
@@ -4162,7 +4152,7 @@ function AbstractList$IteratorImpl_0(this$0){
   this.this$0 = this$0;
 }
 
-defineSeed(169, 1, {}, AbstractList$IteratorImpl_0);
+defineSeed(168, 1, {}, AbstractList$IteratorImpl_0);
 _.hasNext = function hasNext_0(){
   return $hasNext(this);
 }
@@ -4174,7 +4164,7 @@ _.next = function next_1(){
 _.i = 0;
 function $add(this$static, index_0, o){
   (index_0 < 0 || index_0 > this$static.size_0) && indexOutOfBounds(index_0, this$static.size_0);
-  splice_0(this$static.array, index_0, 0, o);
+  splice(this$static.array, index_0, 0, o);
   ++this$static.size_0;
 }
 
@@ -4213,11 +4203,11 @@ function ArrayList_0(){
   this.array = initDim(_3Ljava_lang_Object_2_classLit, makeCastMap([Q$Serializable]), Q$Object, 0, 0);
 }
 
-function splice_0(array, index_0, deleteCount, value_0){
+function splice(array, index_0, deleteCount, value_0){
   array.splice(index_0, deleteCount, value_0);
 }
 
-defineSeed(170, 168, makeCastMap([Q$Serializable, Q$List]), ArrayList_0);
+defineSeed(169, 167, makeCastMap([Q$Serializable, Q$List]), ArrayList_0);
 _.add_0 = function add_2(o){
   return $add_0(this, o);
 }
@@ -4235,7 +4225,7 @@ function HashMap_0(){
   AbstractHashMap_0.call(this);
 }
 
-defineSeed(171, 160, makeCastMap([Q$Serializable, Q$Map]), HashMap_0);
+defineSeed(170, 159, makeCastMap([Q$Serializable, Q$Map]), HashMap_0);
 _.equals = function equals_8(value1, value2){
   return maskUndefined(value1) === maskUndefined(value2) || value1 != null && equals__devirtual$(value1, value2);
 }
@@ -4248,7 +4238,7 @@ function IdentityHashMap_0(){
   AbstractHashMap_0.call(this);
 }
 
-defineSeed(172, 160, makeCastMap([Q$Serializable, Q$Map]), IdentityHashMap_0);
+defineSeed(171, 159, makeCastMap([Q$Serializable, Q$Map]), IdentityHashMap_0);
 _.equals$ = function equals_9(obj){
   var entry, entry$iterator, otherKey, otherMap, otherValue;
   if (obj === this) {
@@ -4299,7 +4289,7 @@ function MapEntryImpl_0(key, value_0){
   this.value_0 = value_0;
 }
 
-defineSeed(173, 166, makeCastMap([Q$Map$Entry]), MapEntryImpl_0);
+defineSeed(172, 165, makeCastMap([Q$Map$Entry]), MapEntryImpl_0);
 _.getKey = function getKey_1(){
   return this.key;
 }
@@ -4319,7 +4309,7 @@ function NoSuchElementException_0(){
   RuntimeException_0.call(this);
 }
 
-defineSeed(174, 6, makeCastMap([Q$Serializable, Q$Throwable]), NoSuchElementException_0);
+defineSeed(173, 6, makeCastMap([Q$Serializable, Q$Throwable]), NoSuchElementException_0);
 function equalsWithNullCheck(a, b){
   return maskUndefined(a) === maskUndefined(b) || a != null && equals__devirtual$(a, b);
 }
@@ -4342,7 +4332,7 @@ function gwtOnLoad(errFn, modName, modBase, softPermutationId){
 
 --></script>
 <script><!--
-var Ljava_lang_Object_2_classLit = createForClass('java.lang.', 'Object', 1), Lcom_google_gwt_core_client_Scheduler_2_classLit = createForClass('com.google.gwt.core.client.', 'Scheduler', 12), Lcom_google_gwt_core_client_JavaScriptObject_2_classLit = createForClass('com.google.gwt.core.client.', 'JavaScriptObject$', 9), _3Ljava_lang_Object_2_classLit = createForArray('[Ljava.lang.', 'Object;', 176), Ljava_lang_Throwable_2_classLit = createForClass('java.lang.', 'Throwable', 8), Ljava_lang_Exception_2_classLit = createForClass('java.lang.', 'Exception', 7), Ljava_lang_RuntimeException_2_classLit = createForClass('java.lang.', 'RuntimeException', 6), Ljava_lang_StackTraceElement_2_classLit = createForClass('java.lang.', 'StackTraceElement', 154), _3Ljava_lang_StackTraceElement_2_classLit = createForArray('[Ljava.lang.', 'StackTraceElement;', 177), Lcom_google_gwt_lang_SeedUtil_2_classLit = createForClass('com.google.gwt.lang.', 'SeedUtil', 45), Ljava_lang_Enum_2_classLit = createForClass('java.lang.', 'Enum', 85), Lcom_inmindd_dcu_client_PrivacyPolicy_2_classLit = createForClass('com.inmindd.dcu.client.', 'PrivacyPolicy', 105), Lcom_inmindd_dcu_client_PrivacyPolicy$1_2_classLit = createForClass('com.inmindd.dcu.client.', 'PrivacyPolicy$1', 106), Ljava_lang_Boolean_2_classLit = createForClass('java.lang.', 'Boolean', 142), Ljava_lang_Number_2_classLit = createForClass('java.lang.', 'Number', 149), _3C_classLit = createForArray('', '[C', 178), Ljava_lang_Class_2_classLit = createForClass('java.lang.', 'Class', 143), Ljava_lang_Integer_2_classLit = createForClass('java.lang.', 'Integer', 148), _3Ljava_lang_Integer_2_classLit = createForArray('[Ljava.lang.', 'Integer;', 179), Ljava_lang_String_2_classLit = createForClass('java.lang.', 'String', 2), _3Ljava_lang_String_2_classLit = createForArray('[Ljava.lang.', 'String;', 180), Ljava_lang_ClassCastException_2_classLit = createForClass('java.lang.', 'ClassCastException', 144), Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass('com.google.gwt.core.client.', 'JavaScriptException', 5), Ljava_lang_ArrayStoreException_2_classLit = createForClass('java.lang.', 'ArrayStoreException', 141), Ljava_lang_IllegalArgumentException_2_classLit = createForClass('java.lang.', 'IllegalArgumentException', 145), Ljava_lang_NullPointerException_2_classLit = createForClass('java.lang.', 'NullPointerException', 151), Lcom_google_gwt_core_client_impl_StringBufferImpl_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'StringBufferImpl', 19), Lcom_google_gwt_user_client_rpc_InvocationException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'InvocationException', 60), Lcom_google_gwt_user_client_rpc_ServiceDefTarget$NoServiceEntryPointSpecifiedException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'ServiceDefTarget$NoServiceEntryPointSpecifiedException', 65), Lcom_google_gwt_user_client_rpc_impl_RemoteServiceProxy_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RemoteServiceProxy', 81), Lcom_inmindd_dcu_client_InminddService_1Proxy_2_classLit = createForClass('com.inmindd.dcu.client.', 'InminddService_Proxy', 103), Lcom_google_gwt_user_client_rpc_impl_RemoteServiceProxy$ServiceHelper_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RemoteServiceProxy$ServiceHelper', 82), Lcom_google_gwt_core_client_impl_StringBufferImplAppend_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'StringBufferImplAppend', 20), Lcom_google_gwt_core_client_impl_SchedulerImpl_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'SchedulerImpl', 14), Lcom_google_gwt_user_client_rpc_impl_SerializerBase_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'SerializerBase', 98), Lcom_inmindd_dcu_client_InminddService_1TypeSerializer_2_classLit = createForClass('com.inmindd.dcu.client.', 'InminddService_TypeSerializer', 104), Lcom_google_gwt_user_client_rpc_IncompatibleRemoteServiceException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'IncompatibleRemoteServiceException', 58), Lcom_google_gwt_user_client_rpc_RpcTokenException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'RpcTokenException', 62), Lcom_google_gwt_user_client_rpc_XsrfToken_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'XsrfToken', null), Lcom_inmindd_dcu_shared_CognitiveOneInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'CognitiveOneInfo', 107), Lcom_inmindd_dcu_shared_CognitiveTwoInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'CognitiveTwoInfo', 109), Lcom_inmindd_dcu_shared_DietInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'DietInfo', 111), Lcom_inmindd_dcu_shared_FamilyHistoryInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'FamilyHistoryInfo', 113), Lcom_inmindd_dcu_shared_FeelingsInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'FeelingsInfo', 115), Lcom_inmindd_dcu_shared_MedicalInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'MedicalInfo', 117), Lcom_inmindd_dcu_shared_Patient_2_classLit = createForClass('com.inmindd.dcu.shared.', 'Patient', 119), Lcom_inmindd_dcu_shared_PhysicalActivityInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'PhysicalActivityInfo', 121), Lcom_inmindd_dcu_shared_RiskFactorScore_2_classLit = createForClass('com.inmindd.dcu.shared.', 'RiskFactorScore', 123), Lcom_inmindd_dcu_shared_SmokeAlcoholInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SmokeAlcoholInfo', 125), Lcom_inmindd_dcu_shared_SupportApps_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportApps', 127), Lcom_inmindd_dcu_shared_SupportExperts_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportExperts', 129), Lcom_inmindd_dcu_shared_SupportFAQ_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportFAQ', 131), Lcom_inmindd_dcu_shared_SupportGoal_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportGoal', 133), Lcom_inmindd_dcu_shared_SupportGoalUser_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportGoalUser', 134), Lcom_inmindd_dcu_shared_SupportRiskFactorInfos_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportRiskFactorInfos', 137), Lcom_inmindd_dcu_shared_User_2_classLit = createForClass('com.inmindd.dcu.shared.', 'User', 139), Ljava_lang_NumberFormatException_2_classLit = createForClass('java.lang.', 'NumberFormatException', 153), Ljava_util_AbstractCollection_2_classLit = createForClass('java.util.', 'AbstractCollection', 159), Ljava_util_AbstractList_2_classLit = createForClass('java.util.', 'AbstractList', 168), Ljava_util_ArrayList_2_classLit = createForClass('java.util.', 'ArrayList', 170), Lcom_google_gwt_user_client_rpc_SerializationException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'SerializationException', 64), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter', 83), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader', 84, values), _3Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader_2_classLit = createForArray('[Lcom.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader;', 181), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$1_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$1', 86, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$2_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$2', 89, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$3_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$3', 90, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$4_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$4', 91, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$5_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$5', 92, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$6_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$6', 93, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$7_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$7', 94, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$8_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$8', 95, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$9_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$9', 96, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$10_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$10', 87, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$11_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$11', 88, null), Lcom_google_gwt_http_client_Request_2_classLit = createForClass('com.google.gwt.http.client.', 'Request', 29), Lcom_google_gwt_http_client_Response_2_classLit = createForClass('com.google.gwt.http.client.', 'Response', 36), Lcom_google_gwt_http_client_ResponseImpl_2_classLit = createForClass('com.google.gwt.http.client.', 'ResponseImpl', 37), Lcom_google_gwt_user_client_rpc_impl_RpcStatsContext_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RpcStatsContext', 97), Ljava_util_AbstractMap_2_classLit = createForClass('java.util.', 'AbstractMap', 161), Ljava_util_AbstractHashMap_2_classLit = createForClass('java.util.', 'AbstractHashMap', 160), Ljava_util_HashMap_2_classLit = createForClass('java.util.', 'HashMap', 171), Ljava_util_AbstractSet_2_classLit = createForClass('java.util.', 'AbstractSet', 163), Ljava_util_AbstractHashMap$EntrySet_2_classLit = createForClass('java.util.', 'AbstractHashMap$EntrySet', 162), Ljava_util_AbstractHashMap$EntrySetIterator_2_classLit = createForClass('java.util.', 'AbstractHashMap$EntrySetIterator', 164), Ljava_util_AbstractMapEntry_2_classLit = createForClass('java.util.', 'AbstractMapEntry', 166), Ljava_util_AbstractHashMap$MapEntryNull_2_classLit = createForClass('java.util.', 'AbstractHashMap$MapEntryNull', 165), Ljava_util_AbstractHashMap$MapEntryString_2_classLit = createForClass('java.util.', 'AbstractHashMap$MapEntryString', 167), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStream_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStream', 76), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStreamWriter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStreamWriter', 78), Lcom_google_gwt_user_client_rpc_impl_ClientSerializationStreamWriter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'ClientSerializationStreamWriter', 80), Lcom_google_gwt_http_client_RequestBuilder_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder', 30), Lcom_google_gwt_http_client_RequestBuilder$Method_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder$Method', 32), Lcom_google_gwt_http_client_RequestBuilder$1_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder$1', 31), Lcom_google_gwt_http_client_RequestException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestException', 33), Ljava_util_AbstractList$IteratorImpl_2_classLit = createForClass('java.util.', 'AbstractList$IteratorImpl', 169), Ljava_lang_StringBuffer_2_classLit = createForClass('java.lang.', 'StringBuffer', 156), Lcom_google_gwt_user_client_rpc_RpcRequestBuilder_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'RpcRequestBuilder', 61), Lcom_google_gwt_http_client_RequestPermissionException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestPermissionException', 34), Ljava_util_IdentityHashMap_2_classLit = createForClass('java.util.', 'IdentityHashMap', 172), Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang.', 'IllegalStateException', 146), Ljava_lang_UnsupportedOperationException_2_classLit = createForClass('java.lang.', 'UnsupportedOperationException', 158), Ljava_util_MapEntryImpl_2_classLit = createForClass('java.util.', 'MapEntryImpl', 173), Lcom_google_gwt_http_client_RequestTimeoutException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestTimeoutException', 35), Ljava_lang_IndexOutOfBoundsException_2_classLit = createForClass('java.lang.', 'IndexOutOfBoundsException', 147), Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util.', 'NoSuchElementException', 174), Lcom_google_gwt_user_client_rpc_StatusCodeException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'StatusCodeException', 66), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStreamReader_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStreamReader', 77), Lcom_google_gwt_user_client_rpc_impl_ClientSerializationStreamReader_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'ClientSerializationStreamReader', 79);
+var Ljava_lang_Object_2_classLit = createForClass('java.lang.', 'Object', 1), Lcom_google_gwt_core_client_Scheduler_2_classLit = createForClass('com.google.gwt.core.client.', 'Scheduler', 12), Lcom_google_gwt_core_client_JavaScriptObject_2_classLit = createForClass('com.google.gwt.core.client.', 'JavaScriptObject$', 9), _3Ljava_lang_Object_2_classLit = createForArray('[Ljava.lang.', 'Object;', 175), Ljava_lang_Throwable_2_classLit = createForClass('java.lang.', 'Throwable', 8), Ljava_lang_Exception_2_classLit = createForClass('java.lang.', 'Exception', 7), Ljava_lang_RuntimeException_2_classLit = createForClass('java.lang.', 'RuntimeException', 6), Ljava_lang_StackTraceElement_2_classLit = createForClass('java.lang.', 'StackTraceElement', 153), _3Ljava_lang_StackTraceElement_2_classLit = createForArray('[Ljava.lang.', 'StackTraceElement;', 176), Lcom_google_gwt_lang_SeedUtil_2_classLit = createForClass('com.google.gwt.lang.', 'SeedUtil', 45), Ljava_lang_Enum_2_classLit = createForClass('java.lang.', 'Enum', 84), Lcom_inmindd_dcu_client_PrivacyPolicy_2_classLit = createForClass('com.inmindd.dcu.client.', 'PrivacyPolicy', 104), Lcom_inmindd_dcu_client_PrivacyPolicy$1_2_classLit = createForClass('com.inmindd.dcu.client.', 'PrivacyPolicy$1', 105), Ljava_lang_Boolean_2_classLit = createForClass('java.lang.', 'Boolean', 141), Ljava_lang_Number_2_classLit = createForClass('java.lang.', 'Number', 148), _3C_classLit = createForArray('', '[C', 177), Ljava_lang_Class_2_classLit = createForClass('java.lang.', 'Class', 142), Ljava_lang_Integer_2_classLit = createForClass('java.lang.', 'Integer', 147), _3Ljava_lang_Integer_2_classLit = createForArray('[Ljava.lang.', 'Integer;', 178), Ljava_lang_String_2_classLit = createForClass('java.lang.', 'String', 2), _3Ljava_lang_String_2_classLit = createForArray('[Ljava.lang.', 'String;', 179), Ljava_lang_ClassCastException_2_classLit = createForClass('java.lang.', 'ClassCastException', 143), Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass('com.google.gwt.core.client.', 'JavaScriptException', 5), Ljava_lang_ArrayStoreException_2_classLit = createForClass('java.lang.', 'ArrayStoreException', 140), Ljava_lang_IllegalArgumentException_2_classLit = createForClass('java.lang.', 'IllegalArgumentException', 144), Ljava_lang_NullPointerException_2_classLit = createForClass('java.lang.', 'NullPointerException', 150), Lcom_google_gwt_core_client_impl_StringBufferImpl_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'StringBufferImpl', 18), Lcom_google_gwt_user_client_rpc_InvocationException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'InvocationException', 59), Lcom_google_gwt_user_client_rpc_ServiceDefTarget$NoServiceEntryPointSpecifiedException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'ServiceDefTarget$NoServiceEntryPointSpecifiedException', 64), Lcom_google_gwt_user_client_rpc_impl_RemoteServiceProxy_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RemoteServiceProxy', 80), Lcom_inmindd_dcu_client_InminddService_1Proxy_2_classLit = createForClass('com.inmindd.dcu.client.', 'InminddService_Proxy', 102), Lcom_google_gwt_user_client_rpc_impl_RemoteServiceProxy$ServiceHelper_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RemoteServiceProxy$ServiceHelper', 81), Lcom_google_gwt_core_client_impl_StackTraceCreator$Collector_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'StackTraceCreator$Collector', 17), Lcom_google_gwt_core_client_impl_StringBufferImplAppend_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'StringBufferImplAppend', 19), Lcom_google_gwt_core_client_impl_SchedulerImpl_2_classLit = createForClass('com.google.gwt.core.client.impl.', 'SchedulerImpl', 14), Lcom_google_gwt_user_client_rpc_impl_SerializerBase_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'SerializerBase', 97), Lcom_inmindd_dcu_client_InminddService_1TypeSerializer_2_classLit = createForClass('com.inmindd.dcu.client.', 'InminddService_TypeSerializer', 103), Lcom_google_gwt_user_client_rpc_IncompatibleRemoteServiceException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'IncompatibleRemoteServiceException', 57), Lcom_google_gwt_user_client_rpc_RpcTokenException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'RpcTokenException', 61), Lcom_google_gwt_user_client_rpc_XsrfToken_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'XsrfToken', null), Lcom_inmindd_dcu_shared_CognitiveOneInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'CognitiveOneInfo', 106), Lcom_inmindd_dcu_shared_CognitiveTwoInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'CognitiveTwoInfo', 108), Lcom_inmindd_dcu_shared_DietInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'DietInfo', 110), Lcom_inmindd_dcu_shared_FamilyHistoryInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'FamilyHistoryInfo', 112), Lcom_inmindd_dcu_shared_FeelingsInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'FeelingsInfo', 114), Lcom_inmindd_dcu_shared_MedicalInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'MedicalInfo', 116), Lcom_inmindd_dcu_shared_Patient_2_classLit = createForClass('com.inmindd.dcu.shared.', 'Patient', 118), Lcom_inmindd_dcu_shared_PhysicalActivityInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'PhysicalActivityInfo', 120), Lcom_inmindd_dcu_shared_RiskFactorScore_2_classLit = createForClass('com.inmindd.dcu.shared.', 'RiskFactorScore', 122), Lcom_inmindd_dcu_shared_SmokeAlcoholInfo_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SmokeAlcoholInfo', 124), Lcom_inmindd_dcu_shared_SupportApps_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportApps', 126), Lcom_inmindd_dcu_shared_SupportExperts_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportExperts', 128), Lcom_inmindd_dcu_shared_SupportFAQ_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportFAQ', 130), Lcom_inmindd_dcu_shared_SupportGoal_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportGoal', 132), Lcom_inmindd_dcu_shared_SupportGoalUser_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportGoalUser', 133), Lcom_inmindd_dcu_shared_SupportRiskFactorInfos_2_classLit = createForClass('com.inmindd.dcu.shared.', 'SupportRiskFactorInfos', 136), Lcom_inmindd_dcu_shared_User_2_classLit = createForClass('com.inmindd.dcu.shared.', 'User', 138), Ljava_lang_NumberFormatException_2_classLit = createForClass('java.lang.', 'NumberFormatException', 152), Ljava_util_AbstractCollection_2_classLit = createForClass('java.util.', 'AbstractCollection', 158), Ljava_util_AbstractList_2_classLit = createForClass('java.util.', 'AbstractList', 167), Ljava_util_ArrayList_2_classLit = createForClass('java.util.', 'ArrayList', 169), Lcom_google_gwt_user_client_rpc_SerializationException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'SerializationException', 63), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter', 82), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader', 83, values), _3Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader_2_classLit = createForArray('[Lcom.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader;', 180), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$1_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$1', 85, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$2_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$2', 88, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$3_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$3', 89, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$4_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$4', 90, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$5_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$5', 91, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$6_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$6', 92, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$7_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$7', 93, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$8_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$8', 94, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$9_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$9', 95, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$10_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$10', 86, null), Lcom_google_gwt_user_client_rpc_impl_RequestCallbackAdapter$ResponseReader$11_2_classLit = createForEnum('com.google.gwt.user.client.rpc.impl.', 'RequestCallbackAdapter$ResponseReader$11', 87, null), Lcom_google_gwt_http_client_Request_2_classLit = createForClass('com.google.gwt.http.client.', 'Request', 29), Lcom_google_gwt_http_client_Response_2_classLit = createForClass('com.google.gwt.http.client.', 'Response', 36), Lcom_google_gwt_http_client_ResponseImpl_2_classLit = createForClass('com.google.gwt.http.client.', 'ResponseImpl', 37), Lcom_google_gwt_user_client_rpc_impl_RpcStatsContext_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'RpcStatsContext', 96), Ljava_util_AbstractMap_2_classLit = createForClass('java.util.', 'AbstractMap', 160), Ljava_util_AbstractHashMap_2_classLit = createForClass('java.util.', 'AbstractHashMap', 159), Ljava_util_HashMap_2_classLit = createForClass('java.util.', 'HashMap', 170), Ljava_util_AbstractSet_2_classLit = createForClass('java.util.', 'AbstractSet', 162), Ljava_util_AbstractHashMap$EntrySet_2_classLit = createForClass('java.util.', 'AbstractHashMap$EntrySet', 161), Ljava_util_AbstractHashMap$EntrySetIterator_2_classLit = createForClass('java.util.', 'AbstractHashMap$EntrySetIterator', 163), Ljava_util_AbstractMapEntry_2_classLit = createForClass('java.util.', 'AbstractMapEntry', 165), Ljava_util_AbstractHashMap$MapEntryNull_2_classLit = createForClass('java.util.', 'AbstractHashMap$MapEntryNull', 164), Ljava_util_AbstractHashMap$MapEntryString_2_classLit = createForClass('java.util.', 'AbstractHashMap$MapEntryString', 166), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStream_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStream', 75), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStreamWriter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStreamWriter', 77), Lcom_google_gwt_user_client_rpc_impl_ClientSerializationStreamWriter_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'ClientSerializationStreamWriter', 79), Lcom_google_gwt_http_client_RequestBuilder_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder', 30), Lcom_google_gwt_http_client_RequestBuilder$Method_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder$Method', 32), Lcom_google_gwt_http_client_RequestBuilder$1_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestBuilder$1', 31), Lcom_google_gwt_http_client_RequestException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestException', 33), Ljava_util_AbstractList$IteratorImpl_2_classLit = createForClass('java.util.', 'AbstractList$IteratorImpl', 168), Ljava_lang_StringBuffer_2_classLit = createForClass('java.lang.', 'StringBuffer', 155), Lcom_google_gwt_user_client_rpc_RpcRequestBuilder_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'RpcRequestBuilder', 60), Lcom_google_gwt_http_client_RequestPermissionException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestPermissionException', 34), Ljava_util_IdentityHashMap_2_classLit = createForClass('java.util.', 'IdentityHashMap', 171), Ljava_lang_IllegalStateException_2_classLit = createForClass('java.lang.', 'IllegalStateException', 145), Ljava_lang_UnsupportedOperationException_2_classLit = createForClass('java.lang.', 'UnsupportedOperationException', 157), Ljava_util_MapEntryImpl_2_classLit = createForClass('java.util.', 'MapEntryImpl', 172), Lcom_google_gwt_http_client_RequestTimeoutException_2_classLit = createForClass('com.google.gwt.http.client.', 'RequestTimeoutException', 35), Ljava_lang_IndexOutOfBoundsException_2_classLit = createForClass('java.lang.', 'IndexOutOfBoundsException', 146), Ljava_util_NoSuchElementException_2_classLit = createForClass('java.util.', 'NoSuchElementException', 173), Lcom_google_gwt_user_client_rpc_StatusCodeException_2_classLit = createForClass('com.google.gwt.user.client.rpc.', 'StatusCodeException', 65), Lcom_google_gwt_user_client_rpc_impl_AbstractSerializationStreamReader_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'AbstractSerializationStreamReader', 76), Lcom_google_gwt_user_client_rpc_impl_ClientSerializationStreamReader_2_classLit = createForClass('com.google.gwt.user.client.rpc.impl.', 'ClientSerializationStreamReader', 78);
 $stats && $stats({moduleName:'PrivacyPolicy',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalEnd'});
 if ($wnd.PrivacyPolicy) $wnd.PrivacyPolicy.onScriptLoad();
 --></script></body></html>

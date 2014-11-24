@@ -4,7 +4,7 @@ var $gwt_version = "2.6.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = 'B9E01416328133BF361AD2F698F18EB9';
+var $strongName = '2559267C22307FA8DF4BC9BADB41448E';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'PrivacyPolicy',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -1845,6 +1845,7 @@ function $globalise(){
   $setInnerHTML($doc.getElementById('menu-support-experts'), 'Vraag het een deskundige');
   $setInnerHTML($doc.getElementById('menu-support-faq'), 'Veelgestelde vragen');
   $setInnerHTML($doc.getElementById('menu-support-blog'), 'In-MINDD Blog');
+  $doc.getElementById('menu-support-blog').setAttribute('href', 'https://inmindd-blog.appspot.com/wp-login.php?lang=nl');
   $setInnerHTML($doc.getElementById('menu-support-goals'), 'Uw doelen');
   $setInnerHTML($doc.getElementById('menu-support-logout'), 'Uitloggen');
   $setInnerHTML($doc.getElementById('menu-support-apps'), 'Bruikbare Apps');
@@ -2484,12 +2485,12 @@ function setMotherDiabetes(instance, value_0){
   instance.motherDiabetes = value_0;
 }
 
+--></script>
+<script><!--
 function setSiblingCvd(instance, value_0){
   instance.siblingCvd = value_0;
 }
 
---></script>
-<script><!--
 function setSiblingDementia(instance, value_0){
   instance.siblingDementia = value_0;
 }
