@@ -613,4 +613,7 @@ public interface InminddConstants extends Constants{
 		String twitter_id();
 		String twitterTitle();
 		String twitterLink();
+		
+		//Blog
+		String blog_link();
 }
