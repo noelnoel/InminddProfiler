@@ -87,7 +87,6 @@
         		$.cookiesDirective(
         				{
         					privacyPolicyUri:'privacyPolicy.html',
-        					scriptWrapper:cookieController,
         					explicitConsent: false,
         					backgroundColor: '#52B54A',
         					linkColor: '#ffffff',
@@ -310,17 +309,6 @@
                 console.info(sender.target.alt);
                 document.cookie="gwtLocale="+sender.target.alt.toLowerCase();
                 location.reload();
-                $.cookiesDirective(
-        				{
-        					privacyPolicyUri:'privacyPolicy.html',
-        					scriptWrapper:cookieController,
-        					explicitConsent: false,
-        					backgroundColor: '#52B54A',
-        					linkColor: '#ffffff',
-        					position:'bottom',
-        					backgroundOpacity: '95',
-        					message: $('#cookie_message').text()
-        				});
                 
             }
 
