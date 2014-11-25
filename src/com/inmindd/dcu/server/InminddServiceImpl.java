@@ -331,61 +331,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	}
 
 	
-	public Boolean randomiseUser(User user) throws IllegalArgumentException {
-		String userId = user.getUserId();
-		String countryCode = userId.substring(0, 2);
-		String practiceCode = userId.substring(2,4);
-		String userNo = userId.substring(4,7);
-		String randNo = null;
-		String randResultCode = null;
-		String randTreatmentGroup = null;
-		org.tempuri.ServiceStub.RandomiseParticipantResponse resp = null;
-		try {
-			ServiceStub ser = new ServiceStub();
-			ServiceClient serClient = ser._getServiceClient();
-			serClient.engageModule("addressing");
-			ServiceStub.RandomiseParticipant rand = new ServiceStub.RandomiseParticipant();
-			rand.setSNo(userId);
-			rand.setCountryID(countryCode);
-			rand.setPracticeID(practiceCode);
-			rand.setUserID(userNo);
-			rand.setAuthKey(AUTH_KEY);
-			try {
-				resp = ser.randomiseParticipant(rand);
-				RandResult randRes = resp.getRandomiseParticipantResult();
-				
-				if (randRes.isResultCodeSpecified()) {
-					randResultCode = randRes.getResultCode();
-					if (randResultCode.equals("alreadyrand"))
-						return true;  // already randomised
-				}
-				if (randRes.isRandNoSpecified())
-					randNo  = randRes.getRandNo();
-				
-				if (randRes.isTreatmentGroupSpecified())
-					randTreatmentGroup = randRes.getTreatmentGroup();
-				if (randRes.isResultCodeSpecified()) {  // did we get a result from the randomiser ervice ??
-					randResultCode = randRes.getResultCode();
-					if (randResultCode.equals("ok")) {  						
-						updateUser(user, randNo, randTreatmentGroup);
-					}
-				}
-
-				ServiceStub.ReturnRandInfo retRand = new ServiceStub.ReturnRandInfo();
-				ser.returnRandInfo(retRand);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		} catch (AxisFault e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		
-		return true;
-
-	}
+	
 
 	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
 
