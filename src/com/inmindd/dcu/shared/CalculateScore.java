@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.appengine.api.utils.SystemProperty;
+import com.inmindd.dcu.server.InminddServiceImpl;
 
 public class CalculateScore {
 	
@@ -36,10 +37,9 @@ public class CalculateScore {
 		userId = user.getUserId();
 		try {
 			
-			String query = "select * from patient_info where patient_id =?; ";
+			String query = "select * from patient_info where patient_id = "+userId;
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId+"");
 			result = pstmt.executeQuery(query);
 			populatePatient(result);
 			

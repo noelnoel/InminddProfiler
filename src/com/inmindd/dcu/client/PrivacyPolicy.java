@@ -20,7 +20,9 @@ public class PrivacyPolicy implements EntryPoint
 	public void onModuleLoad()
 	{
 		globalise();
+		
 		callServiceSetup();
+	
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onSuccess(User user) {
@@ -44,9 +46,13 @@ public class PrivacyPolicy implements EntryPoint
 			}
 		};
 		
-		InminddServiceSvc.getUserConnected(callback);
+		//InminddServiceSvc.getUserConnected(callback);
+		triggerCookieMessage();
 	}
 	
+	public static native void triggerCookieMessage() /*-{
+    $wnd.cookieCont();
+	}-*/;
 	
 	public static native void trigerUserIDJavascript(String userID) /*-{
 		$wnd.trigeredUserIDByGWT(userID);
@@ -65,6 +71,8 @@ public class PrivacyPolicy implements EntryPoint
 		return true;
 	}
 
+	
+	
 	
 	
 	private void globalise()
@@ -107,6 +115,9 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
 		DOM.getElementById("landing-index-1").setInnerHTML(constants.privacy_policy());
+		
+		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
+		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
 		
 	}
