@@ -28,9 +28,9 @@ public class LandingPage implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-
 		callServiceSetup();
 		globalize();
+		triggerCookieMessage();
 		EventListener eventRegister= new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -271,6 +271,10 @@ public class LandingPage implements EntryPoint {
 
 	}
 	
+	public static native void triggerCookieMessage() /*-{
+    $wnd.cookieCont();
+}-*/;
+	
 	private void globalize(){
 		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
@@ -281,6 +285,7 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -322,69 +327,10 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("supportLogin").setInnerHTML(constants.supportLogin());
 		DOM.getElementById("supportPassword").setInnerHTML(constants.supportPassword());
 		DOM.getElementById("linkLogin").setInnerHTML(constants.supportSignin());
+		
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		/*DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
-		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
-		DOM.getElementById("rmw").setInnerHTML(constants.rmw());
-		DOM.getElementById("rf-cognitive").setInnerHTML(constants.rf_cognitive());
-		DOM.getElementById("rf-mood").setInnerHTML(constants.rf_mood());
-		DOM.getElementById("rf-diet").setInnerHTML(constants.rf_diet());
-		DOM.getElementById("rf-pressure").setInnerHTML(constants.rf_pressure());
-		DOM.getElementById("rf-obesity").setInnerHTML(constants.rf_obesity());
-		DOM.getElementById("rf-smoking").setInnerHTML(constants.rf_smoking());
-		DOM.getElementById("rf-cholesterol").setInnerHTML(constants.rf_cholesterol());
-		DOM.getElementById("rf-diabetes").setInnerHTML(constants.rf_diabetes());
-		DOM.getElementById("rf-kidney").setInnerHTML(constants.rf_kidney());
-		DOM.getElementById("rf-heart").setInnerHTML(constants.rf_heart());
-		DOM.getElementById("rf-activity").setInnerHTML(constants.rf_activity());
-		DOM.getElementById("rf-alchool").setInnerHTML(constants.rf_alchool());
-		DOM.getElementById("score-1").setInnerHTML(constants.score_1());
-		DOM.getElementById("score-2").setInnerHTML(constants.score_2());
-		DOM.getElementById("score-3").setInnerHTML(constants.score_3());
-		DOM.getElementById("score-4").setInnerHTML(constants.score_4());
-		DOM.getElementById("score-5").setInnerHTML(constants.score_5());
-		DOM.getElementById("score-6").setInnerHTML(constants.score_6());
-		DOM.getElementById("score-7").setInnerHTML(constants.score_7());
-		DOM.getElementById("score-8").setInnerHTML(constants.score_8());
-		DOM.getElementById("score-9").setInnerHTML(constants.score_9());
-		DOM.getElementById("score-10").setInnerHTML(constants.score_10());
-		DOM.getElementById("score-11").setInnerHTML(constants.score_11());
-		DOM.getElementById("score-12").setInnerHTML(constants.score_12());
-		DOM.getElementById("score-13").setInnerHTML(constants.score_13());
-		DOM.getElementById("score-14").setInnerHTML(constants.score_14());
-		DOM.getElementById("score-15").setInnerHTML(constants.score_15());
-		DOM.getElementById("score-16").setInnerHTML(constants.score_16());
-		DOM.getElementById("score-17").setInnerHTML(constants.score_17());
-		DOM.getElementById("score-18").setInnerHTML(constants.score_18());
-		DOM.getElementById("score-19").setInnerHTML(constants.score_19());
-		DOM.getElementById("score-20").setInnerHTML(constants.score_20());
-		DOM.getElementById("score-21").setInnerHTML(constants.score_21());
-		DOM.getElementById("score-22").setInnerHTML(constants.score_22());
-		DOM.getElementById("score-23").setInnerHTML(constants.score_23());
-		DOM.getElementById("score-24").setInnerHTML(constants.score_24());
-		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
-		DOM.getElementById("experts-1").setInnerHTML(constants.experts_1());
-		DOM.getElementById("experts-2").setInnerHTML(constants.experts_2());
-		DOM.getElementById("experts-3").setInnerHTML(constants.experts_3());
-		DOM.getElementById("experts-4").setInnerHTML(constants.experts_4());
-		DOM.getElementById("experts-5").setInnerHTML(constants.experts_5());
-		DOM.getElementById("experts-6").setInnerHTML(constants.experts_6());
-		DOM.getElementById("experts-7").setInnerHTML(constants.experts_7());
-		DOM.getElementById("experts-8").setInnerHTML(constants.experts_8());
-		DOM.getElementById("experts-9").setInnerHTML(constants.experts_9());*/
 	}
 }

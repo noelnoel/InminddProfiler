@@ -64,7 +64,31 @@
         ga('send', 'pageview');
 
         </script>
+        
+        
         <!-- End Google Analytics -->
+        
+        
+        <!--  This website uses cookies message -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+       <<script src="cookiesdirective.js" ></script>
+        <script type="text/javascript">
+        	window.cookieCont = function(){
+        		console.log("Starting cookie script");
+        		console.log($('#cookie_message').text());
+        		$.cookiesDirective(
+        				{
+        					privacyPolicyUri:'privacyPolicy.html',
+        					explicitConsent: false,
+        					backgroundColor: '#52B54A',
+        					linkColor: '#ffffff',
+        					position:'bottom',
+        					backgroundOpacity: '95',
+        					message: $('#cookie_message').text()
+        				});	
+        	}
+        </script>
+         
     </head>
     <body class="tundra">
         <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -159,34 +183,11 @@
             <a  id="linkSupport" role="button" class="invisible">Access the In-MINDD support environment</a>
              <button type="submit" class="invisible" id="linkLogin">Sign in</button>
              <a class="invisible" id="linkRegister" role="button">Access the In-MINDD Profiler</a>
+            
         </div>
         <!-- script references -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="cookiesdirective.js"></script>
-        <!--  This website uses cookies message -->
-        <script type="text/javascript">
-        	$(document).ready(function(){
-        		console.log("Starting cookie script");
-        		function cookieController() {
-                    // Cookie setting scripts in here
-        			
-                }   
-        		$.cookiesDirective(
-        				{
-        					privacyPolicyUri:'privacy_policy.html',
-        					scriptWrapper:cookieController,
-        					explicitConsent: false,
-        					backgroundColor: '#52B54A',
-        					linkColor: '#ffffff',
-        					position:'bottom',
-        					backgroundOpacity: '95',
-        					message: $('#cookie_message').text()
-        				});
-        		
-        	});
-        
-        </script>
-        
+  
+       
         
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="https://yandex.st/dojo/1.9.1/dojo/dojo.js"></script>
@@ -203,5 +204,9 @@
                 $(document).on("click","img.flag", changeFlag);
             });
         </script>
+        
+        
+        
+        
     </body>
 </html>

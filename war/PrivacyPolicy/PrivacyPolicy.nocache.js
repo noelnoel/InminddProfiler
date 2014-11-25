@@ -349,21 +349,21 @@ function PrivacyPolicy(){
   $stats && $stats({moduleName:'PrivacyPolicy', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'selectingPermutation'});
   if (!isHostedMode()) {
     try {
-      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], '2441395EE813FB979CE2533B774CDA6A');
-      unflattenKeylistIntoAnswers(['default', 'ie9'], '2C762317BCFEDD1CF58D14F2902451F5');
-      unflattenKeylistIntoAnswers(['fr', 'ie10'], '5A23120B8FB5DE794EBF634417F56E34');
-      unflattenKeylistIntoAnswers(['default', 'ie10'], '6955409DE7491D094B5F7675A939498B');
-      unflattenKeylistIntoAnswers(['nl', 'gecko1_8'], '7F1C2F232827891D007C7841EA2069E0');
-      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], '88B8F93D34BF7F1350FE549ED22FB30A');
-      unflattenKeylistIntoAnswers(['default', 'safari'], '96334768E7703CA36587E257E92AB445');
-      unflattenKeylistIntoAnswers(['nl', 'ie10'], '9AAE7584A21AE82AE7BD5783D5D4D3C9');
-      unflattenKeylistIntoAnswers(['fr', 'safari'], 'AF04730932B80E176D3CFB7C4B80988A');
-      unflattenKeylistIntoAnswers(['fr', 'ie8'], 'B16A9BB8D8CD3B24FD9BA9E813100091');
-      unflattenKeylistIntoAnswers(['nl', 'safari'], 'B9E01416328133BF361AD2F698F18EB9');
-      unflattenKeylistIntoAnswers(['nl', 'ie9'], 'C5188BAF483D6C8F8DB2AE79130DD70E');
-      unflattenKeylistIntoAnswers(['nl', 'ie8'], 'CFF11084E8DA03153F9B93CD2C329D66');
-      unflattenKeylistIntoAnswers(['default', 'ie8'], 'D98FC4EE49733D38780F9108EDBFF7EB');
-      unflattenKeylistIntoAnswers(['fr', 'ie9'], 'F558E5DDD5CD83D79F5044B19E953E99');
+      unflattenKeylistIntoAnswers(['default', 'ie8'], '11C1710039E07FC89E83F56AF38C9F16');
+      unflattenKeylistIntoAnswers(['nl', 'gecko1_8'], '2CF5CF237112E63D32D70E462C4BF494');
+      unflattenKeylistIntoAnswers(['default', 'ie10'], '3221F2C37444D1E65E3D3AD710706292');
+      unflattenKeylistIntoAnswers(['fr', 'ie8'], '3443E03C5269C68D2EA0E95C0FDE0B29');
+      unflattenKeylistIntoAnswers(['default', 'safari'], '3D132B242064F0836C7FF447118D685B');
+      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], '607F55F4335F0EA1F078E83BCA427ECE');
+      unflattenKeylistIntoAnswers(['nl', 'ie9'], '810DCC643692AF751625B593BF84A46F');
+      unflattenKeylistIntoAnswers(['nl', 'safari'], '82A26553E82BA2377AD4342569214C1B');
+      unflattenKeylistIntoAnswers(['nl', 'ie10'], '9006C2D655EFBBD02B31C2A9BB42BAD7');
+      unflattenKeylistIntoAnswers(['nl', 'ie8'], '9499F9CACD7B00D27099002EB8887CC5');
+      unflattenKeylistIntoAnswers(['fr', 'ie9'], 'B88E543602C5633D18AA8D6FB699A0D3');
+      unflattenKeylistIntoAnswers(['fr', 'safari'], 'BE9F27064153B129E5DB4B2D955DB9C2');
+      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], 'C234BDB2112B36FC1ADD8D9B2BCE8368');
+      unflattenKeylistIntoAnswers(['fr', 'ie10'], 'EF01999D4F891E8C7E8363D134C13C04');
+      unflattenKeylistIntoAnswers(['default', 'ie9'], 'F8B60C8B7AE3D579F3A1C26AFDC8F704');
       strongName = answers[computePropValue('locale')][computePropValue('user.agent')];
       var idx_0 = strongName.indexOf(':');
       if (idx_0 != -1) {

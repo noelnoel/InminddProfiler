@@ -115,7 +115,7 @@
   
   <servlet-mapping>
       <servlet-name>PrivacyPolicy</servlet-name>
-      <url-pattern>/PrivacyPolicy</url-pattern>
+      <url-pattern>/PrivacyPolicy/Inmindd</url-pattern>
   </servlet-mapping>
   
   <servlet>
