@@ -20,7 +20,7 @@ public class EmailCron extends HttpServlet
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) 
 	{
-		//Get List of useres
+		//Get List of users
 		ArrayList<UserMail> mailTable = impl.getUserMailList();
 		for(UserMail mailUser:mailTable)
 		{
@@ -34,9 +34,13 @@ public class EmailCron extends HttpServlet
 					for(EmailDetails email:emailList)
 					{
 						_logger.log(Level.INFO, "Sent emial to: "+unencryptEmail);
-						SendMail.sendMail(unencryptEmail, email.getMessageBody(), email.getSubject());
+						SendMail.sendMail(unencryptEmail, buildEmail(email.getMessageBody(), mailUser.getLang()), email.getSubject());
 					}
-					impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSentEmail()+1);
+					if(emailList.size()>0) //Check to make sure an email was sent
+					{
+						impl.updateLastSentEmail(mailUser.getUserId(),mailUser.getLastSentEmail()+1);
+					}
+					
 				}
 				else
 				{
@@ -45,6 +49,31 @@ public class EmailCron extends HttpServlet
 			}
 			
 		}
+	}
+	
+	
+	private static String buildEmail(String messageBody, String lang)
+	{
+		String start = EmailGroupConstants.EMAIL_HEADER;
+		start+= messageBody;
+		start+= EmailGroupConstants.EMAIL_FOOTER_START;
+		switch(lang)
+		{
+			case("nl"):
+				start+= EmailGroupConstants.EMAIL_FOOTER_TEXT_NL;
+				break;
+			case("en"):
+				start+= EmailGroupConstants.EMAIL_FOOTER_TEXT_EN;
+				break;
+			case("fr"):
+				start+= EmailGroupConstants.EMAIL_FOOTER_TEXT_FR;
+				break;
+			default:
+				start+=EmailGroupConstants.EMAIL_FOOTER_TEXT_EN;
+				break;
+		}
+		start+= EmailGroupConstants.EMAIL_FOOTER_END;
+		return start;
 	}
 	
 	
