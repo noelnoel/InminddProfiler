@@ -108,8 +108,7 @@ public class Apps implements EntryPoint {
 	}
 	
 	private void globalize(){
-		constants = 
-				   (InminddConstants)GWT.create(InminddConstants.class);
+		constants = (InminddConstants)GWT.create(InminddConstants.class);
 		DOM.getElementById("menu-home").setInnerHTML(constants.menu_home());
 		DOM.getElementById("menu-profiler").setInnerHTML(constants.menu_profiler());
 		DOM.getElementById("menu-support").setInnerHTML(constants.menu_support());
@@ -117,6 +116,7 @@ public class Apps implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -127,6 +127,7 @@ public class Apps implements EntryPoint {
 		
 		DOM.getElementById("apps1").setInnerHTML(constants.apps1());
 		DOM.getElementById("apps2").setInnerHTML(constants.apps2());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 }

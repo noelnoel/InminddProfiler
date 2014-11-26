@@ -187,6 +187,7 @@ public class Score implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -248,6 +249,7 @@ public class Score implements EntryPoint {
 		DOM.getElementById("score-28").setInnerHTML(constants.score_28());
 		DOM.getElementById("score-29").setInnerHTML(constants.score_29());
 		DOM.getElementById("score-30").setInnerHTML(constants.score_30());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 	}
 
 }

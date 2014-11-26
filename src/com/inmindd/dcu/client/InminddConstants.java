@@ -570,6 +570,50 @@ public interface InminddConstants extends Constants{
 		String supportMessageScoreFailed();
 		String supportMessageInternalError();
 		String supportAnd();
-
 		
+		//Cookies
+		String cookieConsent();
+		String doNotShowMessage();
+		
+		//Email 
+		String emailAddress();
+		String addEmailBtn();
+		String deleteEmailBtn();
+		String emailAddrAdmin();
+		String emailEnterError();
+		String cancelButton();
+		String addDialogTitle();
+		String del_email_title();
+		String del_email_conf();
+		String delOK();
+		
+		//Privacy Policy
+		String privacy_policy();
+		String trial_id();
+		String trial_website();
+		String gen_statement();
+		String gen_statement_text();
+		String collect_info();
+		String collect_info_text();
+		String request_statement();
+		String request_statement_text();
+		String complaints();
+		String complaints_text();
+		String collection_tech_statement();
+		String collection_tech_statement_text();
+		String tech_stat_1();
+		String tech_stat_2();
+		String tech_stat_3();
+		String tech_stat_4();
+		String tech_stat_5();
+		String privacy_signoff();
+		
+		
+		//Twitter
+		String twitter_id();
+		String twitterTitle();
+		String twitterLink();
+		
+		//Blog
+		String blog_link();
 }
