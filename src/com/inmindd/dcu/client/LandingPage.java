@@ -68,26 +68,7 @@ public class LandingPage implements EntryPoint {
 								userId = user.getUserId();
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");   
-								if(userId.startsWith("11")) //Dublin
-								{
-									//Element nice = DOM.getElementById("twit-widget-nice");
-									//nice.getParentNode().removeChild(nice);
-									
-								}
-								else if(userId.startsWith("22")) //Check for glaswegians 
-								{
-									DOM.getElementById("twit-widget").setAttribute("data-widget-id","532548866025873408");
-									DOM.getElementById("twit-widget").setAttribute("href", "https://twitter.com/InMinddGlasgow" );
-									DOM.getElementById("twit-widget").setInnerHTML("Tweets by @InMinddGlasgow");
-								}
-								else if(userId.startsWith("33")) //Dublin
-								{
-									
-								}
-								else if(userId.startsWith("44"))
-								{
-									
-								}
+								
 								
 							}
 						}
@@ -133,14 +114,17 @@ public class LandingPage implements EntryPoint {
 									//Remove nice Widget
 									Element nieceWidget = DOM.getElementById("twitter-widget-1");
 									nieceWidget.getParentNode().removeChild(nieceWidget);
+									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
 									
 									//maastricht
 									Element maasWidget = DOM.getElementById("twitter-widget-2");
 									maasWidget.getParentNode().removeChild(maasWidget);
+									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
 									
 									//glasgow
 									Element glasWidget = DOM.getElementById("twitter-widget-3");
 									glasWidget.getParentNode().removeChild(glasWidget);
+									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
 									
 								}
 								else if(userId.startsWith("22")) //Check for glaswegians 
@@ -148,26 +132,32 @@ public class LandingPage implements EntryPoint {
 									//Dublin
 									Element dubWidget = DOM.getElementById("twitter-widget-0");
 									dubWidget.getParentNode().removeChild(dubWidget);
+									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
 									//Remove nice Widget
 									Element nieceWidget = DOM.getElementById("twitter-widget-1");
 									nieceWidget.getParentNode().removeChild(nieceWidget);
+									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
 									
 									//maastricht
 									Element maasWidget = DOM.getElementById("twitter-widget-2");
 									maasWidget.getParentNode().removeChild(maasWidget);
+									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
 								}
 								else if(userId.startsWith("33")) 
 								{
 									//Dublin
 									Element dubWidget = DOM.getElementById("twitter-widget-0");
 									dubWidget.getParentNode().removeChild(dubWidget);
+									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
 									//Remove nice Widget
 									Element nieceWidget = DOM.getElementById("twitter-widget-1");
 									nieceWidget.getParentNode().removeChild(nieceWidget);
+									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
 									
 									//glasgow
 									Element glasWidget = DOM.getElementById("twitter-widget-3");
 									glasWidget.getParentNode().removeChild(glasWidget);
+									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
 									
 								}
 								else if(userId.startsWith("44"))
@@ -175,14 +165,17 @@ public class LandingPage implements EntryPoint {
 									//maastricht
 									Element maasWidget = DOM.getElementById("twitter-widget-2");
 									maasWidget.getParentNode().removeChild(maasWidget);
+									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
 									
 									//glasgow
 									Element glasWidget = DOM.getElementById("twitter-widget-3");
 									glasWidget.getParentNode().removeChild(glasWidget);
+									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
 									
 									//Dublin
 									Element dubWidget = DOM.getElementById("twitter-widget-0");
 									dubWidget.getParentNode().removeChild(dubWidget);
+									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
 								}
 	
 							}
