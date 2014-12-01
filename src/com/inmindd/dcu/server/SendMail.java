@@ -52,7 +52,7 @@ public class SendMail
 			msg.setFrom(new InternetAddress(userName));
 			msg.setRecipients(RecipientType.BCC, InternetAddress.parse(emailAddr));
 			msg.setSubject(subject);
-			msg.setText(message);
+			msg.setContent(message, EmailGroupConstants.EMAIL_HTML_MIME_TYPE);
 			Transport.send(msg);
 			
 			

@@ -15,5 +15,5 @@ public class EmailGroupConstants
 	public static final String EMAIL_FOOTER_TEXT_NL = "Dit project wordt gefinancierd door het Zevende Kaderprogramma van de Europese Unie voor onderzoek, technische ontwikkeling en demonstratie, subsidieovereenkomst nummer 304979";
 	public static final String EMAIL_FOOTER_TEXT_FR = "Subventionné par EU FP7: Ce projet reçoit des fonds du Septième Programme-Cadre de l’Union Européenne pour la recherche, le développement et la démonstration technologique (sous le numéro d'autorisation no 304979).";
 	public static final String EMAIL_FOOTER_END = "</td><td><img src=\"http://inmindd-integration.appspot.com/images/eu-flag.png\"/></td></tr></table></body></html>";
-	
+	public static final String EMAIL_HTML_MIME_TYPE = "text/html; charset=utf-8";
 }
