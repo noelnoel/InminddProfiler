@@ -330,11 +330,9 @@ public class LandingPage implements EntryPoint {
 		
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
-<<<<<<< HEAD
-	//	DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
-=======
+
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
->>>>>>> 5c109f0e43e0ef5fa8ef21510e19a7c592107e6b
+
 		
 	}
 }

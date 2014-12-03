@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /**
  * Romain Beuque - 2014
  * romain.beuque@u-psud.fr

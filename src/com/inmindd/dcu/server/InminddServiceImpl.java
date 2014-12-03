@@ -49,20 +49,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
-
-
-
-
-
-
-
-
-
-
 /*end of mail*/
-import org.tempuri.ServiceStub;
-import org.tempuri.ServiceStub.RandResult;
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
