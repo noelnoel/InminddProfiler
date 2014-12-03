@@ -20,7 +20,9 @@ public class PrivacyPolicy implements EntryPoint
 	public void onModuleLoad()
 	{
 		globalise();
+		
 		callServiceSetup();
+	
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
 			@Override
 			public void onSuccess(User user) {
@@ -44,9 +46,13 @@ public class PrivacyPolicy implements EntryPoint
 			}
 		};
 		
-		InminddServiceSvc.getUserConnected(callback);
+		//InminddServiceSvc.getUserConnected(callback);
+		triggerCookieMessage();
 	}
 	
+	public static native void triggerCookieMessage() /*-{
+    $wnd.cookieCont();
+	}-*/;
 	
 	public static native void trigerUserIDJavascript(String userID) /*-{
 		$wnd.trigeredUserIDByGWT(userID);
@@ -67,6 +73,8 @@ public class PrivacyPolicy implements EntryPoint
 
 	
 	
+	
+	
 	private void globalise()
 	{
 		constants = (InminddConstants)GWT.create(InminddConstants.class);
@@ -78,6 +86,7 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
@@ -106,6 +115,9 @@ public class PrivacyPolicy implements EntryPoint
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
 		
 		DOM.getElementById("landing-index-1").setInnerHTML(constants.privacy_policy());
+		
+		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
+		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
 		
 		
 	}

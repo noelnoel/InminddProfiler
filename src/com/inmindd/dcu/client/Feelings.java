@@ -1,5 +1,6 @@
 package com.inmindd.dcu.client;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -302,16 +303,28 @@ public class Feelings {
 		    sp.getElement().getStyle().setProperty("maxWidth", "730px"); 
 		  
 		    InlineLabel lbl = new InlineLabel(question);
-		    lbl.getElement().getStyle().setProperty("fontWeight", "bold");
+		  
+		    lbl.getElement().getStyle().setProperty("foreGround", "white");
 			if ((answerButton % 2 ) == 1) {
-		    lbl.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");  
-			}		   
+		    lineQuestionAnswer.getElement() .setAttribute("class", "tr1");  
+			}	
+			else {		
+			
+			    lineQuestionAnswer.getElement().setAttribute("class", "tr2");
+			}
+			
 		    HorizontalPanel hp = new HorizontalPanel();
 			
 			addToAnswers(hp, answerButton);
 			if ((answerButton % 2 ) == 1) {
-				hp.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
+		
+			hp.getElement().setAttribute("class", "tr1"); 
 			}
+			else {		
+				
+			    hp.getElement().setAttribute("class", "tr2");
+			}
+		//	}
 			sp.add(lbl);
 		    lineQuestionAnswer.add(sp);
 		    lineQuestionAnswer.add(hp);

@@ -78,8 +78,16 @@ H1 {
 .invalid {
 	color: red;
 }
+.tr1{
+	background-color: lightblue;
+	color:black;
+}
+
+.tr2{
+	background-color: white;
+}
 .greybg{
-	background-color:#c0c0c0;
+	background-color:white;
 }
 
 .whitebg {
