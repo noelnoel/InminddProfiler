@@ -2139,7 +2139,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
-		changeEmailGroup(patient_id); //Update the user to the engaging email group
+		//changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2807,6 +2807,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		{
 			//Before update, check the last login
 			UserMail user = this.getUserMail(userId);
+			changeEmailGroup(user.getUserId());
 			initDBConnection();
 			String todaysDate = this.getDateAsMySQLDateTime(new Date());
 			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
