@@ -35,7 +35,6 @@ public interface InminddService extends RemoteService {
 	public Boolean duplicateUser(String id) throws IllegalArgumentException;
 	public Boolean resetPassword(User user) throws IllegalArgumentException;
 
-    public Boolean setRandomiseUserStatus(User user) throws IllegalArgumentException;
 
 	public String getRandomisedGroup(User user)throws IllegalArgumentException;
 
