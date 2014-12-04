@@ -7,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.ServiceClient;
 
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddConstants;
@@ -2130,7 +2128,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
-		changeEmailGroup(patient_id); //Update the user to the engaging email group
+		//changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2798,15 +2796,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		{
 			//Before update, check the last login
 			UserMail user = this.getUserMail(userId);
-			//is the lastlogin null ?
-			/*if(user.getLastLogin()==null) //If so they are elgible to be sent a special email
-			{
-				EmailDetails det = null;
-				String addr = EmailEncryption.decrypt(user.getEncryptedEmail());
-				SendMail.sendMail(addr, det.getMessageBody(), det.getSubject());
-				//finally update their emailGroup
-				this.changeEmailGroup(userId);
-			}*/
+			changeEmailGroup(user.getUserId());
 			initDBConnection();
 			String todaysDate = this.getDateAsMySQLDateTime(new Date());
 			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
@@ -3101,7 +3091,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				String lng = result.getString("lang");
 				int mnth = result.getInt("monthToSend");
 				int emailG = result.getInt("emailGroup");
-				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
+				String plnTxt = result.getString("Plain_Text");
+				det.add(new EmailDetails(subject, text, emailG, mnth, lng, plnTxt));
 				
 			}
 			try

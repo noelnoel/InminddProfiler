@@ -295,6 +295,41 @@ public class Feelings {
 
 		    return cesdPanel;
 		}
+		
+	/*
+		private void setQuestionsAndAnswers(String question, int answerButton) {
+			
+			HorizontalPanel lineQuestionAnswer  = new HorizontalPanel();
+		    SimplePanel sp = new SimplePanel();
+		    sp.getElement().getStyle().setProperty("minWidth", "730px");  
+		    sp.getElement().getStyle().setProperty("maxWidth", "730px"); 
+		  
+		    InlineLabel lbl = new InlineLabel(question);
+		    lbl.getElement().getStyle().setProperty("fontWeight", "bold");
+			if ((answerButton % 2 ) == 1) {
+		    lbl.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");  
+			}		   
+		    HorizontalPanel hp = new HorizontalPanel();
+			
+			addToAnswers(hp, answerButton);
+			if ((answerButton % 2 ) == 1) {
+				hp.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
+			}
+			sp.add(lbl);
+		    lineQuestionAnswer.add(sp);
+		    lineQuestionAnswer.add(hp);
+		    pnl.add(lineQuestionAnswer);
+		    pnl.add(new HTMLPanel("<span>  <br>  </span>"));
+		    // keep track of the questions for validation at submit
+		    panelsArray.add(lineQuestionAnswer);
+		
+	}
+	
+	
+	
+	
+	
+	*/
 	private void setQuestionsAndAnswers(String question, int answerButton) {
 			
 			HorizontalPanel lineQuestionAnswer  = new HorizontalPanel();

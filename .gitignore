@@ -14,6 +14,7 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+#war/WEB-INF/lib/
 
 #compilation logs
 .gwt/
