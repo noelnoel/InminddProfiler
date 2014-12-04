@@ -28,7 +28,7 @@ public class SendMail
 		
 	}
 	
-	public static void sendMail(String emailAddr,String message, String subject)
+	public static void sendMail(String emailAddr,String message, String subject,String plainText)
 	{
 		getUserNameAndPassword();
 		
@@ -52,6 +52,7 @@ public class SendMail
 			msg.setFrom(new InternetAddress(userName));
 			msg.setRecipients(RecipientType.BCC, InternetAddress.parse(emailAddr));
 			msg.setSubject(subject);
+			msg.setText(plainText);
 			msg.setContent(message, EmailGroupConstants.EMAIL_HTML_MIME_TYPE);
 			Transport.send(msg);
 			
