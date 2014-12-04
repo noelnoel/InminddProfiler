@@ -52,6 +52,19 @@ H1 {
    
 }
 
+.tr3 {
+	background-color: white !important;
+	font-weight:bold ;
+	text-align: center;
+}
+@external gwt-ListBox;
+.gwt-ListBox {
+	background-color: white !important;
+	font-weight:bold !important;
+	text-align: center;
+}
+
+
 .feedback{
    color: white;
    height: 250px;
