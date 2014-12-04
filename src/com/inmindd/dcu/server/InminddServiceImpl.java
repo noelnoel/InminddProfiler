@@ -7,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.ServiceClient;
 
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddConstants;
@@ -60,9 +58,7 @@ import javax.mail.internet.MimeMessage;
 
 
 
-/*end of mail*/
-import org.tempuri.ServiceStub;
-import org.tempuri.ServiceStub.RandResult;
+
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;

@@ -41,8 +41,8 @@ public interface InminddServiceAsync {
 	void resetPassword(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
-	void randomiseUser(User user, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;
+	/*void randomiseUser(User user, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;*/
 	
 	
 	void setRandomiseUserStatus(User user, AsyncCallback<Boolean> callback)
