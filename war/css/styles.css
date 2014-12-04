@@ -158,3 +158,9 @@ h4 {
 #ios-arrow-left:hover:before {
     background-color: rgba(54,88,135,1);/*hovercolor*/
 }
+
+
+#email_enter_error /*The error message on the admin page for adding emails*/
+{
+	border:none;
+}

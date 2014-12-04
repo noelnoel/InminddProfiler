@@ -34,7 +34,7 @@ public interface InminddService extends RemoteService {
 	public Boolean registerUser(User user)throws IllegalArgumentException;
 	public Boolean duplicateUser(String id) throws IllegalArgumentException;
 	public Boolean resetPassword(User user) throws IllegalArgumentException;
-	public Boolean randomiseUser(User user)throws IllegalArgumentException;  // not currently used becase of GAE
+	//public Boolean randomiseUser(User user)throws IllegalArgumentException;  // not currently used becase of GAE
     public Boolean setRandomiseUserStatus(User user) throws IllegalArgumentException;
 
 	public String getRandomisedGroup(User user)throws IllegalArgumentException;
@@ -80,4 +80,10 @@ public interface InminddService extends RemoteService {
 	public ArrayList<SupportApps> querySupportApps(String lang)			throws IllegalArgumentException;
 	public boolean isAdministrator() throws IllegalArgumentException;
 	public ArrayList<String> queryAllUsers() throws IllegalArgumentException;
+	
+	public Boolean addUserEmail(String userId, String emailAddr) throws IllegalArgumentException;
+	public Boolean updateUserLastLogin(String userId) throws IllegalArgumentException;
+	public Boolean updateUserMail(String userId, String emailAddress) throws IllegalArgumentException;
+	public Boolean deleteUserMail(String userId) throws IllegalArgumentException;
+	
 }
