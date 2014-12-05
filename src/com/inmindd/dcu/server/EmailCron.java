@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibm.icu.util.GregorianCalendar;
 
 @SuppressWarnings("serial")
 public class EmailCron extends HttpServlet
@@ -34,7 +33,7 @@ public class EmailCron extends HttpServlet
 					for(EmailDetails email:emailList)
 					{
 						_logger.log(Level.INFO, "Sent emial to: "+unencryptEmail);
-						SendMail.sendMail(unencryptEmail, buildEmail(email.getMessageBody(), mailUser.getLang()), email.getSubject());
+						SendMail.sendMail(unencryptEmail, buildEmail(email.getMessageBody(), mailUser.getLang()), email.getSubject(), email.getTextContent());
 					}
 					if(emailList.size()>0) //Check to make sure an email was sent
 					{
@@ -55,6 +54,22 @@ public class EmailCron extends HttpServlet
 	private static String buildEmail(String messageBody, String lang)
 	{
 		String start = EmailGroupConstants.EMAIL_HEADER;
+		switch(lang)
+		{
+			case("nl"):
+				start+= EmailGroupConstants.EMAIL_LINK_NL;
+				break;
+			case("en"):
+				start+= EmailGroupConstants.EMAIL_LINK_EN;
+				break;
+			case("fr"):
+				start+= EmailGroupConstants.EMAIL_LINK_FR;
+				break;
+			default:
+				start+=EmailGroupConstants.EMAIL_LINK_EN;
+				break;
+		}
+		start+= EmailGroupConstants.EMAIL_HEADER_END;
 		start+= messageBody;
 		start+= EmailGroupConstants.EMAIL_FOOTER_START;
 		switch(lang)

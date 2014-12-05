@@ -3,10 +3,8 @@ package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
@@ -34,8 +32,7 @@ public interface InminddService extends RemoteService {
 	public Boolean registerUser(User user)throws IllegalArgumentException;
 	public Boolean duplicateUser(String id) throws IllegalArgumentException;
 	public Boolean resetPassword(User user) throws IllegalArgumentException;
-	//public Boolean randomiseUser(User user)throws IllegalArgumentException;  // not currently used becase of GAE
-    public Boolean setRandomiseUserStatus(User user) throws IllegalArgumentException;
+
 
 	public String getRandomisedGroup(User user)throws IllegalArgumentException;
 

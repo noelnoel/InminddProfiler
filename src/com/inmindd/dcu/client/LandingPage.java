@@ -7,9 +7,9 @@ import java.util.Date;
 //import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptException;
+
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -18,7 +18,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.User;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class LandingPage implements EntryPoint {
 
@@ -324,7 +323,9 @@ public class LandingPage implements EntryPoint {
 		
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
+
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+
 		
 	}
 }

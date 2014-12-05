@@ -1,7 +1,6 @@
 package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,7 +8,6 @@ import java.sql.Statement;
 
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -47,23 +45,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
-
-
-
-
-
-
-
-
-
-
-
+/*end of mail*/
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.protos.cloud.sql.Client.SqlException;
 
 /**
  * The server side implementation of the RPC service.
@@ -72,13 +58,13 @@ import com.google.protos.cloud.sql.Client.SqlException;
 @SuppressWarnings("serial")
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
+	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
 
 	
 	// autherisation key for Glasgow randomisation wev service
 	
-	private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
-	private String decryptedPassword;
+	//private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
+	//private String decryptedPassword;
 	protected Connection conn; 
 	private Patient patient;
 	private FeelingsInfo feelings;
@@ -2139,7 +2125,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
-		changeEmailGroup(patient_id); //Update the user to the engaging email group
+		//changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2807,15 +2793,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		{
 			//Before update, check the last login
 			UserMail user = this.getUserMail(userId);
-			//is the lastlogin null ?
-			/*if(user.getLastLogin()==null) //If so they are elgible to be sent a special email
-			{
-				EmailDetails det = null;
-				String addr = EmailEncryption.decrypt(user.getEncryptedEmail());
-				SendMail.sendMail(addr, det.getMessageBody(), det.getSubject());
-				//finally update their emailGroup
-				this.changeEmailGroup(userId);
-			}*/
+			changeEmailGroup(user.getUserId());
 			initDBConnection();
 			String todaysDate = this.getDateAsMySQLDateTime(new Date());
 			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
@@ -3110,7 +3088,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				String lng = result.getString("lang");
 				int mnth = result.getInt("monthToSend");
 				int emailG = result.getInt("emailGroup");
-				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
+				String plnTxt = result.getString("Plain_Text");
+				det.add(new EmailDetails(subject, text, emailG, mnth, lng, plnTxt));
 				
 			}
 			try
