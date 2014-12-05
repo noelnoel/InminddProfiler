@@ -1,7 +1,6 @@
 package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,7 +8,6 @@ import java.sql.Statement;
 
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -52,7 +50,6 @@ import javax.mail.internet.MimeMessage;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.protos.cloud.sql.Client.SqlException;
 
 /**
  * The server side implementation of the RPC service.

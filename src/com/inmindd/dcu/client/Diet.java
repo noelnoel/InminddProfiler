@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -241,7 +240,7 @@ public class Diet {
 			}
 		  };
 		  
-		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
+
 }
 	
 	

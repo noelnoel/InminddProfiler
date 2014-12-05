@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.server.InminddServiceImpl;
 
 public class CalculateScore {
 	
 	private Connection conn;
-	private Statement statement = null;    
-	private ResultSet resultSet = null;
 	private Patient patient = new Patient();
 	private FeelingsInfo feelings = new FeelingsInfo();
 	private MedicalInfo medical = new MedicalInfo(); 

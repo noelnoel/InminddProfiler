@@ -2,8 +2,6 @@ package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
 
-import org.apache.tools.ant.util.regexp.Regexp;
-
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 

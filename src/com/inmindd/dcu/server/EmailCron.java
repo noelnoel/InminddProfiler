@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibm.icu.util.GregorianCalendar;
 
 @SuppressWarnings("serial")
 public class EmailCron extends HttpServlet

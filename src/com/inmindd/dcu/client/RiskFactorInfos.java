@@ -14,7 +14,6 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class RiskFactorInfos implements EntryPoint {
 	
