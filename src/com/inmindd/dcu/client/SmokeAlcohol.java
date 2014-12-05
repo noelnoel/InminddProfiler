@@ -51,12 +51,10 @@ public class SmokeAlcohol {
 	private ListBox drinksBandIE = new ListBox();
 	private ListBox drinksBandOther = new ListBox();
 	private InlineLabel weeklyDrink = new InlineLabel();
-	private User user;
 	private Login login;
 	private  Image logo = new Image();
 	public static SmokeAlcohol lastinstance;
 	private InminddServiceAsync InminddServiceSvc;
-	private static final String LOGO_IMAGE_NAME = "Standard_drink_in_Ireland.png";
 	private static Button btn;;
 	public SmokeAlcohol() {
 		lastinstance = this;

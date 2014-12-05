@@ -62,7 +62,6 @@ public class CognitiveOne {
 	private TextBox plantSimulYears;
 	private TextBox elementaryYears;
 	private TextBox elementarySimulYears;
-	private int leftMargin;
 	
 	public static CognitiveOne lastinstance;
 	

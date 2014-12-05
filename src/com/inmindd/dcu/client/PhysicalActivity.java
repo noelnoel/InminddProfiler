@@ -71,7 +71,6 @@ public class PhysicalActivity {
 	private DataField vig;
 	private RadioButton sweatYes; 
 	private RadioButton sweatNo; 
-	private User user;
 	private Login login;	
 	PhysicalActivityInfo activity;
 	

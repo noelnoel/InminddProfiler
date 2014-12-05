@@ -51,7 +51,6 @@ public class PatientInfo {
 	public ListBox occupation = new ListBox();
 	public ListBox employmentStatus = new ListBox();
 	public TextBox otherEmploymentStatus;
-	private User user;
 	private Login login;
 	public static PatientInfo lastinstance;
 
@@ -209,7 +208,9 @@ public class PatientInfo {
 		
 		InlineLabel theSelection = new InlineLabel(constants.cob());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
+		
+		//DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
+		
 		country.addItem(constants.select_one());
         // for (int i=0; i<loc.getSortedRegionCodes().length; i++) { 
        //          String code = loc.getSortedRegionCodes()[i]; 
@@ -240,7 +241,7 @@ public class PatientInfo {
 		InlineLabel select  = new InlineLabel(constants.single());
 		select.getElement().getStyle().setProperty("fontWeight", "bold");
 		
-		SelectElement selectElement = SelectElement.as(marital.getElement());
+		//SelectElement selectElement = SelectElement.as(marital.getElement());
 		
 
 		marital.addItem(constants.select_one());
@@ -268,8 +269,8 @@ public class PatientInfo {
                                  }
               }           
            }
-        SelectElement selectElement2 = SelectElement.as(marital.getElement());
-        com.google.gwt.dom.client.NodeList<OptionElement> options = selectElement2.getOptions();
+        //SelectElement selectElement2 = SelectElement.as(marital.getElement());
+        //com.google.gwt.dom.client.NodeList<OptionElement> options = selectElement2.getOptions();
       
         
         maritalStatus.add(marital);

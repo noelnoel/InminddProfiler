@@ -342,13 +342,12 @@ public class CalculateScore {
 	
 	
 	private void mmol(RiskFactorScore rf){
-		double cholNetherlands;
-		double cholOthers;
+		
 		double chol = medical.getMmol();
+		
 		// netherlands calulation;
 		if (chol >= 6.5) {
 			rf.setCholesterolNetherlands(7.5);
-			
 		}
 		if (chol >= 5.0) {
 			rf.setCholesterolOthers(7.5);

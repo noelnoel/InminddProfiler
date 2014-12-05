@@ -41,7 +41,6 @@ public class Feelings {
 		private DockPanel dock2;
 		private InlineLabel error;
 		private Login login;
-		private static User user;
 		private InminddServiceAsync InminddServiceSvc;
 
 		

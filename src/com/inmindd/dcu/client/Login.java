@@ -40,7 +40,6 @@ public class Login  {
 
 	private  User user = new User();
 	private  Patient patient = new Patient();
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
   
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -109,7 +108,7 @@ public class Login  {
     private String hashedPassword;
     private String hashedMaidenName;
     private String hashedFavColour;
-    private String email;
+
     
     private Boolean duplicate = false;
     private int idUser;
@@ -756,7 +755,7 @@ public class Login  {
 	// not used 
 	private Boolean checkAlreadyRegistered(String id) {
 		 callServiceSetup();
-		 final Boolean dup;
+		 //final Boolean dup;
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 
 			 @Override	 

@@ -58,13 +58,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
+	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
 
 	
 	// autherisation key for Glasgow randomisation wev service
 	
-	private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
-	private String decryptedPassword;
+	//private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
+	//private String decryptedPassword;
 	protected Connection conn; 
 	private Patient patient;
 	private FeelingsInfo feelings;

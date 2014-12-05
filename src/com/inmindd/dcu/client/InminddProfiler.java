@@ -90,9 +90,6 @@ public class InminddProfiler implements EntryPoint, ValueChangeHandler<String> {
 	static final String TOKEN_LOGIN = "Login";
 	
 	
-	
-	private User user;
-	
 	/**
 	 * The filename of our logo image
 	 */

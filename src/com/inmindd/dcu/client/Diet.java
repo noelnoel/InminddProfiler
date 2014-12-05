@@ -60,12 +60,10 @@ public class Diet {
 	private RadioButton pastaTwo;
 	
 	private ScrollPanel scroll = new ScrollPanel();
-	private User user;
 	private User outerUser;
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
-	public static Diet lastinstance;
-	private  String randomisedGroup;
+	public static Diet lastinstance;;
 	
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -215,7 +213,7 @@ public class Diet {
 	private void setRandomiserStatus() {
 		
 		 callServiceSetup();
-		 User user = login.getUser();
+		 //User user = login.getUser();
 			
 		
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){

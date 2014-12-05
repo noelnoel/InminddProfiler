@@ -82,7 +82,6 @@ public class MedicalHealth {
 		
 	}
 	
-	private User user;
 	private Login login;
 	private TabLayoutPanel content;
 	private FlowPanel medicalHealthPanel = new FlowPanel();
@@ -255,7 +254,7 @@ public class MedicalHealth {
 		});
 
 		
-		String user = login.getUserId();
+		//String user = login.getUserId();
 		heightFeet = new DataField(constants.feet());
 
 		heightFeet.getElement().getStyle().setProperty("marginLeft", "52px");

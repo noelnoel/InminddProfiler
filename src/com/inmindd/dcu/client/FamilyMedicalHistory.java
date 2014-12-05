@@ -27,7 +27,6 @@ public class FamilyMedicalHistory {
 	private static final int DECK_PHYSICAL = 5;
 	
 	private TabLayoutPanel content;
-	private ScrollPanel scroll;
 	private FlowPanel familyMedicalHistory;
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
@@ -68,7 +67,6 @@ public class FamilyMedicalHistory {
 	private RadioButton siblingMellitusNo;
 	private RadioButton siblingMellitusDontKnow;
 	private InminddServiceAsync InminddServiceSvc;
-	private User user;
 	private Login login;
 	public static FamilyMedicalHistory lastinstance;
 	
