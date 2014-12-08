@@ -217,6 +217,8 @@ public class Goals implements EntryPoint {
 		
 		DOM.getElementById("back-to-profile").setInnerHTML(constants.back_to_profile());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
+
 
 }

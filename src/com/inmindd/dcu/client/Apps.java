@@ -128,6 +128,9 @@ public class Apps implements EntryPoint {
 		DOM.getElementById("apps1").setInnerHTML(constants.apps1());
 		DOM.getElementById("apps2").setInnerHTML(constants.apps2());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
+
 	}
 
 }

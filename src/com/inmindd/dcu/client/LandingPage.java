@@ -281,6 +281,8 @@ public class LandingPage implements EntryPoint {
 		
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
+
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());

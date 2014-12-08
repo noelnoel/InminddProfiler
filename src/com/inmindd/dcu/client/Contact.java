@@ -91,6 +91,7 @@ public class Contact implements EntryPoint {
 		DOM.getElementById("france").setInnerHTML(constants.france());
 		DOM.getElementById("netherlands").setInnerHTML(constants.netherlands());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
 
 }
