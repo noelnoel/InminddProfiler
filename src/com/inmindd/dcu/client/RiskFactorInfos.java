@@ -1,4 +1,3 @@
-
 /**
  * Romain Beuque - 2014
  * romain.beuque@u-psud.fr
@@ -14,6 +13,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class RiskFactorInfos implements EntryPoint {
 	
@@ -274,7 +274,6 @@ public class RiskFactorInfos implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -286,7 +285,6 @@ public class RiskFactorInfos implements EntryPoint {
 		DOM.getElementById("goal-2").setInnerHTML(constants.goal_2());
 		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4());
 		DOM.getElementById("back").setInnerHTML(constants.back());
-		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
 
 

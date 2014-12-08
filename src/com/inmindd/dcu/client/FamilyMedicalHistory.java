@@ -1,9 +1,10 @@
 package com.inmindd.dcu.client;
 
 import com.google.gwt.core.client.GWT;
-
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -27,6 +28,7 @@ public class FamilyMedicalHistory {
 	private static final int DECK_PHYSICAL = 5;
 	
 	private TabLayoutPanel content;
+	private ScrollPanel scroll;
 	private FlowPanel familyMedicalHistory;
 	private static final String LOGO_IMAGE_NAME = "images.jpeg";
 	
@@ -67,6 +69,7 @@ public class FamilyMedicalHistory {
 	private RadioButton siblingMellitusNo;
 	private RadioButton siblingMellitusDontKnow;
 	private InminddServiceAsync InminddServiceSvc;
+	private User user;
 	private Login login;
 	public static FamilyMedicalHistory lastinstance;
 	

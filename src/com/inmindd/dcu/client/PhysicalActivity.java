@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.FamilyHistoryInfo;
 import com.inmindd.dcu.shared.PhysicalActivityInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -71,6 +72,7 @@ public class PhysicalActivity {
 	private DataField vig;
 	private RadioButton sweatYes; 
 	private RadioButton sweatNo; 
+	private User user;
 	private Login login;	
 	PhysicalActivityInfo activity;
 	

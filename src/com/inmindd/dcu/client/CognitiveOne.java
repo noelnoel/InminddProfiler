@@ -1,6 +1,7 @@
 package com.inmindd.dcu.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +25,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.client.MyHandler;
 import com.inmindd.dcu.client.MyChangeHandler;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
+import com.inmindd.dcu.shared.SmokeAlcoholInfo;
 import com.inmindd.dcu.shared.User;
 
 public class CognitiveOne {
@@ -62,6 +64,7 @@ public class CognitiveOne {
 	private TextBox plantSimulYears;
 	private TextBox elementaryYears;
 	private TextBox elementarySimulYears;
+	private int leftMargin;
 	
 	public static CognitiveOne lastinstance;
 	

@@ -2,14 +2,11 @@ package com.inmindd.dcu.client;
 
 import java.util.Date;
 
-
-
 //import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -18,18 +15,18 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.Crypto;
 import com.inmindd.dcu.shared.User;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class LandingPage implements EntryPoint {
 
 	private InminddServiceAsync InminddServiceSvc;
 	private InminddConstants constants;
-	private String userId="";
+
 
 	@Override
 	public void onModuleLoad() {
-		callServiceSetup();
 		globalize();
-		triggerCookieMessage();
+		callServiceSetup();
 		EventListener eventRegister= new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -64,11 +61,8 @@ public class LandingPage implements EntryPoint {
 								now.setTime(nowLong);
 								Cookies.setCookie("gwtLocale", user.getLang(), now);
 								Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
-								userId = user.getUserId();
-								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-								DOM.getElementById("supportPanel").setAttribute("style", "");   
-								
-								
+								//DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+								//DOM.getElementById("supportPanel").setAttribute("style", "");     			
 							}
 						}
 						@Override
@@ -101,84 +95,10 @@ public class LandingPage implements EntryPoint {
 							if (user == null) {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("loginPanel").setAttribute("style", "");
-								
 							} else {
 								DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
 								DOM.getElementById("supportPanel").setAttribute("style", "");
-								//Get the logged in user, elaborate hack to check for glaswegians
-								String userId = user.getUserId();
-								if(userId.startsWith("11")) //Dublin
-								{
-									
-									//Remove nice Widget
-									Element nieceWidget = DOM.getElementById("twitter-widget-1");
-									nieceWidget.getParentNode().removeChild(nieceWidget);
-									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
-									
-									//maastricht
-									Element maasWidget = DOM.getElementById("twitter-widget-2");
-									maasWidget.getParentNode().removeChild(maasWidget);
-									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
-									
-									//glasgow
-									Element glasWidget = DOM.getElementById("twitter-widget-3");
-									glasWidget.getParentNode().removeChild(glasWidget);
-									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
-									
-								}
-								else if(userId.startsWith("22")) //Check for glaswegians 
-								{
-									//Dublin
-									Element dubWidget = DOM.getElementById("twitter-widget-0");
-									dubWidget.getParentNode().removeChild(dubWidget);
-									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
-									//Remove nice Widget
-									Element nieceWidget = DOM.getElementById("twitter-widget-1");
-									nieceWidget.getParentNode().removeChild(nieceWidget);
-									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
-									
-									//maastricht
-									Element maasWidget = DOM.getElementById("twitter-widget-2");
-									maasWidget.getParentNode().removeChild(maasWidget);
-									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
-								}
-								else if(userId.startsWith("33")) 
-								{
-									//Dublin
-									Element dubWidget = DOM.getElementById("twitter-widget-0");
-									dubWidget.getParentNode().removeChild(dubWidget);
-									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
-									//Remove nice Widget
-									Element nieceWidget = DOM.getElementById("twitter-widget-1");
-									nieceWidget.getParentNode().removeChild(nieceWidget);
-									//DOM.getElementById("nice-twitter").setAttribute("style", "display:none");
-									
-									//glasgow
-									Element glasWidget = DOM.getElementById("twitter-widget-3");
-									glasWidget.getParentNode().removeChild(glasWidget);
-									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
-									
-								}
-								else if(userId.startsWith("44"))
-								{
-									//maastricht
-									Element maasWidget = DOM.getElementById("twitter-widget-2");
-									maasWidget.getParentNode().removeChild(maasWidget);
-									//DOM.getElementById("maas-twitter").setAttribute("style", "display:none");
-									
-									//glasgow
-									Element glasWidget = DOM.getElementById("twitter-widget-3");
-									glasWidget.getParentNode().removeChild(glasWidget);
-									//DOM.getElementById("glas-twitter").setAttribute("style", "display:none");
-									
-									//Dublin
-									Element dubWidget = DOM.getElementById("twitter-widget-0");
-									dubWidget.getParentNode().removeChild(dubWidget);
-									//DOM.getElementById("dub-twitter").setAttribute("style", "display:none");
-								}
-	
 							}
-							
 						}
 
 						@Override
@@ -207,20 +127,18 @@ public class LandingPage implements EntryPoint {
 			}
 		};
 		
-
-			Element elem = DOM.getElementById("linkProfiler");
-			DOM.sinkEvents(elem, Event.ONCLICK);
-			DOM.setEventListener(elem, eventProfiler);
-			Element elem1 = DOM.getElementById("linkSupport");
-			DOM.sinkEvents(elem1, Event.ONCLICK);
-			DOM.setEventListener(elem1, eventSupport);
-			Element elem2 = DOM.getElementById("linkLogin");
-			DOM.sinkEvents(elem2, Event.ONCLICK);
-			DOM.setEventListener(elem2, eventLogin);
-			Element elem3 = DOM.getElementById("linkRegister");
-			DOM.sinkEvents(elem3, Event.ONCLICK);
-			DOM.setEventListener(elem3, eventRegister);
-		
+		Element elem = DOM.getElementById("linkProfiler");
+		DOM.sinkEvents(elem, Event.ONCLICK);
+		DOM.setEventListener(elem, eventProfiler);
+		Element elem1 = DOM.getElementById("linkSupport");
+		DOM.sinkEvents(elem1, Event.ONCLICK);
+		DOM.setEventListener(elem1, eventSupport);
+		Element elem2 = DOM.getElementById("linkLogin");
+		DOM.sinkEvents(elem2, Event.ONCLICK);
+		DOM.setEventListener(elem2, eventLogin);
+		Element elem3 = DOM.getElementById("linkRegister");
+		DOM.sinkEvents(elem3, Event.ONCLICK);
+		DOM.setEventListener(elem3, eventRegister);
 		
 		AsyncCallback<Boolean> callbackLogout = new AsyncCallback<Boolean>() {
 
@@ -244,10 +162,8 @@ public class LandingPage implements EntryPoint {
 		} else if(page != null && page.equals("logout")){
 			InminddServiceSvc.unsetUserConnected(callbackLogout);
 		} else {
-
-				DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
-				DOM.getElementById("indexPanel").setAttribute("style", "");
-
+			DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
+			DOM.getElementById("indexPanel").setAttribute("style", "");
 		}
 	}
 
@@ -263,10 +179,6 @@ public class LandingPage implements EntryPoint {
 
 	}
 	
-	public static native void triggerCookieMessage() /*-{
-    $wnd.cookieCont();
-}-*/;
-	
 	private void globalize(){
 		constants = 
 				   (InminddConstants)GWT.create(InminddConstants.class);
@@ -277,12 +189,8 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
-		
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
-		DOM.getElementById("logout").setInnerHTML(constants.logout());
-
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
 		DOM.getElementById("menu-support-apps").setInnerHTML(constants.menu_support_apps());
 		DOM.getElementById("menu-inmindd").setInnerHTML(constants.menu_inmindd());
@@ -322,12 +230,54 @@ public class LandingPage implements EntryPoint {
 		DOM.getElementById("supportLogin").setInnerHTML(constants.supportLogin());
 		DOM.getElementById("supportPassword").setInnerHTML(constants.supportPassword());
 		DOM.getElementById("linkLogin").setInnerHTML(constants.supportSignin());
-		
-		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
-		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
-
-		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
-
-		
+		/*DOM.getElementById("keepthisup").setInnerHTML(constants.keepthisup());
+		DOM.getElementById("rfi").setInnerHTML(constants.rfi());
+		DOM.getElementById("rmw").setInnerHTML(constants.rmw());
+		DOM.getElementById("rf-cognitive").setInnerHTML(constants.rf_cognitive());
+		DOM.getElementById("rf-mood").setInnerHTML(constants.rf_mood());
+		DOM.getElementById("rf-diet").setInnerHTML(constants.rf_diet());
+		DOM.getElementById("rf-pressure").setInnerHTML(constants.rf_pressure());
+		DOM.getElementById("rf-obesity").setInnerHTML(constants.rf_obesity());
+		DOM.getElementById("rf-smoking").setInnerHTML(constants.rf_smoking());
+		DOM.getElementById("rf-cholesterol").setInnerHTML(constants.rf_cholesterol());
+		DOM.getElementById("rf-diabetes").setInnerHTML(constants.rf_diabetes());
+		DOM.getElementById("rf-kidney").setInnerHTML(constants.rf_kidney());
+		DOM.getElementById("rf-heart").setInnerHTML(constants.rf_heart());
+		DOM.getElementById("rf-activity").setInnerHTML(constants.rf_activity());
+		DOM.getElementById("rf-alchool").setInnerHTML(constants.rf_alchool());
+		DOM.getElementById("score-1").setInnerHTML(constants.score_1());
+		DOM.getElementById("score-2").setInnerHTML(constants.score_2());
+		DOM.getElementById("score-3").setInnerHTML(constants.score_3());
+		DOM.getElementById("score-4").setInnerHTML(constants.score_4());
+		DOM.getElementById("score-5").setInnerHTML(constants.score_5());
+		DOM.getElementById("score-6").setInnerHTML(constants.score_6());
+		DOM.getElementById("score-7").setInnerHTML(constants.score_7());
+		DOM.getElementById("score-8").setInnerHTML(constants.score_8());
+		DOM.getElementById("score-9").setInnerHTML(constants.score_9());
+		DOM.getElementById("score-10").setInnerHTML(constants.score_10());
+		DOM.getElementById("score-11").setInnerHTML(constants.score_11());
+		DOM.getElementById("score-12").setInnerHTML(constants.score_12());
+		DOM.getElementById("score-13").setInnerHTML(constants.score_13());
+		DOM.getElementById("score-14").setInnerHTML(constants.score_14());
+		DOM.getElementById("score-15").setInnerHTML(constants.score_15());
+		DOM.getElementById("score-16").setInnerHTML(constants.score_16());
+		DOM.getElementById("score-17").setInnerHTML(constants.score_17());
+		DOM.getElementById("score-18").setInnerHTML(constants.score_18());
+		DOM.getElementById("score-19").setInnerHTML(constants.score_19());
+		DOM.getElementById("score-20").setInnerHTML(constants.score_20());
+		DOM.getElementById("score-21").setInnerHTML(constants.score_21());
+		DOM.getElementById("score-22").setInnerHTML(constants.score_22());
+		DOM.getElementById("score-23").setInnerHTML(constants.score_23());
+		DOM.getElementById("score-24").setInnerHTML(constants.score_24());
+		DOM.getElementById("score-25").setInnerHTML(constants.score_25());
+		DOM.getElementById("experts-1").setInnerHTML(constants.experts_1());
+		DOM.getElementById("experts-2").setInnerHTML(constants.experts_2());
+		DOM.getElementById("experts-3").setInnerHTML(constants.experts_3());
+		DOM.getElementById("experts-4").setInnerHTML(constants.experts_4());
+		DOM.getElementById("experts-5").setInnerHTML(constants.experts_5());
+		DOM.getElementById("experts-6").setInnerHTML(constants.experts_6());
+		DOM.getElementById("experts-7").setInnerHTML(constants.experts_7());
+		DOM.getElementById("experts-8").setInnerHTML(constants.experts_8());
+		DOM.getElementById("experts-9").setInnerHTML(constants.experts_9());*/
 	}
 }

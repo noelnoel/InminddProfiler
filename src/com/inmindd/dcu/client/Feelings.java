@@ -2,6 +2,10 @@ package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.ButtonGroup;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -22,6 +26,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.inmindd.dcu.shared.FeelingsInfo;
+import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
 public class Feelings {
@@ -41,6 +46,7 @@ public class Feelings {
 		private DockPanel dock2;
 		private InlineLabel error;
 		private Login login;
+		private static User user;
 		private InminddServiceAsync InminddServiceSvc;
 
 		
@@ -288,9 +294,7 @@ public class Feelings {
 
 		    return cesdPanel;
 		}
-		
-	/*
-		private void setQuestionsAndAnswers(String question, int answerButton) {
+	private void setQuestionsAndAnswers(String question, int answerButton) {
 			
 			HorizontalPanel lineQuestionAnswer  = new HorizontalPanel();
 		    SimplePanel sp = new SimplePanel();
@@ -308,51 +312,6 @@ public class Feelings {
 			if ((answerButton % 2 ) == 1) {
 				hp.getElement().getStyle().setProperty("backgroundColor", "#c0c0c0");
 			}
-			sp.add(lbl);
-		    lineQuestionAnswer.add(sp);
-		    lineQuestionAnswer.add(hp);
-		    pnl.add(lineQuestionAnswer);
-		    pnl.add(new HTMLPanel("<span>  <br>  </span>"));
-		    // keep track of the questions for validation at submit
-		    panelsArray.add(lineQuestionAnswer);
-		
-	}
-	
-	
-	
-	
-	
-	*/
-	private void setQuestionsAndAnswers(String question, int answerButton) {
-			
-			HorizontalPanel lineQuestionAnswer  = new HorizontalPanel();
-		    SimplePanel sp = new SimplePanel();
-		    sp.getElement().getStyle().setProperty("minWidth", "730px");  
-		    sp.getElement().getStyle().setProperty("maxWidth", "730px"); 
-		  
-		    InlineLabel lbl = new InlineLabel(question);
-		  
-		    lbl.getElement().getStyle().setProperty("foreGround", "white");
-			if ((answerButton % 2 ) == 1) {
-		    lineQuestionAnswer.getElement() .setAttribute("class", "tr1");  
-			}	
-			else {		
-			
-			    lineQuestionAnswer.getElement().setAttribute("class", "tr2");
-			}
-			
-		    HorizontalPanel hp = new HorizontalPanel();
-			
-			addToAnswers(hp, answerButton);
-			if ((answerButton % 2 ) == 1) {
-		
-			hp.getElement().setAttribute("class", "tr1"); 
-			}
-			else {		
-				
-			    hp.getElement().setAttribute("class", "tr2");
-			}
-		//	}
 			sp.add(lbl);
 		    lineQuestionAnswer.add(sp);
 		    lineQuestionAnswer.add(hp);

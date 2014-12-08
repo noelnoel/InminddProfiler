@@ -201,7 +201,6 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
-		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -216,9 +215,6 @@ public class Goals implements EntryPoint {
 		DOM.getElementById("score-26").setInnerHTML(constants.score_26());
 		
 		DOM.getElementById("back-to-profile").setInnerHTML(constants.back_to_profile());
-		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
-		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
-
 
 }

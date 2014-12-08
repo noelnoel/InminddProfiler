@@ -6,12 +6,15 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DefaultLocalizedNames;
+//import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -20,9 +23,6 @@ import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.dom.client.SelectElement;
 import com.inmindd.dcu.shared.Patient;
 import com.inmindd.dcu.shared.User;
 
@@ -51,6 +51,7 @@ public class PatientInfo {
 	public ListBox occupation = new ListBox();
 	public ListBox employmentStatus = new ListBox();
 	public TextBox otherEmploymentStatus;
+	private User user;
 	private Login login;
 	public static PatientInfo lastinstance;
 
@@ -208,9 +209,7 @@ public class PatientInfo {
 		
 		InlineLabel theSelection = new InlineLabel(constants.cob());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		
-		//DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
-		
+		DefaultLocalizedNames loc = new DefaultLocalizedNames(); 
 		country.addItem(constants.select_one());
         // for (int i=0; i<loc.getSortedRegionCodes().length; i++) { 
        //          String code = loc.getSortedRegionCodes()[i]; 
@@ -232,21 +231,11 @@ public class PatientInfo {
 	}
 
 	private FlowPanel getMaritalStatus() {
-		
 		FlowPanel maritalStatus = new FlowPanel();		
-		
 		InlineLabel theSelection = new InlineLabel(constants.marital());
 		theSelection.getElement().getStyle().setProperty("fontWeight", "bold");
-		
-		InlineLabel select  = new InlineLabel(constants.single());
-		select.getElement().getStyle().setProperty("fontWeight", "bold");
-		
-		//SelectElement selectElement = SelectElement.as(marital.getElement());
-		
-
 		marital.addItem(constants.select_one());
-		
-		
+        marital.addItem(constants.single());
         marital.addItem(constants.married());
         marital.addItem(constants.civil());
         marital.addItem(constants.cohab());
@@ -255,24 +244,7 @@ public class PatientInfo {
         marital.addItem(constants.divorced());
         marital.addItem(constants.seperated());
         marital.addItem(constants.widowed());
-        marital.getElement().setAttribute("class", "tr3");  
         maritalStatus.add(theSelection);
-        
-        com.google.gwt.dom.client.NodeList<Node> children = marital.getElement().getChildNodes();       
-        for (int i = 0; i< children.getLength();i++) {
-          Node child = children.getItem(i);
-            if (child.getNodeType()==Node.ELEMENT_NODE) {
-              if (child instanceof OptionElement) {
-                OptionElement optionElement = (OptionElement) child;
-                  
-                     optionElement.getStyle().setBackgroundColor("red");  
-                                 }
-              }           
-           }
-        //SelectElement selectElement2 = SelectElement.as(marital.getElement());
-        //com.google.gwt.dom.client.NodeList<OptionElement> options = selectElement2.getOptions();
-      
-        
         maritalStatus.add(marital);
         
         maritalStatus.setWidth("100%");

@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -60,10 +61,12 @@ public class Diet {
 	private RadioButton pastaTwo;
 	
 	private ScrollPanel scroll = new ScrollPanel();
+	private User user;
 	private User outerUser;
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
-	public static Diet lastinstance;;
+	public static Diet lastinstance;
+	private  String randomisedGroup;
 	
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -213,7 +216,7 @@ public class Diet {
 	private void setRandomiserStatus() {
 		
 		 callServiceSetup();
-		 //User user = login.getUser();
+		 User user = login.getUser();
 			
 		
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
@@ -238,7 +241,7 @@ public class Diet {
 			}
 		  };
 		  
-
+		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
 }
 	
 	

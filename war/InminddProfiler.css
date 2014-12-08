@@ -52,19 +52,6 @@ H1 {
    
 }
 
-.tr3 {
-	background-color: white !important;
-	font-weight:bold ;
-	text-align: center;
-}
-@external gwt-ListBox;
-.gwt-ListBox {
-	background-color: white !important;
-	font-weight:bold !important;
-	text-align: center;
-}
-
-
 .feedback{
    color: white;
    height: 250px;
@@ -91,16 +78,8 @@ H1 {
 .invalid {
 	color: red;
 }
-.tr1{
-	background-color: lightblue;
-	color:black;
-}
-
-.tr2{
-	background-color: white;
-}
 .greybg{
-	background-color:white;
+	background-color:#c0c0c0;
 }
 
 .whitebg {
