@@ -1,9 +1,5 @@
 package com.inmindd.dcu.client;
 
-
-
-import java.rmi.RemoteException;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -24,6 +20,7 @@ import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
+
 //import com.googlecode.gwt.crypto.bouncycastle.DataLengthException;
 //import com.googlecode.gwt.crypto.bouncycastle.InvalidCipherTextException;
 //import com.googlecode.gwt.crypto.bouncycastle.digests.SHA1Digest;
@@ -43,7 +40,6 @@ public class Login  {
 
 	private  User user = new User();
 	private  Patient patient = new Patient();
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
   
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -83,6 +79,7 @@ public class Login  {
     private String passwordRepeat  = constants.repeat_password();
     private String mothersMaiden  = constants.maiden_name();
     private String favColour  = constants.fav_colour();
+    private String emailAddress = constants.emailAddress();
    
     private TextBox userId = new TextBox();
   
@@ -91,6 +88,7 @@ public class Login  {
     
     private TextBox userIdReg = new TextBox();
     private TextBox userForgotIdReg = new TextBox();
+    private TextBox userEmailAddress = new TextBox();
     
     private PasswordTextBox passwordReg = new PasswordTextBox();
     private PasswordTextBox passwordRegRepeat = new PasswordTextBox();
@@ -110,6 +108,8 @@ public class Login  {
     private String hashedPassword;
     private String hashedMaidenName;
     private String hashedFavColour;
+
+    
     private Boolean duplicate = false;
     private int idUser;
     
@@ -202,11 +202,14 @@ public class Login  {
         loginLayout.setHTML(11, 0, favColour);
         loginLayout.setWidget(11, 1, colourBox);
     
+        motherBox.setWidth("145px");
+        loginLayout.setHTML(12, 0, emailAddress);
+        loginLayout.setWidget(12, 1, userEmailAddress);
     
-        loginLayout.setWidget(12, 0, registerbutton);
+        loginLayout.setWidget(13, 0, registerbutton);
         
-        cellFormatter.setColSpan(12, 0, 3);
-        cellFormatter.setHorizontalAlignment(12, 0, HasHorizontalAlignment.ALIGN_CENTER);
+        cellFormatter.setColSpan(13, 0, 3);
+        cellFormatter.setHorizontalAlignment(13, 0, HasHorizontalAlignment.ALIGN_CENTER);
         loginLayout.setCellSpacing(6);
      
 
@@ -240,7 +243,37 @@ public class Login  {
         			hashedMaidenName = Crypto.getSHA1for((motherBox.getText()));
         			// generate digest of favorite colour
         			hashedFavColour = Crypto.getSHA1for((colourBox.getText()));
-        			
+        			//Check is the email address field entered
+        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
+        			{
+        				String unVaildatedEmailAddress = userEmailAddress.getText();
+        				if(isEmailValid(unVaildatedEmailAddress))
+        				{
+        					//Encrypt the email address
+        					
+        					//get rid of the unencrypted version
+        					unVaildatedEmailAddress = "";
+        					String userId = userIdReg.getText();
+        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
+							{
+
+								@Override
+								public void onFailure(Throwable caught)
+								{
+									// TODO Do we log these somewhere?
+									
+								}
+
+								@Override
+								public void onSuccess(Boolean result)
+								{
+									// TODO Nothing much really, we just want confirmation, do we log these somewhere?
+									
+								}
+							};
+        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
+        				}
+        			}
         			callServiceSetup();
         			createUser(userIdReg.getText());
         			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
@@ -275,6 +308,24 @@ public class Login  {
 	    				//	InlineLabel error = new InlineLabel("You are now logged on to InMINDD. Please proceed to the About You panel");
 	    				//	showErrorPopupPanel(error, "green");	            			
 	    					setUser(user);	
+	    					InminddServiceSvc.updateUserLastLogin(user.getUserId(), new AsyncCallback<Boolean>()
+							{
+
+								@Override
+								public void onFailure(Throwable caught)
+								{
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(Boolean result)
+								{
+									// TODO Auto-generated method stub
+									
+								}
+							}); //Update the users last login time
+	    					
 	    					// Clear screens of previous input
 	    					if(PatientInfo.lastinstance != null)
 	    						PatientInfo.clearInputs();	
@@ -299,6 +350,8 @@ public class Login  {
 	    					//getScore();   //uncomment this to calc score at login
 	    					content.selectTab(1);
 	    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+	    					
+	    					//Update the users last login time on the database
 	    				}
 
 	    			}
@@ -331,6 +384,20 @@ public class Login  {
 	    return mainpanel;
 
 	}    
+	
+	/***
+	 * This method will examin what is entered in the email text box on the registration form
+	 * From here it will determine if what is entered is actually an email address (i.e. a String of the form <some text>@<domain>.<tld>
+	 * Vaildation is done by the regualr expression for email addresses given by RFC 2822
+	 * @param emailAddress The string to vaildate
+	 * @return a boolean indicating whether or not he email address is vaild
+	 */
+	private boolean isEmailValid(String emailAddress)
+	{
+
+		String regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+		return emailAddress.matches(regexp);
+	}
 	
 	private void forgotPassword() {
 		
@@ -688,7 +755,7 @@ public class Login  {
 	// not used 
 	private Boolean checkAlreadyRegistered(String id) {
 		 callServiceSetup();
-		 final Boolean dup;
+		 //final Boolean dup;
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 
 			 @Override	 

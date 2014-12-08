@@ -96,6 +96,8 @@
     <url-pattern>/Contact/Inmindd</url-pattern>
   </servlet-mapping>
     
+    
+    
   <servlet>
     <servlet-name>InminddAdmin</servlet-name>
     <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
@@ -104,6 +106,25 @@
   <servlet-mapping>
     <servlet-name>InminddAdmin</servlet-name>
     <url-pattern>/Admin/Inmindd</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+      <servlet-name>PrivacyPolicy</servlet-name>
+      <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>PrivacyPolicy</servlet-name>
+      <url-pattern>/PrivacyPolicy/Inmindd</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>EmailCron</servlet-name>
+  	<servlet-class>com.inmindd.dcu.server.EmailCron</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmailCron</servlet-name>
+  	<url-pattern>/cron/email</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

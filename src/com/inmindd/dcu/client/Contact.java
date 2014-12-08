@@ -74,6 +74,7 @@ public class Contact implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -89,6 +90,8 @@ public class Contact implements EntryPoint {
 		DOM.getElementById("scotland").setInnerHTML(constants.scotland());
 		DOM.getElementById("france").setInnerHTML(constants.france());
 		DOM.getElementById("netherlands").setInnerHTML(constants.netherlands());
+		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
 
 }
