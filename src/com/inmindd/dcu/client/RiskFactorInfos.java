@@ -1,3 +1,4 @@
+
 /**
  * Romain Beuque - 2014
  * romain.beuque@u-psud.fr
@@ -13,7 +14,6 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.SupportRiskFactorInfos;
 import com.inmindd.dcu.shared.User;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class RiskFactorInfos implements EntryPoint {
 	
@@ -286,6 +286,7 @@ public class RiskFactorInfos implements EntryPoint {
 		DOM.getElementById("goal-2").setInnerHTML(constants.goal_2());
 		DOM.getElementById("linkGoalButton").setInnerHTML(constants.goal_4());
 		DOM.getElementById("back").setInnerHTML(constants.back());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
 
 

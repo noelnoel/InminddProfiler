@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 
-	<!-- <cron>
+	<cron>
 		<url>/cron/email</url>
 		<description>Sends out emails to insight users on a monthly basis</description>
 		<schedule> every 12 hours</schedule>
-	</cron>-->
+	</cron>
 </cronentries>

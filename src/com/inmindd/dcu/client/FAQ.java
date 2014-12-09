@@ -9,7 +9,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.inmindd.dcu.shared.SupportFAQ;
-import com.inmindd.dcu.shared.SupportGoalUser;
 import com.inmindd.dcu.shared.User;
 
 public class FAQ implements EntryPoint {
@@ -129,6 +128,7 @@ public class FAQ implements EntryPoint {
 		
 		DOM.getElementById("faqh1").setInnerHTML(constants.faq());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 	}
 
 }

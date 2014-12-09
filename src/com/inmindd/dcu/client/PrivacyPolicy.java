@@ -118,7 +118,7 @@ public class PrivacyPolicy implements EntryPoint
 		
 		DOM.getElementById("cookie_message").setInnerHTML(constants.cookieConsent());
 		DOM.getElementById("cookie_message_button").setInnerHTML(constants.doNotShowMessage());
-		
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
 		
 	}
 

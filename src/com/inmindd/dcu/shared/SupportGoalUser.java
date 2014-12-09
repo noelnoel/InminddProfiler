@@ -2,8 +2,6 @@ package com.inmindd.dcu.shared;
 
 import java.io.Serializable;
 
-import com.inmindd.dcu.client.Goals;
-
 public class SupportGoalUser  implements Serializable {
 	private String id_user;
 	private int id_goal;
