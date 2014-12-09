@@ -249,10 +249,6 @@ public class Login  {
         				String unVaildatedEmailAddress = userEmailAddress.getText();
         				if(isEmailValid(unVaildatedEmailAddress))
         				{
-        					//Encrypt the email address
-        					
-        					//get rid of the unencrypted version
-        					unVaildatedEmailAddress = "";
         					String userId = userIdReg.getText();
         					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
 							{
