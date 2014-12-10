@@ -16,9 +16,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -28,7 +26,6 @@ public class CognitiveTwo {
 	private static final int DECK_COGNITIVE2 = 7;
 	private static final int DECK_SMOKE_ALCOHOL = 8;
 	
-	private User user;
 	private Login login;
 	
 	private FlowPanel cognitiveTwoPanel;
@@ -45,12 +42,8 @@ public class CognitiveTwo {
 	private static final String OFTEN_AFTER = constants.often_always();
 	private static final String  NEVER_MONTH = constants.never_2();
 	private static final String OFTEN_MONTH = constants.often_2();
-	private static final String  NEVER_MONTH_AFTER = "Never/Rarely ";
-	private static final String OFTEN_MONTH_AFTER = "Often/Always  ";
 	private static final String  NEVER_YEAR = constants.never_3();
 	private static final String OFTEN_YEAR = constants.often_3();
-	private static final String  NEVER_YEAR_AFTER = "Never/Rarely ";
-	private static final String OFTEN_YEAR_AFTER = "Often/Always  ";
 	private static final String IF_OFTEN = constants.activity_weekly();
 	private static final String IF_OFTEN_MONTH = constants.activity_monthly();
 	private static final String IF_OFTEN_YEAR = constants.activity_yearly();
