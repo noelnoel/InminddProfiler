@@ -58,7 +58,7 @@ public class Diet {
 	private RadioButton chickenNo;
 	private RadioButton pastaZero;
 	private RadioButton pastaTwo;
-	
+	private User user;
 	private ScrollPanel scroll = new ScrollPanel();
 	private User outerUser;
 	private Login login;
@@ -237,7 +237,7 @@ public class Diet {
 				
 			}
 		  };
-		  
+		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
 
 }
 	
