@@ -35,6 +35,7 @@ public interface InminddService extends RemoteService {
 
 	public Boolean setRandomiseUserStatus(User user) throws IllegalArgumentException;
 	public String getRandomisedGroup(User user)throws IllegalArgumentException;
+	
 
 	
 	public Boolean updatePatientInfo(Patient patient)	throws IllegalArgumentException;
