@@ -52,6 +52,7 @@ public interface InminddServiceAsync {
 	void updateFeelingsInfo(FeelingsInfo feelings, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
+	
 	void setRandomiseUserStatus(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
