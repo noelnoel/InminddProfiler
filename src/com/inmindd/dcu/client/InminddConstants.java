@@ -40,7 +40,6 @@ public interface InminddConstants extends Constants{
 	 	String smoking_drink();
 	 	String diet_tab();
 	 	String unable_retrieve_db();
-
 	 	
 	 	String wait_six_months();
 
@@ -341,6 +340,7 @@ public interface InminddConstants extends Constants{
 	 	String random_failed();
 	 	String random_wait();
 	 	String random_error();
+	 	String random_successful();
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();
