@@ -1,7 +1,7 @@
 Inmindd Profiler and Support Environment 
 ===============
 
-Version (0.9) 
+Version (1.3) 
 
 ===============
 
