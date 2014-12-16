@@ -1914,8 +1914,13 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
-			     // String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
-			     String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      
+			      //Live
+			      //String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+				  
+			      //Test   
+			      String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
 			      db.execute("use inmindd;");
@@ -1923,14 +1928,18 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      else 
 		      {  
 		    	  //running application locally in development mode 
-		    	  //String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  //Live URL
+		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  //String password = "noknoknok";
+		    	  
+		    	  //Test URL
+		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String password = "inminddtest";
+		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
-		    	  String userName = "root"; //was root
-		    	  //String password = "inminddtest"; //was noknoknok
-		    	  String password = "noknoknok";
-		    	  
+		    	  String userName = "root";
+
 		    	  try 
 		    	  {
 		  			Class.forName(driver).newInstance();
