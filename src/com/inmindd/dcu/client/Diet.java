@@ -182,11 +182,6 @@ public class Diet {
 		    			if (Window.confirm(constants.confirm()))
 		    			{
 		    				setRandomiserStatus();
-		    				try {
-		    				Thread.sleep(10000);
-		    				}catch (InterruptedException e){
-		    					e.printStackTrace();	    					
-		    				}
 		    			}
 		    			else {
 		    				return;
@@ -274,7 +269,16 @@ public class Diet {
 	       			
 	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			outerUser.setRandomGroup(group);
-       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");    			
+	       			
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=logout");   
+	       			}
+	       			else
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			}
+       				 			
 	       			return;
 	       		}
 	            
