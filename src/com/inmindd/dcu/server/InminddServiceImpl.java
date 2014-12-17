@@ -107,7 +107,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						 updateUserLastLogin(idUser);
+						updateUserLastLogin(idUser);
 						conn.close();
 						return user;
 					}
@@ -318,8 +318,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 
-	
-	
 
 	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
 
@@ -1922,10 +1920,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
 			      
 			      //Live
-			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      //String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
 				  
 			      //Test   
-			      //String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			      String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
 			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
@@ -1935,12 +1933,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {  
 		    	  //running application locally in development mode 
 		    	  //Live URL
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  String password = "noknoknok";
+		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  //String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	  //String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  //String password = "inminddtest";
+		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String password = "inminddtest";
 		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
@@ -3000,14 +2998,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String group = result.getString(1);
-				if(group.equals("Control"))
+				
+				if(group == null)
+				{
+						//TODO something here 
+				}
+				else if(group.equalsIgnoreCase("Control"))
 				{
 					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
 				}
-				else
+				else if(group.equalsIgnoreCase("Intervention"))
 				{
 					return EmailGroupConstants.INTERVENTION_GROUP;
 				}
+				
 			}
 			try
 			{

@@ -18,6 +18,7 @@ public interface InminddConstants extends Constants{
 	 	String reset_password();
 	 	String enter_id();
 	 	String reg_error();
+	 	String reg_error2();
 	 	String reset_password_fail();
 	 	String practice_code_error();
 	 	String register_heading();

@@ -237,7 +237,6 @@ public class Diet {
 				
 			}
 		  };
-			 Window.alert(user.getUserId());
 		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
 
 }
@@ -270,12 +269,7 @@ public class Diet {
 	       			
 	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			outerUser.setRandomGroup(group);
-	       			
-	       			if(whichGroup.equalsIgnoreCase("Taxi"))
-	       			{
-	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
-	       			}
-	       			
+       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");    			
 	       			return;
 	       		}
 	            
