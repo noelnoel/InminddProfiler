@@ -280,12 +280,21 @@ public class Login  {
 										@Override
 										public void onSuccess(Boolean result)
 										{	
-											//Window.alert("Add email "+result);											
+											//Window.alert("Add email "+result);
+					    					content.selectTab(1);
+					    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+											
 										}
 									};
 		        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
 		        				}
-		        			}						
+		        			}
+		        			else
+		        			{
+								//Window.alert("Add email "+result);
+		    					content.selectTab(1);
+		    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+		        			}
 						}
 					};
         			InminddServiceSvc.registerUser(user, callback);       			
