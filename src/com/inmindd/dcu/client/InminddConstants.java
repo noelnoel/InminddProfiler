@@ -341,6 +341,7 @@ public interface InminddConstants extends Constants{
 	 	String random_wait();
 	 	String random_error();
 	 	String random_successful();
+	 	String not_randomised();
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();

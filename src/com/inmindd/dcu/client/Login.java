@@ -248,7 +248,7 @@ public class Login  {
         			{
         				String unVaildatedEmailAddress = userEmailAddress.getText();
         				if(isEmailValid(unVaildatedEmailAddress))
-        				{
+        				{	Window.alert(userEmailAddress.getText());
         					String userId = userIdReg.getText();
         					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
 							{

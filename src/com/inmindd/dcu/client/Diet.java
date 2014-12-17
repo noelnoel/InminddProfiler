@@ -258,15 +258,24 @@ public class Diet {
 	       		}            		
 	       		else {
 	       			String whichGroup = null;
-	       			if (group.equals("Control"))
-	       				whichGroup = "Radio";
-	       			else whichGroup = "Taxi";
-	       			  
-	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
+	       				whichGroup = "Radio";
+	       			}
+	       			else
+	       			{
+	       				whichGroup = "Taxi";
+	       			}
+	       			
+	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			outerUser.setRandomGroup(group);
 	       			
-	       			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			if(whichGroup.equalsIgnoreCase("Taxi"))
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			}
+	       			
 	       			return;
 	       		}
 	            
