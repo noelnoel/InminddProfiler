@@ -178,18 +178,23 @@ public class Diet {
 	    	public void onClick(ClickEvent event) {
 	    		if (checkUser()) {
 	    			if (validateInput()) {
-	    			updateDietDB();
-	    			if (Window.confirm(constants.confirm()))
-	    				setRandomiserStatus();
-	    			
-	    			else {
-	    				return;
-	    			}
-	    			if (Window.confirm(constants.allocated_group())) {	    					
-	    						
-	    						getRandomGroup(); // this gets randomisedGroup 	  				
-	    				
-	    			}
+		    			updateDietDB();
+		    			if (Window.confirm(constants.confirm()))
+		    			{
+		    				setRandomiserStatus();
+		    				try {
+		    				Thread.sleep(10000);
+		    				}catch (InterruptedException e){
+		    					e.printStackTrace();	    					
+		    				}
+		    			}
+		    			else {
+		    				return;
+		    			}
+		    			if (Window.confirm(constants.allocated_group())) {	    					
+		    				// this gets randomisedGroup 
+		    				getRandomGroup(); 	  				
+		    			}
 	    			}
 	    		}
 	    	}
