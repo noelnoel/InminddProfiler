@@ -107,7 +107,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						updateUserLastLogin(idUser);
+						//TODO check this code 
+						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+							//we authorize login for Intervention group
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						}
 						conn.close();
 						return user;
 					}
