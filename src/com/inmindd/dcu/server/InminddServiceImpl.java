@@ -185,6 +185,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
+					} else if(result.getString("randomised_group") == null){
+						//edge case where a user has not been randomised but still tries to access the support environment
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("User not yet randomised");
+						
 					} else if(result.getInt("controlGroupAuthorized")== 0){
 						
 						user = null;

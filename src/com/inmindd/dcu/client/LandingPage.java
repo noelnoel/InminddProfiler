@@ -78,6 +78,10 @@ public class LandingPage implements EntryPoint {
 							{
 								Window.alert(constants.wait_six_months());
 							}
+							else if(onFailureError.equalsIgnoreCase("User not yet randomised"))
+							{
+								Window.alert(constants.not_randomised());
+							}
 						
 							DOM.getElementById("loginPanel").setAttribute("style", "");
 							DOM.getElementById("loadingPanel").setAttribute("style", "display:none");
