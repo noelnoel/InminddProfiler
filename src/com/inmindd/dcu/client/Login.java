@@ -243,39 +243,52 @@ public class Login  {
         			hashedMaidenName = Crypto.getSHA1for((motherBox.getText()));
         			// generate digest of favorite colour
         			hashedFavColour = Crypto.getSHA1for((colourBox.getText()));
-        			//Check is the email address field entered
-        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
-        			{
-        				String unVaildatedEmailAddress = userEmailAddress.getText();
-        				if(isEmailValid(unVaildatedEmailAddress))
-        				{
-        					String userId = userIdReg.getText();
-        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
-							{
-
-								@Override
-								public void onFailure(Throwable caught)
-								{
-									// TODO Do we log these somewhere?
-									
-								}
-
-								@Override
-								public void onSuccess(Boolean result)
-								{
-									// TODO Nothing much really, we just want confirmation, do we log these somewhere?
-									
-								}
-							};
-        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
-        				}
-        			}
+        			        			
         			callServiceSetup();
         			createUser(userIdReg.getText());
-        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
+        			
+        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							System.out.println(constants.reg_error2()+" "+caught);	
+						}
 
+						@Override
+						public void onSuccess(Boolean result)
+						{	//If the registration is successful add the email if it exists 
+							//Window.alert("Register successful "+result);
+							
+		        			//Check is the email address field entered
+		        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
+		        			{
+		        				String unVaildatedEmailAddress = userEmailAddress.getText();
+		        				
+		        				if(isEmailValid(unVaildatedEmailAddress))
+		        				{	
+		        					String userId = userIdReg.getText();
+		        					//Window.alert(userId+ " "+ unVaildatedEmailAddress);
+		        					
+		        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
+									{
+										@Override
+										public void onFailure(Throwable caught)
+										{
+											Window.alert("Add email Failed"+caught);
+										}
+										@Override
+										public void onSuccess(Boolean result)
+										{	
+											//Window.alert("Add email "+result);											
+										}
+									};
+		        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
+		        				}
+		        			}						
+						}
+					};
         			InminddServiceSvc.registerUser(user, callback);       			
-
         		}
         	}
         });
@@ -369,6 +382,7 @@ public class Login  {
 	    	}
 
 	    });
+	    
 	    // Listen for mouse events on the forgot password   button.
 	    forgotPasswordButton.addClickHandler(new ClickHandler() {
 	    	@Override

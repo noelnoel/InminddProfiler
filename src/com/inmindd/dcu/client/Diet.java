@@ -58,7 +58,6 @@ public class Diet {
 	private RadioButton chickenNo;
 	private RadioButton pastaZero;
 	private RadioButton pastaTwo;
-	
 	private ScrollPanel scroll = new ScrollPanel();
 	private User outerUser;
 	private Login login;
@@ -213,7 +212,8 @@ public class Diet {
 	private void setRandomiserStatus() {
 		
 		 callServiceSetup();
-		 //User user = login.getUser();
+		 final User user = login.getUser();
+
 			
 		
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
@@ -223,21 +223,21 @@ public class Diet {
 	       			InlineLabel error = new InlineLabel(constants.random_failed());
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
-	       	//	else {
-	       			//InlineLabel error = new InlineLabel("Randomiser status service successful completion");
-	       			//showErrorPopupPanel(error, "green"); 	       			
+	       	else {
+	       		InlineLabel error = new InlineLabel(constants.random_successful());
+	       		showErrorPopupPanel(error, "green"); 	       			
 	       			
-	       	//	}
+	       		}
 	            
 	         }
 			@Override
 			public void onFailure(Throwable caught) {
-				//InlineLabel error = new InlineLabel("Database update error");
-				//showErrorPopupPanel(error, "red");			
+				InlineLabel error = new InlineLabel(constants.random_failed());
+				showErrorPopupPanel(error, "red");			
 				
 			}
 		  };
-		  
+		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
 
 }
 	
@@ -247,25 +247,29 @@ public class Diet {
 		 callServiceSetup();
 		final  User user = login.getUser();
 		
-		
+
 		 AsyncCallback<String> callback =  new AsyncCallback<String>(){
 			 @Override	 
 	       public void onSuccess(String group) {
 	       		if ((group == null)){	            		
 	       			InlineLabel error = new InlineLabel(constants.random_wait());
-	       			//showErrorPopupPanel(error, "red");            			
+	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
 	       			String whichGroup = null;
-	       			if (group.equals("Control"))
+	       			
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
 	       				whichGroup = "Radio";
-	       			else whichGroup = "Taxi";
-	       			  
+	       			}
+	       			else
+	       			{
+	       				whichGroup = "Taxi";
+	       			}
+	       			
 	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
-	       			
 	       			outerUser.setRandomGroup(group);
-	       			
-	       			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");    			
 	       			return;
 	       		}
 	            
@@ -291,6 +295,11 @@ public class Diet {
 			return  false;
 			
 		}
+//		else
+//		{
+//			InlineLabel error = new InlineLabel("USER IS "+user.getUserId());
+//			showErrorPopupPanel(error, "green");
+//		}	
 		return true;
 	}
 	
