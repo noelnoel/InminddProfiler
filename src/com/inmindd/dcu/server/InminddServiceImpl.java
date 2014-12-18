@@ -49,6 +49,16 @@ import javax.mail.internet.MimeMessage;
 
 
 
+
+
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+/**
+ * The server side implementation of the RPC service.
+ */
+
 @SuppressWarnings("serial")
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
@@ -398,13 +408,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randomiserStatus);
 			preparedStmt.executeUpdate();
-			try {
-				Thread.sleep(5000);  // give the randomiser a chance to do its thing
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-
 		}
 		catch (SQLException e) {
 			user = null;
@@ -428,10 +431,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// check randomiser status		        
 				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
 				pstmt.setString(1, idUser);
+				try {
+					Thread.sleep(10000);
+				}catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 				result = pstmt.executeQuery();			
 				while (result.next()) {
-					if (result.getInt(5) == 2) {					
-						randGroup = result.getString(6);
+					randGroup = result.getString(6);
+					if (result.getInt(5) == 2) {	
 						conn.close();
 						return randGroup;
 					}
@@ -2600,6 +2609,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			prep.setString(1, userId);
 			prep.setString(2, enc);
 			prep.setString(3, todayAsMySqlDatetime);
+			//Returns false even when updated successfully ..weird
 			boolean result =  prep.execute();
 			try
 			{
@@ -2999,9 +3009,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				String group = result.getString(1);
 				
-				if(result.wasNull())
+				if(group == null)
 				{
-					return EmailGroupConstants.USER_NOT_RANDOMISED;
+						//TODO something here 
 				}
 				else if(group.equalsIgnoreCase("Control"))
 				{
@@ -3042,9 +3052,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT date_randomised FROM user WHERE userID=?;";
+		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
 		PreparedStatement prep;
-		Date d;
 		try
 		{
 			prep = conn.prepareStatement(selStatement);
@@ -3052,12 +3061,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				d = result.getDate(1);
-				if(result.wasNull())
-				{
-					d = null;
-				}
-				
+				Date d = result.getDate(1);
+				return d;
 			}
 			try
 			{
@@ -3067,8 +3072,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				e.printStackTrace();
 			}
-			d = null;
-			return d;
+			return null;
 
 		}
 		catch(SQLException e)

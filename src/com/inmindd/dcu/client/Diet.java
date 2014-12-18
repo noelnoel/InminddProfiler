@@ -182,13 +182,10 @@ public class Diet {
 		    			if (Window.confirm(constants.confirm()))
 		    			{
 		    				setRandomiserStatus();
+		    				getRandomGroup();
 		    			}
 		    			else {
 		    				return;
-		    			}
-		    			if (Window.confirm(constants.allocated_group())) {	    					
-		    				// this gets randomisedGroup 
-		    				getRandomGroup(); 	  				
 		    			}
 	    			}
 	    		}
@@ -213,8 +210,6 @@ public class Diet {
 		
 		 callServiceSetup();
 		 final User user = login.getUser();
-
-			
 		
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 			 @Override	 
@@ -225,7 +220,9 @@ public class Diet {
 	       		}            		
 	       	else {
 	       		InlineLabel error = new InlineLabel(constants.random_successful());
-	       		showErrorPopupPanel(error, "green"); 	       			
+	       		showErrorPopupPanel(error, "green");
+	       		InlineLabel error2 = new InlineLabel(constants.random_wait());
+	       		showErrorPopupPanel(error2, "green"); 
 	       			
 	       		}
 	            
@@ -246,6 +243,7 @@ public class Diet {
 		
 		 callServiceSetup();
 		final  User user = login.getUser();
+		Window.alert("in get randomgroup");
 		
 
 		 AsyncCallback<String> callback =  new AsyncCallback<String>(){

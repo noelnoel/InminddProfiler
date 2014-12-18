@@ -1,3 +1,4 @@
+
 package com.inmindd.dcu.server;
 
 public class EmailGroupConstants
@@ -10,6 +11,7 @@ public class EmailGroupConstants
 	public static final int RANDOMIZED_DONT_EMAIL=2;
 	public static final int INTERVENTION_GROUP=1;
 	public static final int USER_NOT_RANDOMISED = 3;
+
 	
 	
 	public static final String EMAIL_HEADER = "<html><head></head><body><table style=\"table-layout:fixed\"><tr><td><a href=\"http://inmindd-profiler.appspot.com\"><img src=\"http://inmindd-profiler.appspot.com/images/inmindd_logo.png\"/></a></td><td style=\"width:200px\"><a href=\"http://inmindd-profiler.appspot.com\">";
@@ -24,3 +26,4 @@ public class EmailGroupConstants
 	public static final String EMAIL_FOOTER_END = "</td><td><img src=\"http://inmindd-integration.appspot.com/images/eu-flag.png\"/></td></tr></table></body></html>";
 	public static final String EMAIL_HTML_MIME_TYPE = "text/html; charset=utf-8";
 }
+
