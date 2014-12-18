@@ -107,7 +107,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						 updateUserLastLogin(idUser);
+						//TODO check this code 
+						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+							//we authorize login for Intervention group
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						}
 						conn.close();
 						return user;
 					}
@@ -186,12 +195,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized")== 0){
-						
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-
 						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
-					}
+					} else if(result.getString("randomised_group") == null){
+						//edge case where a user has not been randomised but still tries to access the support environment
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("User not yet randomised");
+					}	
 					conn.close();
 					return user;
 			}
@@ -312,8 +324,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 
-	
-	
 
 	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
 
@@ -1916,10 +1926,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
 			      
 			      //Live
-			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      //String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
 				  
 			      //Test   
-			      //String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			      String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
 			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
@@ -1929,12 +1939,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {  
 		    	  //running application locally in development mode 
 		    	  //Live URL
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  String password = "noknoknok";
+		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  //String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	  //String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  //String password = "inminddtest";
+		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String password = "inminddtest";
 		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
@@ -2994,14 +3004,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String group = result.getString(1);
-				if(group.equals("Control"))
+				
+				if(group == null)
+				{
+						//TODO something here 
+				}
+				else if(group.equalsIgnoreCase("Control"))
 				{
 					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
 				}
-				else
+				else if(group.equalsIgnoreCase("Intervention"))
 				{
 					return EmailGroupConstants.INTERVENTION_GROUP;
 				}
+				
 			}
 			try
 			{
