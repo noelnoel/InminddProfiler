@@ -23,7 +23,7 @@ public class EmailCron extends HttpServlet
 		ArrayList<UserMail> mailTable = impl.getUserMailList();
 		for(UserMail mailUser:mailTable)
 		{
-			if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL||mailUser.getDateRegistered()==null)
+			if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL && mailUser.getRandomized()!=EmailGroupConstants.USER_NOT_RANDOMISED && mailUser.getDateRegistered()!=null)
 			{
 				int monthsSinceReg = getMonthsSinceRegisistration(mailUser.getDateRegistered());
 				if(monthsSinceReg>mailUser.getLastSentEmail())//

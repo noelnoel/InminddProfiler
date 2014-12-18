@@ -3316,7 +3316,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						updateUserLastLogin(idUser);
+						//TODO check this code 
+						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+							//we authorize login for Intervention group
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						}
 						conn.close();
 						return user;
 					}
@@ -3394,19 +3403,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
+					} else if(result.getInt("controlGroupAuthorized")== 0){
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
 					} else if(result.getString("randomised_group") == null){
 						//edge case where a user has not been randomised but still tries to access the support environment
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
 						throw new IllegalArgumentException("User not yet randomised");
-						
-					} else if(result.getInt("controlGroupAuthorized")== 0){
-						
-						user = null;
-						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-
-						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
-					}
+					}	
 					conn.close();
 					return user;
 			}
@@ -3607,13 +3613,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randomiserStatus);
 			preparedStmt.executeUpdate();
-			try {
-				Thread.sleep(5000);  // give the randomiser a chance to do its thing
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-
 		}
 		catch (SQLException e) {
 			user = null;
@@ -3637,10 +3636,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// check randomiser status		        
 				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
 				pstmt.setString(1, idUser);
+				try {
+					Thread.sleep(10000);
+				}catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 				result = pstmt.executeQuery();			
 				while (result.next()) {
-					if (result.getInt(5) == 2) {					
-						randGroup = result.getString(6);
+					randGroup = result.getString(6);
+					if (result.getInt(5) == 2) {	
 						conn.close();
 						return randGroup;
 					}
@@ -5809,6 +5814,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			prep.setString(1, userId);
 			prep.setString(2, enc);
 			prep.setString(3, todayAsMySqlDatetime);
+			//Returns false even when updated successfully ..weird
 			boolean result =  prep.execute();
 			try
 			{
