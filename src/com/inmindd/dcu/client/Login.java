@@ -258,7 +258,7 @@ public class Login  {
 						@Override
 						public void onSuccess(Boolean result)
 						{	//If the registration is successful add the email if it exists 
-							//Window.alert("Register successful "+result);
+							Window.alert("Registration successful");
 							
 		        			//Check is the email address field entered
 		        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
@@ -275,26 +275,22 @@ public class Login  {
 										@Override
 										public void onFailure(Throwable caught)
 										{
-											Window.alert("Add email Failed"+caught);
+											Window.alert("Email not added"+caught);
 										}
 										@Override
 										public void onSuccess(Boolean result)
 										{	
-											//Window.alert("Add email "+result);
-					    					content.selectTab(1);
-					    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
-											
+											Window.alert("Email added successfully");
 										}
 									};
 		        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
 		        				}
 		        			}
-		        			else
-		        			{
-								//Window.alert("Add email "+result);
-		    					content.selectTab(1);
-		    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
-		        			}
+
+							//Window.alert("Add email "+result);
+	    					content.selectTab(1);
+	    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+
 						}
 					};
         			InminddServiceSvc.registerUser(user, callback);       			

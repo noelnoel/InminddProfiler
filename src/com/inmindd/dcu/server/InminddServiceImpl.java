@@ -404,13 +404,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randomiserStatus);
 			preparedStmt.executeUpdate();
-			try {
-				Thread.sleep(5000);  // give the randomiser a chance to do its thing
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-
 		}
 		catch (SQLException e) {
 			user = null;
@@ -434,10 +427,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// check randomiser status		        
 				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
 				pstmt.setString(1, idUser);
+				try {
+					Thread.sleep(10000);
+				}catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 				result = pstmt.executeQuery();			
 				while (result.next()) {
-					if (result.getInt(5) == 2) {					
-						randGroup = result.getString(6);
+					randGroup = result.getString(6);
+					if (result.getInt(5) == 2) {	
 						conn.close();
 						return randGroup;
 					}
@@ -2606,6 +2605,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			prep.setString(1, userId);
 			prep.setString(2, enc);
 			prep.setString(3, todayAsMySqlDatetime);
+			//Returns false even when updated successfully ..weird
 			boolean result =  prep.execute();
 			try
 			{
