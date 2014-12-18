@@ -107,7 +107,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						 updateUserLastLogin(idUser);
+						//TODO check this code 
+						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+							//we authorize login for Intervention group
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						}
 						conn.close();
 						return user;
 					}
@@ -186,12 +195,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized")== 0){
-						
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-
 						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
-					}
+					} else if(result.getString("randomised_group") == null){
+						//edge case where a user has not been randomised but still tries to access the support environment
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("User not yet randomised");
+					}	
 					conn.close();
 					return user;
 			}
@@ -312,8 +324,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 
-	
-	
 
 	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
 
@@ -2994,14 +3004,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String group = result.getString(1);
-				if(group.equals("Control"))
+				
+				if(group == null)
+				{
+						//TODO something here 
+				}
+				else if(group.equalsIgnoreCase("Control"))
 				{
 					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
 				}
-				else
+				else if(group.equalsIgnoreCase("Intervention"))
 				{
 					return EmailGroupConstants.INTERVENTION_GROUP;
 				}
+				
 			}
 			try
 			{
