@@ -2860,18 +2860,50 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	private UserMail getUserMail(String userId)
 	{
-		ArrayList<UserMail> allUsers = this.getUserMailList();
-		//find the person 
-		UserMail ret = null;
-		for(UserMail user: allUsers)
+		UserMail user = null;
+		initDBConnection();
+		String selStatement = "SELECT * FROM USER_MAIL WHERE id=?;";
+		PreparedStatement prep;
+		try
 		{
-			if(user.getUserId().equals(userId))
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
 			{
-				ret = user;
-				break;
+				String id = result.getString("userId");
+				Date randomized = getDateRegisteredForUser(id);
+				String email = result.getString("email");
+				Date lastLogin = result.getDate("lastLogin");
+				int emailGroup = result.getInt("emailGroup");
+				int lastEmail = result.getInt("lastSentEmail");
+				int randNumber = getRandomizedGroupForUser(id);
+				user = new UserMail(id, email, lastLogin, emailGroup, lastEmail, randomized, randNumber);
 			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return user;
+
 		}
-		return ret;
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return user;
+		}
 	}
 
 
