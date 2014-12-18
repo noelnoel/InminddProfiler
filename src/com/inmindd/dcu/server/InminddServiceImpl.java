@@ -2999,9 +2999,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				String group = result.getString(1);
 				
-				if(group == null)
+				if(result.wasNull())
 				{
-						//TODO something here 
+					return EmailGroupConstants.USER_NOT_RANDOMISED;
 				}
 				else if(group.equalsIgnoreCase("Control"))
 				{
@@ -3042,8 +3042,9 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
+		String selStatement = "SELECT date_randomised FROM user WHERE userID=?;";
 		PreparedStatement prep;
+		Date d;
 		try
 		{
 			prep = conn.prepareStatement(selStatement);
@@ -3051,8 +3052,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			ResultSet result = prep.executeQuery();
 			while(result.next())
 			{
-				Date d = result.getDate(1);
-				return d;
+				d = result.getDate(1);
+				if(result.wasNull())
+				{
+					d = null;
+				}
+				
 			}
 			try
 			{
@@ -3062,7 +3067,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			{
 				e.printStackTrace();
 			}
-			return null;
+			d = null;
+			return d;
 
 		}
 		catch(SQLException e)
