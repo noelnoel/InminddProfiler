@@ -178,18 +178,18 @@ public class Diet {
 	    	public void onClick(ClickEvent event) {
 	    		if (checkUser()) {
 	    			if (validateInput()) {
-	    			updateDietDB();
-	    			if (Window.confirm(constants.confirm()))
-	    				setRandomiserStatus();
-	    			
-	    			else {
-	    				return;
-	    			}
-	    			if (Window.confirm(constants.allocated_group())) {	    					
-	    						
-	    						getRandomGroup(); // this gets randomisedGroup 	  				
-	    				
-	    			}
+		    			updateDietDB();
+		    			if (Window.confirm(constants.confirm()))
+		    			{
+		    				setRandomiserStatus();
+		    			}
+		    			else {
+		    				return;
+		    			}
+		    			if (Window.confirm(constants.allocated_group())) {	    					
+		    				// this gets randomisedGroup 
+		    				getRandomGroup(); 	  				
+		    			}
 	    			}
 	    		}
 	    	}
@@ -269,7 +269,16 @@ public class Diet {
 	       			
 	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			outerUser.setRandomGroup(group);
-       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");    			
+	       			
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=logout");   
+	       			}
+	       			else
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			}
+       				 			
 	       			return;
 	       		}
 	            

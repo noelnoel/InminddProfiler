@@ -246,7 +246,7 @@ public class PatientInfo {
 
 		marital.addItem(constants.select_one());
 		
-		
+		marital.addItem(constants.single());
         marital.addItem(constants.married());
         marital.addItem(constants.civil());
         marital.addItem(constants.cohab());
@@ -258,19 +258,19 @@ public class PatientInfo {
         marital.getElement().setAttribute("class", "tr3");  
         maritalStatus.add(theSelection);
         
-        com.google.gwt.dom.client.NodeList<Node> children = marital.getElement().getChildNodes();       
-        for (int i = 0; i< children.getLength();i++) {
-          Node child = children.getItem(i);
-            if (child.getNodeType()==Node.ELEMENT_NODE) {
-              if (child instanceof OptionElement) {
-                OptionElement optionElement = (OptionElement) child;
-                  
-                     optionElement.getStyle().setBackgroundColor("red");  
-                                 }
-              }           
-           }
-        //SelectElement selectElement2 = SelectElement.as(marital.getElement());
-        //com.google.gwt.dom.client.NodeList<OptionElement> options = selectElement2.getOptions();
+//        com.google.gwt.dom.client.NodeList<Node> children = marital.getElement().getChildNodes();       
+//        for (int i = 0; i< children.getLength();i++) {
+//          Node child = children.getItem(i);
+//            if (child.getNodeType()==Node.ELEMENT_NODE) {
+//              if (child instanceof OptionElement) {
+//                OptionElement optionElement = (OptionElement) child;
+//                  
+//                     optionElement.getStyle().se  
+//                                 }
+//              }           
+//           }
+//        //SelectElement selectElement2 = SelectElement.as(marital.getElement());
+//        //com.google.gwt.dom.client.NodeList<OptionElement> options = selectElement2.getOptions();
       
         
         maritalStatus.add(marital);
