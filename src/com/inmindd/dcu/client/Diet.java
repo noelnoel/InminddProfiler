@@ -182,6 +182,7 @@ public class Diet {
 		    			if (Window.confirm(constants.confirm()))
 		    			{
 		    				setRandomiserStatus();
+		    				Window.confirm(constants.allocated_group());
 		    				getRandomGroup();
 		    			}
 		    			else {
