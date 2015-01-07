@@ -9,6 +9,10 @@ public class EmailGroupConstants
 	//Not part of the email groups, but needed to make sure people in control group are not sent emails
 	public static final int RANDOMIZED_DONT_EMAIL=2;
 	public static final int INTERVENTION_GROUP=1;
+	public static final int USER_NOT_RANDOMISED = 3;
+
+	
+	
 	public static final String EMAIL_HEADER = "<html><head></head><body><table style=\"table-layout:fixed\"><tr><td><a href=\"http://inmindd-profiler.appspot.com\"><img src=\"http://inmindd-profiler.appspot.com/images/inmindd_logo.png\"/></a></td><td style=\"width:200px\"><a href=\"http://inmindd-profiler.appspot.com\">";
 	public static final String EMAIL_LINK_EN = "Login to In-MINDD Support Environment";
 	public static final String EMAIL_LINK_FR = "Se connecter à l'environnement de soutien In-MINDD";
