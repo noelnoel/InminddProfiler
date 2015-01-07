@@ -182,6 +182,7 @@ public class Diet {
 		    			if (Window.confirm(constants.confirm()))
 		    			{
 		    				setRandomiserStatus();
+		    				Window.confirm(constants.allocated_group());
 		    				getRandomGroup();
 		    			}
 		    			else {
@@ -243,8 +244,6 @@ public class Diet {
 		
 		 callServiceSetup();
 		final  User user = login.getUser();
-		Window.alert("in get randomgroup");
-		
 
 		 AsyncCallback<String> callback =  new AsyncCallback<String>(){
 			 @Override	 
