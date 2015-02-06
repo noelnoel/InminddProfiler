@@ -1929,10 +1929,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
 			      
 			      //Live
-			      //String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
 				  
 			      //Test   
-			      String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			      //String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
 			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
@@ -1942,12 +1942,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {  
 		    	  //running application locally in development mode 
 		    	  //Live URL
-		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  //String password = "noknoknok";
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  String password = "inminddtest";
+		    	 /* String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String password = "inminddtest";*/
 		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
@@ -2862,7 +2862,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	{
 		UserMail user = null;
 		initDBConnection();
-		String selStatement = "SELECT * FROM USER_MAIL WHERE id=?;";
+		String selStatement = "SELECT * FROM USER_MAIL WHERE userId=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -2872,13 +2872,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String id = result.getString("userId");
-				Date randomized = getDateRegisteredForUser(id);
 				String email = result.getString("email");
 				Date lastLogin = result.getDate("lastLogin");
 				int emailGroup = result.getInt("emailGroup");
 				int lastEmail = result.getInt("lastSentEmail");
 				int randNumber = getRandomizedGroupForUser(id);
-				user = new UserMail(id, email, lastLogin, emailGroup, lastEmail, randomized, randNumber);
+				user = new UserMail(id, email, lastLogin, emailGroup, lastEmail, lastLogin, randNumber);
 			}
 			try
 			{
