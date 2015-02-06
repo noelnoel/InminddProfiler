@@ -1942,12 +1942,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {  
 		    	  //running application locally in development mode 
 		    	  //Live URL
-		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  //String password = "noknoknok";
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  String password = "inminddtest";
+		    	 // String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	 // String password = "inminddtest";
 		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
@@ -2862,7 +2862,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	{
 		UserMail user = null;
 		initDBConnection();
-		String selStatement = "SELECT * FROM USER_MAIL WHERE id=?;";
+		String selStatement = "SELECT * FROM USER_MAIL WHERE userId=?;";
 		PreparedStatement prep;
 		try
 		{
