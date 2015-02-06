@@ -1,7 +1,7 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
-
+import java.lang.InterruptedException;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -76,9 +76,11 @@ public class Apps implements EntryPoint {
 						output += expert.toJSON();
 					}
 					output += "]";
-
+					
+					
+					
 					DOM.getElementById("appsInputRPC").setAttribute("value",output);
-
+					 
 					trigerJavascript();
 				}				
 			}

@@ -30,8 +30,19 @@ public class EmailCron extends HttpServlet
 			{
 				if(mailUser.getRandomized()!=EmailGroupConstants.RANDOMIZED_DONT_EMAIL)
 				{
+<<<<<<< HEAD
+					ArrayList<EmailDetails> emailList = impl.getEmail(mailUser.getLastSentEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
+					String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
+					for(EmailDetails email:emailList)
+					{
+						_logger.log(Level.INFO, "Sent email to: "+unencryptEmail);
+						SendMail.sendMail(unencryptEmail, buildEmail(email.getMessageBody(), mailUser.getLang()), email.getSubject(), email.getTextContent());
+					}
+					if(emailList.size()>0) //Check to make sure an email was sent
+=======
 					int monthsSinceReg = getMonthsSinceRegisistration(mailUser.getDateRegistered());
 					if(monthsSinceReg>mailUser.getLastSentEmail())//
+>>>>>>> development
 					{
 						ArrayList<EmailDetails> emailList = impl.getEmail(mailUser.getLastSentEmail()+1,mailUser.getEmailGroup(), mailUser.getLang());
 						String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());

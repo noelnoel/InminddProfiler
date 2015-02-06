@@ -336,23 +336,26 @@ public class MedicalHealth {
 		weightKilos.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				double weight = weightKilos.getDoubleValue();
+				double ededweight = weightKilos.getDoubleValue();
 				String weightText = weightKilos.getText();
-				if (weightText == "" || weight == -1) {
+				if (weightText == "" || ededweight == -1) {
 					weightStone.setFocus();
 					return;
 				}
 
-				else if ((weight >=  MIN_WEIGHT_KILOS) && (weight <=  MAX_WEIGHT_KILOS)) {	
+				else if ((ededweight >=  MIN_WEIGHT_KILOS) && (ededweight <=  MAX_WEIGHT_KILOS)) {	
 					weightInputStone = 0;
 					weightInputLbs = 0;
-					weightInputKilos = weight;
+					weightInputKilos = ededweight;
 					cholYes.setFocus(true);
 				}
 
 				else {
 					error = new InlineLabel(constants.invalid_weight());
-					showErrorPopupPanel(error,"red");
+				
+					
+					
+					showErrorPopupPanel(error, "red");
 					weightKilos.setFocus();
 					weightKilos.setText("");
 
