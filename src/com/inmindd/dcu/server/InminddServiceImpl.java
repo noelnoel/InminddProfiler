@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+
+
+
 import com.google.appengine.api.utils.SystemProperty;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
@@ -47,6 +50,10 @@ import javax.mail.internet.MimeMessage;
 
 /*end of mail*/
 
+
+
+
+import com.google.gwt.core.ext.SelectionProperty;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -1914,7 +1921,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 	}
 	*/
-	public void initDBConnection() {		
+	/*public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode
 		
 		  try 
@@ -1925,10 +1932,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
 			      
 			      //Live
-			      //String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db?user=root";
 				  
 			      //Test   
-			      String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			     // String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
 			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
@@ -1942,10 +1949,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		    	  //String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	  String password = "inminddtest";
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String password = "noknoknok";
 		    	  
-		    	  String dbName = "inmindd";
+		    	  String dbName = "inmindd-v3:inmindd-db";
 		    	  String driver = "com.mysql.jdbc.Driver";
 		    	  String userName = "root";
 
@@ -1965,8 +1972,42 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      e.printStackTrace();
 		      return;
 		  }
-	}
+	}*/
+	
+	public void initDBConnection()
+	{String url = null;
+	if (SystemProperty.environment.value() ==
+		    SystemProperty.Environment.Value.Production) {
+		  // Connecting from App Engine.
+		  // Load the class that provides the "jdbc:google:mysql://"
+		  // prefix.
+		  try {
+			Class.forName("com.mysql.jdbc.GoogleDriver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  url =
+		    "jdbc:google:mysql://inmindd-v3:inmindd-db?user=root";
+		} else {
+		// Connecting from an external network. 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		url = "jdbc:mysql://173.194.249.69:3306?user=root"; 
+		}
 
+		try {
+			conn = DriverManager.getConnection(url);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
 		User userConnected = new User();

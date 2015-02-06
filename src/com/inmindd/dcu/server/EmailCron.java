@@ -32,7 +32,7 @@ public class EmailCron extends HttpServlet
 					String unencryptEmail = EmailEncryption.decrypt(mailUser.getEncryptedEmail());
 					for(EmailDetails email:emailList)
 					{
-						_logger.log(Level.INFO, "Sent emial to: "+unencryptEmail);
+						_logger.log(Level.INFO, "Sent email to: "+unencryptEmail);
 						SendMail.sendMail(unencryptEmail, buildEmail(email.getMessageBody(), mailUser.getLang()), email.getSubject(), email.getTextContent());
 					}
 					if(emailList.size()>0) //Check to make sure an email was sent
