@@ -20,7 +20,6 @@
 
   <!-- Other module inherits                                      -->
 <inherits name="com.google.gwt.i18n.I18N"/>
-
 	<extend-property name="locale" values="nl" />
 	<extend-property name="locale" values="fr" />
 	<set-configuration-property name="locale.cookie" value="gwtLocale"/>
@@ -29,9 +28,6 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
-  
-
-  
  <!-- Here we define the class that contains the entry point -->
 	<entry-point class="com.inmindd.dcu.client.PrivacyPolicy"/>
 </module>

@@ -12,17 +12,27 @@ public class EmailDetails
 	private int emailGroup;
 	private int monthToSend;
 	private String lang;
+	private String textContent;
 	
-	
-	public EmailDetails(String sub, String messageB, int emailG, int month, String lng)
+	public EmailDetails(String sub, String messageB, int emailG, int month, String lng, String text)
 	{
 		this.setSubject(sub);
 		this.setMessageBody(messageB);
 		this.setEmailGroup(emailG);
 		this.setMonthToSend(month);
 		this.setLang(lng);
+		this.setTextContent(text);
 	}
 
+	public String getTextContent()
+	{
+		return this.textContent;
+	}
+	
+	public void setTextContent(String cont)
+	{
+		this.textContent = cont;
+	}
 
 	public String getSubject() {
 		return subject;

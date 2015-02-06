@@ -108,6 +108,15 @@
     <url-pattern>/Admin/Inmindd</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+      <servlet-name>PrivacyPolicy</servlet-name>
+      <servlet-class>com.inmindd.dcu.server.InminddServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>PrivacyPolicy</servlet-name>
+      <url-pattern>/PrivacyPolicy/Inmindd</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>EmailCron</servlet-name>

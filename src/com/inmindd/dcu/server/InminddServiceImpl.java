@@ -1,16 +1,16 @@
 package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.client.ServiceClient;
+
+
+
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.inmindd.dcu.client.InminddConstants;
 import com.inmindd.dcu.client.InminddService;
 import com.inmindd.dcu.shared.CalculateScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
@@ -48,23 +48,15 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
-
-
-
-
-
-
-
-
 /*end of mail*/
-import org.tempuri.ServiceStub;
-import org.tempuri.ServiceStub.RandResult;
 
+
+
+
+import com.google.gwt.core.ext.SelectionProperty;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.protos.cloud.sql.Client.SqlException;
 
 /**
  * The server side implementation of the RPC service.
@@ -73,13 +65,13 @@ import com.google.protos.cloud.sql.Client.SqlException;
 @SuppressWarnings("serial")
 public class InminddServiceImpl extends RemoteServiceServlet implements InminddService {
 	private User user;	
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
+	//private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
 
 	
 	// autherisation key for Glasgow randomisation wev service
 	
-	private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
-	private String decryptedPassword;
+	//private final static String AUTH_KEY = "2E5E03C0-F32E-4934-AF92-D5BEA12C195E";
+	//private String decryptedPassword;
 	protected Connection conn; 
 	private Patient patient;
 	private FeelingsInfo feelings;
@@ -104,7 +96,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		ResultSet result = null;
 
 		try {	          
-			pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
+			pstmt = conn.prepareStatement("SELECT * FROM inmindd.user where userId = ?;");
 			pstmt.setString(1, idUser);
 			result = pstmt.executeQuery();
 			
@@ -122,7 +114,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					else
 					{
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						 updateUserLastLogin(idUser);
+						//TODO check this code 
+						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+							//we authorize login for Intervention group
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							 updateUserLastLogin(idUser);
+						}
 						conn.close();
 						return user;
 					}
@@ -201,12 +202,15 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
 					} else if(result.getInt("controlGroupAuthorized")== 0){
-						
 						user = null;
 						getThreadLocalRequest().getSession().setAttribute("current_user", null);
-
 						throw new IllegalArgumentException("You have to wait up to 6 months for entering the support environment.");
-					}
+					} else if(result.getString("randomised_group") == null){
+						//edge case where a user has not been randomised but still tries to access the support environment
+						user = null;
+						getThreadLocalRequest().getSession().setAttribute("current_user", null);
+						throw new IllegalArgumentException("User not yet randomised");
+					}	
 					conn.close();
 					return user;
 			}
@@ -327,62 +331,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		
 	}
 
-	
-	public Boolean randomiseUser(User user) throws IllegalArgumentException {
-		String userId = user.getUserId();
-		String countryCode = userId.substring(0, 2);
-		String practiceCode = userId.substring(2,4);
-		String userNo = userId.substring(4,7);
-		String randNo = null;
-		String randResultCode = null;
-		String randTreatmentGroup = null;
-		org.tempuri.ServiceStub.RandomiseParticipantResponse resp = null;
-		try {
-			ServiceStub ser = new ServiceStub();
-			ServiceClient serClient = ser._getServiceClient();
-			serClient.engageModule("addressing");
-			ServiceStub.RandomiseParticipant rand = new ServiceStub.RandomiseParticipant();
-			rand.setSNo(userId);
-			rand.setCountryID(countryCode);
-			rand.setPracticeID(practiceCode);
-			rand.setUserID(userNo);
-			rand.setAuthKey(AUTH_KEY);
-			try {
-				resp = ser.randomiseParticipant(rand);
-				RandResult randRes = resp.getRandomiseParticipantResult();
-				
-				if (randRes.isResultCodeSpecified()) {
-					randResultCode = randRes.getResultCode();
-					if (randResultCode.equals("alreadyrand"))
-						return true;  // already randomised
-				}
-				if (randRes.isRandNoSpecified())
-					randNo  = randRes.getRandNo();
-				
-				if (randRes.isTreatmentGroupSpecified())
-					randTreatmentGroup = randRes.getTreatmentGroup();
-				if (randRes.isResultCodeSpecified()) {  // did we get a result from the randomiser ervice ??
-					randResultCode = randRes.getResultCode();
-					if (randResultCode.equals("ok")) {  						
-						updateUser(user, randNo, randTreatmentGroup);
-					}
-				}
-
-				ServiceStub.ReturnRandInfo retRand = new ServiceStub.ReturnRandInfo();
-				ser.returnRandInfo(retRand);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		} catch (AxisFault e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		
-		return true;
-
-	}
 
 	private Boolean updateUser(User user , String randNo, String randTreatmentGroup) {
 
@@ -463,13 +411,6 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, randomiserStatus);
 			preparedStmt.executeUpdate();
-			try {
-				Thread.sleep(5000);  // give the randomiser a chance to do its thing
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-
 		}
 		catch (SQLException e) {
 			user = null;
@@ -493,10 +434,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			// check randomiser status		        
 				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM user where userId = ?;");
 				pstmt.setString(1, idUser);
+				try {
+					Thread.sleep(10000);
+				}catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 				result = pstmt.executeQuery();			
 				while (result.next()) {
-					if (result.getInt(5) == 2) {					
-						randGroup = result.getString(6);
+					randGroup = result.getString(6);
+					if (result.getInt(5) == 2) {	
 						conn.close();
 						return randGroup;
 					}
@@ -1928,9 +1875,10 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public RiskFactorScore getLibraScore(User user) 
 	{
 		//open database connection
+		initDBConnection();
 		RiskFactorScore score = new RiskFactorScore();
 		CalculateScore calcScore = new CalculateScore();
-		calcScore.calcScore(score, user);
+		calcScore.calcScore(score, user, conn);
 		return  score;
 	}
 	
@@ -1973,7 +1921,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 	}
 	*/
-	public void initDBConnection() {		
+	/*public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode
 		
 		  try 
@@ -1982,18 +1930,32 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {
 		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
-			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      
+			      //Live
+			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db?user=root";
+				  
+			      //Test   
+			     // String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+			      
 			      conn = DriverManager.getConnection(url);
+			      Statement db = conn.createStatement();
+			      db.execute("use inmindd;");
 		      } 
 		      else 
 		      {  
 		    	  //running application locally in development mode 
-		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  String dbName = "inmindd";
-		    	  String driver = "com.mysql.jdbc.Driver";
-		    	  String userName = "javaPrograms"; //was root
-		    	  String password = "sql"; //was noknoknok
+		    	  //Live URL
+		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  //String password = "noknoknok";
 		    	  
+		    	  //Test URL
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String password = "noknoknok";
+		    	  
+		    	  String dbName = "inmindd-v3:inmindd-db";
+		    	  String driver = "com.mysql.jdbc.Driver";
+		    	  String userName = "root";
+
 		    	  try 
 		    	  {
 		  			Class.forName(driver).newInstance();
@@ -2010,8 +1972,42 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      e.printStackTrace();
 		      return;
 		  }
-	}
+	}*/
+	
+	public void initDBConnection()
+	{String url = null;
+	if (SystemProperty.environment.value() ==
+		    SystemProperty.Environment.Value.Production) {
+		  // Connecting from App Engine.
+		  // Load the class that provides the "jdbc:google:mysql://"
+		  // prefix.
+		  try {
+			Class.forName("com.mysql.jdbc.GoogleDriver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  url =
+		    "jdbc:google:mysql://inmindd-v3:inmindd-db?user=root";
+		} else {
+		// Connecting from an external network. 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		url = "jdbc:mysql://173.194.249.69:3306?user=root"; 
+		}
 
+		try {
+			conn = DriverManager.getConnection(url);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	
 	@Override
 	public User getUserConnected() throws IllegalArgumentException {
 		User userConnected = new User();
@@ -2190,7 +2186,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 
 		String insert = "INSERT INTO `support_goals_users` (`id_goal`, `id_user`, `timestamp`, `comment`) VALUES (?, ?, ?, ?);";
-		changeEmailGroup(patient_id); //Update the user to the engaging email group
+		//changeEmailGroup(patient_id); //Update the user to the engaging email group
 		
 		//Check if the goal was already chosen by the patient and if it is don't rewrite it to database
 		boolean goalChosen = goalChosenAlready(patient_id, goal.getId_goal(), goal.getComment());
@@ -2650,6 +2646,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			prep.setString(1, userId);
 			prep.setString(2, enc);
 			prep.setString(3, todayAsMySqlDatetime);
+			//Returns false even when updated successfully ..weird
 			boolean result =  prep.execute();
 			try
 			{
@@ -2766,7 +2763,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Boolean userHasEmail(String userId)
 	{
 		initDBConnection();
-		String updateStat = "SELECT * FROM USER_MAIl WHERE userId=?";
+		String updateStat = "SELECT * FROM USER_MAIL WHERE userId=?";
 		PreparedStatement prep;
 		try
 		{
@@ -2858,15 +2855,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		{
 			//Before update, check the last login
 			UserMail user = this.getUserMail(userId);
-			//is the lastlogin null ?
-			/*if(user.getLastLogin()==null) //If so they are elgible to be sent a special email
-			{
-				EmailDetails det = null;
-				String addr = EmailEncryption.decrypt(user.getEncryptedEmail());
-				SendMail.sendMail(addr, det.getMessageBody(), det.getSubject());
-				//finally update their emailGroup
-				this.changeEmailGroup(userId);
-			}*/
+			changeEmailGroup(user.getUserId());
 			initDBConnection();
 			String todaysDate = this.getDateAsMySQLDateTime(new Date());
 			String updateStatement = "UPDATE USER_MAIL SET lastLogin=? WHERE userId=?;";
@@ -3046,7 +3035,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public int getRandomizedGroupForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT randomised_group FROM USER WHERE userID=?;";
+		String selStatement = "SELECT randomised_group FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -3056,14 +3045,20 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String group = result.getString(1);
-				if(group.equals("Control"))
+				
+				if(group == null)
+				{
+						//TODO something here 
+				}
+				else if(group.equalsIgnoreCase("Control"))
 				{
 					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
 				}
-				else
+				else if(group.equalsIgnoreCase("Intervention"))
 				{
 					return EmailGroupConstants.INTERVENTION_GROUP;
 				}
+				
 			}
 			try
 			{
@@ -3094,7 +3089,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
-		String selStatement = "SELECT timestamp FROM USER WHERE userID=?;";
+		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
 		PreparedStatement prep;
 		try
 		{
@@ -3161,7 +3156,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				String lng = result.getString("lang");
 				int mnth = result.getInt("monthToSend");
 				int emailG = result.getInt("emailGroup");
-				det.add(new EmailDetails(subject, text, emailG, mnth, lng));
+				String plnTxt = result.getString("Plain_Text");
+				det.add(new EmailDetails(subject, text, emailG, mnth, lng, plnTxt));
 				
 			}
 			try

@@ -1,8 +1,5 @@
 package com.inmindd.dcu.server;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -28,7 +25,7 @@ public class SendMail
 		
 	}
 	
-	public static void sendMail(String emailAddr,String message, String subject)
+	public static void sendMail(String emailAddr,String message, String subject,String plainText)
 	{
 		getUserNameAndPassword();
 		
@@ -52,7 +49,8 @@ public class SendMail
 			msg.setFrom(new InternetAddress(userName));
 			msg.setRecipients(RecipientType.BCC, InternetAddress.parse(emailAddr));
 			msg.setSubject(subject);
-			msg.setText(message);
+			msg.setText(plainText);
+			msg.setContent(message, EmailGroupConstants.EMAIL_HTML_MIME_TYPE);
 			Transport.send(msg);
 			
 			

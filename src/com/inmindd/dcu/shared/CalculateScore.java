@@ -12,8 +12,6 @@ import com.google.appengine.api.utils.SystemProperty;
 public class CalculateScore {
 	
 	private Connection conn;
-	private Statement statement = null;    
-	private ResultSet resultSet = null;
 	private Patient patient = new Patient();
 	private FeelingsInfo feelings = new FeelingsInfo();
 	private MedicalInfo medical = new MedicalInfo(); 
@@ -25,9 +23,9 @@ public class CalculateScore {
 	private String userId;
 	
 	
-	public RiskFactorScore calcScore(RiskFactorScore rf, User user ) {
+	public RiskFactorScore calcScore(RiskFactorScore rf, User user,Connection conn ) {
 		
-		initDBConnection();
+		//initDBConnection();
 		/*
 		 * get the inputs from the database
 		 */
@@ -36,11 +34,12 @@ public class CalculateScore {
 		userId = user.getUserId();
 		try {
 			
-			String query = "select * from patient_info where patient_id = " + userId;
+			String query = "select * from patient_info where patient_id = "+userId;
 			
-			pstmt = conn.prepareStatement("");
+			pstmt = conn.prepareStatement(query);
 			result = pstmt.executeQuery(query);
 			populatePatient(result);
+			
 			query = "select * from feelings_info where patient_id = " + userId;
 			
 			pstmt = conn.prepareStatement("");
@@ -343,13 +342,12 @@ public class CalculateScore {
 	
 	
 	private void mmol(RiskFactorScore rf){
-		double cholNetherlands;
-		double cholOthers;
+		
 		double chol = medical.getMmol();
+		
 		// netherlands calulation;
 		if (chol >= 6.5) {
 			rf.setCholesterolNetherlands(7.5);
-			
 		}
 		if (chol >= 5.0) {
 			rf.setCholesterolOthers(7.5);
@@ -831,34 +829,45 @@ public class CalculateScore {
 	public void initDBConnection() {		
 		// use Google driver for mysql when running in production mode
 		
-		  try {
-		      if (SystemProperty.environment.value() ==
-		          SystemProperty.Environment.Value.Production) {
-		        // Load the class that provides the new "jdbc:google:mysql://" prefix.
-		        Class.forName("com.mysql.jdbc.GoogleDriver");
-		        String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
-		        conn = DriverManager.getConnection(url);
-		      } else {  //running application locally in development mode 
-		    	String url = "jdbc:mysql://173.194.249.69:3306/";
-		  		String dbName = "inmindd";
-		  		String driver = "com.mysql.jdbc.Driver";
-		  		String userName = "root";
-		  		String password = "noknoknok";
-		  		try {
+		  try 
+		  {
+		     if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) 
+		      {
+		    	  // Load the class that provides the new "jdbc:google:mysql://" prefix.
+			      Class.forName("com.mysql.jdbc.GoogleDriver");
+			     // String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+			     String url = "jdbc:google:mysql://inmindd-v3:staging?user=root";
+			      conn = DriverManager.getConnection(url);
+			      Statement db = conn.createStatement();
+			      db.execute("use inmindd;");
+		      } 
+		      else 
+		      {  
+		    	  //running application locally in development mode 
+		    	  String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String dbName = "inmindd";
+		    	  String driver = "com.mysql.jdbc.Driver";
+		    	  String userName = "root"; //was root
+		    	  String password = "inminddtest"; //was noknoknok
+		    	  
+		    	  try 
+		    	  {
 		  			Class.forName(driver).newInstance();
 		  			conn = DriverManager.getConnection(url+dbName,userName,password);
-
-		  		} catch (Exception e) {
+		    	  } 
+		    	  catch (Exception e) 
+		    	  {
 		  			e.printStackTrace();
-		  		} 
-		  		
+		    	  } 
 		      }
-		    } catch (Exception e) {
+		  } 
+		  catch (Exception e) 
+		  {
 		      e.printStackTrace();
 		      return;
-		    }
-
+		  }
 	}
+	
 
 	
 	

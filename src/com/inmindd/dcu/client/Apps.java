@@ -1,7 +1,7 @@
 package com.inmindd.dcu.client;
 
 import java.util.ArrayList;
-
+import java.lang.InterruptedException;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -75,9 +75,11 @@ public class Apps implements EntryPoint {
 						output += expert.toJSON();
 					}
 					output += "]";
-
+					
+					
+					
 					DOM.getElementById("appsInputRPC").setAttribute("value",output);
-
+					 
 					trigerJavascript();
 				}				
 			}
@@ -116,6 +118,7 @@ public class Apps implements EntryPoint {
 		DOM.getElementById("menu-support-experts").setInnerHTML(constants.menu_support_experts());
 		DOM.getElementById("menu-support-faq").setInnerHTML(constants.menu_support_faq());
 		DOM.getElementById("menu-support-blog").setInnerHTML(constants.menu_support_blog());
+		DOM.getElementById("menu-support-blog").setAttribute("href", constants.blog_link());
 		DOM.getElementById("menu-support-goals").setInnerHTML(constants.goal_0());
 		DOM.getElementById("menu-support-logout").setInnerHTML(constants.logout());
 		DOM.getElementById("eu-advert-message").setInnerHTML(constants.euFunding());
@@ -127,6 +130,9 @@ public class Apps implements EntryPoint {
 		DOM.getElementById("apps1").setInnerHTML(constants.apps1());
 		DOM.getElementById("apps2").setInnerHTML(constants.apps2());
 		DOM.getElementById("privacy-policy").setInnerHTML(constants.privacy_policy());
+
+		DOM.getElementById("logout").setInnerHTML(constants.logout());
+
 	}
 
 }

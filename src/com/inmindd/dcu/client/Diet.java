@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
 import com.inmindd.dcu.shared.User;
 
@@ -59,14 +58,11 @@ public class Diet {
 	private RadioButton chickenNo;
 	private RadioButton pastaZero;
 	private RadioButton pastaTwo;
-	
 	private ScrollPanel scroll = new ScrollPanel();
-	private User user;
 	private User outerUser;
 	private Login login;
 	private InminddServiceAsync InminddServiceSvc;
-	public static Diet lastinstance;
-	private  String randomisedGroup;
+	public static Diet lastinstance;;
 	
 	static  InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -182,18 +178,16 @@ public class Diet {
 	    	public void onClick(ClickEvent event) {
 	    		if (checkUser()) {
 	    			if (validateInput()) {
-	    			updateDietDB();
-	    			if (Window.confirm(constants.confirm()))
-	    				setRandomiserStatus();
-	    			
-	    			else {
-	    				return;
-	    			}
-	    			if (Window.confirm(constants.allocated_group())) {	    					
-	    						
-	    						getRandomGroup(); // this gets randomisedGroup 	  				
-	    				
-	    			}
+		    			updateDietDB();
+		    			if (Window.confirm(constants.confirm()))
+		    			{
+		    				setRandomiserStatus();
+		    				Window.confirm(constants.allocated_group());
+		    				getRandomGroup();
+		    			}
+		    			else {
+		    				return;
+		    			}
 	    			}
 	    		}
 	    	}
@@ -216,8 +210,7 @@ public class Diet {
 	private void setRandomiserStatus() {
 		
 		 callServiceSetup();
-		 User user = login.getUser();
-			
+		 final User user = login.getUser();
 		
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 			 @Override	 
@@ -226,22 +219,24 @@ public class Diet {
 	       			InlineLabel error = new InlineLabel(constants.random_failed());
 	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
-	       	//	else {
-	       			//InlineLabel error = new InlineLabel("Randomiser status service successful completion");
-	       			//showErrorPopupPanel(error, "green"); 	       			
+	       	else {
+	       		InlineLabel error = new InlineLabel(constants.random_successful());
+	       		showErrorPopupPanel(error, "green");
+	       		InlineLabel error2 = new InlineLabel(constants.random_wait());
+	       		showErrorPopupPanel(error2, "green"); 
 	       			
-	       	//	}
+	       		}
 	            
 	         }
 			@Override
 			public void onFailure(Throwable caught) {
-				//InlineLabel error = new InlineLabel("Database update error");
-				//showErrorPopupPanel(error, "red");			
+				InlineLabel error = new InlineLabel(constants.random_failed());
+				showErrorPopupPanel(error, "red");			
 				
 			}
 		  };
-		  
 		  InminddServiceSvc.setRandomiseUserStatus(user, callback);
+
 }
 	
 	
@@ -249,26 +244,38 @@ public class Diet {
 		
 		 callServiceSetup();
 		final  User user = login.getUser();
-		
-		
+
 		 AsyncCallback<String> callback =  new AsyncCallback<String>(){
 			 @Override	 
 	       public void onSuccess(String group) {
 	       		if ((group == null)){	            		
 	       			InlineLabel error = new InlineLabel(constants.random_wait());
-	       			//showErrorPopupPanel(error, "red");            			
+	       			showErrorPopupPanel(error, "red");            			
 	       		}            		
 	       		else {
 	       			String whichGroup = null;
-	       			if (group.equals("Control"))
-	       				whichGroup = "Radio";
-	       			else whichGroup = "Taxi";
-	       			  
-	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
+	       				whichGroup = "Radio";
+	       			}
+	       			else
+	       			{
+	       				whichGroup = "Taxi";
+	       			}
+	       			
+	       			Window.alert(constants.random_user_1() + " " + user.getUserId() + " " + constants.random_user_2() + whichGroup );
 	       			outerUser.setRandomGroup(group);
 	       			
-	       			Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			if (group.equalsIgnoreCase(("Control")))
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=logout");   
+	       			}
+	       			else
+	       			{
+	       				Window.Location.assign(GWT.getHostPageBaseURL() + "index.html?page=support");
+	       			}
+       				 			
 	       			return;
 	       		}
 	            
@@ -294,6 +301,11 @@ public class Diet {
 			return  false;
 			
 		}
+//		else
+//		{
+//			InlineLabel error = new InlineLabel("USER IS "+user.getUserId());
+//			showErrorPopupPanel(error, "green");
+//		}	
 		return true;
 	}
 	

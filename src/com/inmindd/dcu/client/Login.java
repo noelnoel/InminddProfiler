@@ -1,9 +1,5 @@
 package com.inmindd.dcu.client;
 
-
-
-import java.rmi.RemoteException;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -44,7 +40,6 @@ public class Login  {
 
 	private  User user = new User();
 	private  Patient patient = new Patient();
-	private final static byte[] GWT_DES_KEY = new byte[] { -110, 121, -65, 22, -60, 61, -22, -60, 21, -122, 41, -89, -89, -68, -8, 41, -119, -51, -12, -36, 19, -8, -17, 47 };
   
 	static InminddConstants constants = 
 			   (InminddConstants)GWT.create(InminddConstants.class);
@@ -113,7 +108,7 @@ public class Login  {
     private String hashedPassword;
     private String hashedMaidenName;
     private String hashedFavColour;
-    private String email;
+
     
     private Boolean duplicate = false;
     private int idUser;
@@ -248,43 +243,57 @@ public class Login  {
         			hashedMaidenName = Crypto.getSHA1for((motherBox.getText()));
         			// generate digest of favorite colour
         			hashedFavColour = Crypto.getSHA1for((colourBox.getText()));
-        			//Check is the email address field entered
-        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
-        			{
-        				String unVaildatedEmailAddress = userEmailAddress.getText();
-        				if(isEmailValid(unVaildatedEmailAddress))
-        				{
-        					//Encrypt the email address
-        					
-        					//get rid of the unencrypted version
-        					unVaildatedEmailAddress = "";
-        					String userId = userIdReg.getText();
-        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
-							{
-
-								@Override
-								public void onFailure(Throwable caught)
-								{
-									// TODO Do we log these somewhere?
-									
-								}
-
-								@Override
-								public void onSuccess(Boolean result)
-								{
-									// TODO Nothing much really, we just want confirmation, do we log these somewhere?
-									
-								}
-							};
-        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
-        				}
-        			}
+        			        			
         			callServiceSetup();
         			createUser(userIdReg.getText());
-        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>();
+        			
+        			AsyncCallback<Boolean> callback = new AuthenticationHandlerReg<Boolean>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							System.out.println(constants.reg_error2()+" "+caught);	
+						}
 
+						@Override
+						public void onSuccess(Boolean result)
+						{	//If the registration is successful add the email if it exists 
+							Window.alert("Registration successful");
+							
+		        			//Check is the email address field entered
+		        			if((userEmailAddress.getText()!=null) ||!userEmailAddress.getText().equals(""))//First check if it's blank
+		        			{
+		        				String unVaildatedEmailAddress = userEmailAddress.getText();
+		        				
+		        				if(isEmailValid(unVaildatedEmailAddress))
+		        				{	
+		        					String userId = userIdReg.getText();
+		        					//Window.alert(userId+ " "+ unVaildatedEmailAddress);
+		        					
+		        					AsyncCallback<Boolean> cback = new AsyncCallback<Boolean>()
+									{
+										@Override
+										public void onFailure(Throwable caught)
+										{
+											Window.alert("Email not added"+caught);
+										}
+										@Override
+										public void onSuccess(Boolean result)
+										{	
+											Window.alert("Email added successfully");
+										}
+									};
+		        					InminddServiceSvc.addUserEmail(userId, unVaildatedEmailAddress, cback);
+		        				}
+		        			}
+
+							//Window.alert("Add email "+result);
+	    					content.selectTab(1);
+	    					content.getTabWidget(0).getElement().getStyle().setProperty("backgroundColor", "red");
+
+						}
+					};
         			InminddServiceSvc.registerUser(user, callback);       			
-
         		}
         	}
         });
@@ -378,6 +387,7 @@ public class Login  {
 	    	}
 
 	    });
+	    
 	    // Listen for mouse events on the forgot password   button.
 	    forgotPasswordButton.addClickHandler(new ClickHandler() {
 	    	@Override
@@ -760,7 +770,7 @@ public class Login  {
 	// not used 
 	private Boolean checkAlreadyRegistered(String id) {
 		 callServiceSetup();
-		 final Boolean dup;
+		 //final Boolean dup;
 		 AsyncCallback<Boolean> callback =  new AsyncCallback<Boolean>(){
 
 			 @Override	 

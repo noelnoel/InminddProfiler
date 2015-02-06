@@ -4,7 +4,6 @@ package com.inmindd.dcu.client;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.inmindd.dcu.shared.RiskFactorScore;
 import com.inmindd.dcu.shared.CognitiveOneInfo;
 import com.inmindd.dcu.shared.CognitiveTwoInfo;
 import com.inmindd.dcu.shared.DietInfo;
@@ -41,13 +40,6 @@ public interface InminddServiceAsync {
 	void resetPassword(User user, AsyncCallback<Boolean> callback)
 			throws IllegalArgumentException;
 	
-	void randomiseUser(User user, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;
-	
-	
-	void setRandomiseUserStatus(User user, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;
-	
 	void getRandomisedGroup(User user,  AsyncCallback<String> callback)
 			throws IllegalArgumentException;
 	
@@ -58,7 +50,11 @@ public interface InminddServiceAsync {
 				throws IllegalArgumentException;
 	
 	void updateFeelingsInfo(FeelingsInfo feelings, AsyncCallback<Boolean> callback)
-			throws IllegalArgumentException;	
+			throws IllegalArgumentException;
+	
+	
+	void setRandomiseUserStatus(User user, AsyncCallback<Boolean> callback)
+			throws IllegalArgumentException;
 	
 	void queryFeelingsInfo(User user, AsyncCallback<FeelingsInfo> callback)
 			throws IllegalArgumentException;

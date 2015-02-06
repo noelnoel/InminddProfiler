@@ -15,6 +15,8 @@
             <!--[if lt IE 9]>
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <![endif]-->
+            
+            
         <style type="text/css">
             .jumbotronRb {
                 width: 310px;
@@ -53,16 +55,28 @@
             }
             
             
-            /*Twitter widget*/
-            a.tweet-box-button.web-intent 
+        
+            
+         
+            .twitter-timeline
             {
-				display: none;
-			}
+            	position: relative;
+				right: -97%;
+				top: -190px;
+            }
+            
+         	.twit-text
+         	{
+         	position: relative;
+			top: -190px;
+			}	
 			
-			a.follow-button.profile 
+			
+			#fixed-height
 			{
-				display: none;
+				height: 700px;
 			}
+           
         </style>
         <!-- Google Analytics -->
         <script>
@@ -76,6 +90,27 @@
 
         </script>
         <!-- End Google Analytics -->
+        
+                <!-- script references -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+         <script src="cookiesdirective.js"></script>
+        <!--  This website uses cookies message -->
+        <script type="text/javascript">
+        	window.cookieCont = function(){
+        		console.log("Starting cookie script");
+        		console.log($('#cookie_message').text());
+        		$.cookiesDirective(
+        				{
+        					privacyPolicyUri:'privacyPolicy.html',
+        					explicitConsent: false,
+        					backgroundColor: '#52B54A',
+        					linkColor: '#ffffff',
+        					position:'bottom',
+        					backgroundOpacity: '95',
+        					message: $('#cookie_message').text()
+        				});	
+        	}
+        </script>
     </head>
     <body class="tundra">
         <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
@@ -118,7 +153,13 @@
                                         <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://www.inmindd.eu/" id="menu-inmindd">In-MINDD Website</a></li>
                                         <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="contact.html" id="menu-contact">Contact</a></li>
                                         <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="privacyPolicy.html" id="privacy-policy">Privacy Policy</a></li>
+                                    	<li> 
+                                    		<a href="index.html?page=logout">
+                							<span class="glyphicon glyphicon-fast-backward"></span> <span id="logout">Logout</span>
+                							</a>
+                						</li>
                                     </ul>
+                                    
                                 </nav>
                             </div>
                         </div>
@@ -213,27 +254,47 @@
                             </div>
                         </div>
                         <div id="supportPanel" style="display:none">
+                         <!-- Twitter Widgets -->
+                      
                             <div class="row">
-                                <div class="col-md-8 col-md-offset-2">
+                            	               
+                                  
+                                <div class="col-md-8 col-md-offset-2" id="fixed-height">
                                     <h1 style="text-align:center" id="landing-support-1">Welcome to the In-MINDD Support Environment!</h1>
                                     <br />
                                     <h2 id="landing-support-2">What is In-MINDD Support Environment?</h2>
                                     <p id="landing-support-3">The Support environment will provide you with your personal Lifestyle for Brain Health Score <a href="score.html">(LIBRA) and your personalised plan</a>.</p>
                                     <br />
-                                    <div class="jumbotronRb bg-success" style="margin:0 auto">
+                                    <div class="jumbotronRb bg-success">
                                         <a href="score.html">
                                         	<img src="images/landing/profile.jpg" alt="" />
                                         	<p id="landing-support-8">Your LIBRA Personalised Plan</p>
                                         </a>
+                                
                                         <div class="linkItems"></div>
+                               		  
                                     </div>
-                                    <br /><br />
-                                    <p id="landing-support-4">You will also have access to other features such as a <a href="faq.html">FAQ page</a>, <a href="http://inmindd-blog.appspot.com/">a blog</a> where you can share your thoughts and experience of participating in the IN-MINDD study.  We encourage you to visit the <a href="#">user forum</a> to link in with other participants in the study, the forum will provide you with the opportunity to talk to other users and discuss any topics that relate to brain health and share any tips and supports on adopting and maintaining a healthy lifestyle to improve long term brain health.</p>
-                                    <p id="landing-support-5">Feel free to visit the support environment as often or little as you wish. There are a number of ways for you to get involved, you can revisit your personalised plan as often as you like, chat to other users on the forum or contribute to the IN-MINDD blog.  If you have any questions on your personalised plan go to our FAQ page, if you don’t find what you are looking for please use the <a href="experts.html">Ask the Expert</a> feature and we will be happy to answer your question.</p>
-                                    <p id="landing-support-6">We hope that you will find the many features helpful and informative. If you have any thoughts or suggestions on the support environment please feel free to contact us <a href="contact.html">here</a>.</p>
+                      
                                 	
-                                	<a id="twit-widget" class="twitter-timeline" href="https://twitter.com/inmindddublin" data-widget-id="530346620290740227">Tweets by @inmindddublin</a>
-									<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                               
+                                    <a  class="twitter-timeline twitter" width="300" height="200" data-chrome="nofooter noheader" href="https://twitter.com/inmindddublin" data-widget-id="530346620290740227">Tweets by @inmindddublin</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                	
+                                	<!--  Nice -->
+                                	 <a   class="twitter-timeline" width="300" height="200" data-chrome="nofooter noheader"  href="https://twitter.com/inminddnice" data-widget-id="532547401911771136">Tweets de @inminddnice</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                	
+                                	<!--  maastricht -->
+                                	<a  class="twitter-timeline" width="300" height="200" data-chrome="nofooter noheader" href="https://twitter.com/inminddum" data-widget-id="530348710123671554">Tweets by @inminddum</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                	<!--  glasgow -->
+                                	<a  class="twitter-timeline" width="300" height="200" data-chrome="nofooter noheader" data-dnt="true" href="https://twitter.com/InMinddGlasgow" data-widget-id="532548866025873408">Tweets by @InMinddGlasgow</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                      
+                                    
+                                    <p class="twit-text" id="landing-support-4">You will also have access to other features such as a <a href="faq.html">FAQ page</a>, <a href="http://inmindd-blog.appspot.com/">a blog</a> where you can share your thoughts and experience of participating in the IN-MINDD study.  We encourage you to visit the <a href="#">user forum</a> to link in with other participants in the study, the forum will provide you with the opportunity to talk to other users and discuss any topics that relate to brain health and share any tips and supports on adopting and maintaining a healthy lifestyle to improve long term brain health.</p>
+                                    <p class="twit-text" id="landing-support-5">Feel free to visit the support environment as often or little as you wish. There are a number of ways for you to get involved, you can revisit your personalised plan as often as you like, chat to other users on the forum or contribute to the IN-MINDD blog.  If you have any questions on your personalised plan go to our FAQ page, if you don’t find what you are looking for please use the <a href="experts.html">Ask the Expert</a> feature and we will be happy to answer your question.</p>
+                                    <p  class="twit-text" id="landing-support-6">We hope that you will find the many features helpful and informative. If you have any thoughts or suggestions on the support environment please feel free to contact us <a href="contact.html">here</a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -258,32 +319,8 @@
             
             
         </div>
-        <!-- script references -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="cookiesdirective.js"></script>
-        <!--  This website uses cookies message -->
-        <script type="text/javascript">
-        	$(document).ready(function(){
-        		console.log("Starting cookie script");
-        		function cookieController() {
-                    // Cookie setting scripts in here
-        			
-                }   
-        		$.cookiesDirective(
-        				{
-        					privacyPolicyUri:'privacyPolicy.html',
-        					scriptWrapper:cookieController,
-        					explicitConsent: false,
-        					backgroundColor: '#52B54A',
-        					linkColor: '#ffffff',
-        					position:'bottom',
-        					backgroundOpacity: '95',
-        					message: $('#cookie_message').text()
-        				});
-        		
-        	});
-        
-        </script>
+
+      
         
         
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -295,11 +332,14 @@
                 console.info(sender.target.alt);
                 document.cookie="gwtLocale="+sender.target.alt.toLowerCase();
                 location.reload();
+                
             }
 
             $(document).ready(function(){
                 $(document).on("click","img.flag", changeFlag);
             });
         </script>
+         
+        
     </body>
 </html>

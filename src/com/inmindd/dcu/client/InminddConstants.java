@@ -18,6 +18,7 @@ public interface InminddConstants extends Constants{
 	 	String reset_password();
 	 	String enter_id();
 	 	String reg_error();
+	 	String reg_error2();
 	 	String reset_password_fail();
 	 	String practice_code_error();
 	 	String register_heading();
@@ -40,7 +41,6 @@ public interface InminddConstants extends Constants{
 	 	String smoking_drink();
 	 	String diet_tab();
 	 	String unable_retrieve_db();
-
 	 	
 	 	String wait_six_months();
 
@@ -341,6 +341,8 @@ public interface InminddConstants extends Constants{
 	 	String random_failed();
 	 	String random_wait();
 	 	String random_error();
+	 	String random_successful();
+	 	String not_randomised();
 	 	
 	 	// alcohol & smoking
 	 	String smoke_alcohol();
@@ -613,4 +615,7 @@ public interface InminddConstants extends Constants{
 		String twitter_id();
 		String twitterTitle();
 		String twitterLink();
+		
+		//Blog
+		String blog_link();
 }
