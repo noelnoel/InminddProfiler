@@ -19,7 +19,7 @@ public class Apps implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		globalize();
+		
 		callServiceSetup();
 		
 		AsyncCallback<User> callback = new AsyncCallback<User>() {
@@ -45,6 +45,7 @@ public class Apps implements EntryPoint {
 		};
 
 		InminddServiceSvc.getUserConnected(callback);
+		globalize();
 	}
 
 	public static native void trigerUserIDJavascript(String userID) /*-{

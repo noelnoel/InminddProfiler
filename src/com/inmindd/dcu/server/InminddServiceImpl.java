@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.inmindd.dcu.server;
 
 import java.io.UnsupportedEncodingException;
@@ -49,6 +50,60 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /*end of mail*/
+=======
+package com.inmindd.dcu.server;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.google.appengine.api.utils.SystemProperty;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.inmindd.dcu.client.InminddService;
+import com.inmindd.dcu.shared.CalculateScore;
+import com.inmindd.dcu.shared.CognitiveOneInfo;
+import com.inmindd.dcu.shared.CognitiveTwoInfo;
+import com.inmindd.dcu.shared.DietInfo;
+import com.inmindd.dcu.shared.FamilyHistoryInfo;
+import com.inmindd.dcu.shared.FeelingsInfo;
+import com.inmindd.dcu.shared.MedicalInfo;
+import com.inmindd.dcu.shared.Patient;
+import com.inmindd.dcu.shared.PhysicalActivityInfo;
+import com.inmindd.dcu.shared.RiskFactorScore;
+import com.inmindd.dcu.shared.SmokeAlcoholInfo;
+import com.inmindd.dcu.shared.SupportApps;
+import com.inmindd.dcu.shared.SupportExperts;
+import com.inmindd.dcu.shared.SupportFAQ;
+import com.inmindd.dcu.shared.SupportGoal;
+import com.inmindd.dcu.shared.SupportGoalUser;
+import com.inmindd.dcu.shared.SupportRiskFactorInfos;
+import com.inmindd.dcu.shared.User;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+/*mail purpose*/
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
+
+
+>>>>>>> development
 
 
 
@@ -1932,10 +1987,17 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			      Class.forName("com.mysql.jdbc.GoogleDriver");
 			      
 			      //Live
+<<<<<<< HEAD
 			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db?user=root";
 				  
 			      //Test   
 			     // String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+=======
+			      String url = "jdbc:google:mysql://inmindd-v3:inmindd-db/inmindd?user=root";
+				  
+			      //Test   
+			      //String url = "jdbc:google:mysql://inmindd-v3:staging/inmindd?user=root";
+>>>>>>> development
 			      
 			      conn = DriverManager.getConnection(url);
 			      Statement db = conn.createStatement();
@@ -1945,12 +2007,17 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		      {  
 		    	  //running application locally in development mode 
 		    	  //Live URL
-		    	  //String url = "jdbc:mysql://173.194.249.69:3306/";
-		    	  //String password = "noknoknok";
-		    	  
-		    	  //Test URL
 		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
 		    	  String password = "noknoknok";
+		    	  
+		    	  //Test URL
+<<<<<<< HEAD
+		    	  String url = "jdbc:mysql://173.194.249.69:3306/";
+		    	  String password = "noknoknok";
+=======
+		    	 /* String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  String password = "inminddtest";*/
+>>>>>>> development
 		    	  
 		    	  String dbName = "inmindd-v3:inmindd-db";
 		    	  String driver = "com.mysql.jdbc.Driver";
@@ -2897,18 +2964,49 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	private UserMail getUserMail(String userId)
 	{
-		ArrayList<UserMail> allUsers = this.getUserMailList();
-		//find the person 
-		UserMail ret = null;
-		for(UserMail user: allUsers)
+		UserMail user = null;
+		initDBConnection();
+		String selStatement = "SELECT * FROM USER_MAIL WHERE userId=?;";
+		PreparedStatement prep;
+		try
 		{
-			if(user.getUserId().equals(userId))
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
 			{
-				ret = user;
-				break;
+				String id = result.getString("userId");
+				String email = result.getString("email");
+				Date lastLogin = result.getDate("lastLogin");
+				int emailGroup = result.getInt("emailGroup");
+				int lastEmail = result.getInt("lastSentEmail");
+				int randNumber = getRandomizedGroupForUser(id);
+				user = new UserMail(id, email, lastLogin, emailGroup, lastEmail, lastLogin, randNumber);
 			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return user;
+
 		}
-		return ret;
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return user;
+		}
 	}
 
 
@@ -3321,3 +3419,4 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	
 }
+

@@ -1,3 +1,4 @@
+
 package com.inmindd.dcu.server;
 
 public class EmailGroupConstants
@@ -25,3 +26,4 @@ public class EmailGroupConstants
 	public static final String EMAIL_FOOTER_END = "</td><td><img src=\"http://inmindd-integration.appspot.com/images/eu-flag.png\"/></td></tr></table></body></html>";
 	public static final String EMAIL_HTML_MIME_TYPE = "text/html; charset=utf-8";
 }
+
