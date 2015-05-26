@@ -105,39 +105,49 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					//System.out.println(result.getString(4));
 					user = new User();
 					user.setUserId(result.getString(1));
-					Date d = getDateRandomised(idUser);
-					if (!(d == null)){
-						int differenceMonths =  getMonthsSinceRandomisation(d);
-						
 					
 					
-						if (differenceMonths >= 5 ) {
-							getThreadLocalRequest().getSession().setAttribute("current_user", user);
-							updateUserLastLogin(idUser);
-							conn.close();
-							return user;
-						}
-						else
+					if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention"))
+					{
+						//we authorize login for Intervention group
+						getThreadLocalRequest().getSession().setAttribute("current_user", user);
+						 updateUserLastLogin(idUser);
+							
+					} 
+					else if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Control"))
+					{
+						Date d = getDateRandomised(idUser);
+						if(d==null)
 						{
-							getThreadLocalRequest().getSession().setAttribute("current_user", user);
-							//TODO check this code 
-							if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
-							//we authorize login for Intervention group
-							getThreadLocalRequest().getSession().setAttribute("current_user", user);
-							 updateUserLastLogin(idUser);
-							} 
-							else if(result.getInt("controlGroupAuthorized") == 1)
+							if((result.getInt("controlGroupAuthorized") == 1))
 							{
-							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 								getThreadLocalRequest().getSession().setAttribute("current_user", user);
 								updateUserLastLogin(idUser);
 							}
-							conn.close();
-							return user;
 						}
+						else
+						{
+							int monthsSinceReg = getMonthsSinceRandomisation(d);
+							
+							if((monthsSinceReg>=5) )
+							{
+								getThreadLocalRequest().getSession().setAttribute("current_user", user);
+								updateUserLastLogin(idUser);
+							}
+							else if((result.getInt("controlGroupAuthorized") == 1))
+							{
+								getThreadLocalRequest().getSession().setAttribute("current_user", user);
+								updateUserLastLogin(idUser);
+							}
+						}
+						
+					}
+					conn.close();
+					return user;
+						
 				}
 			}
-			}
+			
 			//Only executes if there is no user with that id 
 			user = null;
 			getThreadLocalRequest().getSession().setAttribute("current_user", null);
@@ -157,6 +167,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	
 	private static int getMonthsSinceRandomisation(Date registrationDate)
 	{
+		if(registrationDate==null)
+		{
+			return 0;
+		}
+		
 		Date today = new Date();
 		Calendar startCalendar = Calendar.getInstance();
 		startCalendar.setTime(registrationDate);
@@ -330,8 +345,11 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	@Override
 	public Boolean registerUser(User user) throws IllegalArgumentException {
 			String userId = user.getUserId();
-			if (duplicateUser(userId))  // this user already in database
-				return false;
+			if (duplicateUser(userId))  
+			{
+				return false;// this user already in database
+			}
+				
 			//open database connection
 			initDBConnection();
 			// Verify that the input is valid. 
@@ -342,7 +360,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(time);  
 			String insert = "insert  into user (userId,passwordhash,timestamp, maiden_name_hash, favorite_colour_hash)  values(?,?,?,?,?)";			
-			//TODO: Add in add to mail table here
+			
 			
 			try {
 				PreparedStatement updateUserInfo = conn.prepareStatement(insert);
