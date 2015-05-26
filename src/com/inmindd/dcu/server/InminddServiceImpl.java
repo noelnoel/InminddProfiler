@@ -34,6 +34,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 /*mail purpose*/
 import java.util.Properties;
@@ -46,6 +47,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 
 
 
@@ -87,6 +89,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 	@Override
 	public User authenticateUser(String idUser, String password) throws IllegalArgumentException {	
 		//open database connection
+		int i = 1;
 		initDBConnection();
 
 		PreparedStatement pstmt = null;
@@ -102,29 +105,37 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 					//System.out.println(result.getString(4));
 					user = new User();
 					user.setUserId(result.getString(1));
+					Date d = getDateRandomised(idUser);
+					if (!(d == null)){
+						int differenceMonths =  getMonthsSinceRandomisation(d);
+						
 					
-					if(result.getInt("profiler_blocked")==1)
-					{
-						throw new IllegalArgumentException("Blocked");
+					
+						if (differenceMonths < 5 ) {
+							throw new IllegalArgumentException("Blocked");
+						
+						}
+					
+						
 
-					}
-					else
-					{
-						getThreadLocalRequest().getSession().setAttribute("current_user", user);
-						//TODO check this code 
-						if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
+						else
+						{
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							//TODO check this code 
+							if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Intervention")){
 							//we authorize login for Intervention group
 							getThreadLocalRequest().getSession().setAttribute("current_user", user);
 							 updateUserLastLogin(idUser);
-						} else if(result.getInt("controlGroupAuthorized") == 1) {
+							} else if(result.getInt("controlGroupAuthorized") == 1) {
 							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
-							getThreadLocalRequest().getSession().setAttribute("current_user", user);
-							 updateUserLastLogin(idUser);
+								getThreadLocalRequest().getSession().setAttribute("current_user", user);
+								updateUserLastLogin(idUser);
 						}
 						conn.close();
 						return user;
 					}
 				}
+			}
 			}
 			//Only executes if there is no user with that id 
 			user = null;
@@ -143,7 +154,19 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		return user;
 	}
 	
-	
+	private static int getMonthsSinceRandomisation(Date registrationDate)
+	{
+		Date today = new Date();
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(registrationDate);
+		
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(today);
+		
+		int differenceinYears = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+		int differenceInMonths = (differenceinYears*12)+(endCalendar.get(Calendar.MONTH)-startCalendar.get(Calendar.MONTH));
+		return differenceInMonths;
+	}
 	@Override
 	public Boolean duplicateUser(String id) throws IllegalArgumentException {	
 		//open database connection
@@ -1952,7 +1975,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
 		    	  String userName = "root";
-
+		    	
 		    	  try 
 		    	  {
 		  			Class.forName(driver).newInstance();
@@ -3078,6 +3101,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				ee.printStackTrace();
 			}
 			return -1;
+			
+					
 		}
 	}
 	
@@ -3121,7 +3146,47 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			return null;
 		}
 	}
+	public Date getDateRandomised(String userId)
+	{
+		initDBConnection();
+		String selStatement = "SELECT date_randomised FROM user WHERE userID=?;";
+		PreparedStatement prep;
+		try
+		{
+			prep = conn.prepareStatement(selStatement);
+			prep.setString(1, userId);
+			ResultSet result = prep.executeQuery();
+			while(result.next())
+			{
+				Date d = result.getDate("date_randomised");
+				
+				return d;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
 
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			try
+			{
+				conn.close();
+			}
+			catch(SQLException ee)
+			{
+				ee.printStackTrace();
+			}
+			return null;
+		}
+	}
 	/***
 	 * Will return a given email from the email table
 	 * @param month the month the email should be sent
