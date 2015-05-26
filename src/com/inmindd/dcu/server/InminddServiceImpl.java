@@ -111,13 +111,12 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						
 					
 					
-						if (differenceMonths < 5 ) {
-							throw new IllegalArgumentException("Blocked");
-						
+						if (differenceMonths >= 5 ) {
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							updateUserLastLogin(idUser);
+							conn.close();
+							return user;
 						}
-					
-						
-
 						else
 						{
 							getThreadLocalRequest().getSession().setAttribute("current_user", user);
@@ -126,14 +125,16 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 							//we authorize login for Intervention group
 							getThreadLocalRequest().getSession().setAttribute("current_user", user);
 							 updateUserLastLogin(idUser);
-							} else if(result.getInt("controlGroupAuthorized") == 1) {
+							} 
+							else if(result.getInt("controlGroupAuthorized") == 1)
+							{
 							//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 								getThreadLocalRequest().getSession().setAttribute("current_user", user);
 								updateUserLastLogin(idUser);
+							}
+							conn.close();
+							return user;
 						}
-						conn.close();
-						return user;
-					}
 				}
 			}
 			}
@@ -167,6 +168,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		int differenceInMonths = (differenceinYears*12)+(endCalendar.get(Calendar.MONTH)-startCalendar.get(Calendar.MONTH));
 		return differenceInMonths;
 	}
+	
 	@Override
 	public Boolean duplicateUser(String id) throws IllegalArgumentException {	
 		//open database connection
@@ -217,7 +219,17 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 						//we authorize login for Intervention group
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
-					} else if(result.getInt("controlGroupAuthorized") == 1) {
+					} 
+					else if(result.getString("randomised_group") != null && result.getString("randomised_group").equals("Control"))
+					{
+						int monthsSinceRandomise = getMonthsSinceRandomisation(getDateRandomised(user.getUserId()));
+						if(monthsSinceRandomise>=5)
+						{
+							getThreadLocalRequest().getSession().setAttribute("current_user", user);
+							updateUserLastLogin(idUser);
+						}
+					}
+					else if(result.getInt("controlGroupAuthorized") == 1) {
 						//we authorize login for Control group if they have been authorized by the researchers after their second visit 6 months after
 						getThreadLocalRequest().getSession().setAttribute("current_user", user);
 						 updateUserLastLogin(idUser);
@@ -1969,8 +1981,8 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		    	  String password = "noknoknok";
 		    	  
 		    	  //Test URL
-		    	 // String url = "jdbc:mysql://173.194.242.136:3306/";
-		    	 // String password = "inminddtest";
+		    	  //String url = "jdbc:mysql://173.194.242.136:3306/";
+		    	  //String password = "inminddtest";
 		    	  
 		    	  String dbName = "inmindd";
 		    	  String driver = "com.mysql.jdbc.Driver";
