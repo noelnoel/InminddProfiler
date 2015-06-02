@@ -2925,7 +2925,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String id = result.getString("userId");
-				Date randomized = getDateRegisteredForUser(id);
+				Date randomized = getDateRandomised(id);
 				String email = result.getString("email");
 				Date lastLogin = result.getDate("lastLogin");
 				int emailGroup = result.getInt("emailGroup");
@@ -3046,7 +3046,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			while(result.next())
 			{
 				String id = result.getString("userId");
-				Date randomized = getDateRegisteredForUser(id);
+				Date randomized = getDateRandomised(id);
 				String email = result.getString("email");
 				Date lastLogin = result.getDate("lastLogin");
 				int emailGroup = result.getInt("emailGroup");
@@ -3096,7 +3096,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 				
 				if(group == null)
 				{
-						//TODO something here 
+					return EmailGroupConstants.RANDOMIZED_DONT_EMAIL;
 				}
 				else if(group.equalsIgnoreCase("Control"))
 				{
@@ -3136,7 +3136,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 		}
 	}
 	
-	public Date getDateRegisteredForUser(String userId)
+	/*public Date getDateRegisteredForUser(String userId)
 	{
 		initDBConnection();
 		String selStatement = "SELECT timestamp FROM user WHERE userID=?;";
@@ -3175,7 +3175,7 @@ public class InminddServiceImpl extends RemoteServiceServlet implements InminddS
 			}
 			return null;
 		}
-	}
+	}*/
 	public Date getDateRandomised(String userId)
 	{
 		initDBConnection();
